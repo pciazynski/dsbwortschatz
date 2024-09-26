@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+
+<br><br>
+<br><br>
+
+<div class = "explain">
+	<p>
+		Die Lemmata sind hier nach Häufigkeitsrang aufgelistet. Ein Klick auf einen Balken fügt das Lemma unten ein.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:right;">Minimum Häufigkeit</td>
+		<td>
+			<input type="number" value="1000" id="min" onchange="updateZipf()">
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+</div>
+<br><br>
+
+
+<div class = "explain">
+	<p>
+		Hier können einzelne Lemma im Zeitverlauf dargestellt sowie inkludierende Lemmagruppen aufgelistet werden. 
+		Ein Klick auf einen Eintrag der Liste führt zu einer exakten Darstellung dieser Lemmagruppe. 
+		Die Betrachtung kann anhand der Lemmata oder der zugrundeliegenden Token erfolgen. 
+		Über den Link zu dolnoserbski.de finden sich weitere Informationen zu den Einträgen.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Suchbegriff</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
+				<button onclick = "updateTimeline()">Inklusive Suche</button> 
+			</div>
+			<script>
+				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
+			</script>
+		</td>
+		<td></td>
+		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmabaum</button></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Regex</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="regexsearch" type="text" placeholder="^ und $ werden angefügt" onchange = "">
+				<button onclick = "updateTimelineRegex()">Enter</button> 
+			</div>
+		</td>
+		<td style="text-align:center;">Bspw TE(J|N)</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Betrachtung</td>
+		<td>
+			<select id="focus" onchange="updateFocus()">
+				<option value="0">Lemma</option>
+				<option value="3">Token</option>
+			</select>
+		</td>
+		<td></td>
+	</tr>
+</table>
+
+<br>
+
+<div class = "iframediv">
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="100px" id="lemmastats" scrolling="yes"></iframe>
+	</div>
+</div>
+
+<br>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Lemmaliste</button>
+	<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+	<button class = "iframebutton" onclick="diagrammlink('tokengroup');">Tokenliste</button>
+	<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized"  width="19%" height="475px" id="lemmagroup" scrolling="yes"></iframe>
+		<iframe class="resized" width="60%" height="475px" id="timeline" scrolling="yes"></iframe>
+		<iframe class="resized" width="19%" height="475px" id="tokengroup" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+</div>
+
+
+
+<br><br>
+<script>
+
+	var callDolnoserbski = function(){
+		curlemma = document.getElementById("lemma").value.trim()
+		if(curlemma.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curlemma, "_blank")
+		}
+	}
+	
+	var callLemmatree = function(){
+		curlemma = document.getElementById("lemma").value.trim()
+		if(curlemma.length>0){
+			window.open("../lemmatree?lemma="+curlemma, "_blank")
+		}
+	}
+	
+	
+	var updateFocus = function(){
+		loading("timeline")
+		focus = document.getElementById("focus").value.trim()
+		sourcearr = document.getElementById("timeline").src.split("&focus=")
+		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
+		if(focus==3){source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")}
+		if(curlemma.length>0){
+			document.getElementById("timeline").src=source
+		}
+	}
+	
+	var updateTimelineRegex = function(){
+		loading("timeline")
+		loading("lemmagroup")
+		loading("tokengroup")
+		loading("lemmastats")
+		curlemma = document.getElementById("regexsearch").value.trim()
+		focus = document.getElementById("focus").value.trim()
+		if(curlemma.length>0){
+			document.getElementById("timeline").src="timeline.html?data=regexlemmasearch.php&lemma="+curlemma+"&sort&focus="+focus
+			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curlemma+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
+			document.getElementById("lemmastats").src="lemmastats.html"
+		}
+	}
+
+	var updateTimeline = function(){
+		loading("timeline")
+		loading("lemmagroup")
+		loading("tokengroup")
+		loading("lemmastats")
+		curlemma = document.getElementById("lemma").value.trim()
+		focus = document.getElementById("focus").value.trim()
+		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
+		if(curlemma.length>0){
+			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
+			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
+			document.getElementById("lemmastats").src="lemmastats.html"
+		}
+	}
+	var updateZipf = function(){
+		loading("zipf")
+		curlemma = document.getElementById("min").value.trim()
+		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmabag&min="+curlemma
+	}
+	
+	var lemmaClick = function(lemma){
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
+		focus = document.getElementById("focus").value.trim()
+		curlemma=lemma
+		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
+	}
+	
+	updateZipf()
+	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
+	curlemma = getQueryVariable("lemma")
+	if(curlemma.length>0){
+		document.getElementById("lemma").value = curlemma
+		updateTimeline()
+		document.getElementById("lemma").scrollIntoView()
+	}
+	else{
+		document.getElementById('timeline').src="error_token.html"
+	}
+</script>
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

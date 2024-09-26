@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="../../lib/plotly-latest.min.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+</head>
+
+<body style="text-align:left;">
+<script>
+	var dataset = getQueryVariable("data")
+	var token = getQueryVariable("token")
+	dataset = dataset +"?token="+token
+	data_arr = readPHP(dataset).split("\n");
+
+	str = '<table class="clicktable">';
+	str = str + "<tr><th>Lemma<br>(Link)</th><th>Deutsch<br>(Link)<br></th><th>Vorlesen<br>(Link)</th><th>Token</th><th>Norm</th><th>Type</th><th>Subtype</th>"
+	str = str +"</tr>"
+
+	for (var i = 0; i < data_arr.length; i++) {
+		arr = data_arr[i].split(sep)
+		str += "<tr>"
+		str += "<td><a target='_blank' href=../bwlemma/?lemma="+arr[0].slice(1,-1)+">"+arr[0].slice(1,-1)+"</a></td>"
+		str += "<td><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+arr[0].slice(1,-1).split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>"+arr[0].slice(1,-1).split("|")[0]+"</a></td>"
+		if(arr.length>2){
+			normtoken = ""
+			normtokenarr = arr[2].split("|")
+			for (var j=1;j<normtokenarr.length;j++){
+				if(normtokenarr[j].trim().length>0)
+				{normtoken = normtokenarr[j]}
+			}
+
+			if(normtoken.length>0){
+				console.log(normtoken)
+				readtoken = readPHP("psedcytassearch.php?token="+normtoken)
+				if(Math.abs(readtoken.split("-")[0].length-normtoken.length)<3){
+					leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
+					onclickfun = "window.open('"+leseurl+"', '_blank')"
+					str += '<td onclick="'+onclickfun+'"> &#128266; </td>'
+				}
+				else{
+					str += '<td></td>'
+				}
+			}
+			else{
+				str += '<td></td>'
+			}
+		}
+		else{
+			str += '<td></td>'
+		}
+		for (var j=1;j<arr.length;j++){
+			str += "<td>"+arr[j]+"</td>"
+		}
+
+		str += '</tr>'
+	}
+
+	str = str + "</table>";
+	document.write(str)
+	data_arr = ""
+	str = ""
+</script>
+</body>

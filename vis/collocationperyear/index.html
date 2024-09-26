@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<!-- Plotly.js -->
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+<body style="background-color:lightgray">
+<script>document.write(header())</script>
+
+<br><br>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"><script>document.write(minDate)</script></td>
+			<td>
+				<input type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="update()">
+			</td>
+		<td style="text-align:left;"><script>document.write(maxDate)</script></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Minimum Tokenhäufigkeit (Min 5)</td>
+		<td>
+			<input style="width:30%;" type="number" min ="5" value="50" id="min" onchange="update()">
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('wordnet');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('wordnet');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="475px" id="wordnet" scrolling="yes"></iframe>
+	</div>
+</div>
+
+<br><br>
+
+<script>
+	document.getElementById("year").min=minDate
+	document.getElementById("year").max=maxDate
+	var updateYearlabel = function(){
+		tmp = parseInt(document.getElementById("year").value)
+		document.getElementById("yearlabel").innerHTML = tmp
+	}
+	var update = function(){
+		min = document.getElementById("min").value.trim()
+		if(min>4){
+			loading('wordnet')
+			year = document.getElementById("year").value.trim()
+			document.getElementById('wordnet').src="wordnet.html?data=collocationperyear.php&year="+year+"&frequency="+min
+		}
+	}
+	document.getElementById("yearlabel").innerHTML =(minDate + maxDate)/2
+	document.getElementById("year").value=(minDate + maxDate)/2
+	update()
+
+</script>
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

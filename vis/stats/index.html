@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+<body style="background-color:lightgray">
+<script>document.write(header())</script>
+
+<br><br>
+<br><br>
+
+<div class = "explain">
+	<p>
+		Häufigkeit von Buchstaben / Zeichen.
+	</p>
+</div>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('tokenlength');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('tokenlength');">Rohdaten</button>
+
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="475px" id="tokenlength" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="diatype('tokenlength','barchart');">Bar</button>
+	<button class = "iframebutton" onclick="diatype('tokenlength','piechart');">Pie</button>
+	<button class = "iframebutton" onclick="hidewatermark('tokenlength');">Quellenangabe</button>
+</div>
+
+<br><br>
+<div class = "explain">
+	<p>
+		Verteilung von Wortlängen
+	</p>
+</div>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('charactercount');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('charactercount');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="475px" id="charactercount" scrolling="yes"></iframe>
+	</div>
+		<button class = "iframebutton" onclick="diatype('charactercount','boxplot');">Boxplot</button>
+		<button class = "iframebutton" onclick="diatype('charactercount','barchart');">Bar</button>
+		<button class = "iframebutton" onclick="diatype('charactercount','piechart');">Pie</button>
+		<button class = "iframebutton" onclick="hidewatermark('charactercount');">Quellenangabe</button>
+	</div>
+</div>
+
+<br><br>
+
+<div class = "iframediv">
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="475px" id="stats" scrolling="yes"></iframe>
+	</div>
+</div>
+
+<script>
+
+	var diatype = function(id, diatype){
+		loading(id)
+		srctmp = document.getElementById(id).src = diatype+".html"+document.getElementById(id).src.split(".html")[1]
+	}
+	
+	loading('tokenlength')
+	loading('charactercount')
+	
+	document.getElementById('stats').src="../../data/stats.txt"
+	document.getElementById('tokenlength').src = 'barchart.html?data=stats/characters'
+	document.getElementById('charactercount').src = 'barchart.html?data=stats/tokenlength'
+	
+</script>
+
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

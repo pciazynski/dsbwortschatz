@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <!-- Plotly.js -->
+  <script src="../../_assets/datahandler.js"></script>
+  <script src="../../lib/config.js"></script>
+  <script src="../../_assets/gui.js"></script>
+  <link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+
+<br><br>
+
+<table class="optionmenu" align="center">
+
+	<tr>
+		<td style="text-align:center;">Minimum</td>
+		<td>
+			<input style="width:30%;" type="number" value="2" id="min" onchange="updateYear()">
+		</td>
+
+		</tr>
+</table>
+
+
+<br><br>
+
+
+
+<div class = "iframediv">
+<button class = "iframebutton" onclick="diagrammlink('diagram');">Vollbild</button>
+<button class = "iframebutton" onclick="datalink('diagram');">Rohdaten</button>
+
+<div style="text-align:center;">
+	<iframe class="resized" width="90%" height="500px" style="background-color:white;" id="diagram" scrolling="yes"></iframe>
+</div>
+<button class = "iframebutton" onclick="hidewatermark('diagram');">Quellenangabe</button>
+
+</div>
+
+
+<br><br>
+<script>
+var updateYear = function(){
+    min = document.getElementById("min").value
+    document.getElementById("diagram").src="barchart.html?data=bagofwordsall/compact&min="+min
+}
+
+
+
+
+document.getElementById('diagram').src="barchart.html?data=bagofwordsall/compact&min=1000"
+</script>
+
+<br><br>
+
+<script>
+	document.write(footer())
+</script>
+
+</body>

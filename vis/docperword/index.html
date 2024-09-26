@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<head>
+	<script src='../../_assets/datahandler.js'></script>
+	<script src='../../lib/config.js'></script>
+	<script src='../../_assets/gui.js'></script>
+	<script src='../../_assets/autocomplete.js'></script>
+	<link rel='stylesheet' href='../../digilabstyles.css'>
+</head>
+<body style='background-color:lightgray'>
+<script>document.write(header())</script>
+<br><br>
+<br><br>
+
+<div class = 'explain'>
+	<p>
+		Hier können Dokumente gelistet werden, die ein angegebenes Token enthalten. Die Dokumente werden auch auf einer Zeitleiste positioniert.<br>
+		Ein Klick auf die URNs in der Liste öffnet das Dokument über einen CTS Request und highlighted dabei das Token.
+	</p>
+</div>
+
+<table class='optionmenu' align='center'>
+	<tr>
+		<td style='text-align:center;'>Token</td>
+		<td>
+			<div class='autocomplete'>
+				<input style='width:70%' id='token' type='text' placeholder='Token'>
+				<button onclick = 'updateToken()'>Enter</button> 
+			</div>
+			<script>
+				autocomplete('token', 'prefixsearch.php?&cutoff=2&limit=20&token=', ''); 
+			</script>
+		</td>
+		<td>
+			<a href="?token=bismark">Beispiel Bismark</a>
+		</td>
+	</tr>
+	<tr>
+		<td style='text-align:center;'>Lemma</td>
+		<td>
+			<div class='autocomplete'>
+				<input style='width:70%' id='lemma' type='text' placeholder='Lemma'>
+				<button onclick = 'updateLemma()'>Enter</button> 
+			</div>
+			<script>
+				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
+			</script>
+		</td>
+		<td>
+			<a href="?lemma=BISMARCK">Beispiel BISMARCK</a>
+		</td>
+	</tr>
+</table>
+<br><br>
+
+
+<div class = 'iframediv'>
+	<button class = 'iframebutton' onclick='diagrammlink("timeline");'>Zeitleiste</button>
+	<button class = 'iframebutton' onclick='diagrammlink("doclist");'>Dok.-Liste</button>
+	<button class = 'iframebutton' onclick='datalink("doclist");'>Rohdaten</button>
+	<div style='text-align:center;'>
+		<iframe class='resized' width='70%' height='475px' id='timeline' scrolling='yes'></iframe>
+		<iframe class='resized' width='29%' height='475px' id='doclist' scrolling='yes'></iframe>
+	</div>
+	<button class = 'iframebutton' onclick='hidewatermark("timeline");'>Quellenangabe</button>
+</div>
+
+<br><br>
+
+<div class = 'iframediv'>
+	<button class = 'iframebutton' onclick='diagrammlink("tokendistribution");'>Diagramm</button>
+	<button class = 'iframebutton' onclick='datalink("tokendistribution");'>Rohdaten</button>
+	<div style='text-align:center;'>
+		<iframe class='resized' width='100%' height='475px' id='tokendistribution' scrolling='yes'></iframe>
+	</div>
+	<button class = 'iframebutton' onclick='hidewatermark("tokendistribution");'>Quellenangabe</button>
+</div>
+
+<script>
+
+	var callDolnoserbski = function(){
+		tmp = document.getElementById('token').value.trim()
+		if(tmp.length>0){
+			window.open('https://dolnoserbski.de/ortografija/slownik?wuraz='+tmp, '_blank')
+		}
+	}
+	
+	var updateToken = function(){
+		tmp = document.getElementById('token').value.trim()
+		if(tmp.length>0){
+			loading('timeline')
+			loading('doclist')
+			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&token='+tmp
+			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&token='+tmp
+		}
+	}
+	
+	var updateLemma = function(){
+		tmp = document.getElementById('lemma').value.trim()
+		if(tmp.length>0){
+			loading('timeline')
+			loading('doclist')
+			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&lemma='+tmp
+			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&lemma='+tmp
+		}
+	}
+	
+	var updateTokendistribution = function(urn){
+		tmp = document.getElementById('token').value.trim()
+		if(tmp.length>0){
+			loading('tokendistribution')
+			document.getElementById('tokendistribution').src = 'https://urncts.eu/cts/dsb/plain/textsearch.php?urn=urn:cts:dsb:bramborski.sserski_zassnik.1863.12:&token=bismark' 
+		}
+	}
+	
+	tmplemma = getQueryVariable('lemma')
+	if(tmplemma.length>0){
+		document.getElementById('lemma').value = tmplemma
+		updateLemma()
+	}
+	else{
+		document.getElementById('token').value = getQueryVariable('token')
+		updateToken()
+	}
+	updateTokendistribution()
+</script>
+
+<br><br>
+<script>
+	document.write(footer())
+</script>
+
+</body>

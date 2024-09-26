@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+
+<br><br>
+<br><br>
+
+<div class = "explain">
+	<p>
+		Hier können Flektionen von Lemmata hierarchisch betrachtet werden. Mehrere Lemmata können in einer Liste übergeben werden. Ist "Inklusive" aktiviert, wird nach Lemmagruppen für jedes einzelne Lemma gesucht. 
+		Über den Link zu dolnoserbski.de finden sich weitere Informationen zu den Einträgen.
+		<br>
+		<strong>Baum</strong>: Linksklick fokussiert Nachbarn des geklickten Knotens. Doppelklick fokussiert das komplette Netzwerk.
+		<br>
+		<strong>Sunburst</strong>:Linksklick im Mittelstreifen fokussiert das gewählte Lemma und zeigt dessen Timeline. Linksklick auf die äußeren Elemente zeigt den Zeitverlauf und Info zur Wortform.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Lemma</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
+				<button onclick = "updateTree()">Enter</button> 
+			</div>
+			<script>
+				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
+			</script>
+		</td>
+		<td>Sende an </td>
+		<td style="text-align:left;"><button onclick = "addLemmaToList()">&#10149;Lemmaliste</button><br><button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button>
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Lemmaliste</td>
+		<td>
+			<input style="width:70%" id="lemmalist" type="text" placeholder="Kommasepariert" onchange = "">
+			<button onclick = "updateTreeFromList()">Enter</button> 
+		</td>
+		<td style="text-align:center;"><a href="?lemma=MŁYŃSKI,KRABAT">Bspw MŁYŃSKI,KRABAT</a></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Inklusive</td>
+		<td>
+			<input type="checkbox" id="inclusive"/> 
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Regex</td>
+		<td>
+			<input style="width:70%" id="lemmaregex" type="text" placeholder="" onchange = "">
+			<button onclick = "updateTreeFromRegex()">Enter</button> 
+		</td>
+		<td style="text-align:center;"><label>Bspw TE(J|N)</label></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Log. Gewichtung</td>
+		<td>
+			<input type="checkbox" id="weight" checked="true"/> 
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('tree');">Baumsicht</button>
+	<button class = "iframebutton" onclick="diagrammlink('sunburst');">Sunburst</button>
+	<button class = "iframebutton" onclick="datalink('tree');">Rohdaten</button>
+
+	<div style="text-align:center;">
+		<iframe class="resized" width="69%" height="475px" id="tree" scrolling="yes"></iframe>
+		<iframe class="resized" width="30%" height="475px" id="sunburst" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('sunburst');">Quellenangabe</button>
+</div>
+
+<br>
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr>
+			<td style = "width: 100%;">
+				<iframe class="resized" width="100%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="500px" id="timeline" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+			</td>
+		</tr>
+
+	</table>
+</div>
+
+
+<br><br>
+<script>
+
+	var tokenclick = function(tmp){
+		loading("timeline")
+		loading("tokeninfo")
+		if(tmp.length>0){
+			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
+			document.getElementById("tokeninfo").src="datalist.html?data=token2lemma.php&token="+tmp
+		}
+	}
+	
+	var lemmaclick = function(tmp){
+		loading("timeline")
+		loading("tokeninfo")
+		if(tmp.length>0){
+			document.getElementById("timeline").src="lemmatimeline.html?data=lemmacountperyear.php&lemma="+tmp+"&sort&focus=3&exact=1"
+		//	document.getElementById("tokeninfo").src="../../php/lemmacountperyear.php&lemma="+tmp
+		}
+	}
+
+	
+	var callDolnoserbski = function(){
+		curlemma = document.getElementById('lemma').value.trim()
+		if(curlemma.length>0){
+			window.open('https://dolnoserbski.de/ortografija/slownik?wuraz='+curlemma, '_blank')
+		}
+	}
+	
+	var updateTreeFromRegex = function(){
+		curlemma = document.getElementById('lemmaregex').value.trim()
+		if(curlemma.length>0){
+			loading("tree")
+			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatokenregex.php&lemma='+curlemma+weight
+			document.getElementById('sunburst').src='sunburst.html?data=lemmatokenregex.php&lemma='+curlemma+weight
+		}
+	}
+	
+	var updateTreeFromList = function(){
+		curlemma = document.getElementById('lemmalist').value.trim()
+		if(curlemma.length>0){
+			loading("tree")
+			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
+			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+		}
+	}
+
+	var updateTree = function(){
+		curlemma = document.getElementById('lemma').value.trim()
+		if(curlemma.length>0){
+			loading("tree")
+			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
+			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+		}
+	}
+	
+	var addLemmaToList = function(){
+		loading("tree")
+		tmp = document.getElementById("lemma").value.trim()
+		tmp2 = document.getElementById("lemmalist").value.trim()
+		str = ""
+		if(tmp.length>0){
+			if(tmp2.length>0){str = ","}
+			str = tmp2+str+tmp
+			document.getElementById("lemmalist").value = str
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma
+		}
+	}
+	
+	curlemma = getQueryVariable('lemma')
+	if(curlemma.length>0){
+		document.getElementById('lemma').value = curlemma
+		updateTree()
+		document.getElementById('lemma').scrollIntoView()
+	}
+	else{
+		document.getElementById('tree').src = 'error_token.html'
+	}
+</script>
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

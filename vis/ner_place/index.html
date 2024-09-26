@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+
+<br><br>
+<br><br>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('geomap');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('geomap');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="60%" height="475px" id="geomap" scrolling="yes"></iframe>
+<!--
+		<iframe class="resized" width="30%" height="475px" id="urnlist" scrolling="yes"></iframe>
+-->
+	</div>
+	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_kreise');">BB Landkreise</button>
+	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_gemeinden');">BB Gemeinden</button>
+	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_ortsteile');">BB Ortsteile</button>
+	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_gemverbaende');">Gem Verbände</button>
+	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_sorbsiedlgebiet');">Srb. Siedlgebiet</button>
+	<button class = "iframebutton" onclick="maptype('worldcountries');">Weltkarte</button>
+	<button class = "iframebutton" onclick="maptype('europe');">Europa</button>
+	<button class = "iframebutton" onclick="maptype('bundeslaender');">Bundesländer</button>
+	<button class = "iframebutton" onclick="maptype('landkreise');">Landkreise</button>
+	<button class = "iframebutton" onclick="maptype('gemeinden');">Gemeinden</button>
+</div>
+
+<br><br>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Suchbegriff</td>
+		<td>
+			<input style="width:90%" type="text" id="token" onchange="updateTimeline()">
+		</td>
+	</tr>
+	<tr>
+		<td title="Zufällige Schwankung als Workaround für überlagernde Punkte" style="text-align:center;">Jitter</td>
+		<td>
+			<input style="width:20%" type="number" min="0" max="0.8" value="0.3" step="0.1" id="jitter" onchange="updateTimeline()">
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="75%" height="475px" id="timeline" scrolling="yes"></iframe>
+		<iframe class="resized" width="20%" height="475px" id="stemmings" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+</div>
+
+<br><br>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+</div>
+
+<br><br>
+<script>
+
+	var updateTimeline = function(){
+		loading('timeline')
+		token = document.getElementById('token').value.trim()
+		jit = parseFloat(document.getElementById('jitter').value.trim())
+		document.getElementById('timeline').src='timeline.html?data=tokencountperyear.php&jitter='+jit+'&token='+token+'&sort'
+	}
+
+	var maptype = function(typename){
+		loading('geomap')
+		document.getElementById('geomap').src='geomap.html?data=entitiesPLACE/_all&maptype='+typename
+	}
+	loading('zipf')
+	loading('geomap')
+	document.getElementById('zipf').src = 'zipf.html?data=entitiesPLACE/_all'
+	document.getElementById('timeline').src = 'error_token.html'
+	document.getElementById('stemmings').src = 'error_token.html'
+	//document.getElementById('urnlist').src = 'error_token.html'
+	document.getElementById('geomap').src = 'geomap.html?data=entitiesPLACE/_all'
+
+</script>
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

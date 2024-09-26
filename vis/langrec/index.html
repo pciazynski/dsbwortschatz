@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+		
+<br><br>
+
+<div class = "explain">
+	<p>
+		Hier Text einfügen oder <a href="https://tiepilab.de/cts/vis/home/" target="_blank">über CTS</a> eintragen:
+	</p>
+</div>
+
+<table align="center"  style="width:80%">
+	<tr>
+		<td>
+			<input style="width:90%;height:200px;" value = "" type="text" id="inputtext" onchange="recognise()"></input>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div class = "explain">
+				<p>
+					Grün = Bestätigt DSB, Blau = Unsicher, Rot = Deutsch
+				</p>
+			</div>
+			<div id="langrec" style="width:90%;height:2000px;background-color:white;"></div>
+		</td>
+	</tr>
+</table>
+<script>
+
+	var recognise = function(){
+	var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;=?@\[\]^_`{|}~]/g;
+		text = " "+document.getElementById("inputtext").value.replace(punctRE, ' ').toLowerCase()+" "
+		textarr = text.split(" ")
+		dsblist = "\n"+readTextFile("langDetect3/dsb");
+		mix1list = "\n"+readTextFile("langDetect3/mix1");
+		mix2list = "\n"+readTextFile("langDetect3/mix2");
+		deulist = "\n"+readTextFile("langDetect3/deu");
+
+		for (var i = 0;i<textarr.length;i++){
+			token = textarr[i].trim()
+			
+			if(dsblist.includes("\n"+token+"\t")){
+				text = text.replaceAll(" "+token+" ", ' <span style="color:green;">'+token+'</span> ')
+			}
+			if(mix1list.includes("\n"+token+"\t")){
+				text = text.replaceAll(" "+token+" ", ' <span style="color:cyan;">'+token+'</span> ')
+			}
+			if(mix2list.includes("\n"+token+"\t")){
+				text = text.replaceAll(" "+token+" ", ' <span style="color:blue;">'+token+'</span> ')
+			}
+			if(deulist.includes("\n"+token+"\t")){
+				text = text.replaceAll(" "+token+" ", ' <span style="color:red;">'+token+'</span> ')
+			}
+		}
+		document.getElementById('langrec').innerHTML=text
+	}
+
+</script>
+
+<br><br>
+
+<script>
+	var urn = getQueryVariable("urn")
+	if(urn.length>0){
+		text = ctsrequest("https://tiepilab.de/cts/dsb/plain/passage.php?urn="+urn+"&deletexml&nl")
+		document.getElementById("inputtext").value=text.replaceAll("\n"," <br> ")
+		recognise()
+	}
+	document.write(footer())
+</script>
+
+</body>

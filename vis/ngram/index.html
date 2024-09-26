@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<!-- Plotly.js -->
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+<script>document.write(header())</script>
+<br><br>
+
+<script>
+	n = getQueryVariable("n")
+	if(n.length==0){n=3}
+</script>
+
+<div class = "explain">
+	<p>
+		Hier werden nGramme nach Häufigkeitsrang dargestellt. Per Klick auf einen Balken kann das zugehörige nGram näher untersucht werden.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:right;">Minimum Häufigkeit</td>
+		<td>
+			<input type="number" value="100" id="min" onchange="updateYear()">
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+</div>
+
+<br><br>
+
+<div class = "explain">
+	<p>
+		Nach Klick auf einen Balken der Häufigkeitssortierung wird die Vorkommenshäufigkeit des nGram im Zeitverlauf visualisiert. Alternativ kann ein Suchbegriff im Textfeld angegeben werden. Die einzelnen Wortformen in der rechten Tabelle können per Klick ausgewählt werden um Häufigkeitsverläufe verschiedener farbkodierter nGramme zu visualisieren, welche diese Wortform enthalten. Zur Unterstützung werden Vorschläge bereitgestellt, bei denen der folgende Buchstabe variiert wird.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Suchbegriff</td>
+		<td>
+			<div class="autocomplete">
+				<input id="filter" type="text" placeholder="Token / nGram">
+			</div>
+			<script>
+				autocomplete("filter", "prefixngramsearch.php?n="+n+"&cutoff=2&limit=20&token=", "updateNGram"); 
+			</script>
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 80%;">
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>			</td>
+			<td style = "width: 20%;">
+				<button class = "iframebutton" onclick="diagrammlink('ngram');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('ngram');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 80%;">
+				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+			</td>
+			<td style = "width: 20%;">		
+				<iframe class="resized" width="100%" height="475px" id="ngram" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 80%;">
+				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+			</td>
+			<td style = "width: 20%;">
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br><br>
+<script>
+	var updateNGram = function(){
+		loading('ngram')
+		loading('timeline')
+		tmp = document.getElementById("filter").value.trim()
+		document.getElementById('ngram').src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+tmp
+		document.getElementById('timeline').src = "timeline.html?data=ngramperyear.php&filter="+tmp+"&n="+n
+	}
+	
+	var updateZipf = function(){
+		loading('zipf')
+		min = document.getElementById("min").value.trim()
+		document.getElementById('zipf').src="zipf.html?data=ngram.php&frequency="+min+"&n="+n
+	}
+	updateZipf()
+//	updateNGram()
+
+</script>
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

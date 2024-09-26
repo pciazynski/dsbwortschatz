@@ -1,0 +1,2 @@
+Wortschatz > 5
+Duden <= 5
