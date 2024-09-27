@@ -25,28 +25,20 @@
 		str += "<td><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+arr[0].slice(1,-1).split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>"+arr[0].slice(1,-1).split("|")[0]+"</a></td>"
 		if(arr.length>2){
 			normtoken = ""
-			normtokenarr = arr[2].split("|")
-			for (var j=1;j<normtokenarr.length;j++){
-				if(normtokenarr[j].trim().length>0)
-				{normtoken = normtokenarr[j]}
+			normtoken = arr[2].slice(1,-1).replaceAll("|",",").toLowerCase()
+			if(normtoken.length==0){
 			}
-
-			if(normtoken.length>0){
-				console.log(normtoken)
-				readtoken = readPHP("psedcytassearch.php?token="+normtoken)
-				console.log("psedcytassearch.php?token="+normtoken)
-				if(readtoken.length > 0 && Math.abs(readtoken.split("-")[0].length-normtoken.length)<3){
-					leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
-					onclickfun = "window.open('"+leseurl+"', '_blank')"
-					str += '<td onclick="'+onclickfun+'"> &#128266; </td>'
-				}
-				else{
-					str += '<td></td>'
-				}
-			}
-			else{
-				str += '<td></td>'
-			}
+		}
+		else{normtoken = token}
+		
+		console.log(normtoken)
+		readtoken = readPHP("psedcytassearch.php?token="+normtoken)
+		console.log(readtoken)
+		if(readtoken.length==0){readtoken = readPHP("psedcytassearch.php?token="+token)}
+		if(readtoken.length > 0){
+			leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
+			onclickfun = "window.open('"+leseurl+"', '_blank')"
+			str += '<td onclick="'+onclickfun+'"> &#128266; </td>'
 		}
 		else{
 			str += '<td></td>'
