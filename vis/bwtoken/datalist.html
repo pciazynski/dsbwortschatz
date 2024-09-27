@@ -34,7 +34,7 @@
 			if(normtoken.length>0){
 				console.log(normtoken)
 				readtoken = readPHP("psedcytassearch.php?token="+normtoken)
-				if(readtoken.length && Math.abs(readtoken.split("-")[0].length-normtoken.length)<3){
+				if(readtoken.length > 0 && Math.abs(readtoken.split("-")[0].length-normtoken.length)<3){
 					leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
 					onclickfun = "window.open('"+leseurl+"', '_blank')"
 					str += '<td onclick="'+onclickfun+'"> &#128266; </td>'
