@@ -112,7 +112,7 @@ for line in inventory("dsb").split("\n"):
     if (len(year)>1 and count!=0):
         count-=1
         print(str(count)+" "+urn)
-        with open ("data/ngram"+n+"/"+urn.replace(":","_")+".txt", "w",encoding="utf8") as outf,open ("data/ngram"+n+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
+        with open ("data/ngram"+n+"/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/ngram"+n+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
             rs = ngram(urn,n)
             outf.write(rs)
             outyf.write(rs)

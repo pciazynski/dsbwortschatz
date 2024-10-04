@@ -163,7 +163,7 @@ for line in inventory("dsb").split("\n"):
     if (len(year)>1 and count!=0):
         print(str(count)+" "+urn)
         count-=1
-        with open ("data/entities"+tag+"/"+urn.replace(":","&")+".txt", "w",encoding="utf8") as outf,open ("data/entities"+tag+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
+        with open ("data/entities"+tag+"/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/entities"+tag+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
             rs = entities(urn)
             print("requested")
             outf.write(rs)

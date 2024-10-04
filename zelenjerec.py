@@ -17,12 +17,12 @@ with open("data/langDetect3/deu.txt", "r", encoding="utf8") as inf:
         
 if not os.path.exists("data"):
     os.mkdir("data")
-if os.path.exists("data/langdiff"):
-    shutil.rmtree("data/langdiff")
-os.mkdir("data/langdiff")
-if os.path.exists("data/langdiffperyear"):
-    shutil.rmtree("data/langdiffperyear")
-os.mkdir("data/langdiffperyear")
+if os.path.exists("data/langseparation"):
+    shutil.rmtree("data/langseparation")
+os.mkdir("data/langseparation")
+if os.path.exists("data/langseparationperyear"):
+    shutil.rmtree("data/langseparationperyear")
+os.mkdir("data/langseparation")
 
 def inventory(endpoint):
     global ctsurl
@@ -46,7 +46,7 @@ def requestctsurl(ns):
             ctsurl+=line.decode('utf-8')
         
     
-def langdiff(urn):
+def langseparation(urn):
     global ctsurl
     requestctsurl(urn)
     res = ""
@@ -89,14 +89,11 @@ for line in inventory("dsb").split("\n"):
     if (len(year)>1 and count!=0):
         count-=1
         print(str(count)+" "+urn)
-        rs = langdiff(urn)
+        rs = langseparation(urn)
         if len(rs.strip())>0:
-            with open ("data/langdiff/"+urn.replace(":","_")+".txt", "w",encoding="utf8") as outf,open ("data/langdiffperyear/"+year+".txt", "a",encoding="utf8") as outyf:
+            with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                 outf.write(rs)
                 outyf.write(rs)
-
-
-
 
 def process(foldername):
     with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
@@ -106,4 +103,4 @@ def process(foldername):
                 for line in inf:
                     outf.write(line)
 
-process("data/langdiff")
+process("data/langseparation")
