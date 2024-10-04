@@ -16,7 +16,7 @@ if (isset($_GET['deu'])){
 $query = 'SELECT ngram, frequency, deu FROM langDetectngram WHERE deu =='.$deu.' AND frequency >='.$frequency;
 if (isset($_GET['filter'])){
 	$filter = str_replace('_','\_',$_GET['filter']);
-	$query .= ' AND ngram LIKE "%'.$filter.'%" escape "\" ';
+	$query .= ' AND ngram LIKE "%\_'.$filter.'\_%" escape "\" ';
 }
 
 
