@@ -22,7 +22,7 @@ if os.path.exists("data/langseparation"):
 os.mkdir("data/langseparation")
 if os.path.exists("data/langseparationperyear"):
     shutil.rmtree("data/langseparationperyear")
-os.mkdir("data/langseparation")
+os.mkdir("data/langseparationperyear")
 
 def inventory(endpoint):
     global ctsurl
