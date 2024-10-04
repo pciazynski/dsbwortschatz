@@ -41,7 +41,7 @@ def requestctsurl(ns):
         if not ns.startswith("urn:cts"):
             ns = "urn:cts:"+ns
         ns = ns.split(":")[2]
-        data = urlopen("https://tiepilab.de/cts/nsresolver/"+ns) 
+        data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
         for line in data: 
             ctsurl+=line.decode('utf-8')
         
