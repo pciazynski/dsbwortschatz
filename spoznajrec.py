@@ -74,6 +74,7 @@ with open("learn/found_deu.txt", "r", encoding = "utf8") as inf:
         deudict[tmp] = 1
 
 
+
 with open("learn/stopwords_deu.txt", "r", encoding = "utf8") as inf:
     for line in inf:
             tmp = line.strip().lower()
