@@ -60,14 +60,28 @@
 		deulist = "\n"+readTextFile("langDetect3/deu");
 		for (var i = 0;i<textarr.length;i++){
 			token = textarr[i].trim()
-			
+			onclickfun = "window.open('http://localhost/dsbwortschatz/vis/bwtoken/?token="+token+"')"
 			if(dsblist.includes("\n"+token+"\t")){
-				text = text.replaceAll(" "+token+" ", ' <a href="http://localhost/dsbwortschatz/vis/bwtoken/?token='+token+'>'+token+'</a> ')
+				text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick='+onclickfun+'>'+token+'</span> ')
 			}
-
+			else {
+				if(mix1list.includes("\n"+token+"\t")){
+					text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick='+onclickfun+'>'+token+'</span> ')
+				}
+				else{
+					if(mix2list.includes("\n"+token+"\t")){
+						text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick='+onclickfun+'>'+token+'</span> ')
+					}
+					else{
+						if(deulist.includes("\n"+token+"\t")){
+							text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick='+onclickfun+'>'+token+'</span> ')
+						}
+					else{
+							text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick='+onclickfun+'>'+token+'</span> ')
+						}}}}
 		}
 		
-		alert(text)
+		//alert(text)
 		document.getElementById('langrec').innerHTML=text
 	}
 
