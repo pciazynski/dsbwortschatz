@@ -15,10 +15,10 @@
 	var lemma = getQueryVariable("lemma")
 	if(lemma.length >0){
 		dataset = dataset +"?lemma="+lemma+"&sort"
-		diagramtitle = "Dok. Lemma:"+ lemma
+		diagramtitle = "Dokumente mit Lemma:"+ lemma
 	}else{
 		dataset = dataset +"?token="+token+"&sort"
-		diagramtitle = "Dok. Token:"+ token
+		diagramtitle = "Dokumente mit Token:"+ token
 	}
 	data_arr = readPHP(dataset).split("\n");
 	maxval = 0

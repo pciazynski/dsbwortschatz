@@ -5,6 +5,7 @@
 	<script src="../../lib/plotly-latest.min.js"></script>
 	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
 </head>
 
 <body style="text-align:left;">
@@ -15,14 +16,15 @@
 	data_arr = readPHP(dataset).split("\n");
 
 	str = '<table class="clicktable">';
-	str = str + "<tr><th>Lemma<br>(Link)</th><th>Deutsch<br>(Link)<br></th><th>Vorlesen<br>(Link)</th><th>Token</th><th>Norm</th><th>Type</th><th>Subtype</th>"
+	str = str + '<tr><th>Dokument-<br>nachweise</th><th>Lemma</th><th>Deutsch<br>(dolnoserbski.de)<br></th><th>Vorlesen<br>(dolnoserbski.de)</th><th>Token</th><th>Norm</th><th>Type</th><th>Subtype</th>'
 	str = str +"</tr>"
 
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
-		str += "<tr>"
+		str += '<tr>'
+		str += "<td><a target='_blank' href=../docperword/?token="+token+">&#10149;</a></td>"
 		str += "<td><a target='_blank' href=../bwlemma/?lemma="+arr[0].slice(1,-1)+">"+arr[0].slice(1,-1)+"</a></td>"
-		str += "<td><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+arr[0].slice(1,-1).split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>"+arr[0].slice(1,-1).split("|")[0]+"</a></td>"
+		str += "<td><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+arr[0].slice(1,-1).split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>&#10149;</a></td>"
 		if(arr.length>2){
 			normtoken = ""
 			normtoken = arr[2].slice(1,-1).replaceAll("|",",").toLowerCase()
@@ -31,7 +33,6 @@
 		}
 		else{normtoken = token}
 		
-		console.log(normtoken)
 		readtoken = readPHP("psedcytassearch.php?token="+normtoken)
 		console.log(readtoken)
 		if(readtoken.length==0){readtoken = readPHP("psedcytassearch.php?token="+token)}
