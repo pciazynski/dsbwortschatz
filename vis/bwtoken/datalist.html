@@ -23,8 +23,11 @@
 		arr = data_arr[i].split(sep)
 		str += '<tr>'
 		str += "<td><a target='_blank' href=../docperword/?token="+token+">&#10149;</a></td>"
-		str += "<td><a target='_blank' href=../bwlemma/?lemma="+arr[0].slice(1,-1)+">"+arr[0].slice(1,-1)+"</a></td>"
-		str += "<td><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+arr[0].slice(1,-1).split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>&#10149;</a></td>"
+		lemma = arr[0].slice(1,-1)
+		if(lemma.length>0){
+			str += "<td><a target='_blank' href=../bwlemma/?lemma="+lemma+">"+lemma+"</a></td>"
+			str += "<td><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+lemma.split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>&#10149;</a></td>"
+		}else{str += "<td></td><td></td>"}
 		if(arr.length>2){
 			normtoken = ""
 			normtoken = arr[2].slice(1,-1).replaceAll("|",",").toLowerCase()
