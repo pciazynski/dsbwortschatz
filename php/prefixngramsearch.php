@@ -22,7 +22,7 @@ if (strlen($token)>=1){
 	}
 	$query = 'SELECT DISTINCT SUBSTRING(ngram,2,LENGTH(ngram)-2) as ngram FROM ngramcount';
 	$PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
-	$query .= ' WHERE ngram LIKE "-'.$token.'%"'.$cutoff.' ORDER BY ngram LIMIT '.$limit;
+	$query .= ' WHERE ngram LIKE "\_'.$token.'%" escape "\"'.$cutoff.' ORDER BY ngram LIMIT '.$limit;
 	$result = $PDO->query($query.";");
 	foreach($result as $row){
 		print($row['ngram']."\n");
