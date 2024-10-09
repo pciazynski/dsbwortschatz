@@ -138,6 +138,7 @@
 		if(focus==3){source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")}
 		if(curlemma.length>0){
 			document.getElementById("timeline").src=source
+			document.title="Lemma "+curlemma
 		}
 	}
 	
@@ -154,6 +155,7 @@
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmastats").src="lemmastats.html"
 		}
+		document.title="Lemma "+curlemma
 	}
 
 	var updateTimeline = function(){
@@ -170,6 +172,7 @@
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmastats").src="lemmastats.html"
 		}
+		document.title="Lemma "+curlemma
 	}
 	var updateZipf = function(){
 		loading("zipf")
@@ -198,6 +201,8 @@
 	else{
 		document.getElementById('timeline').src="error_token.html"
 	}
+	document.title="Lemma "+curlemma
+
 </script>
 <br><br>
 <script>

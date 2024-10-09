@@ -246,6 +246,8 @@
 			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
 			document.getElementById("tokeninfo").src="datalist.html?data=token2lemma.php&token="+tmp
 		}
+		document.title="Token "+tmp
+
 	}
 	var updateZipf = function(){
 		loading("zipf")
@@ -305,6 +307,7 @@
 	document.getElementById("year").max=maxDate
 	document.getElementById("year").value=(minDate + maxDate)/2
 	document.getElementById("yearlabel").innerHTML =(minDate + maxDate)/2
+	document.title="Token "+token
 
 </script>
 

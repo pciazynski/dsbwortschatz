@@ -92,6 +92,7 @@
 			loading('doclist')
 			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&token='+tmp
 			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&token='+tmp
+			document.title=tmp+" Dok.nachweise "
 		}
 	}
 	
@@ -102,6 +103,7 @@
 			loading('doclist')
 			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&lemma='+tmp
 			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&lemma='+tmp
+			document.title=tmp+" Dok.nachweise "
 		}
 	}
 	
@@ -113,6 +115,7 @@
 		}
 	}
 	
+	document.title="Dok.nachweise"
 	tmplemma = getQueryVariable('lemma')
 	if(tmplemma.length>0){
 		document.getElementById('lemma').value = tmplemma
@@ -123,6 +126,7 @@
 		updateToken()
 	}
 	updateTokendistribution()
+
 </script>
 
 <br><br>
