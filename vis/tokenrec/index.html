@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+		
+<br><br>
+
+<div class="explain">
+	<p>
+		Hier niedersorbischen Text einfügen:
+	</p>
+</div>
+
+<table class='optionmenu' align='center'>
+	<tr>
+		<td>
+			<textarea  style="width:90%;height:200px;" value = "" type="text" id="inputtext" onchange="recognise()"></textarea >
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+		<tr>
+			<td style = "width: 100%;">
+				<iframe class="resized" width="50%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class = "explain">
+	<p>
+		<span style="color:green;"> ▮ </span>In Daten enthalten<br>
+		<span style="color:black;"> ▮ </span>In Daten nicht enthalten<br>
+		
+	</p>
+</div>
+
+<table class='optionmenu' align='center'>
+	<tr>
+		<td>
+			<div style="width:90%;background-color:white;">
+				<label  style="width:90%;height:200px;" value = "" type="text" id="tokenrec" onchange="recognise()"></label >
+			</div>
+		</td>
+	</tr>
+</table>
+
+	
+<script>
+	var showtokeninfo = function(tmp){
+		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
+	}
+
+	var recognise = function(){
+		var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
+		document.getElementById('tokenrec').innerHTML = "Loading..."
+		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
+		textarr = text.split(" ").sort()
+		oldtoken = ""
+		
+		knownlist = "\n"+readTextFile("bagofwords/_all");
+		for (var i = 0;i<textarr.length;i++){
+			token = textarr[i].trim()
+			if(oldtoken!== token){
+				//onclickfun = "window.open('../../vis/docperword/?token="+token+"')"
+				onclickfun = "showtokeninfo('"+token+"')"
+				if(knownlist.includes("\n"+token+"\t")){
+					text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+token+'</span> ')
+				}	
+				else {
+					text = text.replaceAll(" "+token+" ", ' <span style="color:black;">'+token +'</span> ')
+				}
+				oldtoken = token
+			}
+		}
+		
+		document.getElementById('tokenrec').innerHTML=text
+	}
+	document.title="Token-Abdeckung"
+
+
+
+</script>
+
+<br><br>
+
+<script>
+	document.write(footer())
+</script>
+
+</body>

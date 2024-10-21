@@ -52,34 +52,39 @@
 	var recognise = function(){
 	var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
 		document.getElementById('langrec').innerHTML = "Loading..."
-		text = " "+document.getElementById("inputtext").value.replaceAll("\n", '<br>').replace(punctRE, ' ').toLowerCase()+" "
-		textarr = text.split(" ")
+		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
+		textarr = text.split(" ").sort()
+		oldtoken = ""
 		dsblist = "\n"+readTextFile("langDetect3/dsb");
 		mix1list = "\n"+readTextFile("langDetect3/mix1");
 		mix2list = "\n"+readTextFile("langDetect3/mix2");
 		deulist = "\n"+readTextFile("langDetect3/deu");
 		for (var i = 0;i<textarr.length;i++){
 			token = textarr[i].trim()
-			onclickfun = "window.open('../../vis/bwtoken/?token="+token+"')"
-			if(dsblist.includes("\n"+token+"\t")){
-				text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick='+onclickfun+'>'+token+'</span> ')
-			}
-			else {
-				if(mix1list.includes("\n"+token+"\t")){
-					text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick='+onclickfun+'>'+token+'</span> ')
+			if(oldtoken!== token){
+				onclickfun = "window.open('../../vis/bwtoken/?token="+token+"')"
+				if(dsblist.includes("\n"+token+"\t")){
+					text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+token+'</span> ')
 				}
-				else{
-					if(mix2list.includes("\n"+token+"\t")){
-						text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick='+onclickfun+'>'+token+'</span> ')
+				else {
+					if(mix1list.includes("\n"+token+"\t")){
+						text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick="'+onclickfun+'">'+token+'</span> ')
 					}
 					else{
-						if(deulist.includes("\n"+token+"\t")){
-							text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick='+onclickfun+'>'+token+'</span> ')
+						if(mix2list.includes("\n"+token+"\t")){
+							text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick="'+onclickfun+'">'+token+'</span> ')
 						}
-					else{
-							text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick='+onclickfun+'>'+token+'</span> ')
-						}}}}
+						else{
+							if(deulist.includes("\n"+token+"\t")){
+								text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick="'+onclickfun+'">'+token+'</span> ')
+							}
+						else{
+								text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick="'+onclickfun+'">'+token+'</span> ')
+							}}}}
+				oldtoken = token
+			}
 		}
+		alert(text)
 		
 		document.getElementById('langrec').innerHTML=text
 	}

@@ -132,10 +132,8 @@
 	
 	var lemmaclick = function(tmp){
 		loading("timeline")
-		loading("tokeninfo")
 		if(tmp.length>0){
 			document.getElementById("timeline").src="lemmatimeline.html?data=lemmacountperyear.php&lemma="+tmp+"&sort&focus=3&exact=1"
-		//	document.getElementById("tokeninfo").src="../../php/lemmacountperyear.php&lemma="+tmp
 		}
 	}
 
@@ -154,6 +152,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatokenregex.php&lemma='+curlemma+weight
 			document.getElementById('sunburst').src='sunburst.html?data=lemmatokenregex.php&lemma='+curlemma+weight
+			document.title=curlemma+" Lemmabaum"
 		}
 	}
 	
@@ -165,6 +164,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
 			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.title=curlemma+" Lemmabaum"
 		}
 	}
 
@@ -176,6 +176,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
 			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.title=curlemma+" Lemmabaum"
 		}
 	}
 	
@@ -194,13 +195,20 @@
 	
 	curlemma = getQueryVariable('lemma')
 	if(curlemma.length>0){
-		document.getElementById('lemma').value = curlemma
-		updateTree()
+		if(curlemma.includes(",")){
+			document.getElementById('lemmalist').value = curlemma
+			updateTreeFromList()
+		
+		}else{
+				document.getElementById('lemma').value = curlemma
+				updateTree()
+			}
 		document.getElementById('lemma').scrollIntoView()
 	}
 	else{
 		document.getElementById('tree').src = 'error_token.html'
 	}
+	document.title="Lemmabaum"
 </script>
 <br><br>
 <script>
