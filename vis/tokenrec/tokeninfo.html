@@ -9,6 +9,10 @@
 </head>
 
 <body style="text-align:left;">
+	<audio id="audioplayer">
+		Your browser does not support the audio element.
+</audio> 
+
 <script>
 	var dataset = getQueryVariable("data")
 	var token = getQueryVariable("token")
@@ -18,6 +22,8 @@
 	str = '<table class="clicktable">';
 	str = str + '<tr><th>Dokument-<br>nachweise</th><th>Lemma</th><th>Deutsch<br>(dolnoserbski.de)<br></th><th>Vorlesen<br>(dolnoserbski.de)</th><th>Token</th><th>Norm</th><th>Type</th><th>Subtype</th>'
 	str = str +"</tr>"
+
+
 
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
@@ -40,7 +46,7 @@
 		if(readtoken.length==0){readtoken = readPHP("psedcytassearch.php?token="+token)}
 		if(readtoken.length > 0){
 			leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
-			onclickfun = "window.open('"+leseurl+"', '_blank')"
+			onclickfun = "document.getElementById('audioplayer').src='"+leseurl+"';document.getElementById('audioplayer').play()"
 			str += '<td onclick="'+onclickfun+'"> &#128266; </td>'
 		}
 		else{
