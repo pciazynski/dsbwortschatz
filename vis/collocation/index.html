@@ -13,6 +13,16 @@
 
 <br><br>
 
+<div class = "explain">
+	<p>
+		Hier werden gemeinsam auftretende Tokens (Bigrams) als Netzwerk sowie Liste dargestellt. LogDice (Pavel Rychlý (2008): A Lexicographer-Friendly Association Score) berechnet sich als 14 + Log<sub>2</sub> { 2 * Häufigkeit <sub>Links,Rechts</sub> ) / ( Häufigkeit<sub>Links</sub> + Häufigkeit<sub>Rechts</sub> ) }. 
+		<br>
+		Ein Klick auf einen Netzwerkknoten oder ein Token in der Liste zeigt unten die linken und rechten Nachbarn dieses Tokens.
+	</p>
+</div>
+
+
+
 <table class="optionmenu" align="center">
 	<tr>
 		<td style="text-align:right;">Minimum Häufigkeit</td>
@@ -34,13 +44,29 @@
 </table>
 
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="diagrammlink('globalwordnet');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('globalwordnet');">Rohdaten</button>
-
-	<div style="text-align:center;">
-		<iframe class="resized" width="100%" height="500px" id="globalwordnet" scrolling="yes"></iframe>
-	</div>
+	<table class="multiiframe" align="center">
+		<tr style = "text-align:right;">
+			<td width="65%">
+				<button class = "iframebutton" onclick="diagrammlink('globalwordnet');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('globalwordnet');">Rohdaten</button>
+			</td>
+			<td>
+				<button class = "iframebutton" onclick="diagrammlink('globallist');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('globallist');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<iframe class="resized" width="100%" height="500px" id="globalwordnet" scrolling="yes"></iframe>
+			</td>
+			<td>		
+				<iframe class="resized" width="100%" height="500px" id="globallist" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
 </div>
+
+
 
 <br><br>
 <table class="optionmenu" align="center">
@@ -110,12 +136,21 @@
 		document.getElementById("logdiceminvalue").innerHTML = otherslider.value+".0"
 		document.getElementById("logdicemaxvalue").innerHTML = this.value+".9"
 	}
+	
+	var sortTokenlistBy = function(sortByWhat){
+		loading('globallist')
+		min = document.getElementById("minglobal").value.trim()
+		logdice = document.getElementById("logdicemin").value.trim()+"-"+ document.getElementById("logdicemax").value.trim()
+		document.getElementById('globallist').src="tokenlist.html?data=collocation.php&frequency="+min+"&logdice="+logdice+"&sortBy="+sortByWhat
+	}
 
 	var update = function(){
 		loading('globalwordnet')
+		loading('globallist')
 		min = document.getElementById("minglobal").value.trim()
 		logdice = document.getElementById("logdicemin").value.trim()+"-"+ document.getElementById("logdicemax").value.trim()
 		document.getElementById('globalwordnet').src="globalwordnet.html?data=collocation.php&frequency="+min+"&logdice="+logdice
+		document.getElementById('globallist').src="tokenlist.html?data=collocation.php&frequency="+min+"&logdice="+logdice
 	}
 	var updateLeftRightNeighbors = function(token){
 		loading('leftwordnet')

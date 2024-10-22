@@ -36,6 +36,12 @@ if (isset($_GET['logdice']) and strlen($_GET['logdice'])>0){
 }
 
 $query = 'SELECT * FROM collocation '.$condition;
+if(isset($_GET['sortBy'])){
+	$sortBy = $_GET['sortBy'];
+	if($sortBy == "logdice" or $sortBy == "frequency"){
+		$query.=' ORDER BY '.$_GET['sortBy'].' DESC';
+	}
+}
 
 
 $result = $PDO->query($query.";");
