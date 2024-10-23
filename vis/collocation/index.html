@@ -15,7 +15,7 @@
 
 <div class = "explain">
 	<p>
-		Hier werden gemeinsam auftretende Tokens (Bigrams) als Netzwerk sowie Liste dargestellt. LogDice (Pavel Rychlý (2008): A Lexicographer-Friendly Association Score) berechnet sich als 14 + Log<sub>2</sub> { 2 * Häufigkeit <sub>Links,Rechts</sub> ) / ( Häufigkeit<sub>Links</sub> + Häufigkeit<sub>Rechts</sub> ) }. 
+		Hier werden gemeinsam auftretende Tokens (hier konkret Bigrams) als Netzwerk sowie Liste dargestellt. LogDice (Pavel Rychlý (2008): A Lexicographer-Friendly Association Score) berechnet sich als 14 + Log<sub>2</sub> { 2 * Häufigkeit <sub>Links,Rechts</sub> ) / ( Häufigkeit<sub>Links</sub> + Häufigkeit<sub>Rechts</sub> ) }. 
 		<br>
 		Ein Klick auf einen Netzwerkknoten oder ein Token in der Liste zeigt unten die linken und rechten Nachbarn dieses Tokens.
 	</p>
@@ -89,6 +89,16 @@
 	</tr>
 </table>
 
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+		<tr>
+			<td style = "width: 100%;">
+				<iframe class="resized" width="50%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+
 
 <div class = "iframediv">
 	<table class="multiiframe" align="center">
@@ -122,6 +132,7 @@
 <script>
 
 	var logdicemin = document.getElementById("logdicemin");
+	
 	var logdicemax = document.getElementById("logdicemax");
 	logdicemin.oninput = function() {
 		otherslider=document.getElementById("logdicemax")
@@ -137,6 +148,11 @@
 		document.getElementById("logdicemaxvalue").innerHTML = this.value+".9"
 	}
 	
+	var showtokeninfo = function(tmp){
+		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
+	}
+
+
 	var sortTokenlistBy = function(sortByWhat){
 		loading('globallist')
 		min = document.getElementById("minglobal").value.trim()
@@ -164,12 +180,12 @@
 			if(token.length==5){newfreq = 50}
 			if(token.length>=5){newfreq = 2}
 			document.getElementById("mintoken").value = newfreq
-
 		}
 		token = document.getElementById('wordnettoken').value
 		min = document.getElementById("mintoken").value.trim()
 		document.getElementById('leftwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&right="+token
 		document.getElementById('rightwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&left="+token
+		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+token
 	}
 	update()
 	document.title="Kollokation"

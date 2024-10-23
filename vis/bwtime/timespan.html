@@ -10,14 +10,19 @@
 <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
 <script>
 
-	diagramtitle = ""
 	dataset = getQueryVariable("data")
 	maxYear = getQueryVariable("maxyear")
 	minYear = getQueryVariable("minyear")
 	if(minYear.length==0){minYear = minDate}else{minYear=parseInt(minYear)}
 	if(maxYear.length==0){maxYear = maxDate}else{maxYear=parseInt(maxYear)}
-	allText = readTextFile(dataset);
-	data_arr = allText.split("\n");
+	data_arr = readTextFile(dataset).split("\n");
+
+	if(dataset.includes("_minmaxyearmax")){
+		diagramtitle = "Worttot"
+	}else{
+		diagramtitle = "Wortgenese"
+	}
+
 	date = []
 	shapes = []
 	delim = ","
@@ -74,6 +79,11 @@
 	}];
 
 	var layout = {
+		title:{
+			text:diagramtitle,
+			font:diagramfont
+		},
+		
 		xaxis: 	{
 			showgrid:false,
 			automargin: true,
@@ -100,11 +110,9 @@
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 
 	var myPlot = document.getElementById('myDiv')
-	myPlot.on('plotly_click', function(data)
-	{
+	myPlot.on('plotly_click', function(data){
 		if(dataset.includes("_minmaxyearmin")){alert("Wortgenese "+data.points[0].x+":\n"+labels[data.points[0].x]);}
 		if(dataset.includes("_minmaxyearmax")){alert("Worttod "+data.points[0].x+":\n"+labels[data.points[0].x]);}
-
 	})
 
 	myPlot.on("plotly_selected", function(eventData) {
@@ -112,6 +120,8 @@
 		bis = (" "+eventData.range.x[1]).split(".")[0].trim()
 		parent.document.getElementById("network").src = "network.html?data="+dataset+"&von="+von+"&bis="+bis
 	});
+
+	document.title=diagramtitle
 
 </script>
 </body>

@@ -14,8 +14,24 @@
 <div class = "explain">
 	<p>
 		Wortgenese, also Wortformen gruppiert nach erstmaliger Verwendung. Linksklick listet die im Jahr erstmalig notierten Wortformen.
+		<br>
+		Worttod, also Wortformen gruppiert nach letztmaliger Verwendung. Linksklick listet die im Jahr letzmalig notierten Wortformen.
 	</p>
 </div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td align="center">
+			<button onclick="worttot()">Worttot</button>
+		</td>
+		<td align="center">
+			<button onclick="wortgenese()">Wortgenese</button>
+		</td>
+	</tr>
+	
+</table>
+
+
 
 <div class = "iframediv">
 	<button class = "iframebutton" onclick="diagrammlink('wortgenese');">Vollbild</button>
@@ -26,29 +42,43 @@
 	<button class = "iframebutton" onclick="hidewatermark('wortgenese');">Quellenangabe</button>
 </div>
 
-<br><br>
-
-<div class = "explain">
-	<p>
-		Worttod, also Wortformen gruppiert nach letztmaliger Verwendung. Linksklick listet die im Jahr letzmalig notierten Wortformen.
-	</p>
-</div>
-
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="diagrammlink('worttot');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('worttot');">Rohdaten</button>
+	<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
 	<div style="text-align:center;">
-		<iframe class="resized" width="100%" height="475px" id="worttot" scrolling="yes"></iframe>
+		<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
 	</div>
-	<button class = "iframebutton" onclick="hidewatermark('worttot');">Quellenangabe</button>
+	<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression / Timeline</button>
+	<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
 </div>
 
 <br><br>
 
 <script>
-	document.getElementById('wortgenese').src="timespan.html?data=bagofwords/_minmaxyearmin"
-	document.getElementById('worttot').src="timespan.html?data=bagofwords/_minmaxyearmax"
-	document.titie="Token Zeitraum"
+	var linreg = function(iframeid){
+		loading(iframeid)
+		if(document.getElementById(iframeid).src.includes("timeline.html")){
+			document.getElementById(iframeid).src=document.getElementById(iframeid).src.replace("timeline.html","linreg_chart.html")
+		}else{
+			document.getElementById(iframeid).src=document.getElementById(iframeid).src.replace("linreg_chart.html","timeline.html")
+		}
+	}
+
+
+	var worttot = function(){
+		document.getElementById('timeline').src="timeline.html?data=bagofwords/_minmaxyearmax"
+		document.getElementById('wortgenese').src="timespan.html?data=bagofwords/_minmaxyearmax"
+		document.title="Worttot"
+	}
+	
+	var wortgenese = function(){
+		document.getElementById('timeline').src="timeline.html?data=bagofwords/_minmaxyearmin"
+		document.getElementById('wortgenese').src="timespan.html?data=bagofwords/_minmaxyearmin"
+		document.title="Wortgenese"
+	}
+	
+	wortgenese()
+
 </script>
 
 <script>
