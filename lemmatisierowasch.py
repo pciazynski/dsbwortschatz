@@ -5,8 +5,6 @@ import shutil
 import sqlite3
 from config import *
 
-ctsurl = ""
-
 lemmabag = {}
 bagofwords = {}
 

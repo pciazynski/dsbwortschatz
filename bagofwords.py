@@ -5,8 +5,6 @@ import shutil
 import sqlite3
 from config import *
 
-ctsurl = ""
-
 if not os.path.exists("data"):
     os.mkdir("data")
 if os.path.exists("data/bagofwords"):

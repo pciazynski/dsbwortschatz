@@ -6,7 +6,6 @@ import sqlite3
 import sys
 from config import *
 
-ctsurl = ""
 n=sys.argv[1]
 bagofwords = {}
 

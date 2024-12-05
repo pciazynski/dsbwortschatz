@@ -31,7 +31,6 @@ div.explain{
 }
 
 div.explain:hover{
-	cursor: help;
 	cursor: pointer;
 }
 

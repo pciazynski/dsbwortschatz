@@ -8,7 +8,6 @@ from config import *
 import re
 import string
 
-ctsurl = ""
 deudict = {}
 
 with open("data/langDetect3/deu.txt", "r", encoding="utf8") as inf:
