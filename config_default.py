@@ -1,3 +1,4 @@
 count = 5
-ctsurl=""
-tokenlength=94
+ctsurl = ""
+copyrighttoken = ""
+tokenlength = 94

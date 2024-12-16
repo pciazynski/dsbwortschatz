@@ -39,11 +39,13 @@ def tokencheck(token):
     if not token in bagofwords:
         return False
     return True
+    
 def lemmamapping(urn):
     global ctsurl
+    global copyrighttoken
     requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"plain/passage.php?urn="+urn) 
+    data = urlopen(ctsurl+"plain/passage.php?urn="+urn+"&copyrighttoken="+copyrighttoken) 
     print("requested")
     for line in data: 
         res+=line.decode('utf-8')

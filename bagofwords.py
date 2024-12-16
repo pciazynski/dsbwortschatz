@@ -40,6 +40,7 @@ def bagofwords(urn):
     requestctsurl(urn)
     res = ""
     data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
+    print(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
     print("requested")
     for line in data: 
         res+=line.decode('utf-8')
@@ -126,12 +127,15 @@ def sanitycheck(rs):
             return False
     return True
     
+doc_year = {}
+
 for line in inventory("dsb").split("\n"):
     urn = line.split("\t")[0]
     urnarr = urn.split(".")
     year = line.split("\t")[2]
 
     if (len(year)>1 and count!=0):
+        doc_year[urn] = year
         count-=1
         print(str(count)+" "+urn)
         with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
@@ -186,7 +190,7 @@ for file in files:
                 if len(line.strip())>0:
                     wordbag += line.split("\t")[0]+"|"
             urn = file.replace(".txt","").replace("_#_",":")
-            year = urn.split(":")[3].split(".")[2]
+            year = doc_year[urn]
             vals = '"'+urn+'","'+year+'","'+wordbag+'"'
             query="INSERT INTO urnwordbag(urn,date,wordbag) VALUES("+vals+")"
             cursor.execute(query)
