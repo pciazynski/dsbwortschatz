@@ -78,12 +78,8 @@
 				<button class = "iframebutton" onclick="tokens('dsb');">Wortliste</button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="ngrams('mix1');">nGram</button>
-				<button class = "iframebutton" onclick="tokens('mix1');">Wortliste</button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="ngrams('mixn1');">nGram</button>
-				<button class = "iframebutton" onclick="tokens('mix1');">Wortliste</button>
 			</td>
 			<td>
 				<button class = "iframebutton" onclick="ngrams('deu');">nGram</button>
@@ -145,6 +141,17 @@
 		Hier werden die oben ausgewählten nGramme anhand ihrer DEU-Klassifikation gelistet. Die einzelnen Wortformen können angeklickt werden, um das ausgewählte Wort zu ändern.
 	</p>
 </div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Maximale Anzahl</td>
+		<td>
+			<div class="autocomplete">
+				<input id="maxcount" type="number" min="0" value = "1000">
+			</div>
+		</td>
+	</tr>
+</table>
 
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
@@ -232,19 +239,21 @@
 		document.getElementById(ele).src=url	}
 
 	var investigatefurther = function(token){
-		loading("ngrambar")
-		loading("ngram")
+//		loading("ngrambar")
+//		loading("ngram")
 		loading("filterdeu0")
 		loading("filterdeu1")
 		loading("filterdeu2")
 		loading("filterdeu3")
 		loading("filterdeu0")
-		document.getElementById("ngrambar").src = "timeline.html?data=ngramperyear.php&frequency=1&n="+n+"&filter="+token
-		document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
-		document.getElementById("filterdeu0").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=0&count=1000"+"&filter="+token+"&n="+n
-		document.getElementById("filterdeu1").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=1&count=1000"+"&filter="+token+"&n="+n
-		document.getElementById("filterdeu2").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu="+(n-1)+"&count=1000&filter="+token+"&n="+n
-		document.getElementById("filterdeu3").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu="+n+"&count=1000&filter="+token+"&n="+n
+		count = parseInt(document.getElementById("maxcount").value)
+		
+		//document.getElementById("ngrambar").src = "timeline.html?data=ngramperyear.php&frequency=1&n="+n+"&filter="+token
+		//document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
+		document.getElementById("filterdeu0").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu=0"+"&filter="+token+"&n="+n
+		document.getElementById("filterdeu1").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu=1"+"&filter="+token+"&n="+n
+		document.getElementById("filterdeu2").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu="+(n-1)+"&filter="+token+"&n="+n
+		document.getElementById("filterdeu3").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu="+n+"&filter="+token+"&n="+n
 		document.getElementById("filterdeu0").scrollIntoView({ block: 'end',  behavior: 'smooth' })
 	}
 

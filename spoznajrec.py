@@ -160,12 +160,20 @@ def initTables():
         os.remove("data/langDetect"+n+".db")
     con = sqlite3.connect("data/langDetect"+n+".db")
     cursor = con.cursor()
-    cursor.execute("CREATE TABLE langDetectngram(ngram VARCHAR (50),frequency INTEGER, deu INTEGER);")
-    cursor.execute("CREATE INDEX langDetectngramindex ON langDetectngram(ngram);")
-    cursor.execute("CREATE INDEX langDetectngramdeuindex ON langDetectngram(deu);")
-    cursor.execute("CREATE TABLE langDetecttoken(token VARCHAR (50),frequency INTEGER, deu INTEGER);")
-    cursor.execute("CREATE INDEX langDetecttokenindex ON langDetecttoken(token);")
-    cursor.execute("CREATE INDEX langDetecttokendeuindex ON langDetecttoken(deu);")
+    cursor.execute("CREATE TABLE langDetectdeungram(ngram VARCHAR (50),frequency INTEGER);")
+    cursor.execute("CREATE INDEX langDetectdeungramindex ON langDetectdeungram(ngram);")
+    cursor.execute("CREATE TABLE langDetectdeutoken(token VARCHAR (50),frequency INTEGER);")
+    cursor.execute("CREATE INDEX langDetectdeutokenindex ON langDetectdeutoken(token);")
+    
+    cursor.execute("CREATE TABLE langDetectdsbngram(ngram VARCHAR (50),frequency INTEGER);")
+    cursor.execute("CREATE INDEX langDetectdsbngramindex ON langDetectdsbngram(ngram);")
+    cursor.execute("CREATE TABLE langDetectdsbtoken(token VARCHAR (50),frequency INTEGER);")
+    cursor.execute("CREATE INDEX langDetectdsbtokenindex ON langDetectdsbtoken(token);")
+
+    cursor.execute("CREATE TABLE langDetectmixngram(ngram VARCHAR (50),frequency INTEGER, deu INTEGER);")
+    cursor.execute("CREATE INDEX langDetectmixngramngramindex ON langDetectmixngram(ngram);")
+    cursor.execute("CREATE INDEX langDetectmixdeuindex ON langDetectmixngram(deu);")
+    
     con.commit()
     con.close()
 
@@ -173,53 +181,52 @@ initTables()
 con = sqlite3.connect("data/langDetect"+n+".db")
 cursor = con.cursor()
 
-def insertIntoTable(name):
+def insertNgramIntoTable(name):
     print("sql nGram "+name)
-    if name == "deu":
-        deuval=3
-    if name == "dsb":
-        deuval=0
-    if name == "mix1":
-        deuval=1
-    if name == "mix2":
-        deuval=2
+
     with open ("data/langDetect"+n+"/ngram"+n+"_"+name+".txt", "r", encoding="utf8") as inf:
         inserts = []
         
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                inserts.append((linearr[0],linearr[1],deuval))
-                #if name == "deu":
-                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',3'
-                #if name == "dsb":
-                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',0'
-                #if name == "mix1":
-                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',1'
-                #if name == "mix2":
-                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',2'
-        cursor.executemany("INSERT INTO langDetectngram(ngram,frequency,deu) VALUES(?,?,?)",inserts)
+                if name == "deu":
+                    inserts.append((linearr[0],linearr[1]))
+                    query = "INSERT INTO langDetectdeungram(ngram,frequency) VALUES(?,?)"
+                elif name == "dsb":
+                    inserts.append((linearr[0],linearr[1]))
+                    query = "INSERT INTO langDetectdsbngram(ngram,frequency) VALUES(?,?)"
+                else:
+                    inserts.append((linearr[0],linearr[1],linearr[2]))
+                    query = "INSERT INTO langDetectmixngram(ngram,frequency,deu) VALUES(?,?,?)"
+        cursor.executemany(query,inserts)
         con.commit()
+
+def insertTokenIntoTable(name):
     print("sql Token "+name)
+    if name == "deu":
+        deuval=3
+    elif name == "dsb":
+        deuval=0
     with open ("data/langDetect"+n+"/"+name+".txt", "r", encoding="utf8") as inf:
         inserts = []
+                    
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                inserts.append((linearr[0],linearr[1],deuval))
-#                if name == "deu":
-#                    vals = '"'+linearr[0]+'",'+linearr[1]+',3'
-#                if name == "dsb":
-#                    vals = '"'+linearr[0]+'",'+linearr[1]+',0'
-#                if name == "mix1":
-#                    vals = '"'+linearr[0]+'",'+linearr[1]+',1'
-#                if name == "mix2":
-#                    vals = '"'+linearr[0]+'",'+linearr[1]+',2'
-        cursor.executemany("INSERT INTO langDetecttoken(token,frequency,deu) VALUES("+vals+")")
+                if name == "deu":
+                    inserts.append((linearr[0],linearr[1]))
+                    query="INSERT INTO langDetectdeutoken(token,frequency) VALUES(?,?)"
+                elif name == "dsb":
+                    inserts.append((linearr[0],linearr[1]))
+                    query="INSERT INTO langDetectdsbtoken(token,frequency) VALUES(?,?)"
+        cursor.executemany(query,inserts)
         con.commit()
 
-insertIntoTable("deu")
-insertIntoTable("dsb")
-insertIntoTable("mix1")
-insertIntoTable("mix2")
+insertNgramIntoTable("deu")
+insertNgramIntoTable("dsb")
+insertNgramIntoTable("mix")
+
+insertTokenIntoTable("deu")
+insertTokenIntoTable("dsb")
 
