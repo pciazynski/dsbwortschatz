@@ -74,19 +74,19 @@
 		</tr>
 		<tr>
 			<td>
-				<button class = "iframebutton" onclick="trigrams('dsb');">nGram</button>
+				<button class = "iframebutton" onclick="ngrams('dsb');">nGram</button>
 				<button class = "iframebutton" onclick="tokens('dsb');">Wortliste</button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="trigrams('mix1');">nGram</button>
+				<button class = "iframebutton" onclick="ngrams('mix1');">nGram</button>
 				<button class = "iframebutton" onclick="tokens('mix1');">Wortliste</button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="trigrams('mixn1');">nGram</button>
+				<button class = "iframebutton" onclick="ngrams('mixn1');">nGram</button>
 				<button class = "iframebutton" onclick="tokens('mix1');">Wortliste</button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="trigrams('deu');">nGram</button>
+				<button class = "iframebutton" onclick="ngrams('deu');">nGram</button>
 				<button class = "iframebutton" onclick="tokens('deu');">Wortliste</button>
 			</td>
 		</tr>
@@ -197,22 +197,39 @@
 		loading('deu')
 		loading('dsb')
 		count = parseInt(document.getElementById("count").value)
-		document.getElementById('mix1').src="tokenlist.html?data=langDetect"+n+"/ngram"+n+"_mix&count="+count+"&n=1"
-		document.getElementById('mixn1').src="tokenlist.html?data=langDetect"+n+"/ngram"+n+"_mix&count="+count+"&n="+(n-1)
-		document.getElementById('deu').src="tokenlist.html?data=langDetect"+n+"/deu&count="+count
-		document.getElementById('dsb').src="tokenlist.html?data=langDetect"+n+"/dsb&count="+count
+		document.getElementById('dsb').src="tokenlist.html?data=langDetectToken.php&deu=0&n="+n+"&count="+count
+		document.getElementById('deu').src="tokenlist.html?data=langDetectToken.php&deu="+n+"&n="+n+"&count="+count
+		document.getElementById('mix1').src="tokenlist.html?data=langDetectnGram.php&deu=1&n="+n+"&count="+count
+		document.getElementById('mixn1').src="tokenlist.html?data=langDetectnGram.php&deu="+(n-1)+"&n="+n+"&count="+count
+//		document.getElementById('mix1').src="tokenlist.html?data=langDetect"+n+"/ngram"+n+"_mix&count="+count+"&n=1"
+//		document.getElementById('mixn1').src="tokenlist.html?data=langDetect"+n+"/ngram"+n+"_mix&count="+count+"&n="+(n-1)
+//		document.getElementById('deu').src="tokenlist.html?data=langDetect"+n+"/deu&count="+count
+//		document.getElementById('dsb').src="tokenlist.html?data=langDetect"+n+"/dsb&count="+count
 	}
 
-	var trigrams = function(ele){
+	var ngrams = function(ele){
 		loading(ele)
 		count = parseInt(document.getElementById("count").value)
-		document.getElementById(ele).src="tokenlist.html?data=langDetect"+n+"/ngram"+n+"_"+ele+"&count="+count
+		url = ""
+		switch(ele){
+			case "dsb": url = "tokenlist.html?data=langDetectnGram.php&deu=0&n="+n+"&count="+count;break;
+			case "deu": url = "tokenlist.html?data=langDetectnGram.php&deu="+n+"&n="+n+"&count="+count;break;
+			case "mix1": url = "tokenlist.html?data=langDetectnGram.php&deu=1&n="+n+"&count="+count;break;
+			case "mixn1": url = "tokenlist.html?data=langDetectnGram.php&deu="+(n-1)+"&n="+n+"&count="+count;break;
+		}
+		document.getElementById(ele).src=url
 	}
 	var tokens = function(ele){
 		loading(ele)
 		count = parseInt(document.getElementById("count").value)
-		document.getElementById(ele).src="tokenlist.html?data=langDetect"+n+"/"+ele+"&count="+count
-	}
+		url = ""
+		switch(ele){
+			case "dsb": url = "tokenlist.html?data=langDetectToken.php&deu=0&n="+n+"&count="+count;break;
+			case "deu": url = "tokenlist.html?data=langDetectToken.php&deu="+n+"&n="+n+"&count="+count;break;
+			case "mix1": url = "tokenlist.html?data=langDetectToken.php&deu=1&n="+n+"&count="+count;break;
+			case "mixn1": url = "tokenlist.html?data=langDetectToken.php&deu="+(n-1)+"&n="+n+"&count="+count;break;
+		}
+		document.getElementById(ele).src=url	}
 
 	var investigatefurther = function(token){
 		loading("ngrambar")
@@ -224,10 +241,10 @@
 		loading("filterdeu0")
 		document.getElementById("ngrambar").src = "timeline.html?data=ngramperyear.php&frequency=1&n="+n+"&filter="+token
 		document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
-		document.getElementById("filterdeu0").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=0"+"&filter="+token+"&n="+n
-		document.getElementById("filterdeu1").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=1"+"&filter="+token+"&n="+n
-		document.getElementById("filterdeu2").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=2"+"&filter="+token+"&n="+n
-		document.getElementById("filterdeu3").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=3"+"&filter="+token+"&n="+n
+		document.getElementById("filterdeu0").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=0&count=1000"+"&filter="+token+"&n="+n
+		document.getElementById("filterdeu1").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu=1&count=1000"+"&filter="+token+"&n="+n
+		document.getElementById("filterdeu2").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu="+(n-1)+"&count=1000&filter="+token+"&n="+n
+		document.getElementById("filterdeu3").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&deu="+n+"&count=1000&filter="+token+"&n="+n
 		document.getElementById("filterdeu0").scrollIntoView({ block: 'end',  behavior: 'smooth' })
 	}
 

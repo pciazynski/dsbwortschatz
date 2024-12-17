@@ -10,13 +10,8 @@ if (isset($_GET['deu']) and strlen($_GET['deu'])>0 and isset($_GET['n']) and str
 		$frequency = $_GET['frequency'];
 	}
 	
-	$query = 'SELECT ngram, frequency FROM langDetectngram WHERE deu =='.$deu.' AND frequency >='.$frequency;
+	$query = 'SELECT token, frequency FROM langDetectToken WHERE deu =='.$deu.' AND frequency >='.$frequency;
 
-	if (isset($_GET['filter']) and strlen($_GET['filter'])>0){
-		$filter = str_replace('_','\_',$_GET['filter']);
-		$query .= ' AND ngram LIKE "%\_'.$filter.'\_%" escape "\" ';
-	}
-	
 	if (isset($_GET['sort'])){
 		$query .= ' ORDER BY frequency DESC';
 	}
@@ -30,7 +25,7 @@ if (isset($_GET['deu']) and strlen($_GET['deu'])>0 and isset($_GET['n']) and str
 	$result = $PDO->query($query.";");
 
 	foreach($result as $row){
-		print($row['ngram']."\t".$row['frequency']."\n");
+		print($row['token']."\t".$row['frequency']."\n");
 	}
 }
 ?>

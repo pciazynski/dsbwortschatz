@@ -73,8 +73,6 @@ with open("learn/found_deu.txt", "r", encoding = "utf8") as inf:
         tmp = tmp.replace("ſ","s").replace("ẜ","s")
         deudict[tmp] = 1
 
-
-
 with open("learn/stopwords_deu.txt", "r", encoding = "utf8") as inf:
     for line in inf:
             tmp = line.strip().lower()
@@ -176,33 +174,52 @@ con = sqlite3.connect("data/langDetect"+n+".db")
 cursor = con.cursor()
 
 def insertIntoTable(name):
-    print("sql "+name)
+    print("sql nGram "+name)
+    if name == "deu":
+        deuval=3
+    if name == "dsb":
+        deuval=0
+    if name == "mix1":
+        deuval=1
+    if name == "mix2":
+        deuval=2
     with open ("data/langDetect"+n+"/ngram"+n+"_"+name+".txt", "r", encoding="utf8") as inf:
+        inserts = []
+        
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                if name == "deu":
-                    vals = '"_'+linearr[0]+'_",'+linearr[1]+',3'
-                if name == "dsb":
-                    vals = '"_'+linearr[0]+'_",'+linearr[1]+',0'
-                if name == "mix":
-                    vals = '"_'+linearr[0]+'_",'+linearr[1]+','+linearr[2]
-                cursor.execute("INSERT INTO langDetectngram(ngram,frequency,deu) VALUES("+vals+")")
+                inserts.append((linearr[0],linearr[1],deuval))
+                #if name == "deu":
+                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',3'
+                #if name == "dsb":
+                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',0'
+                #if name == "mix1":
+                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',1'
+                #if name == "mix2":
+                #    vals = '"_'+linearr[0]+'_",'+linearr[1]+',2'
+        cursor.executemany("INSERT INTO langDetectngram(ngram,frequency,deu) VALUES(?,?,?)",inserts)
         con.commit()
+    print("sql Token "+name)
     with open ("data/langDetect"+n+"/"+name+".txt", "r", encoding="utf8") as inf:
+        inserts = []
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                if name == "deu":
-                    vals = '"_'+linearr[0]+'_",'+linearr[1]+',3'
-                if name == "dsb":
-                    vals = '"_'+linearr[0]+'_",'+linearr[1]+',0'
-                if name == "mix":
-                    vals = '"_'+linearr[0]+'_",'+linearr[1]+',-1'
-                cursor.execute("INSERT INTO langDetecttoken(token,frequency,deu) VALUES("+vals+")")
+                inserts.append((linearr[0],linearr[1],deuval))
+#                if name == "deu":
+#                    vals = '"'+linearr[0]+'",'+linearr[1]+',3'
+#                if name == "dsb":
+#                    vals = '"'+linearr[0]+'",'+linearr[1]+',0'
+#                if name == "mix1":
+#                    vals = '"'+linearr[0]+'",'+linearr[1]+',1'
+#                if name == "mix2":
+#                    vals = '"'+linearr[0]+'",'+linearr[1]+',2'
+        cursor.executemany("INSERT INTO langDetecttoken(token,frequency,deu) VALUES("+vals+")")
         con.commit()
 
 insertIntoTable("deu")
 insertIntoTable("dsb")
-insertIntoTable("mix")
+insertIntoTable("mix1")
+insertIntoTable("mix2")
 

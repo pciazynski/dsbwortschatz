@@ -9,11 +9,12 @@
 <div id="myDiv"></div>
 <script>
 
-	var dataset = getQueryVariable("data")
 	var n = getQueryVariable("n")
+	var deu = getQueryVariable("deu")
 	var count = getQueryVariable("count")
 	var filter = getQueryVariable("filter")
-	data_arr = readTextFile(dataset).split("\n");
+	var dataset = getQueryVariable("data")+"?n="+n+"&deu="+deu+"&count="+count+"&filter="+filter
+	data_arr = readPHP(dataset).split("\n");
 	if(count.length == 0 || count>data_arr.length){count = data_arr.length}
 
 	str = '<table style="border-collapse: collapse;">';
