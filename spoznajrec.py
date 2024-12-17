@@ -191,13 +191,13 @@ def insertNgramIntoTable(name):
             if len(line.strip())>0:
                 linearr = line.split("\t")
                 if name == "deu":
-                    inserts.append((linearr[0],linearr[1]))
+                    inserts.append(("_"+linearr[0]+"_",linearr[1]))
                     query = "INSERT INTO langDetectdeungram(ngram,frequency) VALUES(?,?)"
                 elif name == "dsb":
-                    inserts.append((linearr[0],linearr[1]))
+                    inserts.append(("_"+linearr[0]+"_",linearr[1]))
                     query = "INSERT INTO langDetectdsbngram(ngram,frequency) VALUES(?,?)"
                 else:
-                    inserts.append((linearr[0],linearr[1],linearr[2]))
+                    inserts.append(("_"+linearr[0]+"_",linearr[1],linearr[2]))
                     query = "INSERT INTO langDetectmixngram(ngram,frequency,deu) VALUES(?,?,?)"
         cursor.executemany(query,inserts)
         con.commit()

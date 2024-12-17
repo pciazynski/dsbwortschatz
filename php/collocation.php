@@ -43,6 +43,10 @@ if(isset($_GET['sortBy'])){
 	}
 }
 
+if(isset($_GET['limit']) and strlen($_GET['limit'])>0){
+	$query.=' LIMIT '.$_GET['limit'];
+}
+
 
 $result = $PDO->query($query.";");
 foreach($result as $row){

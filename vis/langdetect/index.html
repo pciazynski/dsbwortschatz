@@ -114,23 +114,31 @@
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
 		<tr style = "text-align:right;">
-			<td style = "width: 80%;">
-				<button class = "iframebutton" onclick="diagrammlink('ngrambar');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('ngrambar');">Rohdaten</button>
+			<td style = "width: 40%;">
+				<button class = "iframebutton" onclick="diagrammlink('leftwordnet');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('leftwordnet');">Rohdaten</button>
 			</td>
 			<td style = "width: 20%;">
 				<button class = "iframebutton" onclick="diagrammlink('ngram');">Vollbild</button>
 				<button class = "iframebutton" onclick="datalink('ngram');">Rohdaten</button>
 			</td>
+			<td style = "width: 40%;">
+				<button class = "iframebutton" onclick="diagrammlink('rightwordnet');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('rightwordnet');">Rohdaten</button>
+			</td>
 		</tr>
 		<tr>
-			<td style = "width: 70%;">		
-				<iframe class="resized" width="100%" height="475px" id="ngrambar" scrolling="yes"></iframe>
+			<td style = "width: 40%;">		
+				<iframe class="resized" width="100%" height="475px" id="leftwordnet" scrolling="yes"></iframe>
 			</td>
-			<td style = "width: 30%;">		
+			<td style = "width: 20%;">		
 				<iframe class="resized" width="100%" height="475px" id="ngram" scrolling="yes"></iframe>
 			</td>
-		</tr>
+			<td style = "width: 40%;">		
+				<iframe class="resized" width="100%" height="475px" id="rightwordnet" scrolling="yes"></iframe>
+			</td>
+
+			</tr>
 	</table>
 </div>
 
@@ -214,6 +222,17 @@
 //		document.getElementById('dsb').src="tokenlist.html?data=langDetect"+n+"/dsb&count="+count
 	}
 
+
+	var investigate = function(token){
+		if (token==null){token = document.getElementById("filter").value}
+		else{document.getElementById("filter").value = token}
+		loading("ngram")
+		document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
+		document.getElementById("ngram").scrollIntoView({ block: 'end',  behavior: 'smooth' })
+	}
+	
+	
+
 	var ngrams = function(ele){
 		loading(ele)
 		count = parseInt(document.getElementById("count").value)
@@ -247,6 +266,19 @@
 		loading("filterdeu3")
 		loading("filterdeu0")
 		count = parseInt(document.getElementById("maxcount").value)
+		loading('leftwordnet')
+		loading('rightwordnet')
+		if(token!=null){
+			if(token.length==1){newfreq = 1000}
+			if(token.length==2){newfreq = 500}
+			if(token.length==3){newfreq = 200}
+			if(token.length==4){newfreq = 100}
+			if(token.length==5){newfreq = 50}
+			if(token.length>=5){newfreq = 2}
+		}
+		document.getElementById('leftwordnet').src="tokenwordnet.html?data=collocation.php&frequency=1&right="+token
+		document.getElementById('rightwordnet').src="tokenwordnet.html?data=collocation.php&frequency=1&left="+token
+		
 		
 		//document.getElementById("ngrambar").src = "timeline.html?data=ngramperyear.php&frequency=1&n="+n+"&filter="+token
 		//document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
@@ -254,18 +286,8 @@
 		document.getElementById("filterdeu1").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu=1"+"&filter="+token+"&n="+n
 		document.getElementById("filterdeu2").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu="+(n-1)+"&filter="+token+"&n="+n
 		document.getElementById("filterdeu3").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu="+n+"&filter="+token+"&n="+n
-		document.getElementById("filterdeu0").scrollIntoView({ block: 'end',  behavior: 'smooth' })
 	}
 
-	var investigate = function(token){
-		if (token==null){token = document.getElementById("filter").value}
-		else{document.getElementById("filter").value = token}
-		loading("ngram")
-		loading("ngrambar")
-		document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
-		document.getElementById("ngrambar").src = "timeline.html?data=ngramperyear.php&frequency=1&n="+n+"&filter="+token
-		document.getElementById("ngram").scrollIntoView({ block: 'end',  behavior: 'smooth' })
-	}
 
 	updateCount()
 	document.title="Sprachtrennung"
