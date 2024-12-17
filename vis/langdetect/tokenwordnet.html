@@ -27,16 +27,14 @@
 	var frequency = getQueryVariable('frequency')
 	var left = getQueryVariable('left')
 	var right = getQueryVariable('right')
-	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right+'&limit=1000&sortBy=frequency'
+	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right+'&limit=500&sortBy=frequency'
 	
 	network = readPHP(dataset).split('\n')
 	if(network.length<100){lay='cose'}else{lay='random'}
 
-	for (key in network)
-	{
+	for (key in network){
 		tmp = network[key].split(sep)
-		if(tmp.length>=2)
-		{
+		if(tmp.length>=2){
 			if(nodes[tmp[0]] == null){nodes [tmp[0]] =  2*Math.log(tmp[2]+1)}
 			nodes [tmp[1]] = 2*Math.log(tmp[2]+1)
 			edges [tmp[0]+sep+tmp[1]] = 1
@@ -116,10 +114,7 @@
 
 
 	cy.on('click ', 'node', function(event) {
-		//node = event.target
-		//node.style('fontSize',defNodeFont)
-		//if(node.style('background-color') == 'rgb(255,0,0)'){newCol = defNodeCol}else{newCol ='red'}
-		//if(node.id()===highlight){node.style('background-color','lightblue')}else{node.style('background-color',newCol)}
+		parent.investigatefurther(event.target.id())
 	});
 
 	var labeltmp = '' 

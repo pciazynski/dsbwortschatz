@@ -259,7 +259,7 @@
 
 	var investigatefurther = function(token){
 //		loading("ngrambar")
-//		loading("ngram")
+		loading("ngram")
 		loading("filterdeu0")
 		loading("filterdeu1")
 		loading("filterdeu2")
@@ -281,7 +281,7 @@
 		
 		
 		//document.getElementById("ngrambar").src = "timeline.html?data=ngramperyear.php&frequency=1&n="+n+"&filter="+token
-		//document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
+		document.getElementById("ngram").src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+token
 		document.getElementById("filterdeu0").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu=0"+"&filter="+token+"&n="+n
 		document.getElementById("filterdeu1").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu=1"+"&filter="+token+"&n="+n
 		document.getElementById("filterdeu2").src = "langDetectnGram.html?data=langDetectnGram.php&frequency=1&count="+count+"&deu="+(n-1)+"&filter="+token+"&n="+n
