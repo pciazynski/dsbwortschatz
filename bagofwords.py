@@ -137,7 +137,7 @@ for line in inventory("dsb").split("\n"):
     if (len(year)>1 and count!=0):
         doc_year[urn] = year
         count-=1
-        print(str(count)+" "+urn)
+       #print(str(count)+" "+urn)
         with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
             rs = bagofwords(urn)
             if sanitycheck(rs):
