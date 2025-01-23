@@ -34,7 +34,11 @@ def requestctsurl(ns):
         data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
         for line in data: 
             ctsurl+=line.decode('utf-8')
-    
+
+def errorlog(errormsg):
+    with open("_ERROR.txt", "a", encoding="utf8") as erroutf:
+        erroutf.write(errormsg+"\n")
+
 def bagofwords(urn):
     global ctsurl
     requestctsurl(urn)
@@ -43,7 +47,7 @@ def bagofwords(urn):
     for line in data: 
         res+=line.decode('utf-8')
     if(len(res.strip())==0):
-        print("EMPTY:"+ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
+        errorlog("EMPTY:"+ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
     return res.strip()
 
 def process(foldername):
@@ -144,8 +148,7 @@ for line in inventory("dsb").split("\n"):
                 outf.write(rs)
                 outyf.write(rs+"\n")
             else:
-                with open ("_error.txt", "a", encoding="utf8") as errout:
-                    errout.write(urn+"->bagofwords incomplete\n")
+                errorlog("bagofwords incomplete:"+urn)
 
 process("data/bagofwords")
 
@@ -170,7 +173,7 @@ cursor = con.cursor()
 
 yearfiles = sorted(os.listdir("data/bagofwordsperyear"))
 for year in yearfiles:
-    print("sql bagofwordsperyear:"+year)
+    #print("sql bagofwordsperyear:"+year)
     with open ("data/bagofwordsperyear/"+year, "r", encoding="utf8") as inf:
         for line in inf.readlines():
             if len(line.strip())>0:
@@ -183,7 +186,7 @@ for year in yearfiles:
 files = sorted(os.listdir("data/bagofwords"))
 for file in files:
     if file.startswith("urn_#_"):
-        print("sql bagofwordsperurn:"+file)
+        #print("sql bagofwordsperurn:"+file)
         with open ("data/bagofwords/"+file, "r", encoding="utf8") as inf:
             wordbag = "|"
             for line in inf.readlines():
