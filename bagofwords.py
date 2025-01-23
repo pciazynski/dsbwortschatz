@@ -39,11 +39,11 @@ def bagofwords(urn):
     global ctsurl
     requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
-    print(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
-    print("requested")
+    data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase&copyrighttoken="+copyrighttoken)
     for line in data: 
         res+=line.decode('utf-8')
+    if(len(res.strip())==0):
+        print("EMPTY:"+ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
     return res.strip()
 
 def process(foldername):

@@ -24,8 +24,10 @@ if (strlen($token)>=1){
 	$PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
 	$query .= ' WHERE ngram LIKE "\_'.$token.'%" escape "\"'.$cutoff.' ORDER BY ngram LIMIT '.$limit;
 	$result = $PDO->query($query.";");
+	$nl = "\n";
+
 	foreach($result as $row){
-		print($row['ngram']."\n");
+		print($row['ngram'].$nl);
 	}
 }
 ?>

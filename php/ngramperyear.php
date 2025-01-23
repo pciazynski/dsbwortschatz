@@ -14,8 +14,11 @@ if (isset($_GET['sort'])){
 }
 
 $result = $PDO->query($query.";");
+$nl = "\n";
+$tab = "\t";
+
 foreach($result as $row){
-	print($row['ngram']."\t".$row['date']."\t".$row['frequency']."\n");
+	print($row['ngram'].$tab.$row['date'].$tab.$row['frequency'].$nl);
 }
 
 ?>

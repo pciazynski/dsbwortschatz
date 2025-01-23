@@ -139,15 +139,17 @@ with open("data/langDetect"+n+"/ngram"+n+"_dsb.txt", "r", encoding = "utf8") as 
             dsbdict[tmp] = 1
 
 
-with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as inf, open("data/langDetect"+n+"/deu.txt", "w", encoding = "utf8") as deuoutf,open("data/langDetect"+n+"/dsb.txt", "w", encoding = "utf8") as dsboutf,open("data/langDetect"+n+"/mix.txt", "w", encoding = "utf8") as mixoutf,open("data/langDetect"+n+"/mix1.txt", "w", encoding = "utf8") as mix1outf,open("data/langDetect"+n+"/mix2.txt", "w", encoding = "utf8") as mix2outf:
+with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as inf, open("data/langDetect"+n+"/deu.txt", "w", encoding = "utf8") as deuoutf, open("data/langDetect"+n+"/deu_slim.txt", "w", encoding = "utf8") as deuoutfslim, open("data/langDetect"+n+"/dsb.txt", "w", encoding = "utf8") as dsboutf, open("data/langDetect"+n+"/dsb_slim.txt", "w", encoding = "utf8") as dsboutfslim,open("data/langDetect"+n+"/mix.txt", "w", encoding = "utf8") as mixoutf,open("data/langDetect"+n+"/mix1.txt", "w", encoding = "utf8") as mix1outf,open("data/langDetect"+n+"/mix2.txt", "w", encoding = "utf8") as mix2outf:
     for line in inf:
         #line = line.replace("ſ","s").replace("ẜ","s")
         line = line.lower()
         tmp = line.split("\t")[0].strip()
         if tmp in deudict and not tmp in dsbdict and not tmp in mixdict:
             deuoutf.write(line)
+            deuoutfslim.write(line.split("\t")[0]+"\n")
         if tmp in dsbdict and not tmp in deudict and not tmp in mixdict:
             dsboutf.write(line)
+            dsboutfslim.write(line.split("\t")[0]+"\n")
         if tmp in mixdict:
             mixoutf.write(line)
         if tmp in mix1dict and not tmp in mix2dict:

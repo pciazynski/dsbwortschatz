@@ -13,6 +13,9 @@
 	var dataset = getQueryVariable("data")
 	var filter = getQueryVariable("filter")
 	var n = getQueryVariable("n")
+	var jitter = getQueryVariable("jitter")
+	if(jitter.length==0){jitter=0.9}else{jitter = parseFloat(jitter)}
+
 	dataset = dataset +"?filter="+filter+"&frequency=10&n="+n
 	data_arr = readPHP(dataset).split("\n");
 	allText=""
@@ -31,11 +34,12 @@
 			tmp = line.split(sep)
 			ngram = tmp[0].slice(1,-1)
 			value  = parseInt(tmp[2])
+			jittervalue = value + (jitter*(Math.random()))
 			date.push(tmp[1])
-			count.push(value)
-			hovers.push(ngram)
+			count.push(jittervalue)
+			hovers.push(ngram+"("+tmp[1]+"):"+value)
 			colors.push(getColor(ngram))
-			if (value>maxval ) {maxval = value}
+			if (jittervalue>maxval ) {maxval = jittervalue}
 		}
 	}
 
@@ -45,6 +49,7 @@
 		type: 'scatter',
 		mode: "markers",
 		text:hovers,
+		hovertemplate: '%{text}',
 		marker: {
 			size:markersize(data_arr.length),
 			color: colors,
