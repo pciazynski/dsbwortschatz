@@ -43,7 +43,7 @@ def bagofwords(urn):
     global ctsurl
     requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase&copyrighttoken="+copyrighttoken)
+    data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
     for line in data: 
         res+=line.decode('utf-8')
     if(len(res.strip())==0):
@@ -138,7 +138,7 @@ for line in inventory("dsb").split("\n"):
     urnarr = urn.split(".")
     year = line.split("\t")[2]
 
-    if (len(year)>1 and count!=0):
+    if (urn=="urn:cts:dsb:wendischer.willkommensgruss._._:" and len(year)>1 and count!=0):
         doc_year[urn] = year
         count-=1
        #print(str(count)+" "+urn)

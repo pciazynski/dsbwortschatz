@@ -62,8 +62,8 @@
 				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
 			</script>
 		</td>
-		<td></td>
-		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmabaum</button></td>
+		<td><a href="?lemma=CHÓŚEBUZ">Bspw CHÓŚEBUZ</a></td>
+		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmavariation</button></td>
 	</tr>
 	<tr>
 		<td style="text-align:center;">Regex</td>
@@ -98,8 +98,14 @@
 <br>
 
 <div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
+	</div>
+	<hr/>
 	<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Lemmaliste</button>
-	<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+	<button class = "iframebutton" onclick="diagrammlink('timeline');">Zeitleiste</button>
 	<button class = "iframebutton" onclick="diagrammlink('tokengroup');">Tokenliste</button>
 	<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
 	<div style="text-align:center;">
@@ -125,7 +131,7 @@
 	var callLemmatree = function(){
 		curlemma = document.getElementById("lemma").value.trim()
 		if(curlemma.length>0){
-			window.open("../lemmatree?lemma="+curlemma, "_blank")
+			window.open("../lemmavariants?lemma="+curlemma, "_blank")
 		}
 	}
 	
@@ -143,6 +149,7 @@
 	}
 	
 	var updateTimelineRegex = function(){
+		loading("traviz")
 		loading("timeline")
 		loading("lemmagroup")
 		loading("tokengroup")
@@ -151,6 +158,7 @@
 		focus = document.getElementById("focus").value.trim()
 		if(curlemma.length>0){
 			document.getElementById("timeline").src="timeline.html?data=regexlemmasearch.php&lemma="+curlemma+"&sort&focus="+focus
+			document.getElementById("traviz").src="traviz.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmastats").src="lemmastats.html"
@@ -159,6 +167,7 @@
 	}
 
 	var updateTimeline = function(){
+		loading("traviz")
 		loading("timeline")
 		loading("lemmagroup")
 		loading("tokengroup")
@@ -167,6 +176,7 @@
 		focus = document.getElementById("focus").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
+			document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"

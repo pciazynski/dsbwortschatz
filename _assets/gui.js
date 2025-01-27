@@ -86,7 +86,7 @@ str='<div  class="header">'+
 +'</td>'
 +'<td>'
 +'<a href="../bwlemma/">Lemma</a> | '
-+'<a href="../lemmatree/">Lemmabaum</a>'
++'<a href="../lemmavariation/">Lemmavariation</a>'
 +'</td>'
 +'<td>'
 +'<a href="../collocation/">Kollokation</a> | <a href="../collocationperyear/">Pro Jahr</a> '

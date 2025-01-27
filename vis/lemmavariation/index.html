@@ -78,6 +78,13 @@
 
 
 <div class = "iframediv">
+	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
+	</div>
+<hr/>
+
 	<button class = "iframebutton" onclick="diagrammlink('tree');">Baumsicht</button>
 	<button class = "iframebutton" onclick="diagrammlink('sunburst');">Sunburst</button>
 	<button class = "iframebutton" onclick="datalink('tree');">Rohdaten</button>
@@ -87,6 +94,7 @@
 		<iframe class="resized" width="30%" height="475px" id="sunburst" scrolling="yes"></iframe>
 	</div>
 	<button class = "iframebutton" onclick="hidewatermark('sunburst');">Quellenangabe</button>
+
 </div>
 
 <br>
@@ -152,6 +160,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatokenregex.php&lemma='+curlemma+weight
 			document.getElementById('sunburst').src='sunburst.html?data=lemmatokenregex.php&lemma='+curlemma+weight
+			document.getElementById('traviz').src='traviz.html?data=lemmatokenregex.php&lemma='+curlemma+weight
 			document.title=curlemma+" Lemmabaum"
 		}
 	}
@@ -164,6 +173,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
 			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.getElementById('traviz').src='traviz.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
 			document.title=curlemma+" Lemmabaum"
 		}
 	}
@@ -176,6 +186,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
 			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.getElementById('traviz').src='traviz.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
 			document.title=curlemma+" Lemmabaum"
 		}
 	}
