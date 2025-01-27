@@ -138,7 +138,7 @@ for line in inventory("dsb").split("\n"):
     urnarr = urn.split(".")
     year = line.split("\t")[2]
 
-    if (urn=="urn:cts:dsb:wendischer.willkommensgruss._._:" and len(year)>1 and count!=0):
+    if (len(year)>1 and count!=0):
         doc_year[urn] = year
         count-=1
        #print(str(count)+" "+urn)
