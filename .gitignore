@@ -16,7 +16,6 @@ _error.txt
 # Compiled Java class files
 *.class
 *.jpg
-*.png
 *.jpeg
 *.mp4
 *.mp3
