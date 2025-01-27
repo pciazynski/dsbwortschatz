@@ -84,17 +84,33 @@
 		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
 	</div>
 <hr/>
-
-	<button class = "iframebutton" onclick="diagrammlink('tree');">Baumsicht</button>
-	<button class = "iframebutton" onclick="diagrammlink('sunburst');">Sunburst</button>
-	<button class = "iframebutton" onclick="datalink('tree');">Rohdaten</button>
-
-	<div style="text-align:center;">
-		<iframe class="resized" width="69%" height="475px" id="tree" scrolling="yes"></iframe>
-		<iframe class="resized" width="30%" height="475px" id="sunburst" scrolling="yes"></iframe>
-	</div>
-	<button class = "iframebutton" onclick="hidewatermark('sunburst');">Quellenangabe</button>
-
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 69%;">
+				<button class = "iframebutton" onclick="diagrammlink('tree');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('tree');">Rohdaten</button>
+			</td>
+			<td style = "width: 30%;">
+				<button class = "iframebutton" onclick="diagrammlink('sunburst');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('sunburst');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td>		
+				<iframe class="resized" width="100%" height="475px" id="tree" scrolling="yes"></iframe>
+			</td>
+			<td>		
+				<iframe class="resized" width="100%" height="475px" id="sunburst" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td>
+			</td>
+			<td>
+				<button class = "iframebutton" onclick="hidewatermark('sunburst');">Quellenangabe</button>
+			</td>
+		</tr>
+	</table>
 </div>
 
 <br>
@@ -121,7 +137,6 @@
 				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
 			</td>
 		</tr>
-
 	</table>
 </div>
 
@@ -158,9 +173,9 @@
 		if(curlemma.length>0){
 			loading("tree")
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
-			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatokenregex.php&lemma='+curlemma+weight
-			document.getElementById('sunburst').src='sunburst.html?data=lemmatokenregex.php&lemma='+curlemma+weight
-			document.getElementById('traviz').src='traviz.html?data=lemmatokenregex.php&lemma='+curlemma+weight
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatokenregex.php&sort&lemma='+curlemma+weight
+			document.getElementById('sunburst').src='sunburst.html?data=lemmatokenregex.php&sort&lemma='+curlemma+weight
+			document.getElementById('traviz').src='traviz.html?data=lemmatokenregex.php&sort&lemma='+curlemma+weight
 			document.title=curlemma+" Lemmabaum"
 		}
 	}
@@ -171,9 +186,9 @@
 			loading("tree")
 			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
-			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
-			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
-			document.getElementById('traviz').src='traviz.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&sort&lemma='+curlemma+inclusive+weight
+			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&sort&lemma='+curlemma+inclusive+weight
+			document.getElementById('traviz').src='traviz.html?data=lemmatoken.php&sort&lemma='+curlemma+inclusive+weight
 			document.title=curlemma+" Lemmabaum"
 		}
 	}
@@ -184,9 +199,9 @@
 			loading("tree")
 			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
-			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
-			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
-			document.getElementById('traviz').src='traviz.html?data=lemmatoken.php&lemma='+curlemma+inclusive+weight
+			document.getElementById('tree').src='lemmatree_dagre.html?data=lemmatoken.php&sort&lemma='+curlemma+inclusive+weight
+			document.getElementById('sunburst').src='sunburst.html?data=lemmatoken.php&sort&lemma='+curlemma+inclusive+weight
+			document.getElementById('traviz').src='traviz.html?data=lemmatoken.php&sort&lemma='+curlemma+inclusive+weight
 			document.title=curlemma+" Lemmabaum"
 		}
 	}

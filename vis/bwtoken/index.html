@@ -303,10 +303,10 @@
 		document.getElementById('timeline').src="error_token.html"
 	}
 	
-	document.getElementById("year").min=minDate
-	document.getElementById("year").max=maxDate
-	document.getElementById("year").value=(minDate + maxDate)/2
-	document.getElementById("yearlabel").innerHTML =(minDate + maxDate)/2
+	document.getElementById("year").min = minDate
+	document.getElementById("year").max = maxDate
+	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
+	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
 	document.title="Token "+token
 
 </script>

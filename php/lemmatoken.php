@@ -14,7 +14,7 @@ if (isset($_GET['lemma'])){
 		$query .= ' WHERE lemma = "|'.$lemma.'|"';
 	}
 	if (isset($_GET['sort'])){
-		$query .= ' ORDER BY frequency DESC';
+		$query .= ' ORDER BY frequency DESC, token';
 	}
 	$result = $PDO->query($query.";");
 	

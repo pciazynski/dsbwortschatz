@@ -57,8 +57,8 @@
 			document.getElementById('wordnet').src="wordnet.html?data=collocationperyear.php&year="+year+"&frequency="+min
 		}
 	}
-	document.getElementById("yearlabel").innerHTML =(minDate + maxDate)/2
-	document.getElementById("year").value=(minDate + maxDate)/2
+	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
+	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
 	update()
 	document.title="Kollokation pro Jahr"
 

@@ -75,16 +75,6 @@
 		</td>
 		<td style="text-align:center;">Bspw TE(J|N)</td>
 	</tr>
-	<tr>
-		<td style="text-align:center;">Betrachtung</td>
-		<td>
-			<select id="focus" onchange="updateFocus()">
-				<option value="0">Lemma</option>
-				<option value="3">Token</option>
-			</select>
-		</td>
-		<td></td>
-	</tr>
 </table>
 
 <br>
@@ -98,22 +88,49 @@
 <br>
 
 <div class = "iframediv">
+
 	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
 	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
 	<div style="text-align:center;">
 		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
 	</div>
 	<hr/>
-	<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Lemmaliste</button>
-	<button class = "iframebutton" onclick="diagrammlink('timeline');">Zeitleiste</button>
-	<button class = "iframebutton" onclick="diagrammlink('tokengroup');">Tokenliste</button>
-	<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
-	<div style="text-align:center;">
-		<iframe class="resized"  width="19%" height="475px" id="lemmagroup" scrolling="yes"></iframe>
-		<iframe class="resized" width="60%" height="475px" id="timeline" scrolling="yes"></iframe>
-		<iframe class="resized" width="19%" height="475px" id="tokengroup" scrolling="yes"></iframe>
-	</div>
-	<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 19%;">
+				<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Lemmaliste</button>
+				<button class = "iframebutton" onclick="datalink('lemmagroup');">Rohdaten</button>
+			</td>
+			<td style = "width: 60%;">
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Zeitleiste</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+			</td>
+			<td style = "width: 19%;">
+				<button class = "iframebutton" onclick="diagrammlink('tokengroup');">Tokenliste</button>
+				<button class = "iframebutton" onclick="datalink('tokengroup');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td>
+				<iframe class="resized"  width="100%" height="475px" id="lemmagroup" scrolling="yes"></iframe>
+			</td>
+			<td>
+				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+			</td>
+			<td>
+				<iframe class="resized" width="100%" height="475px" id="tokengroup" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td></td>
+			<td>
+				<button class = "iframebutton" onclick="updateFocus(3);">Token</button>
+				<button class = "iframebutton" onclick="updateFocus(0);">Lemma</button>
+				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+			</td>
+			<td></td>
+		</tr>
+	</table>
 </div>
 
 
@@ -136,9 +153,8 @@
 	}
 	
 	
-	var updateFocus = function(){
+	var updateFocus = function(focus){
 		loading("timeline")
-		focus = document.getElementById("focus").value.trim()
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
 		if(focus==3){source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")}
@@ -173,7 +189,6 @@
 		loading("tokengroup")
 		loading("lemmastats")
 		curlemma = document.getElementById("lemma").value.trim()
-		focus = document.getElementById("focus").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
 			document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort"
@@ -200,6 +215,7 @@
 		document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
 	}
 	
+	var focus = 0;
 	updateZipf()
 	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
 	curlemma = getQueryVariable("lemma")

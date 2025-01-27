@@ -8,7 +8,7 @@ if (isset($_GET['lemma'])){
 	$query = 'SELECT DISTINCT (token), SUM(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency';
 	$query .= ' WHERE lemma = "|'.$_GET['lemma'].'|" GROUP BY token';
 	if (isset($_GET['sort'])){
-		$query .= ' ORDER BY sumfreq DESC';
+		$query .= ' ORDER BY sumfreq DESC, token';
 	}
 	$result = $PDO->query($query.";");
 	
