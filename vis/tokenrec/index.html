@@ -65,7 +65,8 @@
 	}
 
 	var recognise = function(){
-		var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
+		var punctRE = /[\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
+		//var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
 		document.getElementById('tokenrec').innerHTML = "Loading..."
 		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
 		textarr = text.split(" ").sort()
@@ -74,6 +75,7 @@
 		knownlist = "\n"+readTextFile("bagofwords/_all");
 		for (var i = 0;i<textarr.length;i++){
 			token = textarr[i].trim()
+			console.log(token)
 			if(oldtoken!== token){
 				//onclickfun = "window.open('../../vis/docperword/?token="+token+"')"
 				onclickfun = "showtokeninfo('"+token+"')"
