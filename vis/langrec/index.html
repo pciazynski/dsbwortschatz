@@ -50,7 +50,8 @@
 <script>
 
 	var recognise = function(){
-	var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
+	//var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
+	var punctRE = /[\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
 		document.getElementById('langrec').innerHTML = "Loading..."
 		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
 		textarr = text.split(" ").sort()
