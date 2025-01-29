@@ -17,7 +17,6 @@
 	var filter = getQueryVariable("filter")
 	if(filter.length>0){dataset += "&filter="+filter}
 	
-	alert(dataset)
 	data_arr = readPHP(dataset).split("\n");
 	
 	
