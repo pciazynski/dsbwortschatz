@@ -12,7 +12,9 @@
 	var dataset = getQueryVariable("data")
 	var frequency = getQueryVariable("frequency")
 	var n = getQueryVariable("n")
+	var year = getQueryVariable("year")
 	dataset = dataset +"?frequency="+frequency+"&sort&n="+n
+	if(year.length>0){dataset+="&year="+year}
 	data_arr = readPHP(dataset).split("\n");
 
 	maxval = 0
@@ -26,7 +28,8 @@
 		if(line.length>1){
 			tmp = line.split(sep)
 			ngram = tmp[0].slice(1,-1)
-			value  = parseInt(tmp[1])
+			if(year.length==0){value  = parseInt(tmp[1])}
+			else{value  = parseInt(tmp[2])}
 			date.push(ngram)
 			count.push(value)
 			colors.push(getColor(ngram))
