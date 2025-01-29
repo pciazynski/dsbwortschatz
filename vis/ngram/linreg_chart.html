@@ -44,8 +44,9 @@
 		R2 = SQE/SQT
 	}
 	data = getQueryVariable("data")
-	var token = getQueryVariable("token")
-	dataset = data +"?token="+token+"&sort"
+	var filter = getQueryVariable("filter")
+	var n = getQueryVariable("n")
+	dataset = data +"?filter="+filter+"&sort&n="+n
 	dataset = readPHP(dataset).split("\n");
 	var vorhersage = getQueryVariable("vorhersage")
 
@@ -71,10 +72,11 @@
 		minY = Math.min(minY,val)
 		y1.push(val)
 	}
+	
 
 	linreg (y1)
 	if (vorhersage.length==0){vorhersage=x1.length+1}else{vorhersage=parseInt(vorhersage)}
-	name1=token;color1=getColor(token)
+	name1=filter;color1=getColor(filter)
 
 	minY = Math.min(minY,b0 - 5)
 	maxY = Math.max(maxY,b0 + ( b1 * vorhersage))

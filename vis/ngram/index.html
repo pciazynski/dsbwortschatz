@@ -86,6 +86,7 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td style = "width: 80%;">
+				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur volle nGram)</button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
 			</td>
 			<td style = "width: 20%;">
@@ -96,6 +97,20 @@
 
 <br><br>
 <script>
+
+	var linreg = function(iframeid){
+		tmp = document.getElementById("filter").value.trim()
+		if(tmp.length>0){
+			if(document.getElementById(iframeid).src.includes("timeline.html") && tmp.split("_").length==3){
+				loading(iframeid)
+				document.getElementById(iframeid).src=document.getElementById(iframeid).src.replaceAll("timeline.html","linreg_chart.html")
+			}else if(document.getElementById(iframeid).src.includes("linreg_chart.html")){
+				loading(iframeid)
+				document.getElementById(iframeid).src=document.getElementById(iframeid).src.replaceAll("linreg_chart.html","timeline.html")
+			}
+		}
+	}
+	
 	var updateNGram = function(){
 		loading('ngram')
 		loading('timeline')
