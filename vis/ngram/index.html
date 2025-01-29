@@ -28,7 +28,7 @@
 	<tr>
 		<td style="text-align:right;">Minimum Häufigkeit</td>
 		<td>
-			<input type="number" value="100" id="min" onchange="updateYear()">
+			<input type="number" value="500" id="min" onchange="updateZipf()">
 		</td>
 	</tr>
 </table>
@@ -100,8 +100,13 @@
 		loading('ngram')
 		loading('timeline')
 		tmp = document.getElementById("filter").value.trim()
-		document.getElementById('ngram').src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+tmp
-		document.getElementById('timeline').src = "timeline.html?data=ngramperyear.php&filter="+tmp+"&n="+n
+		if(tmp.split("_").length==3){
+			document.getElementById('timeline').src = "timeline.html?data=ngramperyearexact.php&filter="+tmp+"&n="+n
+			document.getElementById('ngram').src = "ngram.html?data=ngramexact.php&frequency=1&n="+n+"&filter="+tmp
+		}else{
+			document.getElementById('timeline').src = "timeline.html?data=ngramperyear.php&filter="+tmp+"&n="+n
+			document.getElementById('ngram').src = "ngram.html?data=ngram.php&frequency=1&n="+n+"&filter="+tmp
+		}
 	}
 	
 	var updateZipf = function(){
