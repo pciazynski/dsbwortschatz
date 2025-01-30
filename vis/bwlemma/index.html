@@ -96,7 +96,7 @@
 	</tr>
 	<tr>
 		<td style="text-align:right;">
-			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Pro Jahr von </input><script>document.write(minDate)</script>
+			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Bis Jahr von </input><script>document.write(minDate)</script>
 		</td>
 		<td>
 			<input type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateTravizYear()">
@@ -160,7 +160,6 @@
 	
 	var switchPerYear = function(){
 		document.getElementById("year").disabled = !document.getElementById("peryearcheckbox").checked
-		updateTravizYear()
 	}
 	
 	var updateTravizYear = function(){
@@ -169,7 +168,7 @@
 			url = document.getElementById("traviz").src.split("&year")[0]
 			
 			if(document.getElementById("peryearcheckbox").checked) {
-				document.getElementById("traviz").src = url + "&year=<"+parseInt(document.getElementById("year").value)
+				document.getElementById("traviz").src = url + "&year=<"+(parseInt(document.getElementById("year").value)+1)
 			}else{
 				document.getElementById("traviz").src = url
 			}
