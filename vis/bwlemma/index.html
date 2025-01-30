@@ -78,7 +78,6 @@
 </table>
 
 <br>
-
 <div class = "iframediv">
 	<div style="text-align:center;">
 		<iframe class="resized"  width="100%" height="100px" id="lemmastats" scrolling="yes"></iframe>
@@ -87,14 +86,30 @@
 
 <br>
 
+
+
 <div class = "iframediv">
+
+<table>
+	<tr>
+		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">
+			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Pro Jahr von </input><script>document.write(minDate)</script>
+		</td>
+		<td>
+			<input type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateTravizYear()">
+		</td>
+		<td style="text-align:left;">bis <script>document.write(maxDate)</script></td>
+	</tr>
+</table>
 
 	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
 	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
 	<div style="text-align:center;">
 		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
 	</div>
-	<hr/>
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 19%;">
@@ -138,6 +153,29 @@
 <br><br>
 <script>
 
+	var updateYearlabel = function(){
+		tmp = parseInt(document.getElementById("year").value)
+		document.getElementById("yearlabel").innerHTML = tmp
+	}
+	
+	var switchPerYear = function(){
+		document.getElementById("year").disabled = !document.getElementById("peryearcheckbox").checked
+		updateTravizYear()
+	}
+	
+	var updateTravizYear = function(){
+		if(curlemma.trim().length>0){
+			loading("traviz")
+			url = document.getElementById("traviz").src.split("&year")[0]
+			
+			if(document.getElementById("peryearcheckbox").checked) {
+				document.getElementById("traviz").src = url + "&year=<"+parseInt(document.getElementById("year").value)
+			}else{
+				document.getElementById("traviz").src = url
+			}
+		}
+	}
+	
 	var callDolnoserbski = function(){
 		curlemma = document.getElementById("lemma").value.trim()
 		if(curlemma.length>0){
@@ -170,10 +208,11 @@
 		loading("lemmagroup")
 		loading("tokengroup")
 		loading("lemmastats")
+		document.getElementById("year").disabled = true;
 		curlemma = document.getElementById("regexsearch").value.trim()
 		focus = document.getElementById("focus").value.trim()
 		if(curlemma.length>0){
-			document.getElementById("timeline").src="timeline.html?data=regexlemmasearch.php&lemma="+curlemma+"&sort&focus="+focus
+			document.getElementById("timeline").src="timeline.html?data=lemmaregexsearch.php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("traviz").src="traviz.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
@@ -188,6 +227,7 @@
 		loading("lemmagroup")
 		loading("tokengroup")
 		loading("lemmastats")
+		document.getElementById("year").disabled = true;
 		curlemma = document.getElementById("lemma").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
@@ -219,6 +259,12 @@
 	updateZipf()
 	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
 	curlemma = getQueryVariable("lemma")
+	document.getElementById("year").min = minDate
+	document.getElementById("year").max = maxDate
+	document.getElementById("year").disabled = true
+	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
+	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
+
 	if(curlemma.length>0){
 		document.getElementById("lemma").value = curlemma
 		updateTimeline()

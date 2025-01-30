@@ -169,6 +169,7 @@
 	document.getElementById("year").max = maxDate
 	document.getElementById("year").disabled = true
 	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
+	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
 
 	updateZipf()
 	document.title=n+"Gram "
