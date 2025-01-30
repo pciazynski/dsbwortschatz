@@ -12,10 +12,10 @@
 		
 	var dataset = getQueryVariable("data")
 	var lemma = getQueryVariable('lemma')
-	var year = getQueryVariable('year')
 	dataset = dataset +'?lemma='+lemma
 	if (getQueryVariable("inclusive").length>0){dataset+="&inclusive"}
 	if (getQueryVariable("sort").length>0){dataset+="&sort"}
+	var year = getQueryVariable('year')
 	if (year.length>0){dataset+="&year="+year}
 
 	data_arr = readPHP(dataset).split("\n");
