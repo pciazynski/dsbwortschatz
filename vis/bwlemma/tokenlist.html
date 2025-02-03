@@ -12,11 +12,14 @@
 <script>
 	var dataset = getQueryVariable("data")
 	var lemma = getQueryVariable("lemma")
+	var exact = getQueryVariable("exact")
 	dataset = dataset +"?lemma="+lemma+"&sort"
+	if (exact.length>0){title=lemma;dataset+="&exact"}else{title="..|"+lemma+"|..";}
 	data_arr = readPHP(dataset).split("\n");
 
+
 	str = "<table style='border-collapse: collapse;text-align:left;'>";
-	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Tokenliste</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Summe</th>"
+	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Tokenliste<br>"+title+"</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Summe</th>"
 	str = str +"</tr>"
 
 	for (var i = 0; i < data_arr.length; i++) {
@@ -30,7 +33,7 @@
 	document.write(str)
 	data_arr = ""
 	str = ""
-	document.title = "Tokenliste "+ lemma
+	document.title = "Tokenliste "+ title
 
 </script>
 </body>
