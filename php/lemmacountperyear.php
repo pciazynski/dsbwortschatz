@@ -15,10 +15,6 @@ if (isset($_GET['lemma'])){
 		$query .= ' WHERE lemma LIKE "%|'.$token.'|%"';
 	}
 	
-	if (isset($_GET['year'])){
-		$query .= ' AND date '.$_GET['year'];
-	}
-	
 	if (isset($_GET['sort'])){
 		$query .= ' ORDER BY date ASC';
 	}

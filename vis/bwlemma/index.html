@@ -165,13 +165,13 @@
 	var updateTravizYear = function(){
 		if(curlemma.trim().length>0){
 			loading("traviz")
+			url = document.getElementById("traviz").src.split("&year")[0]
 			
 			if(document.getElementById("peryearcheckbox").checked) {
-				url = document.getElementById("traviz").src.replaceAll('lemmatoken.php','lemmatokenperyear.php')+ "&year=<"+(parseInt(document.getElementById("year").value)+1)
+				document.getElementById("traviz").src = url + "&year=<"+(parseInt(document.getElementById("year").value)+1)
 			}else{
-				url = document.getElementById("traviz").src.replaceAll('lemmatokenperyear.php','lemmatoken.php').split("&year")[0]
+				document.getElementById("traviz").src = url
 			}
-			document.getElementById("traviz").src = url
 		}
 	}
 	
