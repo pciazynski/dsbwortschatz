@@ -165,13 +165,13 @@
 	var updateTravizYear = function(){
 		if(curlemma.trim().length>0){
 			loading("traviz")
+			url = document.getElementById("traviz").src.split("&year")[0]
 			
 			if(document.getElementById("peryearcheckbox").checked) {
-				url = document.getElementById("traviz").src.replaceAll('lemmatoken.php','lemmatokenperyear.php')+ "&year=<"+(parseInt(document.getElementById("year").value)+1)
+				document.getElementById("traviz").src = url + "&year=<"+(parseInt(document.getElementById("year").value)+1)
 			}else{
-				url = document.getElementById("traviz").src.replaceAll('lemmatokenperyear.php','lemmatoken.php').split("&year")[0]
+				document.getElementById("traviz").src = url
 			}
-			document.getElementById("traviz").src = url
 		}
 	}
 	
@@ -230,10 +230,10 @@
 		curlemma = document.getElementById("lemma").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-			document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
+			document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmastats").src="lemmastats.html"
 		}
 		document.title="Lemma "+curlemma
@@ -245,12 +245,13 @@
 	}
 	
 	var lemmaClick = function(lemma){
-		loading("timeline")
-		loading("tokengroup")
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
+		focus = document.getElementById("focus").value.trim()
 		curlemma=lemma
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
-		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
+		document.getElementById("tokengroup").src="tokenlist.html?data=lemma2token.php&lemma="+curlemma+"&sort"
 	}
 	
 	var focus = 0;
