@@ -18,8 +18,7 @@ if (isset($_GET['sort'])){
 $tab = "\t";
 $nl = "\n";
 
-$result = $PDO->query($query.";");
-foreach($result as $row){
+foreach($PDO->query($query.';') as $row){
 	print($row['lemma'].$tab.$row['sumfreq'].$nl);
 }
 

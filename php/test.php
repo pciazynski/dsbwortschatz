@@ -16,12 +16,10 @@ if (isset($_GET['lemma'])){
 	if (isset($_GET['sort'])){
 		$query .= ' ORDER BY frequency DESC';
 	}
-	$result = $PDO->query($query.";");
 	
 	$tab = "\t";
 	$nl = "\n";
-	
-	foreach($result as $row){
+	foreach($PDO->query($query.';') as $row){
 		print($row['lemma'].$tab.$row['token'].$tab.$row['frequency'].$nl);
 	}
 }

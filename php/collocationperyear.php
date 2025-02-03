@@ -1,6 +1,5 @@
 <?php
 header('Content-Type: text/plain');
-$sep = "\t";
 
 $PDO = new PDO('sqlite:../data/collocation.db');
 $frequency = 0;
@@ -22,27 +21,25 @@ if (isset($_GET['frequency']) and strlen($_GET['frequency'])>0){
 	$frequency = $_GET['frequency'];
 }
 
+$tab = "\t";
+$nl = "\n";
+
 if(strlen($leftright) > 0 and strlen($year)==4){
 	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE '.$leftright.' AND date =='.$year.' AND frequency >= '.$frequency;
-
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
-		print($row['date'].$sep.$row['left'].$sep.$row['right'].$sep.$row['frequency']."\n");
+	foreach($PDO->query($query.';') as $row){
+		print($row['date'].$tab.$row['left'].$tab.$row['right'].$tab.$row['frequency'].$nl);
 	}
 }
 elseif(strlen($leftright) > 0){
 	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE '.$leftright.' AND frequency >= '.$frequency;
-
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
-		print($row['date'].$sep.$row['left'].$sep.$row['right'].$sep.$row['frequency']."\n");
+	foreach($PDO->query($query.';') as $row){
+		print($row['date'].$tab.$row['left'].$tab.$row['right'].$tab.$row['frequency'].$nl);
 	}
 }
 elseif(strlen($year)==4){
 	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE date =='.$year.' AND frequency >= '.$frequency;
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
-		print($row['date'].$sep.$row['left'].$sep.$row['right'].$sep.$row['frequency']."\n");
+	foreach($PDO->query($query.';') as $row){
+		print($row['date'].$tab.$row['left'].$tab.$row['right'].$tab.$row['frequency'].$nl);
 	}
 }
 ?>

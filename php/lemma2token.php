@@ -14,12 +14,10 @@ if (isset($_GET['lemma'])){
 	if (isset($_GET['sort'])){
 		$query .= ' ORDER BY sumfreq DESC, token';
 	}
-	$result = $PDO->query($query.";");
-	
 	$tab = "\t";
 	$nl = "\n";
-	
-	foreach($result as $row){
+
+	foreach($PDO->query($query.';') as $row){
 		print($row['token'].$tab.$row['sumfreq'].$nl);
 	}
 }

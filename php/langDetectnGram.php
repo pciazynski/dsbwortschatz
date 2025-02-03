@@ -30,10 +30,10 @@ if (isset($_GET['deu']) and strlen($_GET['deu'])>0 and isset($_GET['n']) and str
 		$query.=' LIMIT '.$_GET['count'];
 	}
 
-	$result = $PDO->query($query.";");
-
-	foreach($result as $row){
-		print($row['ngram']."\t".$row['frequency']."\n");
+	$tab = "\t";
+	$nl = "\n";
+	foreach($PDO->query($query.';') as $row){
+		print($row['ngram'].$tab.$row['frequency'].$nl);
 	}
 }
 ?>

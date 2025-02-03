@@ -14,11 +14,9 @@ if (isset($_GET['sort'])){
 	$query .= ' ORDER BY date ASC';
 }
 
-$result = $PDO->query($query.";");
-$nl = "\n";
 $tab = "\t";
-
-foreach($result as $row){
+$nl = "\n";
+foreach($PDO->query($query.';') as $row){
 	print($row['token'].$tab.$row['date'].$tab.$row['frequency'].$nl);
 }
 

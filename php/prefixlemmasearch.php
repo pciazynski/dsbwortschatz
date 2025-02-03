@@ -19,8 +19,9 @@ if (strlen($lemma)>=1){
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT DISTINCT lemma FROM lemmafrequency';
 	$query .= ' WHERE lemma LIKE "'.$lemma.'%"'.$cutoff.' ORDER BY frequency DESC LIMIT '.$limit;
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
+
+	$nl = "\n";
+	foreach($PDO->query($query.';') as $row){
 		print($row['lemma'].$nl);
 	}
 }

@@ -7,9 +7,11 @@ $query = 'SELECT DISTINCT lemma,token,norm,type,subtype FROM tokenlemmanormtypes
 
 if (isset($_GET['token'])){
 	$query .= ' WHERE token = "'.$_GET['token'].'"';
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
-		print($row['lemma']."\t".$row['token']."\t".$row['norm']."\t".$row['type']."\t".$row['subtype']."\n");
+
+	$tab = "\t";
+	$nl = "\n";
+	foreach($PDO->query($query.';') as $row){
+		print($row['lemma'].$tab.$row['token'].$tab.$row['norm'].$tab.$row['type'].$tab.$row['subtype'].$nl);
 	}
 }
 ?>

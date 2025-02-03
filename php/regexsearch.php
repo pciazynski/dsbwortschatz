@@ -16,9 +16,10 @@ if (strlen($token)>=1){
 	}
 	$PDO->sqliteCreateFunction('regexp', '_sqliteRegexp', 2);
 	$result = $PDO->query($query.";");
+
 	$tab = "\t";
 	$nl = "\n";
-	foreach($result as $row){
+	foreach($PDO->query($query.';') as $row){
 		print($row['token'].$tab.$row['date'].$tab.$row['frequency'].$nl);
 	}
 }

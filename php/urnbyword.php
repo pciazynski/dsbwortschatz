@@ -5,7 +5,6 @@ if (isset($_GET['lemma'])){
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT DISTINCT token FROM lemmatokenfrequency WHERE lemma LIKE "%|'.$_GET['lemma'].'|%"';
 	$result = $PDO->query($query.";");
-	$nl = "\n";
 	$token = "";
 	foreach($result as $row){
 		$token .= $row['token'].",";
@@ -24,10 +23,9 @@ if (isset($_GET['lemma'])){
 		$query .= ' ORDER BY date ASC';
 	}
 
-	$result = $PDO->query($query.";");
 	$tab = "\t";
-
-	foreach($result as $row){
+	$nl = "\n";
+	foreach($PDO->query($query.';') as $row){
 		print($row['urn'].$tab.$row['date'].$nl);
 	}
 }
@@ -45,11 +43,9 @@ elseif (isset($_GET['token'])){
 		$query .= ' ORDER BY date ASC';
 	}
 
-	$result = $PDO->query($query.";");
-	$nl = "\n";
 	$tab = "\t";
-
-	foreach($result as $row){
+	$nl = "\n";
+	foreach($PDO->query($query.';') as $row){
 		print($row['urn'].$tab.$row['date'].$nl);
 	}
 }

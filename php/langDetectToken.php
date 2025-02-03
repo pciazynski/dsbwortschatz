@@ -26,10 +26,11 @@ if (isset($_GET['deu']) and strlen($_GET['deu'])>0 and isset($_GET['n']) and str
 		$query.=' LIMIT '.$count;
 	}
 
-	$result = $PDO->query($query.";");
+	$tab = "\t";
+	$nl = "\n";
 
-	foreach($result as $row){
-		print($row['token']."\t".$row['frequency']."\n");
+	foreach($PDO->query($query.';') as $row){
+		print($row['token'].$tab.$row['frequency'].$nl);
 	}
 }
 ?>

@@ -18,11 +18,10 @@ if (isset($_GET['sort'])){
 	$query .= ' ORDER BY date ASC';
 }
 
-$result = $PDO->query($query.";");
-$nl = "\n";
 $tab = "\t";
+$nl = "\n";
 
-foreach($result as $row){
+foreach($PDO->query($query.';') as $row){
 	print($row['ngram'].$tab.$row['date'].$tab.$row['frequency'].$nl);
 }
 

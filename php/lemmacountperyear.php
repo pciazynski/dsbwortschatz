@@ -19,9 +19,11 @@ if (isset($_GET['lemma'])){
 		$query .= ' ORDER BY date ASC';
 	}
 	
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
-		print($row['lemma']."\t".$row['date']."\t".$row['frequency']."\t".$row['token']."\n");
+	$tab = "\t";
+	$nl = "\n";
+
+	foreach($PDO->query($query.';') as $row){
+		print($row['lemma'].$tab.$row['date'].$tab.$row['frequency'].$tab.$row['token'].$nl);
 	}
 }
 

@@ -10,8 +10,7 @@ if (isset($_GET['token'])){
 	$query = 'SELECT url FROM urls';
 	$query .= ' WHERE url LIKE "'.$token.'-%" LIMIT 1';
 	
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
+	foreach($PDO->query($query.';') as $row){
 		print($row['url']);
 	}
 }

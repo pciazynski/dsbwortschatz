@@ -20,9 +20,11 @@ if (isset($_GET['lemma'])){
 		$query .= ' ORDER BY date ASC';
 	}
 	
-	$result = $PDO->query($query.";");
-	foreach($result as $row){
-		print($row['lemma']."\t".$row['date']."\t".$row['summe']."\n");
+	$tab = "\t";
+	$nl = "\n";
+
+	foreach($PDO->query($query.';') as $row){
+		print($row['lemma'].$tab.$row['date'].$tab.$row['summe'].$nl);
 	}
 }
 

@@ -18,9 +18,8 @@ if (isset($_GET['sort'])){
 	$query .= ' ORDER BY length(mapping)';
 }
 
-
-$result = $PDO->query($query.";");
-foreach($result as $row){
-	print($row['mapping']."\n");
+$nl = "\n";
+foreach($PDO->query($query.';') as $row){
+	print($row['mapping'].$nl);
 }
 ?>

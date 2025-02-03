@@ -1,6 +1,5 @@
 <?php
 header('Content-Type: text/plain');
-$sep = "\t";
 $PDO = new PDO('sqlite:../data/collocation.db');
 $frequency = 0;
 $condition = '';
@@ -8,8 +7,6 @@ $condition = '';
 if (isset($_GET['frequency']) and strlen($_GET['frequency'])>0){
 	$frequency = $_GET['frequency'];
 }
-
-
 
 if (isset($_GET['right']) and strlen($_GET['right'])>0){
 	$condition = 'WHERE right == "'.$_GET['right'].'" AND frequency >='.$frequency;
@@ -47,9 +44,9 @@ if(isset($_GET['limit']) and strlen($_GET['limit'])>0){
 	$query.=' LIMIT '.$_GET['limit'];
 }
 
-
-$result = $PDO->query($query.";");
-foreach($result as $row){
-	print($row['left'].$sep.$row['right'].$sep.$row['frequency'].$sep.$row['logdice']."\n");
+$tab = "\t";
+$nl = "\n";
+foreach($PDO->query($query.';') as $row){
+	print($row['left'].$tab.$row['right'].$tab.$row['frequency'].$tab.$row['logdice'].$nl);
 }
 ?>
