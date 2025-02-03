@@ -3,10 +3,10 @@ header('Content-Type: text/plain');
 
 $PDO = new PDO('sqlite:../data/lemmamapping.db');
 $query = 'SELECT lemma, SUM(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency';
-$token = $_GET['lemma'];
+$lemma = $_GET['lemma'];
 
 if (isset($_GET['lemma'])){
-	$query .= ' WHERE lemma LIKE "%|'.$token.'|%"';
+	$query .= ' WHERE lemma LIKE "%|'.$lemma.'|%"';
 }
 
 $query.=' GROUP BY lemma ';
