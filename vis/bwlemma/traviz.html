@@ -16,7 +16,7 @@
 	if (getQueryVariable("inclusive").length>0){dataset+="&inclusive"}
 	if (getQueryVariable("sort").length>0){dataset+="&sort"}
 	var year = getQueryVariable('year')
-	if (year.length>0){dataset+="&year="+year}
+	if (year.length>0){row = 0; dataset+="&year="+year}else{row=1}
 
 	data_arr = readPHP(dataset).split("\n");
 	travdata = []
@@ -24,8 +24,8 @@
 
 	for (var i = 0;i<data_arr.length;i++){
 		linearr = data_arr[i].split(sep)
-		colors.push(getColor(linearr[1]))
-		travdata.push({edition:linearr[1],text:linearr[1].split("").join(' ')})
+		colors.push(getColor(linearr[row]))
+		travdata.push({edition:linearr[row],text:linearr[row].split("").join(' ')})
 	}
 	
 	var traviz = new TRAViz("containerDiv",{
