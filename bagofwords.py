@@ -5,14 +5,7 @@ import shutil
 import sqlite3
 from config import *
 
-if not os.path.exists("data"):
-    os.mkdir("data")
-if os.path.exists("data/bagofwords"):
-    shutil.rmtree("data/bagofwords")
-os.mkdir("data/bagofwords")
-if os.path.exists("data/bagofwordsperyear"):
-    shutil.rmtree("data/bagofwordsperyear")
-os.mkdir("data/bagofwordsperyear")
+
 
 def inventory(endpoint):
     global ctsurl
@@ -130,27 +123,41 @@ def sanitycheck(rs):
             print("+"+line)
             return False
     return True
+
+def reset():
+    print("Reset")
+    if not os.path.exists("data"):
+        os.mkdir("data")
+    if os.path.exists("data/bagofwords"):
+        shutil.rmtree("data/bagofwords")
+    os.mkdir("data/bagofwords")
+    if os.path.exists("data/bagofwordsperyear"):
+        shutil.rmtree("data/bagofwordsperyear")
+    os.mkdir("data/bagofwordsperyear")
+
+def collect():
+    global count
+    reset()
+    print("Collect...")
+    doc_year = {}
     
-doc_year = {}
+    for line in inventory("dsb").split("\n"):
+        urn = line.split("\t")[0]
+        urnarr = urn.split(".")
+        year = line.split("\t")[2]
 
-for line in inventory("dsb").split("\n"):
-    urn = line.split("\t")[0]
-    urnarr = urn.split(".")
-    year = line.split("\t")[2]
-
-    if (len(year)>1 and count!=0):
-        doc_year[urn] = year
-        count-=1
-       #print(str(count)+" "+urn)
-        with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
-            rs = bagofwords(urn)
-            if sanitycheck(rs):
-                outf.write(rs)
-                outyf.write(rs+"\n")
-            else:
-                errorlog("bagofwords incomplete:"+urn)
-
-process("data/bagofwords")
+        if (len(year)>1 and count!=0):
+            doc_year[urn] = year
+            count-=1
+           #print(str(count)+" "+urn)
+            with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
+                rs = bagofwords(urn)
+                if sanitycheck(rs):
+                    outf.write(rs)
+                    outyf.write(rs+"\n")
+                else:
+                    errorlog("bagofwords incomplete:"+urn)
+    process("data/bagofwords")
 
 def initTables():
     if os.path.exists("data/bagofwords.db"):
@@ -159,6 +166,13 @@ def initTables():
     cursor = con.cursor()
     cursor.execute("CREATE TABLE tokendatecount(token VARCHAR (50),date DATE,frequency INTEGER);")
     cursor.execute("CREATE TABLE urnwordbag(urn VARCHAR (50),date DATE,wordbag text);")
+    con.commit()
+    con.close()
+
+def index():
+    con = sqlite3.connect("data/bagofwords.db")
+    cursor = con.cursor()
+    print("Indexing...")
     cursor.execute("CREATE INDEX tokenindex ON tokendatecount(token);")
     cursor.execute("CREATE INDEX tokenurnindex ON urnwordbag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urnwordbag(wordbag);")
@@ -166,35 +180,49 @@ def initTables():
     cursor.execute("CREATE INDEX dateindex ON tokendatecount(date);")
     con.commit()
     con.close()
-    
-initTables()
-con = sqlite3.connect("data/bagofwords.db")
-cursor = con.cursor()
 
-yearfiles = sorted(os.listdir("data/bagofwordsperyear"))
-for year in yearfiles:
-    #print("sql bagofwordsperyear:"+year)
-    with open ("data/bagofwordsperyear/"+year, "r", encoding="utf8") as inf:
-        for line in inf.readlines():
-            if len(line.strip())>0:
-                linearr = line.split("\t")
-                vals = '"'+linearr[0]+'",'+year.replace(".txt","")+','+linearr[1]
-                query="INSERT INTO tokendatecount(token,date,frequency) VALUES("+vals+")"
-                cursor.execute(query)
-    con.commit()
-    
-files = sorted(os.listdir("data/bagofwords"))
-for file in files:
-    if file.startswith("urn_#_"):
-        #print("sql bagofwordsperurn:"+file)
-        with open ("data/bagofwords/"+file, "r", encoding="utf8") as inf:
-            wordbag = "|"
+def db():
+    print("DB...")
+    initTables()
+    con = sqlite3.connect("data/bagofwords.db")
+    cursor = con.cursor()
+
+    yearfiles = sorted(os.listdir("data/bagofwordsperyear"))
+    for year in yearfiles:
+        #print("sql bagofwordsperyear:"+year)
+        with open ("data/bagofwordsperyear/"+year, "r", encoding="utf8") as inf:
             for line in inf.readlines():
                 if len(line.strip())>0:
-                    wordbag += line.split("\t")[0]+"|"
-            urn = file.replace(".txt","").replace("_#_",":")
-            year = doc_year[urn]
-            vals = '"'+urn+'","'+year+'","'+wordbag+'"'
-            query="INSERT INTO urnwordbag(urn,date,wordbag) VALUES("+vals+")"
-            cursor.execute(query)
-    con.commit()
+                    linearr = line.split("\t")
+                    vals = '"'+linearr[0]+'",'+year.replace(".txt","")+','+linearr[1]
+                    query="INSERT INTO tokendatecount(token,date,frequency) VALUES("+vals+")"
+                    cursor.execute(query)
+        con.commit()
+        
+    files = sorted(os.listdir("data/bagofwords"))
+    for file in files:
+        if file.startswith("urn_#_"):
+            #print("sql bagofwordsperurn:"+file)
+            with open ("data/bagofwords/"+file, "r", encoding="utf8") as inf:
+                wordbag = "|"
+                for line in inf.readlines():
+                    if len(line.strip())>0:
+                        wordbag += line.split("\t")[0]+"|"
+                urn = file.replace(".txt","").replace("_#_",":")
+                year = doc_year[urn]
+                vals = '"'+urn+'","'+year+'","'+wordbag+'"'
+                query="INSERT INTO urnwordbag(urn,date,wordbag) VALUES("+vals+")"
+                cursor.execute(query)
+        con.commit()
+    index()
+    
+if len(sys.argv)==2:
+    if sys.argv[1] == "db":
+        db()
+    else:
+        if sys.argv[1] == "collect":
+            collect()
+else:
+    collect()
+    db()
+    

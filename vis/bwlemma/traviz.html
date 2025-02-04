@@ -14,6 +14,7 @@
 	var lemma = getQueryVariable('lemma')
 	dataset = dataset +'?lemma='+lemma
 	if (getQueryVariable("sort").length>0){dataset+="&sort"}
+	if (getQueryVariable("exact").length>0){dataset+="&exact"}
 	var year = getQueryVariable('year')
 	if (year.length>0){dataset+="&year="+year}
 

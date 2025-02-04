@@ -149,23 +149,28 @@ def collect():
                 outf.write(token+"\t"+str(value)+"\n")
 
 
-def initTables():
-    if os.path.exists("data/lemmamapping.db"):
-        os.remove("data/lemmamapping.db")
+def index():
     con = sqlite3.connect("data/lemmamapping.db")
     cursor = con.cursor()
-    cursor.execute("CREATE TABLE tokenlemmanormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
+    print("Indexing...")
     cursor.execute("CREATE INDEX tokenindex ON tokenlemmanormtypesubtypedatefrequency(token);")
     cursor.execute("CREATE INDEX lemmaindex ON tokenlemmanormtypesubtypedatefrequency(lemma);")
     cursor.execute("CREATE INDEX normindex ON tokenlemmanormtypesubtypedatefrequency(norm);")
     cursor.execute("CREATE INDEX typeindex ON tokenlemmanormtypesubtypedatefrequency(type);")
     cursor.execute("CREATE INDEX subtypeindex ON tokenlemmanormtypesubtypedatefrequency(subtype);")
     cursor.execute("CREATE INDEX dateindex ON tokenlemmanormtypesubtypedatefrequency(date);")
-    cursor.execute("CREATE TABLE lemmafrequency(lemma VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE INDEX lemmafrequencyindex ON lemmafrequency(lemma);")
-    cursor.execute("CREATE TABLE lemmatokenfrequency(lemma VARCHAR (50),token VARCHAR ("+str(tokenlength)+"),frequency INTEGER);")
     cursor.execute("CREATE INDEX lemmatokenlemmaindex ON lemmatokenfrequency(lemma);")
     cursor.execute("CREATE INDEX lemmatokentokenindex ON lemmatokenfrequency(token);")
+
+def initTables():
+    if os.path.exists("data/lemmamapping.db"):
+        os.remove("data/lemmamapping.db")
+    con = sqlite3.connect("data/lemmamapping.db")
+    cursor = con.cursor()
+    cursor.execute("CREATE TABLE tokenlemmanormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
+    cursor.execute("CREATE TABLE lemmafrequency(lemma VARCHAR (50),frequency INTEGER);")
+    cursor.execute("CREATE TABLE lemmatokenfrequency(lemma VARCHAR (50),token VARCHAR ("+str(tokenlength)+"),frequency INTEGER);")
     con.commit()
     con.close()
     
@@ -184,10 +189,16 @@ def db():
                 if len(line.strip())>0:
                     linearr = line.split("\t")
                     toklem = linearr[0]+"\t"+linearr[1]
+                    #Für unten sammeln
                     if toklem in lemmatokenbag:
                         lemmatokenbag[toklem] = lemmatokenbag[toklem]+int(linearr[5])
                     else:
                         lemmatokenbag[toklem] = int(linearr[5])
+                    if toklem in lemmatokendatebag:
+                        lemmatokendatebag[toklem] = lemmatokendatebag[toklem]+int(linearr[5])
+                    else:
+                        lemmatokendatebag[toklem] = int(linearr[5])
+                        
                     vals = '"'+linearr[0]+'","'+linearr[1]+'","'+linearr[2]+'","'+linearr[3]+'","'+linearr[4]+'",'+year.replace(".txt","")+','+linearr[5].strip()
                     query="INSERT INTO tokenlemmanormtypesubtypedatefrequency(token,lemma,norm,type,subtype,date,frequency) VALUES("+vals+")"
                     cursor.execute(query)
@@ -205,6 +216,8 @@ def db():
         query = "INSERT INTO lemmatokenfrequency(token,lemma,frequency) VALUES("+vals+")"
         cursor.execute(query)
     con.commit()
+    index()
+
 
 if len(sys.argv)==2:
     if sys.argv[1] == "db":
@@ -215,3 +228,4 @@ if len(sys.argv)==2:
 else:
     collect()
     db()
+    

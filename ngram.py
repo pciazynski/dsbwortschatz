@@ -14,17 +14,6 @@ with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as bwin:
         linearr = line.split("\t")
         bagofwords[linearr[0]] = int(linearr[1])
 
-
-if not os.path.exists("data"):
-    os.mkdir("data")
-if os.path.exists("data/ngram"+n):
-    shutil.rmtree("data/ngram"+n)
-os.mkdir("data/ngram"+n)
-if os.path.exists("data/ngram"+n+"peryear"):
-    shutil.rmtree("data/ngram"+n+"peryear")
-os.mkdir("data/ngram"+n+"peryear")
-
-
 def inventory(endpoint):
     global ctsurl
     requestctsurl(endpoint)
@@ -101,23 +90,48 @@ def process(foldername):
         for token,value in sorted(wb.items(), key = lambda x:x[1], reverse=True):
             outf.write(token+"\t"+str(value)+"\n")
 
+def reset():
+    global n
+    print("Reset")
 
+    if not os.path.exists("data"):
+        os.mkdir("data")
+    if os.path.exists("data/ngram"+n):
+        shutil.rmtree("data/ngram"+n)
+    os.mkdir("data/ngram"+n)
+    if os.path.exists("data/ngram"+n+"peryear"):
+        shutil.rmtree("data/ngram"+n+"peryear")
+    os.mkdir("data/ngram"+n+"peryear")
 
-for line in inventory("dsb").split("\n"):
-    urn = line.split("\t")[0]
-    urnarr = urn.split(".")
-    year = line.split("\t")[2]
+def collect():
+    global count
+    global n
+    reset()
+    print("Collect...")
+    for line in inventory("dsb").split("\n"):
+        urn = line.split("\t")[0]
+        urnarr = urn.split(".")
+        year = line.split("\t")[2]
 
-    if (len(year)>1 and count!=0):
-        count-=1
-        print(str(count)+" "+urn)
-        with open ("data/ngram"+n+"/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/ngram"+n+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
-            rs = ngram(urn,n)
-            outf.write(rs)
-            outyf.write(rs)
+        if (len(year)>1 and count!=0):
+            count-=1
+            with open ("data/ngram"+n+"/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/ngram"+n+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
+                rs = ngram(urn,n)
+                outf.write(rs)
+                outyf.write(rs)
 
-process("data/ngram"+n)
+    process("data/ngram"+n)
 
+def index(n):
+    if os.path.exists("data/ngram"+n+".db"):
+        os.remove("data/ngram"+n+".db")
+    con = sqlite3.connect("data/ngram"+n+".db")
+    cursor = con.cursor()
+    cursor.execute("CREATE INDEX ngramdateindex ON ngramdatecount(ngram);")
+    cursor.execute("CREATE INDEX dateindex ON ngramdatecount(date);")
+    cursor.execute("CREATE INDEX ngramindex ON ngramcount(ngram);")
+    con.commit()
+    con.close()
 
 def initTables(n):
     if os.path.exists("data/ngram"+n+".db"):
@@ -125,42 +139,51 @@ def initTables(n):
     con = sqlite3.connect("data/ngram"+n+".db")
     cursor = con.cursor()
     cursor.execute("CREATE TABLE ngramdatecount(ngram VARCHAR (50),date DATE,frequency INTEGER);")
-    cursor.execute("CREATE INDEX ngramdateindex ON ngramdatecount(ngram);")
-    cursor.execute("CREATE INDEX dateindex ON ngramdatecount(date);")
     cursor.execute("CREATE TABLE ngramcount(ngram VARCHAR (50),frequency INTEGER);")
-    cursor.execute("CREATE INDEX ngramindex ON ngramcount(ngram);")
     con.commit()
     con.close()
 
+def db():
+    print("DB...")
+    global n
+    initTables(n)
+    con = sqlite3.connect("data/ngram"+n+".db")
+    cursor = con.cursor()
 
-initTables(n)
-con = sqlite3.connect("data/ngram"+n+".db")
-cursor = con.cursor()
+    #for file in sorted(os.listdir("data")):
+    #    if(file.startswith("ngram")  and not ".db" in file and file.endswith("peryear")):
+    for year in sorted(os.listdir("data/ngram"+n+"peryear")):
+        print("sql ngram"+n+"peryear:"+year)
+        with open ("data/ngram"+n+"peryear/"+year, "r", encoding="utf8") as inf:
+            for line in inf.readlines():
+                if len(line.strip())>0:
+                    linearr = line.split("\t")
+                    vals = '"_'+linearr[0]+'_",'+year.replace(".txt","")+','+linearr[1].strip()
+                    query="INSERT INTO ngramdatecount(ngram,date,frequency) VALUES("+vals+")"
+                    cursor.execute(query)
+                
+    con.commit()
 
-#for file in sorted(os.listdir("data")):
-#    if(file.startswith("ngram")  and not ".db" in file and file.endswith("peryear")):
-for year in sorted(os.listdir("data/ngram"+n+"peryear")):
-    print("sql ngram"+n+"peryear:"+year)
-    with open ("data/ngram"+n+"peryear/"+year, "r", encoding="utf8") as inf:
+    #for file in sorted(os.listdir("data")):
+    #    if(file.startswith("ngram") and not ".db" in file and not file.endswith("peryear")):
+    with open ("data/ngram"+n+"/_all.txt", "r", encoding="utf8") as inf:
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                vals = '"_'+linearr[0]+'_",'+year.replace(".txt","")+','+linearr[1].strip()
-                query="INSERT INTO ngramdatecount(ngram,date,frequency) VALUES("+vals+")"
+                vals = '"_'+linearr[0]+'_",'+linearr[1].strip()
+                query="INSERT INTO ngramcount(ngram,frequency) VALUES("+vals+")"
                 cursor.execute(query)
-            
-con.commit()
+    con.commit()
+    con.close()
+    index(n)
 
-#for file in sorted(os.listdir("data")):
-#    if(file.startswith("ngram") and not ".db" in file and not file.endswith("peryear")):
-with open ("data/ngram"+n+"/_all.txt", "r", encoding="utf8") as inf:
-    for line in inf.readlines():
-        if len(line.strip())>0:
-            linearr = line.split("\t")
-            vals = '"_'+linearr[0]+'_",'+linearr[1].strip()
-            query="INSERT INTO ngramcount(ngram,frequency) VALUES("+vals+")"
-            cursor.execute(query)
-con.commit()
-
-con.close()
-
+if len(sys.argv)==3:
+    if sys.argv[2] == "db":
+        db()
+    else:
+        if sys.argv[2] == "collect":
+            collect()
+else:
+    collect()
+    db()
+    

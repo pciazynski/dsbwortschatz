@@ -157,24 +157,36 @@ with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as inf, open("data
         if tmp in mix2dict:
             mix2outf.write(line)
 
+def index():
+    if os.path.exists("data/langDetect"+n+".db"):
+        os.remove("data/langDetect"+n+".db")
+    con = sqlite3.connect("data/langDetect"+n+".db")
+    cursor = con.cursor()
+    cursor.execute("CREATE INDEX langDetectdeungramindex ON langDetectdeungram(ngram);")
+    cursor.execute("CREATE INDEX langDetectdeutokenindex ON langDetectdeutoken(token);")
+    
+    cursor.execute("CREATE INDEX langDetectdsbngramindex ON langDetectdsbngram(ngram);")
+    cursor.execute("CREATE INDEX langDetectdsbtokenindex ON langDetectdsbtoken(token);")
+
+    cursor.execute("CREATE INDEX langDetectmixngramngramindex ON langDetectmixngram(ngram);")
+    cursor.execute("CREATE INDEX langDetectmixdeuindex ON langDetectmixngram(deu);")
+    
+    con.commit()
+    con.close()
+
+
 def initTables():
     if os.path.exists("data/langDetect"+n+".db"):
         os.remove("data/langDetect"+n+".db")
     con = sqlite3.connect("data/langDetect"+n+".db")
     cursor = con.cursor()
     cursor.execute("CREATE TABLE langDetectdeungram(ngram VARCHAR (50),frequency INTEGER);")
-    cursor.execute("CREATE INDEX langDetectdeungramindex ON langDetectdeungram(ngram);")
     cursor.execute("CREATE TABLE langDetectdeutoken(token VARCHAR (50),frequency INTEGER);")
-    cursor.execute("CREATE INDEX langDetectdeutokenindex ON langDetectdeutoken(token);")
     
     cursor.execute("CREATE TABLE langDetectdsbngram(ngram VARCHAR (50),frequency INTEGER);")
-    cursor.execute("CREATE INDEX langDetectdsbngramindex ON langDetectdsbngram(ngram);")
     cursor.execute("CREATE TABLE langDetectdsbtoken(token VARCHAR (50),frequency INTEGER);")
-    cursor.execute("CREATE INDEX langDetectdsbtokenindex ON langDetectdsbtoken(token);")
 
     cursor.execute("CREATE TABLE langDetectmixngram(ngram VARCHAR (50),frequency INTEGER, deu INTEGER);")
-    cursor.execute("CREATE INDEX langDetectmixngramngramindex ON langDetectmixngram(ngram);")
-    cursor.execute("CREATE INDEX langDetectmixdeuindex ON langDetectmixngram(deu);")
     
     con.commit()
     con.close()
@@ -232,3 +244,4 @@ insertNgramIntoTable("mix")
 insertTokenIntoTable("deu")
 insertTokenIntoTable("dsb")
 
+index()
