@@ -190,11 +190,14 @@
 	}
 	
 	
-	var updateFocus = function(focus){
+	var updateFocus = function(newfocus){
 		loading("timeline")
+		focus = newfocus
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
-		if(focus==3){source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")}
+		if(focus==3){
+			source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")
+		}
 		if(curlemma.length>0){
 			document.getElementById("timeline").src=source
 			document.title="Lemma "+curlemma
@@ -226,11 +229,10 @@
 		loading("lemmagroup")
 		loading("tokengroup")
 		loading("lemmastats")
-		document.getElementById("year").disabled = true;
 		curlemma = document.getElementById("lemma").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-			document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact"
+			document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact=1"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
@@ -250,7 +252,7 @@
 		loading("traviz")
 		curlemma=lemma
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact"
+		document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact=1"
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
 		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
 	}
