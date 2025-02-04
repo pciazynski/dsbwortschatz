@@ -10,6 +10,10 @@ function diagrammlink(elementid){
 	window.open(document.getElementById(elementid).src, '_blank');
 }
 
+function embedding(iframeid){
+	alert('<iframe height='+document.getElementById(iframeid).offsetHeight+' width='+document.getElementById(iframeid).offsetWidth + ' src="'+document.getElementById(iframeid).src+'"></iframe>' );
+}
+
 function printlink(elementid){
 	url = document.getElementById(elementid).src
 	if(url.includes('&print=1')){url = url.replace('&print=1','')}else{url += '&print=1'}

@@ -53,28 +53,38 @@
 </table>
 <br><br>
 
-
-<div class = 'iframediv'>
-	<button class = 'iframebutton' onclick='diagrammlink("timeline");'>Zeitleiste</button>
-	<button class = 'iframebutton' onclick='diagrammlink("doclist");'>Dok.-Liste</button>
-	<button class = 'iframebutton' onclick='datalink("doclist");'>Rohdaten</button>
-	<div style='text-align:center;'>
-		<iframe class='resized' width='70%' height='475px' id='timeline' scrolling='yes'></iframe>
-		<iframe class='resized' width='29%' height='475px' id='doclist' scrolling='yes'></iframe>
-	</div>
-	<button class = 'iframebutton' onclick='hidewatermark("timeline");'>Quellenangabe</button>
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 69%;">
+				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+			</td>
+			<td style = "width: 30%;">
+				<button class = "iframebutton" onclick="embedding('doclist');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('doclist');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('doclist');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td>		
+				<iframe class='resized' width='100%' height='475px' id='timeline' scrolling='yes'></iframe>
+			</td>
+			<td>		
+				<iframe class='resized' width='100%' height='475px' id='doclist' scrolling='yes'></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td>
+				<button class = 'iframebutton' onclick='hidewatermark("timeline");'>Quellenangabe</button>
+			</td>
+			<td>
+			</td>
+		</tr>
+	</table>
 </div>
 
-<br><br>
-
-<div class = 'iframediv'>
-	<button class = 'iframebutton' onclick='diagrammlink("tokendistribution");'>Diagramm</button>
-	<button class = 'iframebutton' onclick='datalink("tokendistribution");'>Rohdaten</button>
-	<div style='text-align:center;'>
-		<iframe class='resized' width='100%' height='475px' id='tokendistribution' scrolling='yes'></iframe>
-	</div>
-	<button class = 'iframebutton' onclick='hidewatermark("tokendistribution");'>Quellenangabe</button>
-</div>
 
 <script>
 
@@ -107,13 +117,7 @@
 		}
 	}
 	
-	var updateTokendistribution = function(urn){
-		tmp = document.getElementById('token').value.trim()
-		if(tmp.length>0){
-			loading('tokendistribution')
-			document.getElementById('tokendistribution').src = 'https://urncts.eu/cts/dsb/plain/textsearch.php?urn=urn:cts:dsb:bramborski.sserski_zassnik.1863.12:&token=bismark' 
-		}
-	}
+
 	
 	document.title="Dok.nachweise"
 	tmplemma = getQueryVariable('lemma')
@@ -125,7 +129,6 @@
 		document.getElementById('token').value = getQueryVariable('token')
 		updateToken()
 	}
-	updateTokendistribution()
 
 </script>
 
