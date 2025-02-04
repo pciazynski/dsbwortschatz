@@ -116,17 +116,17 @@
 		<tr style = "text-align:right;">
 			<td style = "width: 19%;">
 				<button class = "iframebutton" onclick="embedding('lemmagroup');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Lemmaliste</button>
+				<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Vollbild</button>
 				<button class = "iframebutton" onclick="datalink('lemmagroup');">Rohdaten</button>
 			</td>
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('timeline');">Zeitleiste</button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
 				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
 			</td>
 			<td style = "width: 19%;">
 				<button class = "iframebutton" onclick="embedding('tokengroup');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('tokengroup');">Tokenliste</button>
+				<button class = "iframebutton" onclick="diagrammlink('tokengroup');">Vollbild</button>
 				<button class = "iframebutton" onclick="datalink('tokengroup');">Rohdaten</button>
 			</td>
 		</tr>
@@ -260,6 +260,7 @@
 		document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact=1"
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
 		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
+		document.title="Lemma "+curlemma
 	}
 	
 	var focus = 0;
