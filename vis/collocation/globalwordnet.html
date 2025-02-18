@@ -33,15 +33,14 @@
 	network = readPHP(dataset).split('\n')
 	
 	if(network.length<10000){lay='grid'}else{lay='grid'}
+	underscore = "_"
 
-	for (key in network)
-	{
+	for (key in network){
 		tmp = network[key].split(sep)
-		if(tmp.length>=2)
-		{
-			if(nodes[tmp[0]] == null){nodes [tmp[0]] =  2*Math.log(tmp[2])}
-			nodes [tmp[1]] = 2*Math.log(tmp[2])
-			edges [tmp[0]+sep+tmp[1]] = tmp[3]/25
+		if(tmp.length>=2){
+			if(nodes[underscore+tmp[0]] == null){nodes [underscore+tmp[0]] =  2*Math.log(tmp[2])}
+			nodes [underscore+tmp[1]] = 2*Math.log(tmp[2])
+			edges [underscore+tmp[0]+sep+underscore+tmp[1]] = tmp[3]/25
 		}
 	}
 	var cy = cytoscape({
@@ -49,7 +48,7 @@
 	style: [{
 		selector: "node",
 			css: {
-				'label': 'data(id)', 
+				'label': 'data(label)', 
 				'text-valign': 'center',
 				'text-halign': 'center',
 				'text-wrap': 'wrap',
@@ -74,22 +73,25 @@
 			}
 		}
 	]});
-
+	
+	edgecolor = "black"
+	nodecolor = "red"
+	
 	for (var key in nodes){
-		if( key.length>0)
-		{
+		if( key.length>0){
 			cy.add({
 				data: { id: key,
-				color:'red',
+				color:nodecolor,
+				label:key.replace("_","")
 			}});
 		}
 	}
 
-	for (var key in edges)  
-		if( key.length>0)
-		{
+	
+	for (var key in edges)
+		if( key.length>0){
 			tmp = key.split(sep)
-			color = "black"
+			color = edgecolor
 			cy.add({
 			data: {
 				source:tmp[0],
@@ -111,7 +113,7 @@
 		if(tabbed!=null){tabbed.style('background-color',defNodeCol)}
 		tabbed = e.target
 		tabbed.style('background-color','lightblue')
-		parent.updateLeftRightNeighbors(tabbed.id());
+		parent.updateLeftRightNeighbors(tabbed.id().replace(underscore,""));
 	});
 
 	var labeltmp = '' 

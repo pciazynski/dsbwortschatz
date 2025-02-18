@@ -32,15 +32,15 @@
 	
 	network = readPHP(dataset).split("\n")
 	if(network.length<100){lay="cose"}else{lay="random"}
-
+	underscore = "_"
 	for (key in network)
 	{
 		tmp = network[key].split(sep)
 		if(tmp.length>=3)
 		{
-			if(nodes[tmp[1]] == null){nodes [tmp[1]] =  6*Math.log(tmp[3])}
-			nodes [tmp[2]] = 6*Math.log(tmp[3])
-			edges [tmp[1]+"\t"+tmp[2]] = 1
+			if(nodes[underscore+tmp[1]] == null){nodes [underscore+tmp[1]] =  6*Math.log(tmp[3])}
+			nodes [underscore+tmp[2]] = 6*Math.log(tmp[3])
+			edges [underscore+tmp[1]+sep+underscore+tmp[2]] = 1
 			
 		}
 	}
@@ -49,7 +49,7 @@
 	style: [{
 		selector: "node",
 		css: {
-			label: "data(id)", 
+			label: "data(label)", 
 			"text-valign": "center",
 			"text-halign": "center",
 			height: function(ele){ return 10*Math.max(1,(""+ele.outdegree()).length);},
@@ -64,7 +64,7 @@
 		{
 		selector: 'node.highlight',
 		style: {
-			'label': 'data(id)',
+			'label': 'data(label)',
 			'text-valign': 'center',
 			'color':"white",
 			'text-outline-color': 'red',
@@ -91,7 +91,8 @@
 				data: { id: key,
 				color:defNodeCol,
 				width:nodes[key],
-				height:nodes[key]
+				height:nodes[key],
+				label:key.replace("_","")
 			}});
 		}
 	}
@@ -99,7 +100,7 @@
 	for (var key in edges)  
 		if( key.length>0)
 		{
-			tmp = key.split("\t")
+			tmp = key.split(sep)
 //			color = "black"
 			cy.add({
 			data: {

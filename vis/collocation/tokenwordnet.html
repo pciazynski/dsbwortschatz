@@ -31,15 +31,16 @@
 	
 	network = readPHP(dataset).split('\n')
 	if(network.length<100){lay='cose'}else{lay='random'}
+	underscore = "_"
 
 	for (key in network)
 	{
 		tmp = network[key].split(sep)
 		if(tmp.length>=2)
 		{
-			if(nodes[tmp[0]] == null){nodes [tmp[0]] =  2*Math.log(tmp[2]+1)}
-			nodes [tmp[1]] = 2*Math.log(tmp[2]+1)
-			edges [tmp[0]+sep+tmp[1]] = 1
+			if(nodes[underscore+tmp[0]] == null){nodes [underscore+tmp[0]] =  2*Math.log(tmp[2]+1)}
+			nodes [underscore+tmp[1]] = 2*Math.log(tmp[2]+1)
+			edges [underscore+tmp[0]+sep+underscore+tmp[1]] = 1
 		}
 	}
 	
@@ -48,7 +49,7 @@
 	style: [{
 		selector: 'node',
 		css: {
-			'label': 'data(id)', 
+			'label': 'data(label)', 
 			'text-valign': 'center',
 			'text-halign': 'center',
 			'text-wrap': 'wrap',
@@ -64,7 +65,7 @@
 		{
 		selector: 'node.highlight',
 		style: {
-			'label': 'data(id)',
+			'label': 'data(label)',
 			'text-valign': 'center',
 			'color':'white',
 			'text-outline-color': 'red',
@@ -90,7 +91,8 @@
 				data: { id: key,
 				color:defNodeCol,
 				width:nodes[key],
-				height:nodes[key]
+				height:nodes[key],
+				label:key.replace("_","")
 			}});
 		}
 	}
