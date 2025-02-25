@@ -75,6 +75,8 @@
 	linreg (y1)
 	if (vorhersage.length==0){vorhersage=x1.length+1}else{vorhersage=parseInt(vorhersage)}
 	name1=token;color1=getColor(token)
+	decimals = getQueryVariable("decimals")
+	if (decimals.length==0){decimals=3}
 
 	minY = Math.min(minY,b0 - 5)
 	maxY = Math.max(maxY,b0 + ( b1 * vorhersage))
@@ -90,7 +92,7 @@
 	},{
 		x: [0,vorhersage],
 		y: [b0 ,b0 + ( b1 * vorhersage)],
-		type: "line",mode: "lines",name:"Ŷ = " + b0.toFixed(decicount)+ " + " +b1.toFixed(decicount)+" * X ",
+		type: "line",mode: "lines",name:"Ŷ = " + b0.toFixed(decimals)+ " + " +b1.toFixed(decimals)+" * X ",
 		line: {color: "black", dash:"line",width:2}
 	}];
 

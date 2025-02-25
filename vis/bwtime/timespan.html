@@ -115,12 +115,6 @@
 		if(dataset.includes("_minmaxyearmax")){alert("Worttod "+data.points[0].x+":\n"+labels[data.points[0].x]);}
 	})
 
-	myPlot.on("plotly_selected", function(eventData) {
-		von = (" "+eventData.range.x[0]).split(".")[0].trim()
-		bis = (" "+eventData.range.x[1]).split(".")[0].trim()
-		parent.document.getElementById("network").src = "network.html?data="+dataset+"&von="+von+"&bis="+bis
-	});
-
 	document.title=diagramtitle
 
 </script>

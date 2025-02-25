@@ -135,7 +135,6 @@
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
 				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzeltoken)</button>
-				<button class = "iframebutton" onclick="absrel('timeline');">Abs / Rel</button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
 			</td>
 		</tr>
@@ -193,14 +192,6 @@
 		}
 	}
 
-	var absrel = function(iframeid){
-		loading(iframeid)
-		if(document.getElementById(iframeid).src.includes("percenttimeline.html")){
-			document.getElementById(iframeid).src=document.getElementById(iframeid).src.replace("percenttimeline.html","timeline.html")
-		}else{
-			document.getElementById(iframeid).src=document.getElementById(iframeid).src.replace("timeline.html","percenttimeline.html")
-		}
-	}
 
 
 	var updateTimelineRegex = function(){

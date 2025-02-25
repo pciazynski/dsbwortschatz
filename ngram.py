@@ -123,8 +123,6 @@ def collect():
     process("data/ngram"+n)
 
 def index(n):
-    if os.path.exists("data/ngram"+n+".db"):
-        os.remove("data/ngram"+n+".db")
     con = sqlite3.connect("data/ngram"+n+".db")
     cursor = con.cursor()
     cursor.execute("CREATE INDEX ngramdateindex ON ngramdatecount(ngram);")
