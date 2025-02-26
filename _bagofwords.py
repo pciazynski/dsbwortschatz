@@ -45,7 +45,7 @@ def bagofwords(urn):
 
 def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
-        print("process "+foldername+":"+yearfile)
+        #print("process "+foldername+":"+yearfile)
         wb = dict()
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
             for line in inf:

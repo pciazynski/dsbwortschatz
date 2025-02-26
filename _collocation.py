@@ -49,7 +49,7 @@ con.commit()
 #for file in sorted(os.listdir("data")):
 #    if(file.startswith("ngram")  and not ".db" in file and file.endswith("peryear")):
 for year in sorted(os.listdir("data/ngram2peryear")):
-    print("sql collocation:"+year)
+    #print("sql collocation:"+year)
     with open ("data/ngram2peryear/"+year, "r", encoding="utf8") as inf:
         for line in inf.readlines():
             if len(line.strip())>0:

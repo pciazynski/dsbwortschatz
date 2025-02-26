@@ -61,7 +61,7 @@ def ngram(urn,ngramsize):
 
 def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
-        print("process "+foldername+":"+yearfile)
+        #print("process "+foldername+":"+yearfile)
         wb = dict()
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
             for line in inf:
@@ -151,7 +151,7 @@ def db():
     #for file in sorted(os.listdir("data")):
     #    if(file.startswith("ngram")  and not ".db" in file and file.endswith("peryear")):
     for year in sorted(os.listdir("data/ngram"+n+"peryear")):
-        print("sql ngram"+n+"peryear:"+year)
+        #print("sql ngram"+n+"peryear:"+year)
         with open ("data/ngram"+n+"peryear/"+year, "r", encoding="utf8") as inf:
             for line in inf.readlines():
                 if len(line.strip())>0:

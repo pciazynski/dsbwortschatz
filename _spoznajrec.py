@@ -158,8 +158,6 @@ with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as inf, open("data
             mix2outf.write(line)
 
 def index():
-    if os.path.exists("data/langDetect"+n+".db"):
-        os.remove("data/langDetect"+n+".db")
     con = sqlite3.connect("data/langDetect"+n+".db")
     cursor = con.cursor()
     cursor.execute("CREATE INDEX langDetectdeungramindex ON langDetectdeungram(ngram);")
