@@ -5,7 +5,7 @@ import shutil
 import sqlite3
 from config import *
 
-
+doc_year = {}
 
 def inventory(endpoint):
     global ctsurl
@@ -139,7 +139,6 @@ def collect():
     global count
     reset()
     print("Collect...")
-    doc_year = {}
     
     for line in inventory("dsb").split("\n"):
         urn = line.split("\t")[0]
