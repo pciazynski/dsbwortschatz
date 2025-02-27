@@ -55,6 +55,7 @@
 	<div style="text-align:center;">
 		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
 	</div>
+	<button class = "iframebutton" onclick="threeD('zipf');">3D / 2D</button>
 	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
 	</div>
 <br><br>
@@ -180,6 +181,18 @@
 <br><br>
 
 <script>
+
+	var threeD = function(iframeid){
+		loading(iframeid)
+		el = document.getElementById(iframeid)
+		if(el.src.includes("3d.html")){
+			el.src=el.src.replace("3d.html",".html")
+		}else{
+			el.src=el.src.replace(".html","3d.html")
+		}
+	}
+	
+	
 	var linreg = function(iframeid){
 		loading(iframeid)
 		tmp = document.getElementById("token").value.trim()

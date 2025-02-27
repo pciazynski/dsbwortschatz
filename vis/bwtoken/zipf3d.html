@@ -1,0 +1,89 @@
+<meta charset="utf-8">
+<head>
+	<script src="../../lib/plotly-latest.min.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+</head>
+
+<body style="height:100%">
+<div id="myDiv" style="height:100%"><!-- Plotly chart will be drawn inside this DIV --></div>
+<script>
+
+	var dataset = getQueryVariable("data")
+	var max = getQueryVariable("max")
+	var min = getQueryVariable("min")
+	data_arr = readTextFile(dataset).split("\n");
+	allText=""
+	maxval = 0
+	
+	diagramtitle = "Tokenhäufigkeiten & Tokenlänge "+dataset.split("/")[1]
+	
+	date= []
+	count = []
+	depth = []
+	
+	hovers = []
+	colors = []
+
+	for (var i = 0; i < data_arr.length; i++) {
+		line = data_arr[i];
+		if(line.length>1)
+		{	
+			tmp = line.split(sep)
+			value  = parseInt(tmp[1])
+			if(max.length>0 & value > parseInt(max)){continue}
+			if(min.length>0 & value < parseInt(min)){continue}
+			date.push(tmp[0])
+			count.push(value)
+			depth.push(tmp[0].length)
+			colors.push(getColor(tmp[0]))
+			hovers.push(tmp[0]+":"+value)
+			if (value>maxval ) {maxval = value}
+		}
+	}
+
+	var data = [{
+		x: date,
+		z: count,
+		y: depth,
+		type: 'scatter3d',
+		hovertemplate: '%{text}',
+		text: hovers,
+		mode: "markers",
+		marker: {
+			size:markersize(data_arr.length),
+			color: colors,
+			opaciy:0.2
+			}
+	}];
+
+	var layout = {
+		title:diagramtitle,
+		scene:{
+			xaxis:{
+				showticklabels:false,
+				title: "Häufigkeitsrang"
+			},
+			yaxis:{
+				title: "Tokenlänge"
+			},
+			zaxis:{
+				title: "Häufigkeit (Abs)"
+			}
+		},
+		annotations: watermarke()
+		};
+
+	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
+
+	myPlot = document.getElementById('myDiv')
+
+	myPlot.on('plotly_click', function(data) {
+		token=data.points[0].x;
+		parent.document.getElementById('token').value = token
+		parent.updateTimeline()
+	});
+	document.title = diagramtitle
+
+</script>
+</body>
