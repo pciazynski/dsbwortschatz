@@ -194,11 +194,7 @@ def db():
                         lemmatokenbag[toklem] = lemmatokenbag[toklem]+int(linearr[5])
                     else:
                         lemmatokenbag[toklem] = int(linearr[5])
-                    if toklem in lemmatokendatebag:
-                        lemmatokendatebag[toklem] = lemmatokendatebag[toklem]+int(linearr[5])
-                    else:
-                        lemmatokendatebag[toklem] = int(linearr[5])
-                        
+
                     vals = '"'+linearr[0]+'","'+linearr[1]+'","'+linearr[2]+'","'+linearr[3]+'","'+linearr[4]+'",'+year.replace(".txt","")+','+linearr[5].strip()
                     query="INSERT INTO tokenlemmanormtypesubtypedatefrequency(token,lemma,norm,type,subtype,date,frequency) VALUES("+vals+")"
                     cursor.execute(query)
