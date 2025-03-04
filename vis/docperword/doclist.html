@@ -45,8 +45,8 @@
 		onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+token+"', '_blank')"
 		onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
 		onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
-		onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+token+"', '_blank')"
-		onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+token+"', '_blank')"
+		onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+token+"&lowercase', '_blank')"
+		onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+token+"&lowercase', '_blank')"
 		onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+tmpname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
 		resstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
 		if(dataset.includes("?token")){

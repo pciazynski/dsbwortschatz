@@ -74,11 +74,14 @@
 
 	myPlot = document.getElementById('myDiv')
 
-	myPlot.on('plotly_click', function(data) {
-		token=data.points[0].x;
-		parent.document.getElementById('token').value = token
-		parent.updateTimeline()
-	});
+	if(parent.document.getElementById('token') != undefined){
+		myPlot.on('plotly_click', function(data) {
+			token=data.points[0].x;
+			parent.document.getElementById('token').value = token
+			parent.updateTimeline()
+		});
+	}
+	
 	document.title = diagramtitle
 
 </script>
