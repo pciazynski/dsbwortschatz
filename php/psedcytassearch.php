@@ -7,8 +7,7 @@ if (isset($_GET['token'])){
 	$token = str_replace(',','-%" OR url LIKE "',$token);
 
 	$PDO = new PDO('sqlite:../data/psedcytas.db');
-	$query = 'SELECT url FROM urls';
-	$query .= ' WHERE url LIKE "'.$token.'-%" LIMIT 1';
+	$query = 'SELECT url FROM urls WHERE url LIKE "'.$token.'-%" LIMIT 1';
 	
 	foreach($PDO->query($query.';') as $row){
 		print($row['url']);

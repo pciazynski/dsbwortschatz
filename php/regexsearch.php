@@ -1,26 +1,24 @@
 <?php
 header('Content-Type: text/plain');
 
-if (isset($_GET['token'])){
-	$token = $_GET['token'];
-}
+(isset($_GET['token'])) ? $token = $_GET['token'] ? : NULL ;
 
 if (strlen($token)>=1){
-	$query = 'SELECT DISTINCT * FROM tokendatecount WHERE token REGEXP "'.$token.'" LIMIT 1000';
-	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	function _sqliteRegexp($pattern,$string) {
-		if(preg_match("/^".$pattern."$/", $string)) {
-			return true;
-		}
-		return false;
+		(preg_match("/^".$pattern."$/", $string)) ? $hit = true : $hit =  false;
+		return $hit;
 	}
+	
+	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	$PDO->sqliteCreateFunction('regexp', '_sqliteRegexp', 2);
-	$result = $PDO->query($query.";");
+	$query = 'SELECT DISTINCT * FROM tokendatecount WHERE token REGEXP "'.$token.'" LIMIT 1000';
 
+	$res = '';
 	$tab = "\t";
 	$nl = "\n";
 	foreach($PDO->query($query.';') as $row){
-		print($row['token'].$tab.$row['date'].$tab.$row['frequency'].$nl);
+		$res.=$row['token'].$tab.$row['date'].$tab.$row['frequency'].$nl;
 	}
+	print($res);
 }
 ?>
