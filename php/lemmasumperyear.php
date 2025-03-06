@@ -2,32 +2,24 @@
 header('Content-Type: text/plain');
 
 #token,lemma,norm,type,subtype,date,frequency
-$token = str_replace(",",'" OR lemma LIKE "%|',$_GET['lemma']);
-
 
 if (isset($_GET['lemma'])){
+	$lemma = str_replace(",",'" OR lemma LIKE "%|',$_GET['lemma']);
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT lemma, SUM(frequency) as summe, date FROM tokenlemmanormtypesubtypedatefrequency';
-	if (isset($_GET['exact'])){
-		$query .= ' WHERE lemma = "|'.$token.'|"';
-	}
-	else{
-		$query .= ' WHERE lemma LIKE "%|'.$token.'|%"';
-	}
+	(isset($_GET['exact'])) ? $query .= ' WHERE lemma = "|'.$lemma.'|"' : $query .= ' WHERE lemma LIKE "%|'.$lemma.'|%"';
 	
 	$query.= ' GROUP BY lemma, date ';
-	if (isset($_GET['sort'])){
-		$query .= ' ORDER BY date ASC';
-	}
+	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
 	
 	$tab = "\t";
 	$nl = "\n";
+	$res = '';
 
 	foreach($PDO->query($query.';') as $row){
-		print($row['lemma'].$tab.$row['date'].$tab.$row['summe'].$nl);
+		$res.=$row['lemma'].$tab.$row['date'].$tab.$row['summe'].$nl;
 	}
+	print($res);
 }
-
-
 
 ?>

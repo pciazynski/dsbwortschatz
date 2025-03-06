@@ -1,26 +1,11 @@
 <?php
 header('Content-Type: text/plain');
 $PDO = new PDO('sqlite:../data/collocation.db');
-$frequency = 0;
-$condition = '';
 
-if (isset($_GET['frequency']) and strlen($_GET['frequency'])>0){
-	$frequency = $_GET['frequency'];
-}
-
-if (isset($_GET['right']) and strlen($_GET['right'])>0){
-	$condition = 'WHERE right == "'.$_GET['right'].'" AND frequency >='.$frequency;
-}
-
-if (isset($_GET['left']) and strlen($_GET['left'])>0){
-	$condition = 'WHERE left == "'.$_GET['left'].'" AND frequency >='.$frequency;
-}
-if(strlen($condition) == 0){
-	if($frequency==0){
-		$frequency=10;
-	}
-	$condition = ' WHERE frequency >= '.$frequency;
-}
+(isset($_GET['frequency']) and strlen($_GET['frequency'])>0) ? $frequency = $_GET['frequency'] : $frequency = 0;
+(isset($_GET['right']) and strlen($_GET['right'])>0) ? $condition = ' AND right == "'.$_GET['right'].'" AND frequency >='.$frequency : $condition = '';
+(isset($_GET['left']) and strlen($_GET['left'])>0) ? $condition = ' AND left == "'.$_GET['left'].'" AND frequency >='.$frequency : $condition = '';
+(strlen($condition) == 0 and $frequency==0) ? $frequency = 10 : NULL;
 
 if (isset($_GET['logdice']) and strlen($_GET['logdice'])>0){
 	if(str_contains($_GET['logdice'],"-")){
@@ -32,21 +17,21 @@ if (isset($_GET['logdice']) and strlen($_GET['logdice'])>0){
 	}
 }
 
-$query = 'SELECT * FROM collocation '.$condition;
+$query = 'SELECT * FROM collocation WHERE frequency >= '.$frequency.$condition;
 if(isset($_GET['sortBy'])){
 	$sortBy = $_GET['sortBy'];
-	if($sortBy == "logdice" or $sortBy == "frequency"){
-		$query.=' ORDER BY '.$_GET['sortBy'].' DESC';
-	}
+	($sortBy == "logdice" or $sortBy == "frequency") ? $query.=' ORDER BY '.$sortBy.' DESC' : NULL;
 }
 
-if(isset($_GET['limit']) and strlen($_GET['limit'])>0){
-	$query.=' LIMIT '.$_GET['limit'];
-}
+(isset($_GET['limit']) and strlen($_GET['limit'])>0) ? $query.=' LIMIT '.$_GET['limit'] : NULL;
 
 $tab = "\t";
 $nl = "\n";
+$res = '';
+
 foreach($PDO->query($query.';') as $row){
-	print($row['left'].$tab.$row['right'].$tab.$row['frequency'].$tab.$row['logdice'].$nl);
+	$res.=$row['left'].$tab.$row['right'].$tab.$row['frequency'].$tab.$row['logdice'].$nl;
 }
+
+print($res);
 ?>

@@ -13,17 +13,16 @@ if (isset($_GET['lemma'])){
 
 	$query = 'SELECT lemma, sum(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency WHERE lemma REGEXP "\|'.$_GET['lemma'].'\|" GROUP BY lemma ';
 
-	if (isset($_GET['sort'])){
-		$query .= ' ORDER BY sumfreq DESC';
-	}
+	(isset($_GET['sort'])) ? $query .= ' ORDER BY sumfreq DESC' : NULL;
 
 	$tab = "\t";
 	$nl = "\n";
+	$res = '';
 
 	$result = $PDO->query($query.";");
 	foreach($result as $row){
-		print($row['lemma'].$tab.$row['sumfreq'].$nl);
+		$res.=$row['lemma'].$tab.$row['sumfreq'].$nl;
 	}
+	print($res);
 }
-
 ?>

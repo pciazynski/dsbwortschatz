@@ -3,25 +3,20 @@ header('Content-Type: text/plain');
 
 $n = $_GET['n'];
 $PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
-$frequency = 0;
 
-if (isset($_GET['frequency'])){
-	$frequency = $_GET['frequency'];
-}
+(isset($_GET['frequency'])) ? $frequency = $_GET['frequency'] : $frequency = 1;
 
 $query = 'SELECT ngram, frequency FROM ngramcount WHERE frequency >='.$frequency;
-if (isset($_GET['filter'])){
-	$filter = str_replace('_','\_',$_GET['filter']);
-	$query .= ' AND ngram LIKE "%\_'.$filter.'\_%" escape "\" ';
-}
+(isset($_GET['filter'])) ? $query .= ' AND ngram LIKE "%\_'.str_replace('_','\_',$_GET['filter']).'\_%" escape "\" ' : NULL;
+(isset($_GET['sort'])) ? $query .= ' ORDER BY frequency DESC' : NULL;
 
-if (isset($_GET['sort'])){
-	$query .= ' ORDER BY frequency DESC';
-}
+$tab = "\t";
+$nl = "\n";
+$res = '';
 
-$result = $PDO->query($query.";");
-foreach($result as $row){
-	print($row['ngram']."\t".$row['frequency']."\n");
+foreach($PDO->query($query.";") as $row){
+	$res.=$row['ngram'].$tab.$row['frequency'].$nl;
 }
+print($res);
 
 ?>

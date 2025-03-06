@@ -24,8 +24,8 @@
 
 	for (var i = 0;i<data_arr.length;i++){
 		linearr = data_arr[i].split(sep)
-		colors.push(getColor(linearr[0]))
-		travdata.push({edition:linearr[0],text:linearr[0].split("").join(' ')})
+		colors.push(getColor(linearr[1]))
+		travdata.push({edition:linearr[1],text:linearr[1].split("").join(' ')})
 	}
 	
 	var traviz = new TRAViz("containerDiv",{

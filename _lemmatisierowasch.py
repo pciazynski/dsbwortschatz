@@ -153,6 +153,11 @@ def index():
     con = sqlite3.connect("data/lemmamapping.db")
     cursor = con.cursor()
     print("Indexing...")
+    cursor.execute("CREATE INDEX tokenindextype ON tokenlemmanormtypesubtypefrequency(token);")
+    cursor.execute("CREATE INDEX lemmaindextype ON tokenlemmanormtypesubtypefrequency(lemma);")
+    cursor.execute("CREATE INDEX normindextype ON tokenlemmanormtypesubtypefrequency(norm);")
+    cursor.execute("CREATE INDEX typeindextype ON tokenlemmanormtypesubtypefrequency(type);")
+    cursor.execute("CREATE INDEX subtypeindextype ON tokenlemmanormtypesubtypefrequency(subtype);")
     cursor.execute("CREATE INDEX tokenindex ON tokenlemmanormtypesubtypedatefrequency(token);")
     cursor.execute("CREATE INDEX lemmaindex ON tokenlemmanormtypesubtypedatefrequency(lemma);")
     cursor.execute("CREATE INDEX normindex ON tokenlemmanormtypesubtypedatefrequency(norm);")
@@ -169,6 +174,7 @@ def initTables():
     con = sqlite3.connect("data/lemmamapping.db")
     cursor = con.cursor()
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
+    cursor.execute("CREATE TABLE tokenlemmanormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
     cursor.execute("CREATE TABLE lemmafrequency(lemma VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE TABLE lemmatokenfrequency(lemma VARCHAR (50),token VARCHAR ("+str(tokenlength)+"),frequency INTEGER);")
     con.commit()
@@ -180,6 +186,7 @@ def db():
     cursor = con.cursor()
 
     lemmatokenbag = {}
+    lemmatokennormtypesubtypebag = {}
 
     yearfiles = sorted(os.listdir("data/lemmamappingperyear"))
     for year in yearfiles:
@@ -189,7 +196,14 @@ def db():
                 if len(line.strip())>0:
                     linearr = line.split("\t")
                     toklem = linearr[0]+"\t"+linearr[1]
-                    #Für unten sammeln
+                    toklemnormtypesubtype = linearr[0]+"\t"+linearr[1]+"\t"+linearr[2]+"\t"+linearr[3]+"\t"+linearr[4]
+
+                    if toklemnormtypesubtype in lemmatokennormtypesubtypebag:
+                        lemmatokennormtypesubtypebag[toklemnormtypesubtype] = lemmatokennormtypesubtypebag[toklemnormtypesubtype]+int(linearr[5])
+                    else:
+                        lemmatokennormtypesubtypebag[toklemnormtypesubtype] = int(linearr[5])
+                        
+
                     if toklem in lemmatokenbag:
                         lemmatokenbag[toklem] = lemmatokenbag[toklem]+int(linearr[5])
                     else:
@@ -212,6 +226,12 @@ def db():
         query = "INSERT INTO lemmatokenfrequency(token,lemma,frequency) VALUES("+vals+")"
         cursor.execute(query)
     con.commit()
+    for toklemtypesubtypenorm in lemmatokennormtypesubtypebag:
+        vals = '"'+toklemtypesubtypenorm.replace("\t",'","')+'",'+str(lemmatokennormtypesubtypebag[toklemtypesubtypenorm])
+        query = "INSERT INTO tokenlemmanormtypesubtypefrequency(token,lemma,norm,type,subtype,frequency) VALUES("+vals+")"
+        cursor.execute(query)
+    con.commit()
+
     index()
 
 

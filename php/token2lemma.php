@@ -10,8 +10,11 @@ if (isset($_GET['token'])){
 
 	$tab = "\t";
 	$nl = "\n";
+	$res = "";
+
 	foreach($PDO->query($query.';') as $row){
-		print($row['lemma'].$tab.$row['token'].$tab.$row['norm'].$tab.$row['type'].$tab.$row['subtype'].$nl);
+		$res.=$row['lemma'].$tab.$row['token'].$tab.$row['norm'].$tab.$row['type'].$tab.$row['subtype'].$nl;
 	}
-}
+	
+	print($res);
 ?>

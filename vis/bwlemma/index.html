@@ -210,7 +210,6 @@
 		loading("tokengroup")
 		document.getElementById("year").disabled = true;
 		curlemma = document.getElementById("regexsearch").value.trim()
-		focus = document.getElementById("focus").value.trim()
 		if(curlemma.length>0){
 			document.getElementById("timeline").src="timeline.html?data=lemmaregexsearch.php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("traviz").src="traviz.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"

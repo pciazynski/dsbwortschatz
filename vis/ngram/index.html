@@ -14,6 +14,9 @@
 <br><br>
 
 
+<script>
+	n = getQueryVariable("n")
+</script>
 
 <div class = "explain">
 	<p>
@@ -166,7 +169,6 @@
 		}else{document.getElementById('zipf').src="zipf.html?data=ngram.php&frequency="+min+"&n="+n}
 	}
 
-	n = getQueryVariable("n")
 	if(n.length==0){n=3}
 	document.getElementById("year").min = minDate
 	document.getElementById("year").max = maxDate
