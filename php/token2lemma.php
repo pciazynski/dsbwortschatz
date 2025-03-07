@@ -16,4 +16,5 @@ if (isset($_GET['token'])){
 	}
 	
 	print($res);
+}
 ?>

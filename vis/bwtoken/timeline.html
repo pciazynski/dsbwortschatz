@@ -13,7 +13,7 @@
 	var dataset = getQueryVariable("data")
 	var token = getQueryVariable("token")
 	var jitter = getQueryVariable("jitter")
-	if(jitter.length==0){jitter=0}else{jitter = parseFloat(jitter)}
+	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
 	dataset = dataset +"?token="+token+"&sort"
 	data_arr = readPHP(dataset).split("\n");
 	maxval = 0

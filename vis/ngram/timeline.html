@@ -14,7 +14,7 @@
 	var filter = getQueryVariable("filter")
 	var n = getQueryVariable("n")
 	var jitter = getQueryVariable("jitter")
-	if(jitter.length==0){jitter=0.9}else{jitter = parseFloat(jitter)}
+	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
 
 	dataset = dataset +"?filter="+filter+"&frequency=10&n="+n
 	data_arr = readPHP(dataset).split("\n");
