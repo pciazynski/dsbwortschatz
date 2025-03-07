@@ -90,7 +90,18 @@
 	};
 
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
+	myPlot = document.getElementById('myDiv')
 	document.title = diagramtitle
+	if(parent.document.getElementById('year') != undefined){
+		myPlot.on('plotly_click', function(data) {
+			yearx=data.points[0].x;
+			parent.document.getElementById("year").disabled = false
+			parent.document.getElementById('year').value = yearx
+			parent.document.getElementById('peryearcheckbox').checked = true
+			parent.updateTravizYear()
+		});
+	}
+	
 
 </script>
 </body>

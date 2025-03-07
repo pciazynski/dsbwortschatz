@@ -48,6 +48,10 @@
 		Ein Klick auf einen Eintrag der Liste führt zu einer exakten Darstellung dieser Lemmagruppe. 
 		Die Betrachtung kann anhand der Lemmata oder der zugrundeliegenden Token erfolgen. 
 		Über den Link zu dolnoserbski.de finden sich weitere Informationen zu den Einträgen.
+		<br>
+		Ein Klick in der Timeline zeigt die Token bis zum angeklickten Jahr in einer Textvarianten-Visualisierung (TRAViz). Das Jahr kann ebenfals über den Slider geändert werden. Wird der Slider deaktiviert, werden die Varianten des gesamten Zeitraums dargestellt. 
+		<br>
+		Über die Liste der Lemmagruppen kann der Input für TRAViz ebenfalls ausgewählt werden.
 	</p>
 </div>
 
@@ -84,28 +88,6 @@
 
 
 <div class = "iframediv">
-
-<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
-	<tr>
-		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
-	</tr>
-	<tr>
-		<td style="text-align:right;">
-			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Bis Jahr von </input><script>document.write(minDate)</script>
-		</td>
-		<td>
-			<input type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateTravizYear()">
-		</td>
-		<td style="text-align:left;">bis <script>document.write(maxDate)</script></td>
-	</tr>
-</table>
-
-	<button class = "iframebutton" onclick="embedding('traviz');">HTML Embedding</button>
-	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
-	<div style="text-align:center;">
-		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
-	</div>
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 19%;">
@@ -144,7 +126,27 @@
 			</td>
 			<td></td>
 		</tr>
+	<tr>
+		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">
+			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Textvarianten von </input><script>document.write(minDate)</script>
+		</td>
+		<td>
+			<input style="width:85%" type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateTravizYear()">
+		</td>
+		<td style="text-align:left;">bis <script>document.write(maxDate)</script></td>
+	</tr>
 	</table>
+	
+	<button class = "iframebutton" onclick="embedding('traviz');">HTML Embedding</button>
+	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
+	</div>
+	
 </div>
 
 
@@ -159,6 +161,7 @@
 	
 	var switchPerYear = function(){
 		document.getElementById("year").disabled = !document.getElementById("peryearcheckbox").checked
+		updateTravizYear()
 	}
 	
 	var updateTravizYear = function(){
@@ -167,9 +170,9 @@
 			url = document.getElementById("traviz").src.split("&year")[0]
 			
 			if(document.getElementById("peryearcheckbox").checked) {
-				document.getElementById("traviz").src = url+"&year=<"+(parseInt(document.getElementById("year").value)+1)
+				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year=<"+(parseInt(document.getElementById("year").value)+1)
 			}else{
-				document.getElementById("traviz").src = url
+				document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
 			}
 		}
 	}
@@ -227,7 +230,7 @@
 		curlemma = document.getElementById("lemma").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-			document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact=1"
+			document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
@@ -246,7 +249,7 @@
 		loading("traviz")
 		curlemma=lemma
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		document.getElementById("traviz").src="traviz.html?data=lemma2token.php&lemma="+curlemma+"&sort&exact=1"
+		document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
 		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
 		document.title="Lemma "+curlemma
