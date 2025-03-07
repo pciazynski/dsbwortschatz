@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/plain');
 
-(isset($_GET['token'])) ? $token = $_GET['token'] ? : NULL ;
+(isset($_GET['token'])) ? $token = $_GET['token'] : NULL ;
 
 if (strlen($token)>=1){
 	function _sqliteRegexp($pattern,$string) {
