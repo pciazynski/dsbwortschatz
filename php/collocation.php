@@ -2,9 +2,11 @@
 header('Content-Type: text/plain');
 $PDO = new PDO('sqlite:../data/collocation.db');
 
+$condition = '';
+
 (isset($_GET['frequency']) and strlen($_GET['frequency'])>0) ? $frequency = $_GET['frequency'] : $frequency = 0;
-(isset($_GET['right']) and strlen($_GET['right'])>0) ? $condition = ' AND right == "'.$_GET['right'].'" AND frequency >='.$frequency : $condition = '';
-(isset($_GET['left']) and strlen($_GET['left'])>0) ? $condition = ' AND left == "'.$_GET['left'].'" AND frequency >='.$frequency : $condition = '';
+(isset($_GET['right']) and strlen($_GET['right'])>0) ? $condition = ' AND right == "'.$_GET['right'].'" AND frequency >='.$frequency : NULL;
+(isset($_GET['left']) and strlen($_GET['left'])>0) ? $condition = ' AND left == "'.$_GET['left'].'" AND frequency >='.$frequency : NULL;
 (strlen($condition) == 0 and $frequency==0) ? $frequency = 10 : NULL;
 
 if (isset($_GET['logdice']) and strlen($_GET['logdice'])>0){

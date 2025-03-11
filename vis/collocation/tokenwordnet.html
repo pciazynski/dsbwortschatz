@@ -27,7 +27,9 @@
 	var frequency = getQueryVariable('frequency')
 	var left = getQueryVariable('left')
 	var right = getQueryVariable('right')
-	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right
+	var logdice = getQueryVariable('logdice')
+
+	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right+'&logdice='+logdice
 	
 	network = readPHP(dataset).split('\n')
 	if(network.length<100){lay='cose'}else{lay='random'}

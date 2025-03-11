@@ -89,6 +89,17 @@
 			</script>
 		</td>
 	</tr>
+	<tr>
+		<td></td><td style="text-align:center;"><span id="logdiceminvaluetoken">0.0</span> - <span id="logdicemaxvaluetoken">14.9</span></td><td></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Log Dice</td>
+			<td>
+				<input type="range" min="0" max="14" value="0" class="slider" id="logdicemintoken" onchange="updateLeftRightNeighbors()">
+				<br>
+				<input type="range" min="0" max="14" value="14" class="slider" id="logdicemaxtoken" onchange="updateLeftRightNeighbors()">
+			</td>
+	</tr>
 </table>
 
 <div class = "iframediv">
@@ -151,6 +162,19 @@
 		document.getElementById("logdiceminvalue").innerHTML = otherslider.value+".0"
 		document.getElementById("logdicemaxvalue").innerHTML = this.value+".9"
 	}
+	logdicemintoken.oninput = function() {
+		otherslider=document.getElementById("logdicemaxtoken")
+		otherslider.value=Math.max(otherslider.value,this.value)
+		document.getElementById("logdiceminvaluetoken").innerHTML = this.value+".0"
+		document.getElementById("logdicemaxvaluetoken").innerHTML = otherslider.value+".9"
+	}
+
+	logdicemaxtoken.oninput = function() {
+		otherslider=document.getElementById("logdicemintoken")
+		otherslider.value=Math.min(otherslider.value,this.value)
+		document.getElementById("logdiceminvaluetoken").innerHTML = otherslider.value+".0"
+		document.getElementById("logdicemaxvaluetoken").innerHTML = this.value+".9"
+	}	
 	
 	var showtokeninfo = function(tmp){
 		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
@@ -187,8 +211,10 @@
 		}
 		token = document.getElementById('wordnettoken').value
 		min = document.getElementById("mintoken").value.trim()
-		document.getElementById('leftwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&right="+token
-		document.getElementById('rightwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&left="+token
+		logdice = document.getElementById("logdicemintoken").value.trim()+"-"+ document.getElementById("logdicemaxtoken").value.trim()
+
+		document.getElementById('leftwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&right="+token+"&logdice="+logdice
+		document.getElementById('rightwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&left="+token+"&logdice="+logdice
 		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+token
 	}
 	update()
