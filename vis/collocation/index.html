@@ -131,6 +131,7 @@
 				<button class = "iframebutton" onclick="datalink('rightwordnet');">Rohdaten</button>
 			</td>
 		</tr>
+
 		<tr>
 			<td>
 				<iframe height="500px"  width="90%" id="leftwordnet" scrolling="yes"></iframe>
@@ -139,12 +140,29 @@
 				<iframe height="500px"  width="90%" id="rightwordnet" scrolling="yes"></iframe>
 			</td>
 		</tr>
+
+		<tr>
+			<td>
+				<button class = "iframebutton" onclick="tableornetwork('leftwordnet');">Table / Network</button>
+			</td>
+			<td>		
+				<button class = "iframebutton" onclick="tableornetwork('rightwordnet');">Table / Network</button>
+			</td>
+		</tr>
 	</table>
 </div>
 
 <br><br>
 
 <script>
+
+	var tableornetwork = function(elId){
+		loading(elId)
+		elsrc = document.getElementById(elId).src
+		if(elsrc.includes("wordnet")){document.getElementById(elId).src = elsrc.replace("tokenwordnet","tokenlist")}
+		else{document.getElementById(elId).src = elsrc.replace("tokenlist","tokenwordnet")}
+	}
+
 
 	var logdicemin = document.getElementById("logdicemin");
 	
@@ -186,6 +204,8 @@
 		min = document.getElementById("minglobal").value.trim()
 		logdice = document.getElementById("logdicemin").value.trim()+"-"+ document.getElementById("logdicemax").value.trim()
 		document.getElementById('globallist').src="tokenlist.html?data=collocation.php&frequency="+min+"&logdice="+logdice+"&sortBy="+sortByWhat
+		if(document.getElementById("rightwordnet").src.includes("tokenlist")){document.getElementById("rightwordnet").src = document.getElementById("rightwordnet").src.split("&sortby")[0]+"&sortBy="+sortByWhat}
+		if(document.getElementById("leftwordnet").src.includes("tokenlist")){document.getElementById("leftwordnet").src = document.getElementById("leftwordnet").src.split("&sortby")[0]+"&sortBy="+sortByWhat}
 	}
 
 	var update = function(){
