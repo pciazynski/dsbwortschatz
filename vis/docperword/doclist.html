@@ -41,6 +41,8 @@
 		for (var j = 0; j < urnarr.length; j++){
 			tmpname += " "+urnarr[j].charAt(0).toUpperCase() + urnarr[j].slice(1)
 		}
+		//Remove Versioning Timestamp
+		tmpname = tmpname.substring(0,tmpname.lastIndexOf(" "))
 		
 		onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+token+"', '_blank')"
 		onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
