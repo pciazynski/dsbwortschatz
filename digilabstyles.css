@@ -140,7 +140,7 @@ div.header> table > tbody > tr >td >a{
 }
 
 .slider:hover:enabled {
-	opacity: 1;
+	background: white;
 }
 
 .slider::-webkit-slider-thumb {

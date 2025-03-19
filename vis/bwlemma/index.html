@@ -131,10 +131,9 @@
 	</tr>
 	<tr>
 		<td style="text-align:right;">
-			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Textvarianten von </input><script>document.write(minDate)</script>
 		</td>
 		<td>
-			<input style="width:85%" type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateTravizYear()">
+			<input style="width:85%" type="range" class="slider" id="yearminslider" oninput= "updateYearlabel()" onchange="updateTravizYear()">
 		</td>
 		<td style="text-align:left;">bis <script>document.write(maxDate)</script></td>
 	</tr>
@@ -155,24 +154,20 @@
 <script>
 
 	var updateYearlabel = function(){
-		tmp = parseInt(document.getElementById("year").value)
+		tmp = parseInt(document.getElementById("yearminslider").value)
 		document.getElementById("yearlabel").innerHTML = tmp
 	}
-	
-	var switchPerYear = function(){
-		document.getElementById("year").disabled = !document.getElementById("peryearcheckbox").checked
-		updateTravizYear()
-	}
+
 	
 	var updateTravizYear = function(){
 		if(curlemma.trim().length>0){
 			loading("traviz")
 			url = document.getElementById("traviz").src.split("&year")[0]
-			
-			if(document.getElementById("peryearcheckbox").checked) {
-				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year=<"+(parseInt(document.getElementById("year").value)+1)
-			}else{
+			year = document.getElementById("yearminslider").value+1
+			if(year==maxDate) {
 				document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
+			}else{
+				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year=<"+(document.getElementById("yearminslider").value)
 			}
 		}
 	}
@@ -259,11 +254,10 @@
 	updateZipf()
 	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
 	curlemma = getQueryVariable("lemma")
-	document.getElementById("year").min = minDate
-	document.getElementById("year").max = maxDate
-	document.getElementById("year").disabled = true
-	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
-	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
+	document.getElementById("yearminslider").min = minDate
+	document.getElementById("yearminslider").max = maxDate
+	document.getElementById("yearlabel").innerHTML = maxDate
+	document.getElementById("yearminslider").value = maxDate
 
 	if(curlemma.length>0){
 		document.getElementById("lemma").value = curlemma
