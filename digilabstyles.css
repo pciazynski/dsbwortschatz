@@ -135,14 +135,6 @@ div.header> table > tbody > tr >td >a{
 	transition: opacity .2s;
 }
 
-.slider:disabled {
-	background: gray;
-}
-
-.slider:hover:enabled {
-	background: white;
-}
-
 .slider::-webkit-slider-thumb {
 	-webkit-appearance: none; 
 	appearance: none;

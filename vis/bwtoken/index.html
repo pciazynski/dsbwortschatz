@@ -69,9 +69,6 @@
 	yearminslider.min=minDate
 
 	
-	//yearmaxslider.disabled = true
-	//yearminslider.disabled = true
-	
 	yearmaxslider.min = minDate
 	yearmaxslider.max = maxDate
 	yearminslider.min = minDate
@@ -317,12 +314,6 @@
 		document.getElementById("timespan").src="timezipf.html?data=bagofwords/_minmaxyearzipf&count="+count+"&offset="+offset
 	}
 	
-	var updateYearlabel = function(){
-		tmp = parseInt(document.getElementById("year").value)
-		document.getElementById("yearlabel").innerHTML = tmp
-	}
-
-
 	updateTimeSpan()
 	updateZipf()
 	
