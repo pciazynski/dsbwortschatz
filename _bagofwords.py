@@ -7,9 +7,9 @@ from config import *
 
 doc_year = {}
 
-def inventory(endpoint):
+
+def inventory():
     global ctsurl
-    requestctsurl(endpoint)
     res = ""
     print(ctsurl+"plain/editions.php")
     data = urlopen(ctsurl+"plain/editions.php") 
@@ -18,23 +18,12 @@ def inventory(endpoint):
     return res.strip()
 
 
-def requestctsurl(ns):
-    global ctsurl
-    if len(ctsurl) == 0:
-        if not ns.startswith("urn:cts"):
-            ns = "urn:cts:"+ns
-        ns = ns.split(":")[2]
-        data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
-        for line in data: 
-            ctsurl+=line.decode('utf-8')
-
 def errorlog(errormsg):
     with open("_ERROR.txt", "a", encoding="utf8") as erroutf:
         erroutf.write(errormsg+"\n")
 
 def bagofwords(urn):
     global ctsurl
-    requestctsurl(urn)
     res = ""
     data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
     for line in data: 
@@ -45,7 +34,7 @@ def bagofwords(urn):
 
 def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
-        #print("process "+foldername+":"+yearfile)
+        print("process "+foldername+":"+yearfile)
         wb = dict()
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
             for line in inf:
@@ -139,8 +128,10 @@ def collect():
     global count
     reset()
     print("Collect...")
-    
-    for line in inventory("dsb").split("\n"):
+    doclist = inventory().split("\n")
+    if count == -1:
+        count = len(doclist)
+    for line in doclist:
         urn = line.split("\t")[0]
         urnarr = urn.split(".")
         year = line.split("\t")[2]
@@ -148,7 +139,7 @@ def collect():
         if (len(year)>1 and count!=0):
             doc_year[urn] = year
             count-=1
-           #print(str(count)+" "+urn)
+            print(str(count)+" "+urn)
             with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                 rs = bagofwords(urn)
                 if sanitycheck(rs):

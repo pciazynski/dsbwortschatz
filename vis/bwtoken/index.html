@@ -27,26 +27,61 @@
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:right;">Minimum Tokenhäufigkeit</td>
+		<td style="text-align:right;">Anzahl</td>
 		<td>
-			<input type="number" value="1000" id="min" onchange="updateZipf()">
+			<input type="number" min="0" value="10000" id="limit" onchange="updateZipf()">
 		</td>
 	</tr>
 	<tr>
-		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
+		<td style="text-align:right;">Offset</td>
+		<td>
+			<input type="number" min="0" value="0" id="offset" onchange="updateZipf()">
+		</td>
+	</tr>
+	<tr>
+		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
 	</tr>
 	<tr>
 		<td style="text-align:right;">
-			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox">Pro Jahr von </input><script>document.write(minDate)</script>
 		</td>
 		<td>
-			<input type="range" max="1000" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateZipf()">
+			<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateZipf()">
+			<br>
+			<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateZipf()">
 		</td>
-		<td style="text-align:left;">bis <script>document.write(maxDate)</script></td>
 	</tr>
 	
 </table>
+<script>
+	yearminslider.oninput = function() {
+		otherslider=document.getElementById("yearmaxslider")
+		otherslider.value=Math.max(otherslider.value,this.value)
+		yearminvalue.innerHTML = this.value
+		yearmaxvalue.innerHTML = otherslider.value
+	}
 
+	yearmaxslider.oninput = function() {
+		otherslider=document.getElementById("yearminslider")
+		otherslider.value=Math.min(otherslider.value,this.value)
+		yearminvalue.innerHTML = otherslider.value
+		yearmaxvalue.innerHTML = this.value
+	}
+	yearminslider.min=minDate
+
+	
+	//yearmaxslider.disabled = true
+	//yearminslider.disabled = true
+	
+	yearmaxslider.min = minDate
+	yearmaxslider.max = maxDate
+	yearminslider.min = minDate
+	yearminslider.max = maxDate
+	yearminslider.value = minDate
+	yearmaxslider.value = maxDate
+	yearminvalue.innerHTML=minDate
+	yearmaxvalue.innerHTML = maxDate
+
+</script>
 
 <div class = "iframediv">
 	<button class = "iframebutton" onclick="embedding('zipf');">HTML Embedding</button>
@@ -257,24 +292,22 @@
 	}
 	var updateZipf = function(){
 		loading("zipf")
-		tmp = document.getElementById("min").value.trim()
-		document.getElementById("zipf").src="zipf.html?data=bagofwords/_all&min="+tmp
-		if (document.getElementById("peryearcheckbox").checked){
-			tmp2 = parseInt(document.getElementById("year").value)
-			//if(tmp2<1848){
-			//	if (tmp2<1837){tmp2 = 1797}
-			//	else{tmp2 = 1837}
-			//}
-			//else if(tmp2<1921 && tmp2>1918){
-			//	tmp2 = 1918
-			//}
-			document.getElementById("year").value = tmp2
-			document.getElementById("zipf").src="zipf.html?data=bagofwordsperyear/"+tmp2+"&min="+tmp
-			document.getElementById("yearlabel").innerHTML = tmp2
-		}else{
-			document.getElementById("zipf").src="zipf.html?data=bagofwords/_all&min="+tmp
+		tmp = document.getElementById("limit").value.trim()
+		tmp2 = document.getElementById("offset").value.trim()
+		tmpyear1 = parseInt(document.getElementById("yearminslider").value)
+		tmpyear2 = parseInt(document.getElementById("yearmaxslider").value)
+		if(document.getElementById("zipf").src.includes("3d.html")){funcall="zipf3d"}else{funcall="zipf"}
+		if(tmpyear1 == tmpyear2){
+			document.getElementById("zipf").src=funcall+".html?data=bagofwordsperyear/"+tmpyear1+"&limit="+tmp+"&offset="+tmp2
 		}
-		
+		else{
+			if(tmpyear1 == minDate && tmpyear2 == maxDate){
+				document.getElementById("zipf").src=funcall+".html?data=bagofwords/_all&limit="+tmp+"&offset="+tmp2
+			}
+			else{
+				document.getElementById("zipf").src=funcall+".html?data=tokencountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2+"&limit="+tmp+"&offset="+tmp2
+			}
+		}
 	}
 
 	var updateTimeSpan = function(){
@@ -289,13 +322,7 @@
 		document.getElementById("yearlabel").innerHTML = tmp
 	}
 
-	var switchPerYear = function(){
-		document.getElementById("year").disabled = !document.getElementById("peryearcheckbox").checked
-		updateZipf()
-	}
-	
-	document.getElementById("year").disabled = true
-	
+
 	updateTimeSpan()
 	updateZipf()
 	
@@ -309,10 +336,7 @@
 		document.getElementById('timeline').src="error_token.html"
 	}
 	
-	document.getElementById("year").min = minDate
-	document.getElementById("year").max = maxDate
-	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
-	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
+
 	document.title="Token "+token
 
 </script>
