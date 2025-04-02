@@ -7,10 +7,11 @@ import time
 from config import *
 import re
 import string
+n=sys.argv[1]
 
 deudict = {}
 
-with open("data/langDetect3/deu.txt", "r", encoding="utf8") as inf:
+with open("data/langDetect"+str(n)+"/deu.txt", "r", encoding="utf8") as inf:
     for line in inf:
         deudict[line.split("\t")[0].strip()]=1
         
@@ -47,10 +48,10 @@ def requestctsurl(ns):
     
 def langseparation(urn):
     global ctsurl
+    global copyrighttoken
     requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"plain/structuretext.php?urn="+urn+"&deletexml") 
-    print(ctsurl+"plain/structuretext.php?urn="+urn+"&deletexml")
+    data = urlopen(ctsurl+"plain/structuretext.php?urn="+urn+"&deletexml"+"&copyrighttoken="+copyrighttoken) 
     translator = re.compile('[%s]' % re.escape(string.punctuation))
     for line in data:
         line = line.decode('utf-8')
@@ -76,25 +77,25 @@ def langseparation(urn):
                 res+=line+"\t"+founddeu+"\n"
     return res
 
+def collect():
+    doclist = inventory("dsb").split("\n")
+    if count == -1:
+        count = len(doclist)
+            
+    for line in doclist:
+        urn = line.split("\t")[0]
+        urnarr = urn.split(".")
+        year = line.split("\t")[2]
 
+        if (len(year)>1 and count!=0):
+            count-=1
+            rs = langseparation(urn)
+            print(str(count)+" "+urn+" "+len(rs.strip())
+            if len(rs.strip())>0:
+                with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
+                    outf.write(rs)
+                    outyf.write(rs)
 
-
-                
-for line in inventory("dsb").split("\n"):
-    urn = line.split("\t")[0]
-    urnarr = urn.split(".")
-    year = line.split("\t")[2]
-
-    if (len(year)>1 and count!=0):
-        count-=1
-        print(str(count)+" "+urn)
-        rs = langseparation(urn)
-        if len(rs.strip())>0:
-            with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
-                outf.write(rs)
-                outyf.write(rs)
-
-def process(foldername):
     with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
         for yearfile in sorted(os.listdir(foldername+"peryear")):
             print("process "+foldername+":"+yearfile)
@@ -102,4 +103,3 @@ def process(foldername):
                 for line in inf:
                     outf.write(line)
 
-process("data/langseparation")

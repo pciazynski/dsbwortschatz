@@ -15,7 +15,7 @@ subprocess.run(["python3","_ngram.py","3"])
 subprocess.run(["python3","_ngram.py","5"])
 subprocess.run(["python3","_collocation.py"])
 subprocess.run(["python3","_spoznajrec.py","3"])
-subprocess.run(["python3","_zelenjerec.py"])
+subprocess.run(["python3","_zelenjerec.py","3"])
 #subprocess.run(["python3","_typorecognition.py"]) 
 subprocess.run(["python3","_stats.py"]) 
 
