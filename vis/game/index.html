@@ -12,31 +12,76 @@
 
 <script>document.write(header())</script>
 		
+<br><br>
+<br><br>
 
-
-<div class = "iframediv">
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
-		<tr style = "text-align:center;">
-			<td style = "width: 50%;">
-				<label id="leftwordlabel" onclick ="checkGuess('left')"></label>
-			</td>
-			<td style = "width: 50%;">
-				<label id="rightwordlabel" onclick ="checkGuess('right')"></label>
-			</td>
-		</tr>
-	</table>
+<div class = "explain">
+	<p>
+		Welches der beiden Worte ist häufiger? 
+	</p>
 </div>
+
+<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+	<tr style = "text-align:center;">
+		<td style = "width: 50%;">
+			Schwierigkeitsgrad:
+		</td>
+		<td style = "width: 50%;">
+			<input type="number" value = "5" min = "2" max = "50" id="wordlength" onchange ="fillWords()"></input>
+		</td>
+	</tr>
+</table>
+<br><br>
+
+<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+	<tr style = "text-align:center;">
+		<td style = "width: 30%;">
+			<button style="font-size:30px;" id="leftwordlabel" onclick ="checkGuess('left')"></button>
+		</td>
+		<td style = "width: 30%;">
+			<button  style="font-size:30px;" id="rightwordlabel" onclick ="checkGuess('right')"></button>
+		</td>
+	</tr>
+</table>
+
+<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+	<tr style = "text-align:center;">
+		<td style = "width: 30%;">
+			<label id="resultlabel"></label>
+		</td>
+	</tr>
+</table>
 
 <br><br>
 <script>
 	var length = 5
 	
 	var checkGuess = function(guess){
-		alert(guess)
+		msg = ""
+		color = "red"
+		if(guess === "left" && lcount > rcount){color = "green";msg = "Richtig\n"}
+		else if(guess === "right" && rcount > lcount){color = "green";msg = "Richtig\n"}
+		else{msg = "Falsch\n"}
+		leftword = '<a href="../bwtoken?token='+leftword+'" target="_blank">'+leftword+'</a>'
+		rightword = '<a href="../bwtoken?token='+rightword+'" target="_blank">'+rightword+'</a>'
+		if(guess === "left"){
+			msg = '<span style="background-color:'+color+';">◆</span> '+ leftword+":"+lcount+" " +rightword+":"+rcount+'<br>'
+		}
+		else{
+			msg = leftword+":"+lcount+ ' <span style="background-color:'+color+';">◆</span> ' +rightword+":"+rcount+'<br>'
+		}
+		resultlabel.innerHTML += msg
+		fillWords()
 	}
 	var fillWords = function(){
-		leftword = readPHP("tokenbylength.php?length=5&limit=1&random")
+		leftword = readPHP("tokenfrequencybylength.php?length="+wordlength.value+"&clean&limit=1&random").split("\t")
+		lcount = parseInt(leftword[1])
+		leftword = leftword[0]
 		leftwordlabel.innerHTML=leftword
+		rightword = readPHP("tokenfrequencybylength.php?length="+wordlength.value+"&clean&limit=1&random&frequency=!="+lcount).split("\t")
+		rcount = parseInt(rightword[1])
+		rightword = rightword[0]
+		rightwordlabel.innerHTML=rightword
 	}
 	fillWords()
 </script>

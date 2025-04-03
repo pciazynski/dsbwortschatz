@@ -80,6 +80,14 @@ def langseparation(urn):
                 res+=line+"\t"+founddeu+"\n"
     return res
 
+def process(foldername):
+    with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
+        for yearfile in sorted(os.listdir(foldername+"peryear")):
+            print("process "+foldername+":"+yearfile)
+            with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
+                for line in inf:
+                    outf.write(line)
+
 def collect():
     global count
     reset()
@@ -101,13 +109,8 @@ def collect():
                 with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                     outf.write(rs)
                     outyf.write(rs)
-
-    with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
-        for yearfile in sorted(os.listdir(foldername+"peryear")):
-            print("process "+foldername+":"+yearfile)
-            with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
-                for line in inf:
-                    outf.write(line)
+    process("data/langseparation")
+    
 
 if len(sys.argv)==3:
     if sys.argv[1] == "db":

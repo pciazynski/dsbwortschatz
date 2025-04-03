@@ -9,14 +9,15 @@ if(isset($_GET['length'])){
 	(isset($_GET['clean']))?$clean=' AND frequency>2':$clean='';
 
 	#SUBSTR(token,1,1) and GROUP BY sub make sure that the words are not very similar
-	$query = 'SELECT SUBSTR(token,1,1) as sub , token FROM tokencount WHERE LENGTH(token)=='.$_GET['length'].$frequency.$clean.' GROUP BY sub ORDER BY '.$order.' DESC LIMIT '.$limit;
+	$query = 'SELECT SUBSTR(token,1,1) as sub , token,frequency FROM tokencount WHERE LENGTH(token)=='.$_GET['length'].$frequency.$clean.' GROUP BY sub ORDER BY '.$order.' DESC LIMIT '.$limit;
 
 	$nl = "\n";
+	$tab = "\t";
 	$res = '';
 
 	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	foreach($PDO->query($query.';') as $row){
-		$res.=$row['token'].$nl;
+		$res.=$row['token'].$tab.$row['frequency'].$nl;
 	}
 
 	print($res);
