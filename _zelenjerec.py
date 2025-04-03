@@ -103,3 +103,13 @@ def collect():
                 for line in inf:
                     outf.write(line)
 
+if len(sys.argv)==2:
+    if sys.argv[1] == "db":
+        db()
+    else:
+        if sys.argv[1] == "collect":
+            collect()
+else:
+    collect()
+    db()
+    
