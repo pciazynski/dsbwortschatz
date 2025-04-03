@@ -151,17 +151,17 @@ div.header> table > tbody > tr >td >a{
 	cursor: pointer;
 }
 
-#logdicemin,#yearminslider::-moz-range-progress {
+#logdicemin::-moz-range-progress,#yearminslider::-moz-range-progress {
   background-color: #007377; 
 }
-#logdicemin,#yearminslider::-moz-range-track {  
+#logdicemin::-moz-range-track,#yearminslider::-moz-range-track {  
   background-color: #d3d3d3;
 }
 
-#logdicemax,#yearmaxslider::-moz-range-progress {
+#logdicemax::-moz-range-progress,#yearmaxslider::-moz-range-progress {
   background-color: #d3d3d3; 
 }
-#logdicemax,#yearmaxslider::-moz-range-track {  
+#logdicemax::-moz-range-track,#yearmaxslider::-moz-range-track {  
   background-color: #007377;
 }
 
@@ -174,11 +174,11 @@ div.header> table > tbody > tr >td >a{
 	cursor: ew-resize;
 }
 
-#logdicemin,#yearminslider::-webkit-slider-thumb {
+#logdicemin::-webkit-slider-thumb,#yearminslider::-webkit-slider-thumb {
 	box-shadow: -500px 0 0 500px darkgray;
 }
 
-#logdicemax,#yearmaxslider::-webkit-slider-thumb {
+#logdicemax::-webkit-slider-thumb,#yearmaxslider::-webkit-slider-thumb {
 	box-shadow: 500px 0 0 500px darkgray;
 }
 
