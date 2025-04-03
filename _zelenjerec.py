@@ -103,7 +103,7 @@ def collect():
                 for line in inf:
                     outf.write(line)
 
-if len(sys.argv)==2:
+if len(sys.argv)==3:
     if sys.argv[1] == "db":
         db()
     else:
