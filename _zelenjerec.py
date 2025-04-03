@@ -14,15 +14,18 @@ deudict = {}
 with open("data/langDetect"+str(n)+"/deu.txt", "r", encoding="utf8") as inf:
     for line in inf:
         deudict[line.split("\t")[0].strip()]=1
-        
+
 if not os.path.exists("data"):
     os.mkdir("data")
-if os.path.exists("data/langseparation"):
-    shutil.rmtree("data/langseparation")
-os.mkdir("data/langseparation")
-if os.path.exists("data/langseparationperyear"):
-    shutil.rmtree("data/langseparationperyear")
-os.mkdir("data/langseparationperyear")
+
+def reset():
+    print("Reset")
+    if os.path.exists("data/langseparation"):
+        shutil.rmtree("data/langseparation")
+    os.mkdir("data/langseparation")
+    if os.path.exists("data/langseparationperyear"):
+        shutil.rmtree("data/langseparationperyear")
+    os.mkdir("data/langseparationperyear")
 
 def inventory(endpoint):
     global ctsurl
@@ -78,6 +81,9 @@ def langseparation(urn):
     return res
 
 def collect():
+    global count
+    reset()
+    print("Collect...")
     doclist = inventory("dsb").split("\n")
     if count == -1:
         count = len(doclist)
