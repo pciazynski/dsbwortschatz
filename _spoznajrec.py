@@ -53,30 +53,46 @@ with open("learn/falsefriends.txt", "r", encoding = "utf8") as inf:
 with open("learn/deu_mixed-typical_2011_1M-words.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = line.strip().lower()
-        if not tmp in ff:
+        if not tmp in ff and len(tmp)>1:
             deudict[tmp] = 1
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
             
-with open("learn/ids_a-h.txt", "r", encoding = "utf8") as inf:
+with open("learn/deu_gps4.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmp = (line+" ").split(" ")[0].strip().lower()
-        if not tmp in ff:
+        tmp = (line+" ").split("\t")[0].strip().lower()
+        if not tmp in ff and len(tmp)>1:
+            deudict[tmp] = 1
+            tmp = tmp.replace("ſ","s").replace("ẜ","s")
+            deudict[tmp] = 1
+            
+with open("learn/deu_tg.txt", "r", encoding = "utf8") as inf:
+    for line in inf:
+        tmp = (line+" ").split("\t")[0].strip().lower()
+        if not tmp in ff and len(tmp)>1:
             deudict[tmp] = 1
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
 
-with open("learn/found_deu.txt", "r", encoding = "utf8") as inf:
+with open("learn/deu_ids_a-h.txt", "r", encoding = "utf8") as inf:
+    for line in inf:
+        tmp = (line+" ").split(" ")[0].strip().lower()
+        if not tmp in ff and len(tmp)>1:
+            deudict[tmp] = 1
+            tmp = tmp.replace("ſ","s").replace("ẜ","s")
+            deudict[tmp] = 1
+            
+with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = line.strip().lower()
         deudict[tmp] = 1
         tmp = tmp.replace("ſ","s").replace("ẜ","s")
         deudict[tmp] = 1
 
-with open("learn/stopwords_deu.txt", "r", encoding = "utf8") as inf:
+with open("learn/deu_stopwords.txt", "r", encoding = "utf8") as inf:
     for line in inf:
             tmp = line.strip().lower()
-            if not tmp in ff:
+            if not tmp in ff and len(tmp)>1:
                 deudict[tmp] = 1
                 tmp = tmp.replace("ſ","s").replace("ẜ","s")
                 deudict[tmp] = 1
