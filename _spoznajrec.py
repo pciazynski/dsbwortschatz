@@ -49,7 +49,6 @@ with open("learn/falsefriends.txt", "r", encoding = "utf8") as inf:
 #        tmp = line.strip().lower().split("\t")[0]
 #        addff(tmp)
            
-
 with open("learn/deu_mixed-typical_2011_1M-words.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = line.strip().lower()
@@ -57,6 +56,8 @@ with open("learn/deu_mixed-typical_2011_1M-words.txt", "r", encoding = "utf8") a
             deudict[tmp] = 1
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
+
+print("load deu_mixed:" + str(len(deudict)))
             
 with open("learn/deu_gps4.txt", "r", encoding = "utf8") as inf:
     for line in inf:
@@ -66,6 +67,8 @@ with open("learn/deu_gps4.txt", "r", encoding = "utf8") as inf:
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
             
+print("load deu_gps4:" + str(len(deudict)))
+
 with open("learn/deu_tg.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = (line+" ").split("\t")[0].strip().lower()
@@ -73,6 +76,8 @@ with open("learn/deu_tg.txt", "r", encoding = "utf8") as inf:
             deudict[tmp] = 1
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
+
+print("load deu_tg:" + str(len(deudict)))
 
 with open("learn/deu_ids_a-h.txt", "r", encoding = "utf8") as inf:
     for line in inf:
@@ -82,12 +87,16 @@ with open("learn/deu_ids_a-h.txt", "r", encoding = "utf8") as inf:
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
             
+print("load deu_ids_a-h:" + str(len(deudict)))
+
 with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = line.strip().lower()
         deudict[tmp] = 1
         tmp = tmp.replace("ſ","s").replace("ẜ","s")
         deudict[tmp] = 1
+
+print("load deu_found:" + str(len(deudict)))
 
 with open("learn/deu_stopwords.txt", "r", encoding = "utf8") as inf:
     for line in inf:
@@ -97,6 +106,8 @@ with open("learn/deu_stopwords.txt", "r", encoding = "utf8") as inf:
                 tmp = tmp.replace("ſ","s").replace("ẜ","s")
                 deudict[tmp] = 1
         
+
+print("load deu_stopwords:" + str(len(deudict)))
 
 with open("data/ngram"+n+"/_all.txt", "r", encoding = "utf8") as inf,open("data/langDetect"+n+"/ngram"+n+"_deu.txt", "w", encoding = "utf8") as deuoutf, open("data/langDetect"+n+"/ngram"+n+"_mix.txt", "w", encoding = "utf8") as mixoutf, open("data/langDetect"+n+"/ngram"+n+"_dsb.txt", "w", encoding = "utf8") as dsboutf, open("data/langDetect"+n+"/ngram"+n+"_langDetect.txt", "w", encoding = "utf8") as langDetect:
     for line in inf:
