@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 if (isset($_GET['deu']) and strlen($_GET['deu'])>0 and isset($_GET['n']) and strlen($_GET['n'])>0){
-	$PDO = new PDO('sqlite:../data/langDetect'.$_GET['n'].'.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/langDetect'.$_GET['n'].'.db');
 	$deu = $_GET['deu'];
 	
 	(isset($_GET['frequency']) and strlen($_GET['filter'])>0) ? $frequency = $_GET['frequency'] : $frequency = 1;

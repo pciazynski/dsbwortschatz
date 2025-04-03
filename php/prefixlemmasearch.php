@@ -4,7 +4,7 @@ header('Content-Type: text/plain');
 (isset($_GET['lemma'])) ? $lemma = $_GET['lemma'] : NULL;
 
 if (strlen($lemma)>=1){
-	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 	(isset($_GET['cutoff'])) ? $cutoff = ' GROUP BY SUBSTRING(lemma,0,'.strlen($lemma)+$_GET['cutoff'].')' : $cutoff = '';
 	

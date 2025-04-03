@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 if (isset($_GET['lemma'])){
-	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT DISTINCT token FROM lemmatokenfrequency WHERE lemma LIKE "%|'.$_GET['lemma'].'|%"';
 	$token = '';
 	foreach($PDO->query($query.';') as $row){

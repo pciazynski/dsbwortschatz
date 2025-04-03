@@ -3,7 +3,7 @@ header('Content-Type: text/plain');
 
 if (isset($_GET['token'])){
 
-	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT DISTINCT lemma,token,norm,type,subtype FROM tokenlemmanormtypesubtypedatefrequency';
 	$query .= ' WHERE token = "'.$_GET['token'].'"';
 

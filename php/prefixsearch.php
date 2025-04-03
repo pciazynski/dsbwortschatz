@@ -7,7 +7,7 @@ if (strlen($token)>=1){
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 	(isset($_GET['cutoff'])) ? $cutoff = ' GROUP BY SUBSTRING(token,0,'.strlen($token)+$_GET['cutoff'].')' : $cutoff = "";
 
-	$PDO = new PDO('sqlite:../data/bagofwords.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	$query = 'SELECT DISTINCT token FROM tokendatecount WHERE token LIKE "'.$token.'%"'.$cutoff.' ORDER BY frequency DESC LIMIT '.$limit;
 
 	$nl = "\n";

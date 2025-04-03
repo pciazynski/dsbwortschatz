@@ -7,7 +7,7 @@ if (isset($_GET['lemma'])){
 		return $hit;
 	}
 	
-	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$PDO->sqliteCreateFunction('regexp', '_sqliteRegexp', 2);
 	$query = 'SELECT lemma, sum(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency WHERE lemma REGEXP "\|'.$_GET['lemma'].'\|" GROUP BY lemma ';
 

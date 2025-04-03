@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/plain');
 
-$PDO = new PDO('sqlite:../data/collocation.db?mode=ro');
+$PDO = new PDO('sqlite:../data/collocation.db');
 
 $leftright = "";
 (isset($_GET['right']) and strlen($_GET['right'])>0) ? $leftright = 'right == "'.$_GET['right'].'"' : NULL;

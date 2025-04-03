@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 if (isset($_GET['lemma'])){
-	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	(isset($_GET['year'])) ? $query = 'SELECT lemma,token, SUM(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency WHERE date '.$_GET['year'] : $query = 'SELECT lemma,token, SUM(frequency) as sumfreq FROM lemmatokenfrequency WHERE true';
 	(isset($_GET['exact'])) ? $query .= ' AND lemma = "|'.$_GET['lemma'].'|"' : $query .= ' AND lemma LIKE "|%'.$_GET['lemma'].'%|"';
 
