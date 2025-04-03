@@ -56,31 +56,35 @@
 		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
 		textarr = text.split(" ").sort()
 		oldtoken = ""
-		dsblist = "\n"+readTextFile("langDetect3/dsb_slim");
-		mix1list = "\n"+readTextFile("langDetect3/mix1");
-		mix2list = "\n"+readTextFile("langDetect3/mix2");
-		deulist = "\n"+readTextFile("langDetect3/deu_slim");
+		nl = "\n"
+		tab="\t"
+		sp=" "
+		dsblist = nl+readTextFile("langDetect3/dsb_slim")+nl;
+		mix1list = nl+readTextFile("langDetect3/mix1")+nl;
+		mix2list = nl+readTextFile("langDetect3/mix2")+nl;
+		deulist = nl+readTextFile("langDetect3/deu_slim")+nl;
+
 		for (var i = 0;i<textarr.length;i++){
 			token = textarr[i].trim()
 			if(oldtoken!== token){
 				onclickfun = "window.open('../../vis/bwtoken/?token="+token+"')"
-				if(deulist.includes("\n"+token+"\t")){
-					text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick="'+onclickfun+'">'+token+'</span> ')
+				if(deulist.includes(nl+token+nl)){
+					text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick="'+onclickfun+'">'+token+'</span> ')
 				}
 				else {
-					if(mix2list.includes("\n"+token+"\t")){
-						text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick="'+onclickfun+'">'+token+'</span> ')
+					if(mix2list.includes("\n"+token+tab)){
+						text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick="'+onclickfun+'">'+token+'</span> ')
 					}
 					else{
-						if(mix1list.includes("\n"+token+"\t")){
-							text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick="'+onclickfun+'">'+token+'</span> ')
+						if(mix1list.includes(nl+token+tab)){
+							text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick="'+onclickfun+'">'+token+'</span> ')
 						}
 						else{
-							if(dsblist.includes("\n"+token+"\t")){
-								text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+token+'</span> ')
+							if(dsblist.includes(nl+token+nl)){
+								text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+token+'</span> ')
 							}
 						else{
-								text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick="'+onclickfun+'">'+token+'</span> ')
+								text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick="'+onclickfun+'">'+token+'</span> ')
 							}}}}
 				oldtoken = token
 			}
