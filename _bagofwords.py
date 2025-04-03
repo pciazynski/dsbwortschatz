@@ -155,6 +155,7 @@ def initTables():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
     cursor.execute("CREATE TABLE tokendatecount(token VARCHAR (50),date DATE,frequency INTEGER);")
+    cursor.execute("CREATE TABLE tokencount(token VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE TABLE urnwordbag(urn VARCHAR (50),date DATE,wordbag text);")
     con.commit()
     con.close()
@@ -163,11 +164,12 @@ def index():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
     print("Indexing...")
-    cursor.execute("CREATE INDEX tokenindex ON tokendatecount(token);")
+    cursor.execute("CREATE INDEX tokenindex ON tokencount(token);")
+    cursor.execute("CREATE INDEX tokendateindex ON tokendatecount(token);")
+    cursor.execute("CREATE INDEX tokendatedateindex ON tokendatecount(date);")
     cursor.execute("CREATE INDEX tokenurnindex ON urnwordbag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urnwordbag(wordbag);")
     cursor.execute("CREATE INDEX urndateindex ON urnwordbag(date);")
-    cursor.execute("CREATE INDEX dateindex ON tokendatecount(date);")
     con.commit()
     con.close()
 
@@ -177,6 +179,15 @@ def db():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
 
+    with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as inf:
+        for line in inf.readlines():
+            if len(line.strip())>0:
+                linearr = line.split("\t")
+                vals = '"'+linearr[0]+'",'+linearr[1]
+                query="INSERT INTO tokencount(token,frequency) VALUES("+vals+")"
+                cursor.execute(query)
+    con.commit()
+        
     yearfiles = sorted(os.listdir("data/bagofwordsperyear"))
     for year in yearfiles:
         #print("sql bagofwordsperyear:"+year)

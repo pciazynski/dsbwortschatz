@@ -1,16 +1,22 @@
 <?php
 header('Content-Type: text/plain');
 
-$PDO = new PDO('sqlite:../data/bagofwords.db');
-$query = 'SELECT SUBSTR(token,1,1) as sub , token FROM tokendatecount WHERE LENGTH(token)=='.$_GET['length'].' GROUP BY sub ORDER BY token DESC LIMIT 50';
+if(isset($_GET['length'])){
 
-$nl = "\n";
-$res = '';
+	(isset($_GET['limit']))?$limit=$_GET['limit']:$limit=50;
+	(isset($_GET['random']))?$order="random()":$order="token";
 
-foreach($PDO->query($query.';') as $row){
-	$res.=$row['token'].$nl;
+	#SUBSTR(token,1,1) and GROUP BY sub make sure that the words are not very similar
+	$query = 'SELECT SUBSTR(token,1,1) as sub , token FROM tokencount WHERE LENGTH(token)=='.$_GET['length'].' GROUP BY sub ORDER BY '.$order.' DESC LIMIT '.$limit;
+
+	$nl = "\n";
+	$res = '';
+
+	$PDO = new PDO('sqlite:../data/bagofwords.db');
+	foreach($PDO->query($query.';') as $row){
+		$res.=$row['token'].$nl;
+	}
+
+	print($res);
 }
-
-print($res);
-
 ?>

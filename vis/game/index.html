@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+		
+
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+		<tr style = "text-align:center;">
+			<td style = "width: 50%;">
+				<label id="leftwordlabel" onclick ="checkGuess('left')"></label>
+			</td>
+			<td style = "width: 50%;">
+				<label id="rightwordlabel" onclick ="checkGuess('right')"></label>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br><br>
+<script>
+	var length = 5
+	
+	var checkGuess = function(guess){
+		alert(guess)
+	}
+	var fillWords = function(){
+		leftword = readPHP("tokenbylength.php?length=5&limit=1&random")
+		leftwordlabel.innerHTML=leftword
+	}
+	fillWords()
+</script>
+
+
+<script>
+	document.write(footer())
+</script>
+
+</body>
