@@ -9,7 +9,7 @@ $tag = "";
 (isset($_GET['token'])) ? $query .= ' WHERE stemming = "'.$_GET['token'].'"' : NULL;
 (isset($_GET['sort'])) ? $query .= ' ORDER BY length(mapping)' : NULL;
 
-$PDO = new PDO('sqlite:../data/entities'.$tag.'.db');
+$PDO = new PDO('sqlite:../data/entities'.$tag.'.db?mode=ro');
 $query = 'SELECT * FROM stemmingmapping';
 
 $nl = "\n";

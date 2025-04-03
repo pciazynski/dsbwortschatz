@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/plain');
 
-$PDO = new PDO('sqlite:../data/lemmamapping.db');
+$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
 $query = 'SELECT lemma, SUM(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency';
 
 (isset($_GET['lemma'])) ? $query .= ' WHERE lemma LIKE "%|'.$_GET['lemma'].'|%"' : NULL;

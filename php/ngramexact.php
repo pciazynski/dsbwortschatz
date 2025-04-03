@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 $n = $_GET['n'];
-$PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
+$PDO = new PDO('sqlite:../data/ngram'.$n.'.db?mode=ro');
 
 (isset($_GET['frequency'])) ? $frequency = $_GET['frequency'] : $frequency = 1;
 

@@ -12,7 +12,7 @@ if (strlen($token)>=1){
 	$res = '';
 	$nl = "\n";
 
-	$PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
+	$PDO = new PDO('sqlite:../data/ngram'.$n.'.db?mode=ro');
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['ngram'].$nl;
 	}

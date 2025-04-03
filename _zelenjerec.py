@@ -90,7 +90,7 @@ def collect():
         if (len(year)>1 and count!=0):
             count-=1
             rs = langseparation(urn)
-            print(str(count)+" "+urn+" "+len(rs.strip())
+            print(str(count)+" "+urn+" "+len(rs.strip()))
             if len(rs.strip())>0:
                 with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                     outf.write(rs)

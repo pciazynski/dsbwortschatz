@@ -3,7 +3,7 @@ header('Content-Type: text/plain');
 
 #lemma,summe
 
-$PDO = new PDO('sqlite:../data/lemmamapping.db');
+$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
 $query = 'SELECT type, subtype, SUM(frequency) as summe FROM tokenlemmanormtypesubtypedatefrequency WHERE LENGTH(type)>0 OR LENGTH(subtype)>0 GROUP BY type, subtype ';
 (isset($_GET['sort'])) ? $query .= ' ORDER BY summe DESC' : NULL;
 

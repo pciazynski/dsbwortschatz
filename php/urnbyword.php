@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 if (isset($_GET['lemma'])){
-	$PDO = new PDO('sqlite:../data/lemmamapping.db');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
 	$query = 'SELECT DISTINCT token FROM lemmatokenfrequency WHERE lemma LIKE "%|'.$_GET['lemma'].'|%"';
 	$token = '';
 	foreach($PDO->query($query.';') as $row){
@@ -27,7 +27,7 @@ if (isset($_GET['lemma'])){
 }
 
 elseif (isset($_GET['token'])){
-	$PDO = new PDO('sqlite:../data/bagofwords.db');
+	$PDO = new PDO('sqlite:../data/bagofwords.db?mode=ro');
 	$query = 'SELECT urn, date FROM urnwordbag WHERE wordbag LIKE "%|'.str_replace(",",'|%" OR wordbag LIKE "%|',$_GET['token']).'|%"';
 
 	(isset($_GET['year'])) ? $query .= ' AND date =='.$_GET['year'] : NULL;

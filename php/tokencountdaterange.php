@@ -3,7 +3,7 @@ header('Content-Type: text/plain');
 
 if(isset($_GET['year']))
 {
-	$PDO = new PDO('sqlite:../data/bagofwords.db');
+	$PDO = new PDO('sqlite:../data/bagofwords.db?mode=ro');
 	$query = 'SELECT token, SUM(frequency) as summe FROM tokendatecount WHERE date '.$_GET['year'];
 
 	(isset($_GET['token'])) ? $query .= ' AND token LIKE "'.str_replace(",",'" OR token LIKE "',$_GET['token']).'"' : NULL;

@@ -3,7 +3,7 @@ header('Content-Type: text/plain');
 
 if (isset($_GET['filter'])){
 	$n = $_GET['n'];
-	$PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
+	$PDO = new PDO('sqlite:../data/ngram'.$n.'.db?mode=ro');
 	$query = 'SELECT * FROM ngramdatecount WHERE ngram = "_'.$_GET['filter'].'_"';
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
 

@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: text/plain');
-$PDO = new PDO('sqlite:../data/collocation.db');
+$PDO = new PDO('sqlite:../data/collocation.db?mode=ro');
 
 $condition = '';
 

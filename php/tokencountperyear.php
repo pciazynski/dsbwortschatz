@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/plain');
 
-$PDO = new PDO('sqlite:../data/bagofwords.db');
+$PDO = new PDO('sqlite:../data/bagofwords.db?mode=ro');
 $query = 'SELECT * FROM tokendatecount WHERE True';
 
 (isset($_GET['token'])) ? $query .= ' AND token LIKE "'.str_replace(",",'" OR token LIKE "',$_GET['token']).'"' : NULL;

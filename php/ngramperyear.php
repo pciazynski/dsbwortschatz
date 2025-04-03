@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 $n = $_GET['n'];
-$PDO = new PDO('sqlite:../data/ngram'.$n.'.db');
+$PDO = new PDO('sqlite:../data/ngram'.$n.'.db?mode=ro');
 $query = 'SELECT * FROM ngramdatecount WHERE true';
 
 (isset($_GET['filter'])) ? $query .= ' AND ngram LIKE "%\_'.str_replace('_','\_',$_GET['filter']).'\_%" escape "\"' : NULL;

@@ -9,7 +9,7 @@ if (isset($_GET['lemma'])){
 		return $hit;
 	}
 	
-	$PDO = new PDO('sqlite:../data/lemmamapping.db');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
 	$query = 'SELECT * FROM tokenlemmanormtypesubtypedatefrequency WHERE lemma REGEXP "\|'.$_GET['lemma'].'\|"';
 
 	$PDO->sqliteCreateFunction('regexp', '_sqliteRegexp', 2);

@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 if (isset($_GET['lemma'])){
-	$PDO = new PDO('sqlite:../data/lemmamapping.db');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
 	function _sqliteRegexp($pattern,$string) {
 		(preg_match("/^".$pattern."$/", $string)) ? $hit = true : $hit =  false;
 		return $hit;

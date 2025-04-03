@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 if (isset($_GET['lemma'])){
-	$PDO = new PDO('sqlite:../data/lemmamapping.db');
+	$PDO = new PDO('sqlite:../data/lemmamapping.db?mode=ro');
 	$query = 'SELECT token, lemma, frequency FROM lemmatokenfrequency';
 	(isset($_GET['exact'])) ? $query .= ' WHERE lemma = "|'.str_replace(',','|" OR lemma = "|',$_GET['lemma']).'|"' : $query .= ' WHERE lemma LIKE "%|'.str_replace(',','|%" OR lemma LIKE "%|',$_GET['lemma']).'|%"';
 	
