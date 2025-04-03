@@ -98,6 +98,17 @@ with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
 
 print("load deu_found:" + str(len(deudict)))
 
+with open("learn/deu_intermediateresults.txt", "r", encoding = "utf8") as inf:
+    for line in inf:
+        tmp = (line+" ").split("\t")[0].strip().lower()
+        if not tmp in ff and len(tmp)>1:
+            deudict[tmp] = 1
+            tmp = tmp.replace("ſ","s").replace("ẜ","s")
+            deudict[tmp] = 1
+            
+print("load deu_intermediateresults:" + str(len(deudict)))
+
+
 
 with open("data/ngram"+n+"/_all.txt", "r", encoding = "utf8") as inf,open("data/langDetect"+n+"/ngram"+n+"_deu.txt", "w", encoding = "utf8") as deuoutf, open("data/langDetect"+n+"/ngram"+n+"_mix.txt", "w", encoding = "utf8") as mixoutf, open("data/langDetect"+n+"/ngram"+n+"_dsb.txt", "w", encoding = "utf8") as dsboutf, open("data/langDetect"+n+"/ngram"+n+"_langDetect.txt", "w", encoding = "utf8") as langDetect:
     for line in inf:
