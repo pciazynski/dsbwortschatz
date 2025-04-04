@@ -111,6 +111,9 @@ def collect():
                     outyf.write(rs)
     process("data/langseparation")
     
+def db():
+    return ""
+    
 
 if len(sys.argv)==3:
     if sys.argv[1] == "db":
