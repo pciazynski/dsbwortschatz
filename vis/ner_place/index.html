@@ -14,25 +14,181 @@
 <br><br>
 <br><br>
 
+<script>
+var osm = function(iframeid){
+	dialink = document.getElementById(iframeid).src
+	if(dialink.includes('&osm=1')){dialink = dialink.replace('&osm=1','')}else{dialink += '&osm=1'}
+	document.getElementById(iframeid).src = dialink
+}
+
+
+function mapmenu(){
+	return ""
++"<table class='optionmenu' align='center'>"
++"	<tr style='text-align:center;'>"
++"		<td>Weltkarte</td>"
++"		<td>Kontinente</td>"
++"		<td>Deutschland</td>"
++"		<td>Bundesländer</td>"
++"		<td>Brandenburg (lgb)</td>"
++"		<td>Städte</td>"
++"	</tr>"
++"	<tr style='text-align:center;'>"
++"		<td>"
++"			Historisch AD 0-2000 :<select onchange = \"updateMap(this.options[this.selectedIndex].value)\">"
++"				<option value = \"histmaps/world_2010\">2010</option>"
++"				<option value = \"histmaps/world_2000\">2000</option>"
++"				<option value = \"histmaps/world_1994\">1994</option>"
++"				<option value = \"histmaps/world_1960\">1960</option>"
++"				<option value = \"histmaps/world_1945\">1945</option>"
++"				<option value = \"histmaps/world_1938\">1938</option>"
++"				<option value = \"histmaps/world_1930\">1930</option>"
++"				<option value = \"histmaps/world_1920\">1920</option>"
++"				<option value = \"histmaps/world_1914\">1914</option>"
++"				<option value = \"histmaps/world_1900\">1900</option>"
++"				<option value = \"histmaps/world_1880\">1880</option>"
++"				<option value = \"histmaps/world_1783\">1783</option>"
++"				<option value = \"histmaps/world_1715\">1715</option>"
++"				<option value = \"histmaps/world_1700\">1700</option>"
++"				<option value = \"histmaps/world_1650\">1650</option>"
++"				<option value = \"histmaps/world_1600\">1600</option>"
++"				<option value = \"histmaps/world_1530\">1530</option>"
++"				<option value = \"histmaps/world_1500\">1500</option>"
++"				<option value = \"histmaps/world_1492\">1492</option>"
++"				<option value = \"histmaps/world_1400\">1400</option>"
++"				<option value = \"histmaps/world_1300\">1300</option>"
++"				<option value = \"histmaps/world_1279\">1279</option>"
++"				<option value = \"histmaps/world_1200\">1200</option>"
++"				<option value = \"histmaps/world_1100\">1100</option>"
++"				<option value = \"histmaps/world_1002\">1002</option>"
++"				<option value = \"histmaps/world_900\">900</option>"
++"				<option value = \"histmaps/world_800\">800</option>"
++"				<option value = \"histmaps/world_700\">700</option>"
++"				<option value = \"histmaps/world_600\">600</option>"
++"				<option value = \"histmaps/world_500\">500</option>"
++"				<option value = \"histmaps/world_400\">400</option>"
++"				<option value = \"histmaps/world_300\">300</option>"
++"				<option value = \"histmaps/world_200\">200</option>"
++"				<option value = \"histmaps/world_100\">100</option>"
++"			</select><br>"
++"			Historisch BC 123000-0 :<select onchange = \"updateMap(this.options[this.selectedIndex].value)\">"
++"				<option value = \"histmaps/world_bc1\">1</option>"
++"				<option value = \"histmaps/world_bc100\">100</option>"
++"				<option value = \"histmaps/world_bc200\">200</option>"
++"				<option value = \"histmaps/world_bc300\">300</option>"
++"				<option value = \"histmaps/world_bc323\">323</option>"
++"				<option value = \"histmaps/world_bc400\">400</option>"
++"				<option value = \"histmaps/world_bc500\">500</option>"
++"				<option value = \"histmaps/world_bc700\">700</option>"
++"				<option value = \"histmaps/world_bc1000\">1000</option>"
++"				<option value = \"histmaps/world_bc1500\">1500</option>"
++"				<option value = \"histmaps/world_bc2000\">2000</option>"
++"				<option value = \"histmaps/world_bc3000\">3000</option>"
++"				<option value = \"histmaps/world_bc4000\">4000</option>"
++"				<option value = \"histmaps/world_bc5000\">5000</option>"
++"				<option value = \"histmaps/world_bc8000\">8000</option>"
++"				<option value = \"histmaps/world_bc10000\">10000</option>"
++"				<option value = \"histmaps/world_bc123000\">123000</option>"
++"			</select><br>"
++"			Weltkarte :"
++"			<button onclick='updateMap(\"welt/continents\")'>Kontinente</button>"
++"			<button onclick='updateMap(\"welt/countries\")'>Länder</button>"
++"		</td>"
++"		<td>"
++"			<button onclick='updateMap(\"kontinente/africa\")'>Afrika</button>"
++"			<button onclick='updateMap(\"kontinente/asia\")'>Asien</button><br>"
++"			<button onclick='updateMap(\"kontinente/australia\")'>Australien</button>"
++"			<button onclick='updateMap(\"kontinente/europe\")'>Europa</button><br>"
++"			<button onclick='updateMap(\"kontinente/northamerica\")'>Nordamerika</button>"
++"			<button onclick='updateMap(\"kontinente/southamerica\")'>Südamerika</button><br>"
++"			<button onclick='updateMap(\"kontinente/oceania\")'>Ozeanien</button>"
++"		</td>"
++"		<td>"
++"			<button onclick='updateMap(\"deutschland/bundeslaender\")'>Bundesländer</button><br>"
++"			<button onclick='updateMap(\"deutschland/landkreise\")'>Landkreise</button><br>"
++"			<button onclick='updateMap(\"deutschland/gemeinden\")'>Gemeinden</button>"
++"		</td>"
++"		<td>"
++"			Landkreise<br>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseBB\")'>BB</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseBE\")'>BE</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseBW\")'>BW</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseBY\")'>BY</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseHB\")'>HB</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseHE\")'>HE</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseHH\")'>HH</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseMV\")'>MV</button>"
++"			<br>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseNI\")'>NI</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseNW\")'>NW</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseRP\")'>RP</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseSH\")'>SH</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseSL\")'>SL</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseSN\")'>SN</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseST\")'>ST</button>"
++"			<button onclick='updateMap(\"bundeslaender/landkreiseTH\")'>TH</button>"
++"			<br>Gemeinden<br>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenBB\")'>BB</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenBE\")'>BE</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenBW\")'>BW</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenBY\")'>BY</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenHB\")'>HB</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenHE\")'>HE</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenHH\")'>HH</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenMV\")'>MV</button>"
++"			<br>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenNI\")'>NI</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenNW\")'>NW</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenRP\")'>RP</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenSH\")'>SH</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenSL\")'>SL</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenSN\")'>SN</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenST\")'>ST</button>"
++"			<button onclick='updateMap(\"bundeslaender/gemeindenTH\")'>TH</button>"
++"		</td>"
++"		<td>"
++"			<button onclick='updateMap(\"lgb/sorbsiedlgebiet\")'>Sorbi.Siedlungsgebiet</button>"
++"			<button onclick='updateMap(\"lgb/bebb\")'>BeBB</button><br>"
++"			<button onclick='updateMap(\"lgb/regionen\")'>Regionen</button>"
++"			<button onclick='updateMap(\"lgb/ortsteile\")'>Ortsteile</button>"
++"			<button onclick='updateMap(\"lgb/kreise\")'>Kreise</button><br>"
++"			<button onclick='updateMap(\"lgb/gemeinden\")'>Gemeinden</button>"
++"			<button onclick='updateMap(\"lgb/gemverbaende\")'>Gemeindeeverbände</button><br>"
++"			<button onclick='updateMap(\"lgb/berlinortsteile\")'>Berlin Ortsteile</button>"
++"			<button onclick='updateMap(\"lgb/berlinbezirke\")'>Berlin Bezirke</button>"
++"		</td>"
++"		<td>"
++"			<button onclick='updateMap(\"lgb/berlinortsteile\")'>Berlin Ortsteile</button>"
++"			<button onclick='updateMap(\"lgb/berlinbezirke\")'>Berlin Bezirke</button><br>"
++"			<button onclick='updateMap(\"staedte/chemnitz\")'>Chemnitz</button>"
++"			<button onclick='updateMap(\"staedte/dresden\")'>Dresden</button>"
++"			<button onclick='updateMap(\"staedte/leipzig\")'>Leipzig</button>"
++"		</td>"
++"	</tr>"
++"	<tr style='text-align:center;'>"
++"		<td>Layer:</td>"
++"		<td><button onclick=\"osm('map');\">Open Street Map Layer</button></td>"
++"		<td></td>"
++"		<td></td>"
++"		<td></td>"
++"		<td></td>"
++"	</tr>"
++"</table>"
+
+}
+
+document.write(mapmenu())
+</script>
+
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="diagrammlink('geomap');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('geomap');">Rohdaten</button>
+	<button class = "iframebutton" onclick="diagrammlink('map');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('map');">Rohdaten</button>
 	<div style="text-align:center;">
-		<iframe class="resized" width="60%" height="475px" id="geomap" scrolling="yes"></iframe>
+		<iframe class="resized" width="60%" height="475px" id="map" scrolling="yes"></iframe>
 <!--
 		<iframe class="resized" width="30%" height="475px" id="urnlist" scrolling="yes"></iframe>
 -->
 	</div>
-	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_kreise');">BB Landkreise</button>
-	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_gemeinden');">BB Gemeinden</button>
-	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_ortsteile');">BB Ortsteile</button>
-	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_gemverbaende');">Gem Verbände</button>
-	<button class = "iframebutton" onclick="maptype('lgb/GRENZE_11-51_sorbsiedlgebiet');">Srb. Siedlgebiet</button>
-	<button class = "iframebutton" onclick="maptype('worldcountries');">Weltkarte</button>
-	<button class = "iframebutton" onclick="maptype('europe');">Europa</button>
-	<button class = "iframebutton" onclick="maptype('bundeslaender');">Bundesländer</button>
-	<button class = "iframebutton" onclick="maptype('landkreise');">Landkreise</button>
-	<button class = "iframebutton" onclick="maptype('gemeinden');">Gemeinden</button>
 </div>
 
 <br><br>
@@ -76,6 +232,8 @@
 <br><br>
 <script>
 
+
+
 	var updateTimeline = function(){
 		loading('timeline')
 		token = document.getElementById('token').value.trim()
@@ -83,17 +241,17 @@
 		document.getElementById('timeline').src='timeline.html?data=tokencountperyear.php&jitter='+jit+'&token='+token+'&sort'
 	}
 
-	var maptype = function(typename){
-		loading('geomap')
-		document.getElementById('geomap').src='geomap.html?data=entitiesPLACE/_all&maptype='+typename
+	var updateMap = function(typename){
+		loading('map')
+		document.getElementById('map').src='geomap.html?data=entitiesPLACE/_all&maptype='+typename
 	}
 	loading('zipf')
-	loading('geomap')
+	loading('map')
 	document.getElementById('zipf').src = 'zipf.html?data=entitiesPLACE/_all'
 	document.getElementById('timeline').src = 'error_token.html'
 	document.getElementById('stemmings').src = 'error_token.html'
 	//document.getElementById('urnlist').src = 'error_token.html'
-	document.getElementById('geomap').src = 'geomap.html?data=entitiesPLACE/_all'
+	document.getElementById('map').src = 'geomap.html?data=entitiesPLACE/_all'
 	document.title="Entitäten PLACE"
 
 

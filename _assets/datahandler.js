@@ -24,19 +24,7 @@ function ctsrequest(url){
 	return textstr
 }
 
-function loadGeojson(jsonfile, design){
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', geourl+jsonfile);
-	xhr.setRequestHeader('Content-Type', 'application/json');
-	xhr.responseType = 'json';
-	xhr.onload = function() {
-		if (xhr.status !== 200) return
-		geojson = L.geoJSON(xhr.response,design);
-		geojson.addTo(mymap);
-		mymap.fitBounds(geojson.getBounds());
-	};
-	xhr.send();
-}
+
 function readPHP(file){
 	text=""
 	rawFile = new XMLHttpRequest();
