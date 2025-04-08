@@ -91,6 +91,7 @@ def collect():
         count = len(doclist)
             
     for line in doclist:
+        print(str(count)+" "+urn)
         urn = line.split("\t")[0]
         urnarr = urn.split(".")
         year = line.split("\t")[2]
