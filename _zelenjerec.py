@@ -54,31 +54,25 @@ def langseparation(urn):
     global copyrighttoken
     requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"plain/structuretext.php?urn="+urn+"&deletexml"+"&copyrighttoken="+copyrighttoken) 
-    translator = re.compile('[%s]' % re.escape(string.punctuation))
+    data = urlopen(ctsurl+"tm/structurebagofwords.php?urn="+urn+"&deletexml&lowercase"+"&copyrighttoken="+copyrighttoken) 
     for line in data:
-        line = line.decode('utf-8')
-        translator.sub(' ', line)
-        line = re.sub(' +',' ', line).strip()
+        line = line.decode('utf-8').strip()
         linearr = line.split("\t")
         if len(linearr)==3:
             urn = linearr[0]
-            text = linearr[2].lower()
-            translator.sub(' ', text)
-            text = re.sub(' +',' ', text).strip()
-            textarr = text.split(" ")
+            textarr = linearr[2].split(",")
             occdeu = 0
-            txtdict = {}
             founddeu = ""
             for token in textarr:
-                if token in deudict and not token in txtdict:
+                token = token.split(":")[0]
+                if token in deudict:
                     occdeu += 1
-                    txtdict[token] = 1
-                    founddeu += token+" "
-
+                    founddeu += token+","
+            
             if occdeu > 0:
+                founddeu = founddeu[:-1]
                 res+=line+"\t"+founddeu+"\n"
-    return res
+    return res.strip()
 
 def process(foldername):
     with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
@@ -104,22 +98,69 @@ def collect():
         if (len(year)>1 and count!=0):
             count-=1
             rs = langseparation(urn)
-            print(str(count)+" "+urn+" "+str(len(rs.strip())))
             if len(rs.strip())>0:
                 with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                     outf.write(rs)
                     outyf.write(rs)
     process("data/langseparation")
     
+def initTables():
+    if os.path.exists("data/langDeu"+str(n)+".db"):
+        os.remove("data/langDeu"+str(n)+".db")
+    con = sqlite3.connect("data/langDeu"+str(n)+".db")
+    cursor = con.cursor()
+    cursor.execute("CREATE TABLE tokenurnyearpassagestructureelementfrequency(token VARCHAR (50),docurn VARCHAR (50),urn VARCHAR (50), year DATE,structureelement VARCHAR(50), frequency INTEGER);")
+    con.commit()
+    con.close()
+
+def index():
+    con = sqlite3.connect("data/langDeu"+str(n)+".db")
+    cursor = con.cursor()
+    print("Indexing...")
+    cursor.execute("CREATE INDEX tokenindex ON tokenurnyearpassagestructureelementfrequency(token);")
+    cursor.execute("CREATE INDEX yearindex ON tokenurnyearpassagestructureelementfrequency(year);")
+    cursor.execute("CREATE INDEX urnindex ON tokenurnyearpassagestructureelementfrequency(urn);")
+    cursor.execute("CREATE INDEX freqindex ON tokenurnyearpassagestructureelementfrequency(frequency);")
+    cursor.execute("CREATE INDEX docurnindex ON tokenurnyearpassagestructureelementfrequency(docurn);")
+    cursor.execute("CREATE INDEX structureelement ON tokenurnyearpassagestructureelementfrequency(structureelement);")
+    con.commit()
+    con.close()
+
 def db():
-    return ""
+    print("DB...")
+    initTables()
+    con = sqlite3.connect("data/langDeu"+str(n)+".db")
+    cursor = con.cursor()
+
+    for yearfile in sorted(os.listdir("data/langseparationperyear/")):
+        with open ("data/langseparationperyear/"+yearfile, "r", encoding="utf8") as inf:
+            for line in inf:
+                line=line.strip()
+                rs = line.split("\t")
+                docurn=rs[0].split(":")
+                docurn=docurn[0]+":"+docurn[1]+":"+docurn[2]+":"+docurn[3]+":"
+                tokencountarr = rs[2].split(",")
+                tokencountdict = {}
+                for token in tokencountarr:
+                    tokenarr = token.split(":")
+                    tokencountdict[tokenarr[0]] = tokenarr[1]
+                tokenarr = rs[3].split(",")
+                for token in tokenarr:
+                    if len(token.strip())>0:
+                        vals =  "'"+tokenarr[0].strip()+"','"+rs[0].strip()+"','"+docurn.strip()+"','"+yearfile.replace(".txt","")+"','"+rs[1].strip()+"',"+str(tokencountdict[token])
+                        query="INSERT INTO tokenurnyearpassagestructureelementfrequency(token,urn,docurn,year,structureelement,frequency) VALUES("+vals+")"
+                        cursor.execute(query)
+    con.commit()
+    con.close()
+    index()
+    
     
 
 if len(sys.argv)==3:
-    if sys.argv[1] == "db":
+    if sys.argv[2] == "db":
         db()
     else:
-        if sys.argv[1] == "collect":
+        if sys.argv[2] == "collect":
             collect()
 else:
     collect()
