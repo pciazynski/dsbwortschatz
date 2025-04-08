@@ -27,7 +27,7 @@ if (isset($_GET['lemma'])){
 }
 
 elseif (isset($_GET['token'])){
-	$PDO = new PDO('sqlite:../data/bagofwords.db?mode=ro');
+	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	$query = 'SELECT urn, date FROM urnwordbag WHERE wordbag LIKE "%|'.str_replace(",",'|%" OR wordbag LIKE "%|',$_GET['token']).'|%"';
 
 	(isset($_GET['year'])) ? $query .= ' AND date =='.$_GET['year'] : NULL;

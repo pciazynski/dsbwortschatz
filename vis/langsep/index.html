@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+<body style="background-color:lightgray">
+<script>document.write(header())</script>
+
+<br><br>
+
+<div class = "explain">
+	<p>
+		Hier werden Tokens nach Häufigkeit sortiert dargestellt (Zipf Ranking). Häufige Worte sind idR kurz und allgemein, seltene Worte länger und spezieller. Circa die Hälfte der Tokens in einem Korpus kommt nur einmal vor und können daher für viele statistische Analysen ignoriert werden.
+		<br>
+		Ein Klick auf ein Token fügt dieses in die Ansicht weiter unten ein.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:right;">Anzahl</td>
+		<td>
+			<input type="number" min="0" value="10000" id="limit" onchange="updateZipf()">
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Offset</td>
+		<td>
+			<input type="number" min="0" value="0" id="offset" onchange="updateZipf()">
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="embedding('zipf');">HTML Embedding</button>
+	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="threeD('zipf');">3D / 2D</button>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+	</div>
+<br><br>
+
+
+<div class = "explain">
+	<p>
+		Hier werden Worthäufigkeiten nach Jahren dargestellt. Einzeltokens können per Autovervollständigung oder Klick auf die Zipfverteilung gewählt werden.
+		Statt einzelnen Tokens kann kommasepariert eine Tokenliste oder ein Regex übergeben werden.
+		Es kann zwischen absoluten und relativen Worthäufigkeiten gewechselt werden. Relativ bezieht sich hier auf die Summe der Vorkommen des individuellen Tokens.
+		Für Einzeltokens kann eine lineare Regression der Worthäufigkeiten statt einem Scatterplot angezeigt werden.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Suchbegriff</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="token" type="text" placeholder="Token">
+				<button onclick = "updateTimeline()">Enter</button> 
+			</div>
+			<script>
+				autocomplete("token", "prefixsearch.php?&cutoff=2&limit=20&token=", ""); 
+			</script>
+		</td>
+		<td style="text-align:left;">Sende an <button onclick = "addTokenToList()">&#10149;Tokenliste</button></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Regex</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="regexsearch" type="text" placeholder="^ und $ werden angefügt" onchange = "">
+				<button onclick = "updateTimelineRegex()">Enter</button> 
+			</div>
+		</td>
+		<td style="text-align:center;">Bspw w(o|a)n(a|i)</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Tokenliste</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="tokenlist" type="text" placeholder="Kommasepariert" onchange = "">
+				<button onclick = "updateTimelineTokenList()">Enter</button> 
+			</div>
+		</td>
+		<td style="text-align:center;">Bspw druge,woni</td>
+	</tr>
+</table>
+<br><br>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+		<tr>
+			<td style = "width: 100%;">
+				<iframe class="resized" width="50%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzeltoken)</button>
+				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br><br>
+
+<hr>
+
+<div class = "explain">
+	<p>
+		Verwendungszeitraum von Wortformen sortiert nach Häufigkeitsrang. Per Linksklick öffnet sich ein Popup-Fenster mit der kommaseparierten Wortliste. 
+		Ein Pfeil markiert die früheste (kaḿeńzu⇒) oder späteste (⇒ṅemėrniki) Verwendung des Wortes. Kein Pfeil bedeutet, dass die Verwendung im selben Jahr startete und endete. 
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:right;">Minimum Tokenhäufigkeit</td>
+		<td>
+			<input type="number" value="15000" id="timespanoffset" onchange="updateTimeSpan()">
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Anzahl</td>
+		<td>
+			<input type="number" value="1000" id="timespancount" onchange="updateTimeSpan()">
+		</td>
+	</tr>
+</table>
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="embedding('timespan');">HTML Embedding</button>
+	<button class = "iframebutton" onclick="diagrammlink('timespan');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('timespan');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="475px" id="timespan" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('timespan');">Quellenangabe</button>
+</div>
+</div>
+
+<br><br>
+
+<script>
+
+	var threeD = function(iframeid){
+		loading(iframeid)
+		el = document.getElementById(iframeid)
+		if(el.src.includes("3d.html")){
+			el.src=el.src.replace("3d.html",".html")
+		}else{
+			el.src=el.src.replace(".html","3d.html")
+		}
+	}
+	
+	
+	var linreg = function(iframeid){
+		loading(iframeid)
+		tmp = document.getElementById("token").value.trim()
+		if(tmp.length>0){
+			if(document.getElementById(iframeid).src.includes("timeline.html")){
+				document.getElementById(iframeid).src="linreg_chart.html?data=tokencountperyear.php&token="+tmp+"&sort"
+			}else{
+				document.getElementById(iframeid).src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
+			}
+		}
+	}
+
+
+
+	var updateTimelineRegex = function(){
+		loading("timeline")
+		tmp = document.getElementById("regexsearch").value.trim()
+		if(tmp.length>0){
+			document.getElementById("timeline").src="timeline.html?data=regexsearch.php&token="+tmp+"&sort"
+		}
+	}
+
+
+	var callDolnoserbski = function(){
+		tmp = document.getElementById("token").value.trim()
+		if(tmp.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+tmp, "_blank")
+		}
+	}
+
+	var addTokenToList = function(){
+		loading("timeline")
+		tmp = document.getElementById("token").value.trim()
+		tmp2 = document.getElementById("tokenlist").value.trim()
+		str = ""
+		if(tmp.length>0){
+			if(tmp2.length>0){str = ","}
+			str = tmp2+str+tmp
+			document.getElementById("tokenlist").value = str
+			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+str+"&sort"
+		}
+	}
+
+	var updateTimelineTokenList = function(){
+		loading("timeline")
+		tmp = document.getElementById("tokenlist").value.trim()
+		if(tmp.length>0){
+			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
+		}
+	}
+
+	var updateTimeline = function(){
+		loading("timeline")
+		loading("tokeninfo")
+		tmp = document.getElementById("token").value.trim()
+		if(tmp.length>0){
+			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
+			document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
+		}
+		document.title="Token "+tmp
+
+	}
+	var updateZipf = function(){
+		loading("zipf")
+		tmp = document.getElementById("limit").value.trim()
+		tmp2 = document.getElementById("offset").value.trim()
+		if(document.getElementById("zipf").src.includes("3d.html")){funcall="zipf3d"}else{funcall="zipf"}
+		document.getElementById("zipf").src=funcall+".html?data=langDetect3/deu&limit="+tmp+"&offset="+tmp2
+	}
+
+	var updateTimeSpan = function(){
+		loading("timespan")
+		offset = document.getElementById("timespanoffset").value.trim()
+		count = document.getElementById("timespancount").value.trim()
+		document.getElementById("timespan").src="timezipf.html?data=bagofwords/_minmaxyearzipf&count="+count+"&offset="+offset
+	}
+	
+	updateTimeSpan()
+	updateZipf()
+	
+	token = getQueryVariable('token')
+	if(token.length>0){
+		document.getElementById('token').value=token
+		updateTimeline()
+		document.getElementById("tokeninfo").scrollIntoView()
+	}
+	else{
+		document.getElementById('timeline').src="error_token.html"
+	}
+	
+
+	document.title="Token "+token
+
+</script>
+
+<br><br>
+
+<script>
+	document.write(footer())
+</script>
+</body>
