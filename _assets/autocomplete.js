@@ -1,9 +1,10 @@
 //Adapted from https://www.w3schools.com/howto/howto_js_autocomplete.asp
 
 function autocomplete(input, datasource, functioncall) {
+	inp = document.getElementById(input)
 	var currentFocus;
 	var oldFocus;
-	document.getElementById(input).addEventListener("input", function(e) {
+	inp.addEventListener("input", function(e) {
 		var a, b, i, val = this.value;
 		closeAllLists();
 		if (!val) { return false;}
@@ -21,13 +22,13 @@ function autocomplete(input, datasource, functioncall) {
 			/*insert a input field that will hold the current array item's value:*/
 			b.innerHTML += "<input type='hidden' value='" + data_arr[i] + "'>";
 			b.addEventListener("click", function(e) {
-				document.getElementById(input).value = this.getElementsByTagName("input")[0].value;
+				inp.value = this.getElementsByTagName("input")[0].value;
 				closeAllLists();
 				window[functioncall]()
 			});
 			a.appendChild(b);
 	}});
-	document.getElementById(input).addEventListener("keydown", function(e) {
+	inp.addEventListener("keydown", function(e) {
 	var x = document.getElementById(this.id + "autocomplete-list");
 	if (x) x = x.getElementsByTagName("div");
 	if (e.keyCode == 40){
