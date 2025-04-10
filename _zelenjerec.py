@@ -102,7 +102,7 @@ def collect():
             if len(rs.strip())>0:
                 with open ("data/langseparation/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/langseparationperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                     outf.write(rs)
-                    outyf.write(rs)
+                    outyf.write(rs+"\n")
     process("data/langseparation")
     
 def initTables():
@@ -146,6 +146,7 @@ def db():
                     tokenarr = token.split(":")
                     tokencountdict[tokenarr[0]] = tokenarr[1]
                 tokenarr = rs[3].split(",")
+                print(yearfile)
                 for token in tokenarr:
                     if len(token.strip())>0:
                         vals =  "'"+tokenarr[0].strip()+"','"+rs[0].strip()+"','"+docurn.strip()+"','"+yearfile.replace(".txt","")+"','"+rs[1].strip()+"',"+str(tokencountdict[token])
