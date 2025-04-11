@@ -11,7 +11,6 @@ if(isset($_GET['year']))
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY summe DESC' : NULL;
 	(isset($_GET['limit'])) ? $query .= ' LIMIT '.$_GET['limit'] : $query .= ' LIMIT 10000' ;
 	(isset($_GET['offset'])) ? $query .= ' OFFSET '.$_GET['offset'] : NULL;
-	print($query);
 	$tab = "\t";
 	$nl = "\n";
 	$res = '';
