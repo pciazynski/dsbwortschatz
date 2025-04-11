@@ -56,6 +56,9 @@ str='<div  class="header">'+
 +'Dokumente'
 +'</td>'
 +'<td>'
++'<a href="../characters">Zeichen</a>'
++'</td>'
++'<td>'
 +'Worte'
 +'</td>'
 +'<td>'
@@ -81,6 +84,8 @@ str='<div  class="header">'+
 +'<td>'
 +'<a href="../docperword/">Wortreferenzen</a>'
 
++'</td>'
++'<td>'
 +'</td>'
 +'<td>'
 +'<a href="../bwtoken/">Token</a> | '
