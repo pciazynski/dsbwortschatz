@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+<body style="background-color:lightgray">
+<script>document.write(header())</script>
+
+<br><br>
+
+<div class = "explain">
+	<p>
+		Hier werden als Buchstaben behandelte Zeichen nach Häufigkeit sortiert dargestellt (Zipf Ranking).
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:right;">Anzahl</td>
+		<td>
+			<input type="number" min="0" value="10000" id="limit" onchange="updateZipf()">
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Offset</td>
+		<td>
+			<input type="number" min="0" value="0" id="offset" onchange="updateZipf()">
+		</td>
+	</tr>
+	<tr>
+		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">
+		</td>
+		<td>
+			<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateZipf()">
+			<br>
+			<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateZipf()">
+		</td>
+	</tr>
+	
+</table>
+<script>
+	yearminslider.oninput = function() {
+		otherslider=document.getElementById("yearmaxslider")
+		otherslider.value=Math.max(otherslider.value,this.value)
+		yearminvalue.innerHTML = this.value
+		yearmaxvalue.innerHTML = otherslider.value
+	}
+
+	yearmaxslider.oninput = function() {
+		otherslider=document.getElementById("yearminslider")
+		otherslider.value=Math.min(otherslider.value,this.value)
+		yearminvalue.innerHTML = otherslider.value
+		yearmaxvalue.innerHTML = this.value
+	}
+	yearminslider.min=minDate
+
+	
+	yearmaxslider.min = minDate
+	yearmaxslider.max = maxDate
+	yearminslider.min = minDate
+	yearminslider.max = maxDate
+	yearminslider.value = minDate
+	yearmaxslider.value = maxDate
+	yearminvalue.innerHTML=minDate
+	yearmaxvalue.innerHTML = maxDate
+
+</script>
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="embedding('zipf');">HTML Embedding</button>
+	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="200px" id="charlist" scrolling="yes"></iframe>
+	</div>
+	</div>
+<br><br>
+
+
+<div class = "explain">
+	<p>
+		Hier werden als Buchstaben behandelte Zeichen nach Jahren dargestellt. 
+		Einzelne Zeichen können per Eingabe oder Klick auf die Zipfverteilung gewählt werden.
+		Statt einzelnen Zeichen kann kommasepariert eine Liste übergeben werden.
+		Es kann zwischen absoluten und relativen Zeichenhäufigkeiten gewechselt werden. Relativ bezieht sich hier auf die Summe der Vorkommen des individuellen Zeichens.
+		Für zinzelne Zeichen kann eine lineare Regression der Häufigkeiten statt einem Scatterplot angezeigt werden.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Suchbegriff</td>
+		<td>
+			<input style="width:70%" id="charinput" type="text" placeholder="Zeichen">
+			<button onclick = "updateTimeline()">Enter</button> 
+		</td>
+		<td style="text-align:left;">Sende an <button onclick = "addToList()">&#10149;Liste</button></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Liste</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="charlist" type="text" placeholder="Kommasepariert" onchange = "">
+				<button onclick = "updateTimelineList()">Enter</button> 
+			</div>
+		</td>
+		<td style="text-align:center;">Bspw a,b</td>
+	</tr>
+</table>
+<br><br>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzelne Zeichen)</button>
+				<button class = "iframebutton" onclick="empty('timeline');">Alle / Einzelne Zeichen</button>
+				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 69%;">
+				<button class = "iframebutton" onclick="embedding('doctimeline');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('doctimeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('doctimeline');">Rohdaten</button>
+			</td>
+			<td style = "width: 30%;">
+				<button class = "iframebutton" onclick="embedding('doclist');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('doclist');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('doclist');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 69%;">		
+				<iframe class="resized" width="100%" height="475px" id="doctimeline" scrolling="yes"></iframe>
+			</td>
+			<td>		
+				<iframe class='resized' width='100%' height='475px' id='doclist' scrolling='yes'></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 69%;">
+				<button class = "iframebutton" onclick="hidewatermark('doctimeline');">Quellenangabe</button>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+<br><br>
+
+<script>
+
+	var empty = function(iframeid){
+		loading(iframeid)
+		tmp = document.getElementById("charinput").value.trim()
+		if(tmp.length>0){
+			if(document.getElementById(iframeid).src.includes("&char=")){
+				document.getElementById(iframeid).src="timeline.html?data=charcountperyear.php&sort"
+			}else{
+				document.getElementById(iframeid).src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
+			}
+		}
+	}
+	
+	var linreg = function(iframeid){
+		loading(iframeid)
+		tmp = document.getElementById("charinput").value.trim()
+		if(tmp.length>0){
+			if(document.getElementById(iframeid).src.includes("timeline.html")){
+				document.getElementById(iframeid).src="linreg_chart.html?data=charcountperyear.php&char="+tmp+"&sort"
+			}else{
+				document.getElementById(iframeid).src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
+			}
+		}
+	}
+
+	var addToList = function(){
+		loading("timeline")
+		tmp = document.getElementById("charinput").value.trim()
+		tmp2 = document.getElementById("charlist").value.trim()
+		str = ""
+		if(tmp.length>0){
+			if(tmp2.length>0){str = ","}
+			str = tmp2+str+tmp
+			document.getElementById("charlist").value = str
+			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+str+"&sort"
+		}
+	}
+
+	var updateTimelineList = function(){
+		loading("timeline")
+		tmp = document.getElementById("charlist").value.trim()
+		if(tmp.length>0){
+			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
+		}
+	}
+
+	var updateTimeline = function(){
+		loading('doclist')
+		loading("timeline")
+		tmp = document.getElementById("charinput").value.trim()
+		if(tmp.length>0){
+			document.getElementById('doclist').src = 'doclist.html?data=urnbychar.php&char='+tmp
+			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
+			document.getElementById('doctimeline').src = 'doctimeline.html?data=urnbychar.php&char='+tmp
+		}
+		document.title="Zeichen "+tmp
+
+	}
+	var updateZipf = function(){
+		loading("zipf")
+		tmp = document.getElementById("limit").value.trim()
+		tmp2 = document.getElementById("offset").value.trim()
+		tmpyear1 = parseInt(document.getElementById("yearminslider").value)
+		tmpyear2 = parseInt(document.getElementById("yearmaxslider").value)
+		if(tmpyear1 == tmpyear2){
+			document.getElementById("zipf").src="zipf.html?data=charactersperyear/"+tmpyear1+"&limit="+tmp+"&offset="+tmp2
+			document.getElementById("charlist").src="charlist.html?data=charactersperyear/"+tmpyear1+"&limit="+tmp+"&offset="+tmp2
+		}
+		else{
+			if(tmpyear1 == minDate && tmpyear2 == maxDate){
+				document.getElementById("zipf").src="zipf.html?data=characters/_all&limit="+tmp+"&offset="+tmp2
+				document.getElementById("charlist").src="charlist.html?data=characters/_all&limit="+tmp+"&offset="+tmp2
+			}
+			else{
+				document.getElementById("zipf").src="zipf.html?data=charcountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2+"&limit="+tmp+"&offset="+tmp2
+				document.getElementById("charlist").src="charlist.html?data=charcountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2+"&limit="+tmp+"&offset="+tmp2
+			}
+		}
+	}
+
+	updateZipf()
+	
+	character = getQueryVariable('char')
+	if(character.length>0){
+		document.getElementById('char').value=character
+		updateTimeline()
+	}
+	else{
+		document.getElementById('timeline').src="error_char.html"
+	}
+	
+
+	document.title="Zeichen "+character
+
+</script>
+
+<br><br>
+
+<script>
+	document.write(footer())
+</script>
+</body>

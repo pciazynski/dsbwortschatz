@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+</head>
+
+<body>
+<div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+<script>
+
+	var dataset = getQueryVariable("data")
+	var max = getQueryVariable("max")
+	var min = getQueryVariable("min")
+	var limit = getQueryVariable("limit")
+	var offset = getQueryVariable("offset")
+	if(offset.length==0){offset=0}
+	
+	if(dataset.includes(".php")){
+		dataset+="?sort&year="+getQueryVariable("year")
+		if(limit.length>0){dataset+="&limit="+limit+"&offset="+offset}
+		data_arr = readPHP(dataset).split("\n");
+		diagramtitle = "Tokenhäufigkeiten "+getQueryVariable("year")
+		offset=0;
+	}
+	else{
+		data_arr = readTextFile(dataset).split("\n");
+		diagramtitle = "Tokenhäufigkeiten "+dataset.split("/")[1]
+	}
+	allText=""
+	
+	limit=parseInt(limit)
+	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
+	for (var i = offset; i < limit; i++) {
+		line = data_arr[i];
+		if(line.length>1){	
+			tmp = line.split(sep)
+			funcall = "parent.document.getElementById('charinput').value = '"+tmp[0]+"';parent.updateTimeline()"
+			allText+= '<button onclick="'+funcall+'">'+tmp[0]+"</button>" 
+		}
+	}
+	document.write(allText)
+	document.title = diagramtitle
+
+</script>
+</body>
