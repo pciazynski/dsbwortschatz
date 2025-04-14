@@ -12,16 +12,11 @@
 	var dataset = getQueryVariable("data")
 	var max = getQueryVariable("max")
 	var min = getQueryVariable("min")
-	var limit = getQueryVariable("limit")
-	var offset = getQueryVariable("offset")
-	if(offset.length==0){offset=0}
 	
 	if(dataset.includes(".php")){
 		dataset+="?sort&year="+getQueryVariable("year")
-		if(limit.length>0){dataset+="&limit="+limit+"&offset="+offset}
 		data_arr = readPHP(dataset).split("\n");
 		diagramtitle = "Tokenhäufigkeiten "+getQueryVariable("year")
-		offset=0;
 	}
 	else{
 		data_arr = readTextFile(dataset).split("\n");
@@ -29,9 +24,7 @@
 	}
 	allText=""
 	
-	limit=parseInt(limit)
-	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
-	for (var i = offset; i < limit; i++) {
+	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i];
 		if(line.length>1){	
 			tmp = line.split(sep)

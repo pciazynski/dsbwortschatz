@@ -9,6 +9,7 @@ ns = sys.argv[1]
 print(ns)
 
 subprocess.run(["python3","_bagofwords.py"])
+subprocess.run(["python3","_characters.py"])
 subprocess.run(["python3","_lemmatisierowasch.py"])
 subprocess.run(["python3","_ngram.py","2"])
 subprocess.run(["python3","_ngram.py","3"])

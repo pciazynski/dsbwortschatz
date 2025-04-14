@@ -13,13 +13,13 @@
 	var dataset = getQueryVariable('data')
 	var token = getQueryVariable('char')
 	dataset = dataset +"?char="+token+"&sort"
-	diagramtitle = "Dok. Lemma:"+ token
+	diagramtitle = "Document per Zeichen:"+ token
 	param = "&deletexml&highlight="+token
 	data_arr = readPHP(dataset).split('\n');
 	
 	str = '<table class="clicktable">';
 	if(dataset.includes("?token")){
-		str += str + '<tr><th>Jahr</th><th>Tokensuche <br>(untokenisiert)</th><th>Tokenverteilung <br>Dia | Data</th><th>Lese-<br>freundlich</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
+		str += str + '<tr><th>Jahr</th><th>Zeichensuche</th><th>Zeichenverteilung <br>Dia | Data</th><th>Lese-<br>freundlich</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
 	}
 	else{
 		str += '<tr><th>Jahr</th><th>Lesemodus</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'

@@ -19,18 +19,6 @@
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:right;">Anzahl</td>
-		<td>
-			<input type="number" min="0" value="10000" id="limit" onchange="updateZipf()">
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;">Offset</td>
-		<td>
-			<input type="number" min="0" value="0" id="offset" onchange="updateZipf()">
-		</td>
-	</tr>
-	<tr>
 		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
 	</tr>
 	<tr>
@@ -109,10 +97,8 @@
 	<tr>
 		<td style="text-align:center;">Liste</td>
 		<td>
-			<div class="autocomplete">
-				<input style="width:70%" id="charlist" type="text" placeholder="Kommasepariert" onchange = "">
-				<button onclick = "updateTimelineList()">Enter</button> 
-			</div>
+			<input style="width:70%" id="charlistinput" type="text" placeholder="Kommasepariert" onchange = "">
+			<button onclick = "updateTimelineList()">Enter</button> 
 		</td>
 		<td style="text-align:center;">Bspw a,b</td>
 	</tr>
@@ -205,19 +191,19 @@
 	var addToList = function(){
 		loading("timeline")
 		tmp = document.getElementById("charinput").value.trim()
-		tmp2 = document.getElementById("charlist").value.trim()
+		tmp2 = document.getElementById("charlistinput").value.trim()
 		str = ""
 		if(tmp.length>0){
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
-			document.getElementById("charlist").value = str
+			document.getElementById("charlistinput").value = str
 			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+str+"&sort"
 		}
 	}
 
 	var updateTimelineList = function(){
 		loading("timeline")
-		tmp = document.getElementById("charlist").value.trim()
+		tmp = document.getElementById("charlistinput").value.trim()
 		if(tmp.length>0){
 			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
 		}
@@ -237,22 +223,20 @@
 	}
 	var updateZipf = function(){
 		loading("zipf")
-		tmp = document.getElementById("limit").value.trim()
-		tmp2 = document.getElementById("offset").value.trim()
 		tmpyear1 = parseInt(document.getElementById("yearminslider").value)
 		tmpyear2 = parseInt(document.getElementById("yearmaxslider").value)
 		if(tmpyear1 == tmpyear2){
-			document.getElementById("zipf").src="zipf.html?data=charactersperyear/"+tmpyear1+"&limit="+tmp+"&offset="+tmp2
-			document.getElementById("charlist").src="charlist.html?data=charactersperyear/"+tmpyear1+"&limit="+tmp+"&offset="+tmp2
+			document.getElementById("zipf").src="zipf.html?data=charactersperyear/"+tmpyear1
+			document.getElementById("charlist").src="charlist.html?data=charactersperyear/"+tmpyear1
 		}
 		else{
 			if(tmpyear1 == minDate && tmpyear2 == maxDate){
-				document.getElementById("zipf").src="zipf.html?data=characters/_all&limit="+tmp+"&offset="+tmp2
-				document.getElementById("charlist").src="charlist.html?data=characters/_all&limit="+tmp+"&offset="+tmp2
+				document.getElementById("zipf").src="zipf.html?data=characters/_all"
+				document.getElementById("charlist").src="charlist.html?data=characters/_all"
 			}
 			else{
-				document.getElementById("zipf").src="zipf.html?data=charcountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2+"&limit="+tmp+"&offset="+tmp2
-				document.getElementById("charlist").src="charlist.html?data=charcountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2+"&limit="+tmp+"&offset="+tmp2
+				document.getElementById("zipf").src="zipf.html?data=charcountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2
+				document.getElementById("charlist").src="charlist.html?data=charcountdaterange.php&sort&year=BETWEEN "+tmpyear1+" AND "+tmpyear2
 			}
 		}
 	}
