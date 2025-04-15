@@ -163,7 +163,7 @@
 		if(curlemma.trim().length>0){
 			loading("traviz")
 			url = document.getElementById("traviz").src.split("&year")[0]
-			year = document.getElementById("yearminslider").value+1
+			year = parseInt(document.getElementById("yearminslider").value)+1
 			if(year==maxDate) {
 				document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
 			}else{

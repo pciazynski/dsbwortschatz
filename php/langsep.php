@@ -3,7 +3,7 @@ header('Content-Type: text/plain');
 
 (isset($_GET['n']))?$n=$_GET['n']:$n=3;
 
-(isset($_GET['groupBy']))?$query = 'SELECT '.$_GET['groupBy'].',SUM(frequency) as frequency FROM tokenurnyearpassagestructureelementfrequency WHERE TRUE':$query = 'SELECT token,docurn,urn,year,structureelement,frequency FROM tokenurnyearpassagestructureelementfrequency WHERE TRUE';
+(isset($_GET['groupBy']))?$query = 'SELECT '.$_GET['groupBy'].',SUM(frequency) as frequency FROM tokenurnyearpassagestructureelementfrequency WHERE TRUE':$query = 'SELECT * FROM tokenurnyearpassagestructureelementfrequency WHERE TRUE';
 (isset($_GET['token']))?$query.=' AND token="'.$_GET['token'].'"':NULL;
 if(isset($_GET['urn'])){
 	$urn=$_GET['urn'];
