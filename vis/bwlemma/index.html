@@ -127,16 +127,19 @@
 			<td></td>
 		</tr>
 	<tr>
-		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
+		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
 	</tr>
 	<tr>
 		<td style="text-align:right;">
 		</td>
 		<td>
-			<input style="width:85%" type="range" class="slider" id="yearminslider" oninput= "updateYearlabel()" onchange="updateTravizYear()">
+			<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateTravizYear()">
+			<br>
+			<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateTravizYear()">
 		</td>
-		<td style="text-align:left;">bis <script>document.write(maxDate)</script></td>
 	</tr>
+	
+
 	</table>
 	
 	<button class = "iframebutton" onclick="embedding('traviz');">HTML Embedding</button>
@@ -148,7 +151,33 @@
 	
 </div>
 
+<script>
+	yearminslider.oninput = function() {
+		otherslider=document.getElementById("yearmaxslider")
+		otherslider.value=Math.max(otherslider.value,this.value)
+		yearminvalue.innerHTML = this.value
+		yearmaxvalue.innerHTML = otherslider.value
+	}
 
+	yearmaxslider.oninput = function() {
+		otherslider=document.getElementById("yearminslider")
+		otherslider.value=Math.min(otherslider.value,this.value)
+		yearminvalue.innerHTML = otherslider.value
+		yearmaxvalue.innerHTML = this.value
+	}
+	yearminslider.min=minDate
+
+	
+	yearmaxslider.min = minDate
+	yearmaxslider.max = maxDate
+	yearminslider.min = minDate
+	yearminslider.max = maxDate
+	yearminslider.value = minDate
+	yearmaxslider.value = maxDate
+	yearminvalue.innerHTML=minDate
+	yearmaxvalue.innerHTML = maxDate
+
+</script>
 
 <br><br>
 <script>
@@ -163,11 +192,13 @@
 		if(curlemma.trim().length>0){
 			loading("traviz")
 			url = document.getElementById("traviz").src.split("&year")[0]
-			year = parseInt(document.getElementById("yearminslider").value)+1
-			if(year==maxDate) {
+			yearfrom = document.getElementById("yearminslider").value
+			yearto = document.getElementById("yearmaxslider").value
+			if(yearto==maxDate && yearfrom == minDate) {
 				document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
 			}else{
-				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year=<"+year
+				year = "BETWEEN " + yearfrom + " AND " + yearto
+				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year="+year
 			}
 		}
 	}
@@ -225,7 +256,7 @@
 		curlemma = document.getElementById("lemma").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-			document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
+			document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=0"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
@@ -254,10 +285,6 @@
 	updateZipf()
 	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
 	curlemma = getQueryVariable("lemma")
-	document.getElementById("yearminslider").min = minDate
-	document.getElementById("yearminslider").max = maxDate
-	document.getElementById("yearlabel").innerHTML = maxDate
-	document.getElementById("yearminslider").value = maxDate
 
 	if(curlemma.length>0){
 		document.getElementById("lemma").value = curlemma
