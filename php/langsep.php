@@ -10,7 +10,7 @@ if(isset($_GET['urn'])){
 	(str_ends_with($urn,":"))?NULL:$urn.=".";
 	$query.=' AND urn LIKE "'.$_GET['urn'].'%"';
 }
-(isset($_GET['year']))?$query.=' AND year'.$_GET['year']:NULL;
+(isset($_GET['year']))?$query.=' AND year '.$_GET['year']:NULL;
 (isset($_GET['structureelement']))?$query.=' AND structureelement="'.$_GET['structureelement'].'"':NULL;
 
 (isset($_GET['groupBy']))?$query .=' GROUP BY '.$_GET['groupBy']:NULL;

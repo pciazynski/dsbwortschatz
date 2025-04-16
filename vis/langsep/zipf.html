@@ -15,10 +15,11 @@
 	var min = getQueryVariable("min")
 	var limit = getQueryVariable("limit")
 	var offset = getQueryVariable("offset")
+	var groupBy = getQueryVariable("groupBy")
 	if(offset.length==0){offset=0}
 	
 	if(dataset.includes(".php")){
-		dataset+="?sort&year="+getQueryVariable("year")
+		dataset+="?sort&year="+getQueryVariable("year")+"&groupBy="+groupBy
 		if(limit.length>0){dataset+="&limit="+limit+"&offset="+offset}
 		data_arr = readPHP(dataset).split("\n");
 		diagramtitle = "Tokenhäufigkeiten "+getQueryVariable("year")
