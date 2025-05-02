@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+</head>
+<body style="background-color:white">
+
+<script>
+	function getQueryVariable(variable) {
+		var query = window.location.search.substring(1);
+		var vars = query.split("&");
+		for (var i=0;i<vars.length;i++) {
+			var pair = vars[i].split("=");
+			if (pair[0] == variable) {
+				return decodeURIComponent(pair[1]);
+			}
+		} 
+		return ""
+	}
+
+	miningURL="https://tiepilab.de/dsbtekstmining/"
+	token = getQueryVariable('token')
+
+	document.write('<h1 style="text-align:center;">'+token+'</h1>')
+
+</script>
+
+<div class = "explain">
+	<p>
+		
+	</p>
+</div>
+
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="500px" id="timeline" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="49%" height="500px" id="coocleft" scrolling="yes"></iframe>
+				<iframe class="resized" width="49%" height="500px" id="coocright" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<hr>
+
+<script>
+	if(token.length>0){
+		document.getElementById('timeline').src=miningURL+"vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token="+token
+		document.getElementById('coocleft').src=miningURL+"vis/collocation/tokenwordnet.html?data=collocation.php&frequency=50&logdice=0-14&left="+token
+		document.getElementById('coocright').src=miningURL+"vis/collocation/tokenwordnet.html?data=collocation.php&frequency=50&logdice=0-14&right="+token
+//		document.getElementById('coocright').src="https://tiepilab.de/dsbtekstmining/vis/collocation/tokenwordnet.html?data=collocation.php&frequency=500&left=se&logdice=0-14"
+	}
+	
+	document.title="Tokenprofil "+token
+</script>
+
+</body>

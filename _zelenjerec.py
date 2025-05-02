@@ -1,12 +1,10 @@
-from urllib.request import urlopen
 import sys
 import os
 import shutil
 import sqlite3
-import time
+from pythoncts import *
 from config import *
-import re
-import string
+
 n=sys.argv[1]
 
 deudict = {}
@@ -27,36 +25,11 @@ def reset():
         shutil.rmtree("data/langseparationperyear")
     os.mkdir("data/langseparationperyear")
 
-def inventory(endpoint):
-    global ctsurl
-    requestctsurl(endpoint)
-    res = ""
-    print(ctsurl+"plain/editions.php")
-    data = urlopen(ctsurl+"plain/editions.php") 
-    for line in data: 
-        res+=line.decode('utf-8')
-    return res.strip()
-
-
-def requestctsurl(ns):
-    global ctsurl
-    if len(ctsurl) == 0:
-        if not ns.startswith("urn:cts"):
-            ns = "urn:cts:"+ns
-        ns = ns.split(":")[2]
-        data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
-        for line in data: 
-            ctsurl+=line.decode('utf-8')
-        
-    
 def langseparation(urn):
-    global ctsurl
     global copyrighttoken
-    requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"tm/structurebagofwords.php?urn="+urn+"&deletexml&lowercase"+"&copyrighttoken="+copyrighttoken) 
+    data = structurebagofwords(urn,"&deletexml&lowercase&copyrighttoken="+copyrighttoken).split("\n")
     for line in data:
-        line = line.decode('utf-8').strip()
         linearr = line.split("\t")
         if len(linearr)==3:
             urn = linearr[0]

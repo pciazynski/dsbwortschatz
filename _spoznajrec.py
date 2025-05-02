@@ -28,27 +28,6 @@ with open("learn/falsefriends.txt", "r", encoding = "utf8") as inf:
         tmp = line.strip().lower()
         addff(tmp)
             
-#with open("learn/ortsliste.txt", "r", encoding = "utf8") as inf:
-#    for line in inf:
-#        tmp = line.strip().lower().split("\t")[0]
-#        addff(tmp)
-#with open("learn/ortsliste_ergänzung.txt", "r", encoding = "utf8") as inf:
-#    for line in inf:
-#        tmp = line.strip().lower().split("\t")[0]
-#        addff(tmp)
-#with open("learn/namen_pre.txt", "r", encoding = "utf8") as inf:
-#    for line in inf:
-#        tmp = line.strip().lower().split("\t")[0]
-#        addff(tmp)
-#with open("learn/deutschevornamen.txt", "r", encoding = "utf8") as inf:
-#    for line in inf:
-#        tmp = line.strip().lower().split("\t")[0]
-#        addff(tmp)
-#with open("learn/weiterenamen.txt", "r", encoding = "utf8") as inf:
-#    for line in inf:
-#        tmp = line.strip().lower().split("\t")[0]
-#        addff(tmp)
-           
 with open("learn/deu_mixed-typical_2011_1M-words.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = line.strip().lower()
@@ -89,24 +68,28 @@ with open("learn/deu_ids_a-h.txt", "r", encoding = "utf8") as inf:
             
 print("load deu_ids_a-h:" + str(len(deudict)))
 
-with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
-    for line in inf:
-        tmp = line.strip().lower()
-        deudict[tmp] = 1
-        tmp = tmp.replace("ſ","s").replace("ẜ","s")
-        deudict[tmp] = 1
+intermedieateresults = False
 
-print("load deu_found:" + str(len(deudict)))
-
-with open("learn/deu_intermediateresults.txt", "r", encoding = "utf8") as inf:
-    for line in inf:
-        tmp = (line+" ").split("\t")[0].strip().lower()
-        if not tmp in ff and len(tmp)>1:
+if intermedieateresults:
+    with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
+        for line in inf:
+            tmp = line.strip().lower()
             deudict[tmp] = 1
             tmp = tmp.replace("ſ","s").replace("ẜ","s")
             deudict[tmp] = 1
-            
-print("load deu_intermediateresults:" + str(len(deudict)))
+
+    print("load deu_found:" + str(len(deudict)))
+
+    with open("learn/deu_intermediateresults.txt", "r", encoding = "utf8") as inf:
+        for line in inf:
+            tmp = (line+" ").split("\t")[0].strip().lower()
+            if not tmp in ff and len(tmp)>1:
+                deudict[tmp] = 1
+                tmp = tmp.replace("ſ","s").replace("ẜ","s")
+                deudict[tmp] = 1
+                
+    print("load deu_intermediateresults:" + str(len(deudict)))
+
 
 
 

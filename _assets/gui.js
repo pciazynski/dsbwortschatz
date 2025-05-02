@@ -104,7 +104,7 @@ str='<div  class="header">'+
 +'<a href="../ngram/?n=3">n=3</a> | <a href="../ngram/?n=5">n=5</a>'
 +'</td>'
 +'<td>'
-+'<a href="../langdetect/?n=3">Rozeznaś</a> | <a href="../langrec/?n=3">Spóznaś</a> | '
++'<a href="../langdetect/?n=3">Rozeznaś</a> | <a href="../langrec/?n=3">Gódaś Rec</a> | '
 +'<a href="../langsep/">Zelenje Rec</a>'
 +'</td>'
 +'<td>'
