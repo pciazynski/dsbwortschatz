@@ -16,14 +16,14 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="embedding('profile');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('profile');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('profile');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('tokenprofile');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('tokenprofile');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('tokenprofile');">Rohdaten</button>
 			</td>
 		</tr>
 		<tr>
 			<td style = "width: 100%;">		
-				<iframe class="resized" width="100%" height="475px" id="profile" scrolling="yes"></iframe>
+				<iframe class="resized" width="100%" height="475px" id="tokenprofile" scrolling="yes"></iframe>
 			</td>
 		</tr>
 	</table>
@@ -36,7 +36,7 @@
 <script>
 	token = getQueryVariable('token')
 	if(token.length>0){
-		document.getElementById('profile').src="profile.html?token="+token
+		document.getElementById('tokenprofile').src="tokenprofile.html?token="+token
 	}
 	
 	document.title="Tokenprofil "+token

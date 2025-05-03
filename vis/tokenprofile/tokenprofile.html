@@ -5,6 +5,7 @@
 <body style="background-color:white">
 
 <script>
+	var miningURL="https://tiepilab.de/dsbtekstmining/"
 	function getQueryVariable(variable) {
 		var query = window.location.search.substring(1);
 		var vars = query.split("&");
@@ -16,11 +17,35 @@
 		} 
 		return ""
 	}
+	
+	function readPHP(file){
+	text=""
+	rawFile = new XMLHttpRequest();
+	rawFile.open("GET", miningURL+"php/"+file, false);
+	rawFile.onreadystatechange = function (){
+		if(rawFile.readyState === 4){
+			if(rawFile.status === 200 || rawFile.status == 0)
+			{
+				text = rawFile.responseText;
+			}
+		}
+	}
+	rawFile.send(null);
+	return text.trim()
+}
 
-	miningURL="https://tiepilab.de/dsbtekstmining/"
 	token = getQueryVariable('token')
-
-	document.write('<h1 style="text-align:center;">'+token+'</h1>')
+	infotext = '<table style="valign:top;">'
+	
+	data = readPHP("tokenprofile.php?token="+token).split("\n")
+	infotext+="<tr><td>Erstes & Letztes Auftreten</td><td>"+data[0]+"</td></tr>"
+	infotext+="<tr><td>Lemma</td><td>"+data[1]+"</td></tr>"
+	infotext+="<tr><td>Verwandtschaft</td><td>"+data[2]+"</td></tr>"
+	infotext+="<tr><td>Normierte Form</td><td>"+data[3]+"</td></tr>"
+	infotext+="<tr><td>Typ</td><td>"+data[4]+"</td></tr>"
+	infotext=infotext.replaceAll("\t",", ")+"</table>"
+	
+	document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
 
 </script>
 
