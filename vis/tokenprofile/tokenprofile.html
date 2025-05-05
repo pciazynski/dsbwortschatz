@@ -35,50 +35,29 @@
 }
 
 	token = getQueryVariable('token')
-	infotext = '<table style="valign:top;">'
-	
-	data = readPHP("tokenprofile.php?token="+token).split("\n")
-	infotext+="<tr><td>Erstes & Letztes Auftreten</td><td>"+data[0]+"</td></tr>"
-	infotext+="<tr><td>Lemma</td><td>"+data[1]+"</td></tr>"
-	infotext+="<tr><td>Verwandtschaft</td><td>"+data[2]+"</td></tr>"
-	infotext+="<tr><td>Normierte Form</td><td>"+data[3]+"</td></tr>"
-	infotext+="<tr><td>Typ</td><td>"+data[4]+"</td></tr>"
-	infotext=infotext.replaceAll("\t",", ")+"</table>"
-	
-	document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
-
+	if(token.length>0){
+		infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
+		data = readPHP("tokenprofile.php?token="+token).split("\n")
+		lemma = data[1].replaceAll("|","")
+		infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+token+'">❧</a> <a href = "'+miningURL+'php/tokencountperyear.php?sort&token='+token+'">➚</a></td><td>'+data[0]+'</td></tr>'
+		infotext+='<tr><td>Lemma</td><td></td><td> '+data[1]+'</td></tr>'
+		infotext+='<tr style="background-color:#F0F3FA;"><td>Lexem-Variation</td><td> <a href = "'+miningURL+'vis/lemmavariation/traviz.html?data=lemmatoken.php&weight&sort&lemma='+lemma+'">❧</a>&nbsp;<a href = "'+miningURL+'php/lemmatoken.php?weight&sort&lemma='+lemma+'">➚</a></td><td>'+data[2]+'</td></tr>'
+		infotext+='<tr><td>Normierte&nbsp;Form</td><td></td><td> '+data[3]+'</td></tr>'
+		infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td><td></td><td> '+data[4]+'</td><td></td><td></td></tr>'
+		infotext=infotext.replaceAll("\t",", ")+'</table>'
+		
+		document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
+	}
 </script>
 
-<div class = "explain">
-	<p>
-		
-	</p>
-</div>
 
 
-<div class = "iframediv">
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
-		<tr>
-			<td style = "width: 100%;">		
-				<iframe class="resized" width="100%" height="500px" id="timeline" scrolling="yes"></iframe>
-			</td>
-		</tr>
-		<tr>
-			<td style = "width: 100%;">		
-				<iframe class="resized" width="49%" height="500px" id="coocleft" scrolling="yes"></iframe>
-				<iframe class="resized" width="49%" height="500px" id="coocright" scrolling="yes"></iframe>
-			</td>
-		</tr>
-	</table>
-</div>
-
-<hr>
 
 <script>
 	if(token.length>0){
-		document.getElementById('timeline').src=miningURL+"vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token="+token
-		document.getElementById('coocleft').src=miningURL+"vis/collocation/tokenwordnet.html?data=collocation.php&frequency=50&logdice=0-14&left="+token
-		document.getElementById('coocright').src=miningURL+"vis/collocation/tokenwordnet.html?data=collocation.php&frequency=50&logdice=0-14&right="+token
+//		document.getElementById('timeline').src=miningURL+"vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token="+token
+//		document.getElementById('coocleft').src=miningURL+"vis/collocation/tokenwordnet.html?data=collocation.php&frequency=50&logdice=0-14&left="+token
+//		document.getElementById('coocright').src=miningURL+"vis/collocation/tokenwordnet.html?data=collocation.php&frequency=50&logdice=0-14&right="+token
 //		document.getElementById('coocright').src="https://tiepilab.de/dsbtekstmining/vis/collocation/tokenwordnet.html?data=collocation.php&frequency=500&left=se&logdice=0-14"
 	}
 	

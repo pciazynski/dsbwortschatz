@@ -41,6 +41,18 @@ if(isset($_GET['token'])){
 		(strlen(trim($row['type']))>0) ? $res.=$row['type'].$tab:NULL;
 	}
 	$res=trim($res).$nl;
+	
+	$PDO1 = new PDO('sqlite:../data/lemmamapping.db');
+	$query = 'SELECT left FROM collocation WHERE token = "'.$token.'" ORDER BY logdice DESC LIMIT 10';
+	foreach($PDO1->query($query.';') as $row){
+		$lemma=$row['lemma'].$tab;;
+	}
+	$res.=$lemma.$nl;
+	$query = 'SELECT right FROM collocation WHERE token = "'.$token.'" ORDER BY logdice DESC LIMIT 10';
+	foreach($PDO1->query($query.';') as $row){
+		$lemma=$row['lemma'].$tab;;
+	}
+	$res.=$lemma.$nl;
 	print($res);
 }
 ?>
