@@ -20,15 +20,17 @@
 	}
 	
 	function readCTS(file){
-	text=""
-	rawFile = new XMLHttpRequest();
-	rawFile.open("GET", miningURL+file, false);
-	rawFile.onreadystatechange = function (){
-		if(rawFile.readyState === 4){
-			if(rawFile.status === 200 || rawFile.status == 0){
-				text = rawFile.responseText;
+		text=""
+		rawFile = new XMLHttpRequest();
+		rawFile.open("GET", miningURL+file, false);
+		rawFile.onreadystatechange = function (){
+			if(rawFile.readyState === 4){
+				if(rawFile.status === 200 || rawFile.status == 0){
+					text = rawFile.responseText;
+				}
 			}
 		}
+		return ""
 	}
 	
 	function readPHP(file){
@@ -57,16 +59,14 @@
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Lexem-Variation</td><td> <a href = "'+miningURL+'vis/lemmavariation/traviz.html?data=lemmatoken.php&weight&sort&lemma='+lemma+'">❧</a>&nbsp;<a href = "'+miningURL+'php/lemmatoken.php?weight&sort&lemma='+lemma+'">➚</a></td><td>'+data[2]+'</td></tr>'
 			infotext+='<tr><td>Normierte&nbsp;Form</td><td></td><td> '+data[3]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td><td></td><td> '+data[4]+'</td><td></td><td></td></tr>'
-			infotext+='<tr><td>Linke&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortby=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortby=logdice&limit=10">➚</a></td><td> '+data[5]+'</td></tr>'
+			infotext+='<tr><td>Linke&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[5]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?left='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[6]+'</td><td></td><td></td></tr>'
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
-
-
 		}
 		else{
 			infotext = "Keine Daten"
 		}
-	document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
+		document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
 	}
 </script>
 
