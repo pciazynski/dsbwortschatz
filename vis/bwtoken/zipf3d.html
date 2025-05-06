@@ -37,8 +37,8 @@
 	hovers = []
 	colors = []
 
-	limit=parseInt(limit)
 	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
+	limit=parseInt(limit)
 	for (var i = offset; i < limit; i++) {
 	line = data_arr[i];
 		if(line.length>1){	

@@ -41,7 +41,7 @@
 		if(data.length>1){
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			lemma = data[1].replaceAll("|","")
-			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td><td></td><td> '+data[1]+'</td></tr>'
+			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td><td> <a href = "'+miningURL+'vis/bwtoken/zipf3d.html?data=bagofwords/_all&min=1000&max=10000">❧</a>&nbsp;<a href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td><td> '+data[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+token+'">❧</a> <a href = "'+miningURL+'php/tokencountperyear.php?sort&token='+token+'">➚</a></td><td>'+data[1]+'</td></tr>'
 			infotext+='<tr><td>Lemma</td><td></td><td> '+data[2]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Lexem-Variation</td><td> <a href = "'+miningURL+'vis/lemmavariation/traviz.html?data=lemmatoken.php&weight&sort&lemma='+lemma+'">❧</a>&nbsp;<a href = "'+miningURL+'php/lemmatoken.php?weight&sort&lemma='+lemma+'">➚</a></td><td>'+data[3]+'</td></tr>'
