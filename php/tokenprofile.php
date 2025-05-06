@@ -43,7 +43,7 @@ if(isset($_GET['token'])){
 
 
 	if (strlen($lemma)>0){
-		$query = 'SELECT token, frequency FROM lemmatokenfrequency WHERE lemma LIKE "%'.$lemma.'%" ORDER BY frequency DESC';
+		$query = 'SELECT token, frequency FROM lemmatokenfrequency WHERE lemma = "'.$lemma.'" ORDER BY frequency DESC';
 		foreach($PDO->query($query.';') as $row){
 			$res.=$row['token'].$colon.$row['frequency'].$tab;
 		}
