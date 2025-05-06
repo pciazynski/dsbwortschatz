@@ -36,19 +36,24 @@
 
 	token = getQueryVariable('token')
 	if(token.length>0){
-		infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 		data = readPHP("tokenprofile.php?token="+token).split("\n")
-		lemma = data[1].replaceAll("|","")
-		infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+token+'">❧</a> <a href = "'+miningURL+'php/tokencountperyear.php?sort&token='+token+'">➚</a></td><td>'+data[0]+'</td></tr>'
-		infotext+='<tr><td>Lemma</td><td></td><td> '+data[1]+'</td></tr>'
-		infotext+='<tr style="background-color:#F0F3FA;"><td>Lexem-Variation</td><td> <a href = "'+miningURL+'vis/lemmavariation/traviz.html?data=lemmatoken.php&weight&sort&lemma='+lemma+'">❧</a>&nbsp;<a href = "'+miningURL+'php/lemmatoken.php?weight&sort&lemma='+lemma+'">➚</a></td><td>'+data[2]+'</td></tr>'
-		infotext+='<tr><td>Normierte&nbsp;Form</td><td></td><td> '+data[3]+'</td></tr>'
-		infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td><td></td><td> '+data[4]+'</td><td></td><td></td></tr>'
-		infotext+='<tr><td>Linke&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortby=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortby=logdice&limit=10">➚</a></td><td> '+data[5]+'</td></tr>'
-		infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+token+'&logdice=0-14&sortby=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?left='+token+'&logdice=0-14&sortby=logdice&limit=10">➚</a></td><td> '+data[6]+'</td><td></td><td></td></tr>'
-		infotext=infotext.replaceAll("\t",", ")+'</table>'
-		
-		document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
+		if(data.length>1){
+			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
+			lemma = data[1].replaceAll("|","")
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+token+'">❧</a> <a href = "'+miningURL+'php/tokencountperyear.php?sort&token='+token+'">➚</a></td><td>'+data[0]+'</td></tr>'
+			infotext+='<tr><td>Lemma</td><td></td><td> '+data[1]+'</td></tr>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Lexem-Variation</td><td> <a href = "'+miningURL+'vis/lemmavariation/traviz.html?data=lemmatoken.php&weight&sort&lemma='+lemma+'">❧</a>&nbsp;<a href = "'+miningURL+'php/lemmatoken.php?weight&sort&lemma='+lemma+'">➚</a></td><td>'+data[2]+'</td></tr>'
+			infotext+='<tr><td>Normierte&nbsp;Form</td><td></td><td> '+data[3]+'</td></tr>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td><td></td><td> '+data[4]+'</td><td></td><td></td></tr>'
+			infotext+='<tr><td>Linke&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortby=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortby=logdice&limit=10">➚</a></td><td> '+data[5]+'</td></tr>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+token+'&logdice=0-14&sortby=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?left='+token+'&logdice=0-14&sortby=logdice&limit=10">➚</a></td><td> '+data[6]+'</td><td></td><td></td></tr>'
+			infotext=infotext.replaceAll("\t",", ")+'</table>'
+			
+		}
+		else{
+			infotext = "Keine Daten"
+		}
+	document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
 	}
 </script>
 

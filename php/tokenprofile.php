@@ -16,6 +16,10 @@ if(isset($_GET['token'])){
 		$res.=$row['mindate'].$tab.$row['maxdate'].$nl;
 	}
 	
+	if(strlen(trim($res))==0){
+		print("NULL");
+		exit();
+	}
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 
 	$query = 'SELECT DISTINCT lemma FROM lemmatokenfrequency WHERE token = "'.$token.'"';
