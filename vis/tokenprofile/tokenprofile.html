@@ -19,21 +19,6 @@
 		return ""
 	}
 	
-	function readCTS(file){
-		text=""
-		rawFile = new XMLHttpRequest();
-		rawFile.open("GET", ctsurl+file, false);
-		rawFile.onreadystatechange = function (){
-			if(rawFile.readyState === 4){
-				if(rawFile.status === 200 || rawFile.status == 0){
-					text = rawFile.responseText;
-				}
-			}
-		}
-		rawFile.send(null);
-		return text.trim()
-	}
-	
 	function readPHP(file){
 	text=""
 	rawFile = new XMLHttpRequest();
@@ -70,7 +55,6 @@
 			infotext = "Keine Daten"
 		}
 		document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
-		exsent = readCTS('plain/textexamples.php?limit=5&deletexml&snippet='+token)
 	}
 </script>
 
