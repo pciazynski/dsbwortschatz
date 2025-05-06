@@ -29,9 +29,11 @@
 	var right = getQueryVariable('right')
 	var logdice = getQueryVariable('logdice')
 	var limit = getQueryVariable('limit')
+	var sortBy = getQueryVariable('sortBy')
 	
 	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right+'&logdice='+logdice
 	if(limit.length>0){dataset+="&limit="+limit}
+	if(sortBy.length>0){dataset+="&sortBy="+sortBy}
 	
 	network = readPHP(dataset).split('\n')
 	if(network.length<100){lay='cose'}else{lay='random'}
