@@ -60,12 +60,12 @@ if(isset($_GET['token'])){
 	}
 	$res=trim($res,$tab).$nl;
 	
-	$PDO = new PDO('sqlite:../data/ngram5.db');
-	$query = 'SELECT ngram FROM ngramcount WHERE ngram LIKE "%\_'.$token.'\_%" escape "\" ORDER BY frequency DESC LIMIT 5';
-	foreach($PDO->query($query.';') as $row){
-		$res.=$row['ngram'].$tab;
-	}
-	$res=trim($res,$tab).$nl;
+#	$PDO = new PDO('sqlite:../data/ngram5.db');
+#	$query = 'SELECT ngram FROM ngramcount WHERE ngram LIKE "%\_'.$token.'\_%" escape "\" ORDER BY frequency DESC LIMIT 5';
+#	foreach($PDO->query($query.';') as $row){
+#		$res.=$row['ngram'].$tab;
+#	}
+#	$res=trim($res,$tab).$nl;
 
 	print($res);
 }

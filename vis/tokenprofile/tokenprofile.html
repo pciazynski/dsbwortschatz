@@ -6,7 +6,7 @@
 
 <script>
 	var miningURL="https://tiepilab.de/dsbtekstmining/"
-	var ctsurl = "https://urncts.eu/cts/dsb/cts/"
+	var ctsurl = "https://urncts.eu/cts/dsb/"
 	function getQueryVariable(variable) {
 		var query = window.location.search.substring(1);
 		var vars = query.split("&");
@@ -22,7 +22,8 @@
 	function readCTS(file){
 		text=""
 		rawFile = new XMLHttpRequest();
-		rawFile.open("GET", miningURL+file, false);
+		rawFile.open("GET", ctsurl+file, false);
+		alert(ctsurl+file)
 		rawFile.onreadystatechange = function (){
 			if(rawFile.readyState === 4){
 				if(rawFile.status === 200 || rawFile.status == 0){
@@ -30,7 +31,8 @@
 				}
 			}
 		}
-		return ""
+		rawFile.send(null);
+		return text.trim()
 	}
 	
 	function readPHP(file){
@@ -49,6 +51,11 @@
 }
 
 	token = getQueryVariable('token')
+	examples = readCTS("plain/textexamples.php?snippet="+token)
+	alert(examples)
+	//infotext+='<tr><td>Verwendungen</td><td></td><td> '+examples+'</td></tr>'
+	token=""
+	
 	if(token.length>0){
 		data = readPHP("tokenprofile.php?token="+token).split("\n")
 		if(data.length>1){
@@ -61,7 +68,6 @@
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td><td></td><td> '+data[4]+'</td><td></td><td></td></tr>'
 			infotext+='<tr><td>Linke&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[5]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?left='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[6]+'</td><td></td><td></td></tr>'
-			infotext+='<tr><td>Verwendungen</td><td></td><td> '+data[7].replaceAll("\t","</br>").replaceAll("_"," ")+'</td></tr>'
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
