@@ -23,7 +23,6 @@
 		text=""
 		rawFile = new XMLHttpRequest();
 		rawFile.open("GET", ctsurl+file, false);
-		alert(ctsurl+file)
 		rawFile.onreadystatechange = function (){
 			if(rawFile.readyState === 4){
 				if(rawFile.status === 200 || rawFile.status == 0){
@@ -51,10 +50,6 @@
 }
 
 	token = getQueryVariable('token')
-	examples = readCTS("plain/textexamples.php?snippet="+token)
-	alert(examples)
-	//infotext+='<tr><td>Verwendungen</td><td></td><td> '+examples+'</td></tr>'
-	token=""
 	
 	if(token.length>0){
 		data = readPHP("tokenprofile.php?token="+token).split("\n")
@@ -68,6 +63,8 @@
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td><td></td><td> '+data[4]+'</td><td></td><td></td></tr>'
 			infotext+='<tr><td>Linke&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[5]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn</td><td><a href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a href = "'+miningURL+'php/collocation.php?left='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[6]+'</td><td></td><td></td></tr>'
+			examples = readCTS("plain/textexamples.php?limit=5&deletexml&snippet="+token).replaceAll("\n","<br>")
+			infotext+='<tr><td>Verwendungen</td><td></td><td> '+examples+'</td></tr>'
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
