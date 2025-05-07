@@ -11,6 +11,20 @@
 <script>document.write(header())</script>
 
 <br><br>
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Gesuchtes Token</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="wantedtoken" type="text" placeholder="Token">
+				<button onclick = "updateToken()">Enter</button> 
+			</div>
+			<script>
+				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateToken"); 
+			</script>
+		</td>
+	</tr>
+</table>
 
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
@@ -34,9 +48,18 @@
 <br><br>
 
 <script>
+
+	var updateToken = function(){
+		loading('tokenprofile')
+		el = document.getElementById('tokenprofile')
+		token = document.getElementById('wantedtoken').value
+		document.getElementById('tokenprofile').src="tokenprofile.html?token="+token
+	}
+	
 	token = getQueryVariable('token')
 	if(token.length>0){
-		document.getElementById('tokenprofile').src="tokenprofile.html?token="+token
+		document.getElementById('wantedtoken').value=token
+		updateToken()
 	}
 	
 	document.title="Tokenprofil "+token
