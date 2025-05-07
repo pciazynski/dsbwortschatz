@@ -35,11 +35,13 @@ if(isset($_GET['token'])){
 	}
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 
-	$query = 'SELECT DISTINCT lemma FROM lemmatokenfrequency WHERE token = "'.$token.'"';
+	$query = 'SELECT lemma FROM lemmatokenfrequency WHERE token = "'.$token.'"';
 	foreach($PDO->query($query.';') as $row){
-		$lemma.=$row['lemma'];
+		$lemma=$row['lemma'];
+		$res.=$row['lemma'];
 	}
-	$res.=$lemma.$nl;
+
+	$res=trim($res).$nl;
 
 
 	if (strlen($lemma)>0){
@@ -50,9 +52,9 @@ if(isset($_GET['token'])){
 	}
 	$res=trim($res,$tab).$nl;
 
-	$query = 'SELECT DISTINCT norm FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'"';
+	$query = 'SELECT norm, SUM(frequency) as c FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY norm  ORDER BY c DESC';
 	foreach($PDO->query($query.';') as $row){
-		$res.=$row['norm'].$tab;
+		$res.=$row['norm'].$colon.$row['c'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
 	
@@ -63,12 +65,12 @@ if(isset($_GET['token'])){
 	$res=trim($res,$tab).$nl;
 	
 	$PDO = new PDO('sqlite:../data/collocation.db');
-	$query = 'SELECT left,CAST(logdice AS INT) as c FROM collocation WHERE right = "'.$token.'" ORDER BY logdice DESC LIMIT 10';
+	$query = 'SELECT left,ROUND(logdice,0) as c FROM collocation WHERE right = "'.$token.'" ORDER BY logdice DESC LIMIT 10';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['left'].$colon.$row['c'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
-	$query = 'SELECT right,CAST(logdice AS INT) as c  FROM collocation WHERE left = "'.$token.'" ORDER BY logdice DESC LIMIT 10';
+	$query = 'SELECT right,ROUND(logdice,0) as c  FROM collocation WHERE left = "'.$token.'" ORDER BY logdice DESC LIMIT 10';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['right'].$colon.$row['c'].$tab;
 	}
