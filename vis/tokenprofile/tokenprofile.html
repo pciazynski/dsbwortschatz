@@ -40,7 +40,7 @@
 		data = readPHP("tokenprofile.php?token="+token).split("\n")
 		if(data.length>1){
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
-			lemma = data[2].replaceAll("|","")
+			lemma = data[2].substring(1,data[2].length-1)
 			frequ = parseInt(data[0].split("\t"))
 			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td><td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/zipf.html?data=bagofwords/_all&token='+token+'&limit=1000">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td><td> '+data[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+token+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+token+'">➚</a></td><td>'+data[1]+'</td></tr>'
