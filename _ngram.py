@@ -36,7 +36,7 @@ def requestctsurl(ns):
             ctsurl+=line.decode('utf-8')
 
 def tokencheck(line):
-    linearr = line.split("\t")[0].split("_")
+    linearr = line.split("\t")[0].split(" ")
     for token in linearr:
         if not token.strip() in bagofwords:
             return False
@@ -53,7 +53,7 @@ def ngram(urn,ngramsize):
         if tokencheck(line):
             res+=line
         else:
-            with open("_error.txt", "a", encoding="utf8") as errout:
+            with open("_ERROR.txt", "a", encoding="utf8") as errout:
                 errout.write(urn+" ngram "+ngramsize+" unknown tokens in "+line + "\n")
             #print(line)
     return res
@@ -156,7 +156,7 @@ def db():
             for line in inf.readlines():
                 if len(line.strip())>0:
                     linearr = line.split("\t")
-                    vals = '"_'+linearr[0]+'_",'+year.replace(".txt","")+','+linearr[1].strip()
+                    vals = '" '+linearr[0]+' ",'+year.replace(".txt","")+','+linearr[1].strip()
                     query="INSERT INTO ngramdatecount(ngram,date,frequency) VALUES("+vals+")"
                     cursor.execute(query)
                 
@@ -168,7 +168,7 @@ def db():
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                vals = '"_'+linearr[0]+'_",'+linearr[1].strip()
+                vals = '" '+linearr[0]+' ",'+linearr[1].strip()
                 query="INSERT INTO ngramcount(ngram,frequency) VALUES("+vals+")"
                 cursor.execute(query)
     con.commit()

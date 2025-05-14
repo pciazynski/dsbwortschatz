@@ -38,7 +38,7 @@ with open ("data/ngram2/_all.txt", "r", encoding="utf8") as inf:
     for line in inf.readlines():
         if len(line.strip())>0:
             linearr = line.split("\t")
-            ngramarr = linearr[0].split("_")
+            ngramarr = linearr[0].split(" ")
             freq = int(linearr[1])
             logdice = 14 + math.log ((2*freq)/(bw[ngramarr[0]] + bw[ngramarr[1]]),2)
             vals = '"'+ngramarr[0]+'",'+'"'+ngramarr[1]+'",'+str(freq)+','+str(logdice)
@@ -54,7 +54,7 @@ for year in sorted(os.listdir("data/ngram2peryear")):
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
-                bigramarr = linearr[0].split("_")
+                bigramarr = linearr[0].split(" ")
                 vals = '"'+bigramarr[0]+'",'+'"'+bigramarr[1]+'",'+year.replace(".txt","")+','+linearr[1].strip()
                 query="INSERT INTO collocationperyear(left,right,date,frequency) VALUES("+vals+")"
                 cursor.execute(query)

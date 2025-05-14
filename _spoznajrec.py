@@ -98,7 +98,7 @@ with open("data/ngram"+n+"/_all.txt", "r", encoding = "utf8") as inf,open("data/
         #line = line.replace("ſ","s").replace("ẜ","s")
         line=line.lower()
         tmp = line.split("\t")[0].strip()
-        tmparr = tmp.split("_")
+        tmparr = tmp.split(" ")
         occ_deu = 0
         numberfound=0
         for token in tmparr:
@@ -128,7 +128,7 @@ mix2dict = {}
 
 with open("data/langDetect"+n+"/ngram"+n+"_mix.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmparr = line.split("\t")[0].split("_")
+        tmparr = line.split("\t")[0].split(" ")
         for tmp in tmparr:
             mixdict[tmp] = 1
             if line.split("\t")[2].strip() == "1":
@@ -139,13 +139,13 @@ with open("data/langDetect"+n+"/ngram"+n+"_mix.txt", "r", encoding = "utf8") as 
 
 with open("data/langDetect"+n+"/ngram"+n+"_deu.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmparr = line.split("\t")[0].split("_")
+        tmparr = line.split("\t")[0].split(" ")
         for tmp in tmparr:
             deudict[tmp] = 1
 
 with open("data/langDetect"+n+"/ngram"+n+"_dsb.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmparr = line.split("\t")[0].split("_")
+        tmparr = line.split("\t")[0].split(" ")
         for tmp in tmparr:
             dsbdict[tmp] = 1
 
@@ -214,13 +214,13 @@ def insertNgramIntoTable(name):
             if len(line.strip())>0:
                 linearr = line.split("\t")
                 if name == "deu":
-                    inserts.append(("_"+linearr[0]+"_",linearr[1]))
+                    inserts.append((" "+linearr[0]+" ",linearr[1]))
                     query = "INSERT INTO langDetectdeungram(ngram,frequency) VALUES(?,?)"
                 elif name == "dsb":
-                    inserts.append(("_"+linearr[0]+"_",linearr[1]))
+                    inserts.append((" "+linearr[0]+" ",linearr[1]))
                     query = "INSERT INTO langDetectdsbngram(ngram,frequency) VALUES(?,?)"
                 else:
-                    inserts.append(("_"+linearr[0]+"_",linearr[1],linearr[2]))
+                    inserts.append((" "+linearr[0]+" ",linearr[1],linearr[2]))
                     query = "INSERT INTO langDetectmixngram(ngram,frequency,deu) VALUES(?,?,?)"
         cursor.executemany(query,inserts)
         con.commit()
