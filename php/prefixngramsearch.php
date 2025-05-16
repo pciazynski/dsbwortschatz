@@ -8,7 +8,7 @@ if (strlen($token)>=1){
 	(isset($_GET['n'])) ? $n = $_GET['n'] : $n=3;
 	(isset($_GET['cutoff'])) ? $cutoff = ' GROUP BY SUBSTRING(ngram,0,'.(1+strlen($token)+$_GET['cutoff']).')' : $cutoff = "";
 
-	$query = 'SELECT DISTINCT SUBSTRING(ngram,2,LENGTH(ngram)-2) as ngram FROM ngramcount WHERE ngram LIKE "\_'.$token.'%" escape "\"'.$cutoff.' ORDER BY ngram LIMIT '.$limit;
+	$query = 'SELECT DISTINCT SUBSTRING(ngram,2,LENGTH(ngram)-2) as ngram FROM ngramcount WHERE ngram LIKE " '.$token.'%"'.$cutoff.' ORDER BY ngram LIMIT '.$limit;
 	$res = '';
 	$nl = "\n";
 

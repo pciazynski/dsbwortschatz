@@ -26,7 +26,7 @@
 
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
-		tmp = arr[0].split("_")
+		tmp = arr[0].split(" ")
 		onclickfunction="ngramClick('"+tmp[0]+"')"
 		ngramstr='<span style="cursor:pointer; color:'+getColor(tmp[0])+';" onclick ="'+onclickfunction+'">'+tmp[0]
 		for (var j = 1; j < tmp.length; j++){

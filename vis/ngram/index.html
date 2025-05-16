@@ -131,7 +131,7 @@
 	var linreg = function(iframeid){
 		tmp = document.getElementById("filter").value.trim()
 		if(tmp.length>0){
-			if(document.getElementById(iframeid).src.includes("timeline.html") && tmp.split("_").length==3){
+			if(document.getElementById(iframeid).src.includes("timeline.html") && tmp.split(" ").length==3){
 				loading(iframeid)
 				document.getElementById(iframeid).src=document.getElementById(iframeid).src.replaceAll("timeline.html","linreg_chart.html")
 			}else if(document.getElementById(iframeid).src.includes("linreg_chart.html")){
@@ -145,7 +145,7 @@
 		loading('ngram')
 		loading('timeline')
 		tmp = document.getElementById("filter").value.trim()
-		if(tmp.split("_").length==n){
+		if(tmp.split(" ").length==n){
 			document.getElementById('timeline').src = "timeline.html?data=ngramperyearexact.php&filter="+tmp+"&n="+n
 			document.getElementById('ngram').src = "ngram.html?data=ngramexact.php&frequency=1&n="+n+"&filter="+tmp
 		}else{
