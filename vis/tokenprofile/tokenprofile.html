@@ -35,7 +35,7 @@
 }
 
 	token = getQueryVariable('token').toLowerCase()
-	
+	clickable = getQueryVariable('clickable')
 	if(token.length>0){
 		data = readPHP("tokenprofile.php?token="+token).split("\n")
 		if(data.length>1){
@@ -45,6 +45,28 @@
 			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td><td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/zipf.html?data=bagofwords/_all&token='+token+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td><td> '+data[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+token+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+token+'">➚</a></td><td>'+data[1]+'</td></tr>'
 			infotext+='<tr><td>Lemma</td><td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td><td> '+data[2]+'</td></tr>'
+			
+			if (clickable == 1){
+				tmparr = data[3].split("\t")
+				data[3] = ""
+				for (key in tmparr){
+					token_count=tmparr[key].split(":")
+					data[3] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+				}
+				tmparr = data[6].split("\t")
+				data[6] = ""
+				for (key in tmparr){
+					token_count=tmparr[key].split(":")
+					data[6] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+				}
+				tmparr = data[7].split("\t")
+				data[7] = ""
+				for (key in tmparr){
+					token_count=tmparr[key].split(":")
+					data[7] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+				}
+			}
+			
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Lexem-Variation</td><td> <a target="_blank" href = "'+miningURL+'vis/lemmavariation/traviz.html?data=lemmatoken.php&weight&sort&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmatoken.php?weight&sort&lemma='+lemma+'">➚</a></td><td>'+data[3]+'</td></tr>'
 			infotext+='<tr><td>Linke&nbsp;Nachbarn(LogDice)</td><td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?right='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[6]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn(LogDice)</td><td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+token+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?left='+token+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td><td> '+data[7]+'</td><td></td><td></td></tr>'
@@ -56,7 +78,9 @@
 		else{
 			infotext = "Keine Daten"
 		}
-		document.write('<h1 style="text-align:center;">'+token+'</h1>'+infotext)
+		if(clickable==1){clicktext='<a href="?token='+token+'">HTML Verlinkung entfernen</a>'}
+		else{clicktext = '<a href="?token='+token+'&clickable=1">HTML Verlinkung</a>'}
+		document.write('<h1 style="text-align:center;">'+token+'</h1>'+clicktext+infotext)
 	}
 </script>
 
