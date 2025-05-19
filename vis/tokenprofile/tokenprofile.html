@@ -47,23 +47,29 @@
 			infotext+='<tr><td>Lemma</td><td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td><td> '+data[2]+'</td></tr>'
 			
 			if (clickable == 1){
-				tmparr = data[3].split("\t")
-				data[3] = ""
-				for (key in tmparr){
-					token_count=tmparr[key].split(":")
-					data[3] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+				if(data[3] != null){
+					tmparr = data[3].split("\t")
+					data[3] = ""
+					for (key in tmparr){
+						token_count=tmparr[key].split(":")
+						data[3] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+					}
 				}
-				tmparr = data[6].split("\t")
-				data[6] = ""
-				for (key in tmparr){
-					token_count=tmparr[key].split(":")
-					data[6] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+				if(data[6] != null){
+					tmparr = data[6].split("\t")
+					data[6] = ""
+					for (key in tmparr){
+						token_count=tmparr[key].split(":")
+						data[6] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+					}
 				}
-				tmparr = data[7].split("\t")
-				data[7] = ""
-				for (key in tmparr){
-					token_count=tmparr[key].split(":")
-					data[7] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+				if(data[7] != null){
+					tmparr = data[7].split("\t")
+					data[7] = ""
+					for (key in tmparr){
+						token_count=tmparr[key].split(":")
+						data[7] += '<a href="?token='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+					}
 				}
 			}
 			
