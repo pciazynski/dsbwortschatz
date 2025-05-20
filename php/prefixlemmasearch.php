@@ -8,7 +8,7 @@ if (strlen($lemma)>=1){
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 	(isset($_GET['cutoff'])) ? $cutoff = ' GROUP BY SUBSTRING(lemma,0,'.strlen($lemma)+$_GET['cutoff'].')' : $cutoff = '';
 	
-	$query = 'SELECT DISTINCT lemma FROM lemmafrequency WHERE lemma LIKE "'.$lemma.'%"'.$cutoff.' ORDER BY frequency DESC LIMIT '.$limit;
+	$query = 'SELECT DISTINCT lemma FROM lemmafrequency WHERE lemma LIKE "|'.$lemma.'%"'.$cutoff.' ORDER BY frequency DESC LIMIT '.$limit;
 
 	$nl = "\n";
 	$res = '';
