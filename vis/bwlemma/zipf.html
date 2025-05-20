@@ -15,6 +15,8 @@
 	var dataset = getQueryVariable("data")
 	var max = getQueryVariable("max")
 	var min = getQueryVariable("min")
+	var lemma = getQueryVariable("lemma")
+	var limit = getQueryVariable("limit")
 	data_arr = readTextFile(dataset).split("\n");
 	allText=""
 	maxval = 0
@@ -23,12 +25,24 @@
 	date= []
 	count = []
 	colors = []
-
-	for (var i = 0; i < data_arr.length; i++) {
+	add = true
+	if(lemma.length>0){
+		add = false
+	}
+	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
+	limit=parseInt(limit)
+	for (var i = 0; i < limit; i++) {
 		line = data_arr[i];
 		if(line.length>1)
 		{	
 			tmp = line.split(sep)
+			if(lemma.length>0 && !add){
+				limit = Math.min(limit+1,data_arr.length)
+				if(tmp[0]===lemma){
+					add = true
+				}
+			}
+			if (!add){continue}
 			value  = parseInt(tmp[1])
 			if(max.length>0 & value > parseInt(max)){continue}
 			if(min.length>0 & value < parseInt(min)){continue}

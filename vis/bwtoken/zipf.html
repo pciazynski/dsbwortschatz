@@ -52,8 +52,8 @@
 					add = true
 				}
 			}
-			value  = parseInt(tmp[1])
 			if (!add){continue}
+			value  = parseInt(tmp[1])
 			if(max.length>0 & value > parseInt(max)){continue}
 			if(min.length>0 & value < parseInt(min)){continue}
 			date.push(tmp[0])

@@ -22,7 +22,7 @@ function autocomplete(input, datasource, functioncall) {
 			/*insert a input field that will hold the current array item's value:*/
 			b.innerHTML += "<input type='hidden' value='" + data_arr[i] + "'>";
 			b.addEventListener("click", function(e) {
-				inp.value = this.getElementsByTagName("input")[0].value;
+				document.getElementById(input).value = this.getElementsByTagName("input")[0].value;
 				closeAllLists();
 				window[functioncall]()
 			});

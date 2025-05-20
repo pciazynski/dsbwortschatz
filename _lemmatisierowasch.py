@@ -63,15 +63,15 @@ def lemmamapping(urn):
             if tokencheck(token):
                 if 'lemma="' in we:
                     lemma = "|"+we.split('lemma="')[1].split('"')[0].replace('"',' ').replace("'"," ").strip()+"|"
-                    if len(lemma) == 2:
-                        lemma=""
+                    #if len(lemma) == 2:
+                    #    lemma=""
+                    #else:
+                        #lemmaarr=lemma.split("|")
+                        #for lemmatoken in lemmaarr:
+                    if lemma in lemmabag:
+                        lemmabag[lemma] = lemmabag[lemma]+1
                     else:
-                        lemmaarr=lemma.split("|")
-                        for lemmatoken in lemmaarr:
-                            if lemmatoken in lemmabag:
-                                lemmabag[lemmatoken] = lemmabag[lemmatoken]+1
-                            else:
-                                lemmabag[lemmatoken] = 1
+                        lemmabag[lemma] = 1
                 if 'norm="' in we:
                     norm = "|"+we.split('norm="')[1].split('"')[0].replace('"','')+"|"
                     if len(norm) == 2:

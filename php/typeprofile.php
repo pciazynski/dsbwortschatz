@@ -28,31 +28,22 @@ if(isset($_GET['type'])){
 		$res.=$row['mindate'].$tab.$row['maxdate'].$nl;
 	}
 	
-	
 	if(strlen(trim($res))==0){
 		print("NULL");
 		exit();
 	}
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 
-	$query = 'SELECT lemma FROM lemmatokenfrequency WHERE token = "'.$token.'"';
+	$query = 'SELECT lemma, SUM(frequency) as c FROM lemmatokenfrequency WHERE token = "'.$token.'"';
 	foreach($PDO->query($query.';') as $row){
-		$lemma=$row['lemma'];
-		$res.=$row['lemma'];
+		$lemma=trim($row['lemma'],"|");
+		$res.=$lemma.$colon.$row['c'].$tab;
 	}
 
-	$res=trim($res).$nl;
-
-
-	if (strlen($lemma)>0){
-		$query = 'SELECT token, frequency FROM lemmatokenfrequency WHERE lemma = "'.$lemma.'" ORDER BY frequency DESC';
-		foreach($PDO->query($query.';') as $row){
-			$res.=$row['token'].$colon.$row['frequency'].$tab;
-		}
-	}
 	$res=trim($res,$tab).$nl;
 
-	$query = 'SELECT norm, SUM(frequency) as c FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY norm  ORDER BY c DESC';
+	
+	$query = 'SELECT norm, SUM(frequency) as c FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY norm ORDER BY c DESC';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['norm'].$colon.$row['c'].$tab;
 	}
