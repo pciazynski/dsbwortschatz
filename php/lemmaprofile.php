@@ -12,9 +12,9 @@ if(isset($_GET['lemma'])){
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 
 	if (strlen($lemma)>0){
-		$query = 'SELECT token, frequency FROM lemmatokenfrequency WHERE lemma = "'.$lemma.'" ORDER BY frequency DESC';
+		$query = 'SELECT Min(date) as mindate, Max(date) as maxdate FROM tokenlemmanormtypesubtypedatefrequency WHERE lemma = "|'.$lemma.'|"';
 		foreach($PDO->query($query.';') as $row){
-			$res.=$row['token'].$colon.$row['frequency'].$tab;
+			$res.=$row['mindate'].$tab.$row['maxdate'].$nl;
 		}
 	}
 	$res=trim($res,$tab).$nl;
