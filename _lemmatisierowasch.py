@@ -46,7 +46,8 @@ def lemmamapping(urn):
     requestctsurl(urn)
     res = ""
     data = urlopen(ctsurl+"plain/passage.php?urn="+urn+"&copyrighttoken="+copyrighttoken) 
-    print("requested")
+    print(ctsurl+"plain/passage.php?urn="+urn+"&copyrighttoken="+copyrighttoken+"requested")
+    exit()
     for line in data: 
         res+=line.decode('utf-8')
     
