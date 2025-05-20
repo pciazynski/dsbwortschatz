@@ -13,14 +13,14 @@
 <br><br>
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Gesuchtes Token</td>
+		<td style="text-align:center;">Gesuchtes Wort</td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="wantedtoken" type="text" placeholder="Token">
+				<input style="width:70%" id="wantedtoken" type="text" placeholder="Type">
 				<button onclick = "updateToken()">Enter</button> 
 			</div>
 			<script>
-				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateToken"); 
+				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateType"); 
 			</script>
 		</td>
 	</tr>
@@ -30,14 +30,14 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="embedding('tokenprofile');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('tokenprofile');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('tokenprofile');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('typeprofile');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('typeprofile');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('typeprofile');">Rohdaten</button>
 			</td>
 		</tr>
 		<tr>
 			<td style = "width: 100%;">		
-				<iframe class="resized" width="100%" height="475px" id="tokenprofile" scrolling="yes"></iframe>
+				<iframe class="resized" width="100%" height="475px" id="typeprofile" scrolling="yes"></iframe>
 			</td>
 		</tr>
 	</table>
@@ -49,20 +49,20 @@
 
 <script>
 
-	var updateToken = function(){
-		loading('tokenprofile')
-		el = document.getElementById('tokenprofile')
+	var updateType = function(){
+		loading('typeprofile')
+		el = document.getElementById('typeprofile')
 		token = document.getElementById('wantedtoken').value
-		document.getElementById('tokenprofile').src="tokenprofile.html?token="+token
+		document.getElementById('typeprofile').src="typeprofile.html?token="+token
 	}
 	
-	token = getQueryVariable('token')
+	type = getQueryVariable('type')
 	if(token.length>0){
 		document.getElementById('wantedtoken').value=token
-		updateToken()
+		updateType()
 	}
 	
-	document.title="Tokenprofil "+token
+	document.title="Wortprofil "+type
 </script>
 
 <br><br>
