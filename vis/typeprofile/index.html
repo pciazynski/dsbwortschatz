@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+<body style="background-color:lightgray">
+<script>document.write(header())</script>
+
+<br><br>
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Gesuchtes Wort</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="wantedtoken" type="text" placeholder="Type">
+				<button onclick = "updateToken()">Enter</button> 
+			</div>
+			<script>
+				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateType"); 
+			</script>
+		</td>
+	</tr>
+</table>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="embedding('typeprofile');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('typeprofile');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('typeprofile');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="475px" id="typeprofile" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br><br>
+<hr>
+<br><br>
+
+<script>
+
+	var updateType = function(){
+		loading('typeprofile')
+		el = document.getElementById('typeprofile')
+		token = document.getElementById('wantedtoken').value
+		document.getElementById('typeprofile').src="typeprofile.html?token="+token
+	}
+	
+	type = getQueryVariable('type')
+	if(token.length>0){
+		document.getElementById('wantedtoken').value=token
+		updateType()
+	}
+	
+	document.title="Wortprofil "+type
+</script>
+
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

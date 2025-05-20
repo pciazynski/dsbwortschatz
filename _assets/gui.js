@@ -87,7 +87,7 @@ str='<div  class="header">'+
 +'<a href="../bwtoken/">Token</a> | '
 +'<a href="../bwtime/">Verwendungszeitraum</a> | '
 +'<a href="../tokenrec/">Token-Abdeckung</a> | '
-+'<a href="../tokenprofile/">Token-Steckbrief</a>'
++'<a href="../typeprofile/">Wort-Steckbrief</a>'
 +'</td>'
 +'<td>'
 +'<a href="../bwlemma/">Lemma</a> | '
