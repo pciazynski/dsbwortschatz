@@ -38,7 +38,7 @@
 	wort = getQueryVariable('wort').toLowerCase()
 	clickable = getQueryVariable('clickable')
 	if(wort.length>0){
-		data = readPHP("typeprofile.php?type="+wort).split("\n")
+		data = readPHP("wortprofile.php?word="+wort).split("\n")
 		if(data.length>1){
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			lemma = data[2].split(":")[0]
@@ -60,7 +60,7 @@
 					data[5] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[5] += '<a href="typeprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[5] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 				}
 				if(data[6] != null){
@@ -68,7 +68,7 @@
 					data[6] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[6] += '<a href="typeprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[6] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 				}
 			}

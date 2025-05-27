@@ -23,6 +23,7 @@
 	text=""
 	rawFile = new XMLHttpRequest();
 	rawFile.open("GET", miningURL+"php/"+file, false);
+	alert(miningURL+"php/"+file)
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
 			if(rawFile.status === 200 || rawFile.status == 0){
@@ -45,15 +46,15 @@
 					data[3] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[3] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[3] += '<a href="typeprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 				}
 			}
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td><td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td><td> '+data[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td><td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&exact=1&focus=0&lemma='+lemma+'">❧</a> <a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?exact=1&focus=0&lemma='+lemma+'">➚</a></td><td>'+data[1]+'</td></tr>'
-			infotext+='<tr><td>Lemmatisiert inkl ambig</td><td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td><td> '+data[2]+'</td></tr>'
-			infotext+='<tr><td>Wortformen</td><td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td><td> '+data[3]+'</td></tr>'
+			infotext+='<tr><td>Lemmatisiert inkl ambig</td><td></td><td> '+data[2]+'</td></tr>'
+			infotext+='<tr><td>Wortformen</td><td></td><td> '+data[3]+'</td></tr>'
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
