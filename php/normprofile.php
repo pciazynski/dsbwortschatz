@@ -16,7 +16,7 @@ if(isset($_GET['norm'])){
 	}
 	$res=trim($res,$tab).$nl;
 
-	$query = 'SELECT DISTINCT token tokenlemmanormtypesubtypedatefrequency WHERE norm = "|'.$norm.'|"';
+	$query = 'SELECT DISTINCT token FROM tokenlemmanormtypesubtypedatefrequency WHERE norm = "|'.$norm.'|"';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['token'].$tab;
 	}
