@@ -14,7 +14,6 @@ if(isset($_GET['norm'])){
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['mindate'].$tab.$row['maxdate'].$nl;
 	}
-	$res=trim($res,$tab).$nl;
 
 	$query = 'SELECT DISTINCT token FROM tokenlemmanormtypesubtypedatefrequency WHERE norm = "|'.$norm.'|"';
 	foreach($PDO->query($query.';') as $row){
