@@ -1,9 +1,9 @@
 <?php
 header('Content-Type: text/plain');
 
-if(isset($_GET['type'])){
+if(isset($_GET['word'])){
 	
-	$token = $_GET['type'];
+	$token = $_GET['word'];
 	$res = '';
 	$tab = "\t";
 	$colon = ":";

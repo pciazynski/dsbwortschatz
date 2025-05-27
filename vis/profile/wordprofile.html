@@ -23,7 +23,7 @@
 	text=""
 	rawFile = new XMLHttpRequest();
 	rawFile.open("GET", miningURL+"php/"+file, false);
-	//alert(miningURL+"php/"+file)
+	alert(miningURL+"php/"+file)
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
 			if(rawFile.status === 200 || rawFile.status == 0){
