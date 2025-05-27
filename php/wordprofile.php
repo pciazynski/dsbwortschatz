@@ -45,7 +45,7 @@ if(isset($_GET['word'])){
 	
 	$query = 'SELECT norm, SUM(frequency) as c FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY norm ORDER BY c DESC';
 	foreach($PDO->query($query.';') as $row){
-		$res.=$row['norm'].$colon.$row['c'].$tab;
+		$res.=trim($row['norm'],"|").$colon.$row['c'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
 	
