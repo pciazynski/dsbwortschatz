@@ -20,7 +20,10 @@
 	if(focus.length==0){focus=0}else{focus = parseInt(focus)}
 	dataset = dataset +"?lemma="+lemma+"&sort"
 	if(focus==3){diagramtitle = "Token von Lemma "}else{diagramtitle="Lemma "}
-	if(exact==1){diagramtitle += "exakt ";dataset+="&exact"}else{diagramtitle += "inklusive "}
+	diagramtitle += lemma
+	
+	if(exact==1){dataset+="&exact"}else{diagramtitle += " inkl. ambig"}
+
 	data_arr = readPHP(dataset).split("\n");
 	maxval = 0
 	minval = 10000000
@@ -30,7 +33,6 @@
 	hovers = []
 	colors = []
 
-	diagramtitle += lemma
 	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i];
 		if(line.length>1){

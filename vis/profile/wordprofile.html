@@ -50,7 +50,7 @@
 					data[2] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[2] += '<a href="lemmaprofile.html?lemma='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[2] += '<a href="lemmaprofile.html?lemma='+token_count[0]+'&clickable=1">'+token_count[0]+'</a>\t'
 					}
 				}
 				if(data[5] != null){
@@ -79,7 +79,7 @@
 			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+wort+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+wort+'">➚</a></td>'}
 			infotext+='<td>'+data[1]+'</td></tr>'
 			
-			infotext+='<tr><td>Lemmatisiert</td>'
+			infotext+='<tr><td>Lemma</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td>'}
 			infotext+='<td> '+data[2]+'</td></tr>'
 			
@@ -99,7 +99,7 @@
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
-			infotext = "Keine Daten"
+			infotext = "<br>Keine Daten"
 		}
 		if(clickable==1){clicktext='<a href="?wort='+wort+'">Interaktionselemente entfernen</a>'}
 		else{clicktext = '<a href="?wort='+wort+'&clickable=1">Interaktionselemente anzeigen</a>'}
