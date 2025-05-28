@@ -82,14 +82,17 @@
 		else{
 			infotext = "<br>Keine Daten"
 		}
-		if(clickable==1){clicktext='<a href="?lemma='+lemma+'">Interaktionselemente entfernen</a>'}
-		else{clicktext = '<a href="?lemma='+lemma+'&clickable=1">Interaktionselemente anzeigen</a>'}
-		document.write('<h1 style="text-align:center;">'+lemma+'</h1>'+clicktext+infotext)
+		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
+		if(clickable==1){clicktext += '<td><a href="?lemma='+lemma+'">Interaktionselemente entfernen</a></td>'}
+		else{clicktext += '<td><a href="?lemma='+lemma+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
+		clicktext+='</table>'
+		
+		document.write('<h1 style="text-align:center;">Lemmaprofil '+lemma+'</h1>'+clicktext+infotext)
 	}
 </script>
 
 <script>
-	document.title="Lemmaprofil "+lemma
+	document.title='Lemmaprofil '+lemma
 </script>
 
 </body>

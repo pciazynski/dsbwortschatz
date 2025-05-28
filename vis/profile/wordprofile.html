@@ -52,6 +52,16 @@
 						token_count=tmparr[key].split(":")
 						data[2] += '<a href="lemmaprofile.html?lemma='+token_count[0]+'&clickable=1">'+token_count[0]+'</a>\t'
 					}
+					data[2] = data[2].trim()
+				}
+				if(data[3] != null){
+					tmparr = data[3].split("\t")
+					data[3] = ""
+					for (key in tmparr){
+						token_count=tmparr[key].split(":")
+						data[3] += '<a href="normprofile.html?norm='+token_count[0]+'&clickable=1">'+token_count[0]+'</a>\t'
+					}
+					data[3] = data[3].trim()
 				}
 				if(data[5] != null){
 					tmparr = data[5].split("\t")
@@ -60,6 +70,7 @@
 						token_count=tmparr[key].split(":")
 						data[5] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
+					data[5] = data[5].trim()
 				}
 				if(data[6] != null){
 					tmparr = data[6].split("\t")
@@ -68,6 +79,7 @@
 						token_count=tmparr[key].split(":")
 						data[6] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
+					data[6] = data[6].trim()
 				}
 			}
 			
@@ -83,32 +95,34 @@
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td>'}
 			infotext+='<td> '+data[2]+'</td></tr>'
 			
-			infotext+='<tr><td>Linke&nbsp;Nachbarn(LogDice)</td>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Linke&nbsp;Nachbarn(LogDice)</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+wort+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?right='+wort+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
 			infotext+='<td> '+data[5]+'</td></tr>'
-			infotext+='<tr style="background-color:#F0F3FA;"><td>Rechte&nbsp;Nachbarn(LogDice)</td>'
+			infotext+='<tr><td>Rechte&nbsp;Nachbarn(LogDice)</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+wort+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?left='+wort+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
 			infotext+='<td> '+data[6]+'</td><td></td><td></td></tr>'
-			infotext+='<tr><td>Normierte&nbsp;Form</td>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Normierte&nbsp;Form</td>'
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[3]+'</td></tr>'
-			infotext+='<tr style="background-color:#F0F3FA;"><td>Typ</td>'
+			infotext+='<tr><td>Typ</td>'
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
-			if(clickable==1){infotext+='<tr><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+wort+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
+			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+wort+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
 			infotext = "<br>Keine Daten"
 		}
-		if(clickable==1){clicktext='<a href="?wort='+wort+'">Interaktionselemente entfernen</a>'}
-		else{clicktext = '<a href="?wort='+wort+'&clickable=1">Interaktionselemente anzeigen</a>'}
-		document.write('<h1 style="text-align:center;">'+wort+'</h1>'+clicktext+infotext)
+		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
+		if(clickable==1){clicktext += '<td><a href="?wort='+wort+'">Interaktionselemente entfernen</a></td>'}
+		else{clicktext += '<td><a href="?wort='+wort+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
+		clicktext+='</table>'
+		document.write('<h1 style="text-align:center;">Wortprofil '+wort+'</h1>'+clicktext+infotext)
 	}
 </script>
 
 <script>
-	document.title="Wortprofil "+wort
+	document.title='Wortprofil '+wort
 </script>
 
 </body>

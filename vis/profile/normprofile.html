@@ -48,6 +48,7 @@
 						token_count=tmparr[key].split(":")
 						data[1] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+token_count[0]+'</a>\t'
 					}
+					data[1] = data[1].trim()
 				}
 			}
 			
@@ -65,14 +66,16 @@
 		else{
 			infotext = "<br>Keine Daten"
 		}
-		if(clickable==1){clicktext='<a href="?norm='+norm+'">Interaktionselemente entfernen</a>'}
-		else{clicktext = '<a href="?norm='+norm+'&clickable=1">Interaktionselemente anzeigen</a>'}
-		document.write('<h1 style="text-align:center;">'+norm+'</h1>'+clicktext+infotext)
+		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
+		if(clickable==1){clicktext += '<td><a href="?norm='+norm+'">Interaktionselemente entfernen</a></td>'}
+		else{clicktext += '<td><a href="?norm='+norm+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
+		clicktext+='</table>'
+		document.write('<h1 style="text-align:center;">Normprofil '+norm+'</h1>'+clicktext+infotext)
 	}
 </script>
 
 <script>
-	document.title="Normprofil "+norm
+	document.title='Normprofil '+norm
 </script>
 
 </body>
