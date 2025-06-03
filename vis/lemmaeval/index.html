@@ -52,15 +52,13 @@
 				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
 			</script>
 		</td>
-		<td><a href="?lemma=CHÓŚEBUZ">Bspw CHÓŚEBUZ</a></td>
+		<td><label id = "lemmatext"></label></td>
 		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmavariation</button></td>
 	</tr>
-
 </table>
 
 
 <br>
-
 
 
 <div class = "iframediv">
@@ -107,13 +105,27 @@
 
 <br><br>
 <script>
-
+	var updateFocus = function(newfocus){
+		loading("timeline")
+		focus = newfocus
+		sourcearr = document.getElementById("timeline").src.split("&focus=")
+		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
+		if(focus==3){
+			source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")
+		}
+		if(curlemma.length>0){
+			document.getElementById("timeline").src=source
+			document.title="Lemma "+curlemma
+		}
+	}
+	
 	var updateZipf = function(){
 		loading("zipf")
 		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmauniqueness"
 	}
 	
-	var lemmaClick = function(lemma){
+	var lemmaClick = function(lemma, hover){
+		document.getElementById("lemmatext").innerHTML = hover
 		document.getElementById("lemma").value = lemma
 		updateTimeline()
 	}
@@ -132,7 +144,7 @@
 		document.title="Lemma "+curlemma
 	}
 
-	focus = 3
+	focus = 0
 	updateZipf()
 	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
 

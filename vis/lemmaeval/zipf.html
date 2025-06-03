@@ -21,15 +21,18 @@
 	date= []
 	count = []
 	colors = []
+	hovers = []
+	
 	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i];
 		if(line.length>1)
 		{	
 			tmp = line.split(sep)
-			value  = parseFloat(tmp[1])
+			value  = parseFloat(tmp[1]).toFixed(4)
 			date.push(tmp[0])
 			count.push(value)
 			colors.push(getColor(tmp[0]))
+			hovers.push(tmp[0]+"<br>uniqueness:"+value + "<br>unique: " + tmp[2] +"<br>ambig:"+tmp[3])
 			if (value>maxval ) {maxval = value}
 		}
 	}
@@ -38,6 +41,8 @@
 		x: date,
 		y: count,
 		type: 'bar',
+		hovertemplate: '%{text}',
+		text:hovers,
 		marker: {
 			color: colors
 		}
@@ -70,7 +75,7 @@
 	myPlot = document.getElementById('myDiv')
 	myPlot.on("plotly_click", function(data) {
 		lemma=data.points[0].x;
-		parent.lemmaClick(lemma)
+		parent.lemmaClick(lemma,data.points[0].text)
 	});
 	document.title = diagramtitle
 

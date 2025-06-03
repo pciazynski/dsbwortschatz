@@ -8,7 +8,6 @@ lemmauniquebag = {}
 
 with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as inf:
     for line in inf:
-        line = line.replace("!","")
         linearr = line.split("\t")
         lemma = linearr[1]
         lemma = lemma[1:-1]
