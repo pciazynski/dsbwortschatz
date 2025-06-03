@@ -130,6 +130,20 @@
 		updateTimeline()
 	}
 	
+	var callDolnoserbski = function(){
+		curlemma = document.getElementById("lemma").value.trim()
+		if(curlemma.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curlemma, "_blank")
+		}
+	}
+	
+	var callLemmatree = function(){
+		curlemma = document.getElementById("lemma").value.trim()
+		if(curlemma.length>0){
+			window.open("../lemmavariation?lemma="+curlemma, "_blank")
+		}
+	}
+	
 	var updateTimeline = function(){
 		loading("timeline")
 		loading("lemmagroup")
