@@ -13,40 +13,21 @@
 <script>
 
 	var dataset = getQueryVariable("data")
-	var max = getQueryVariable("max")
-	var min = getQueryVariable("min")
-	var lemma = getQueryVariable("lemma")
-	var limit = getQueryVariable("limit")
 	data_arr = readTextFile(dataset).split("\n");
 	allText=""
 	maxval = 0
-	diagramtitle = "Lemmahäufigkeiten"
+	diagramtitle = "Lemmaeindeutigkeit"
 
 	date= []
 	count = []
 	colors = []
-	add = true
-	if(lemma.length>0){
-		add = false
-	}
-	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
-	limit=parseInt(limit)
-	for (var i = 0; i < limit; i++) {
+	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i];
 		if(line.length>1)
 		{	
 			tmp = line.split(sep)
-			if(lemma.length>0 && !add){
-				limit = Math.min(limit+1,data_arr.length)
-				if(tmp[0]===lemma){
-					add = true
-				}
-			}
-			if (!add){continue}
-			value  = parseInt(tmp[1])
-			if(max.length>0 & value > parseInt(max)){continue}
-			if(min.length>0 & value < parseInt(min)){continue}
-			date.push(tmp[0].substring(1,tmp[0].length-1))
+			value  = parseFloat(tmp[1])
+			date.push(tmp[0])
 			count.push(value)
 			colors.push(getColor(tmp[0]))
 			if (value>maxval ) {maxval = value}
@@ -89,8 +70,7 @@
 	myPlot = document.getElementById('myDiv')
 	myPlot.on("plotly_click", function(data) {
 		lemma=data.points[0].x;
-		parent.document.getElementById("lemma").value = lemma
-		parent.updateTimeline()
+		parent.lemmaClick(lemma)
 	});
 	document.title = diagramtitle
 
