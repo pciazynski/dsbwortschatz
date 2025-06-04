@@ -71,15 +71,15 @@
 		<td style="text-align:center;">Suchbegriff</td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
+				<input style="width:50%" id="norm" type="text" placeholder="Normierung"> 
 				<button onclick = "updateTimeline()">Inklusive Suche</button> 
 			</div>
 			<script>
-				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
+				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
 			</script>
 		</td>
 		<td><label id = "lemmatext"></label></td>
-		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmavariation</button></td>
+		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button></td>
 	</tr>
 </table>
 
@@ -91,9 +91,9 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 19%;">
-				<button class = "iframebutton" onclick="embedding('lemmagroup');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('lemmagroup');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('normgroup');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('normgroup');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('normgroup');">Rohdaten</button>
 			</td>
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
@@ -108,7 +108,7 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				<iframe class="resized"  width="100%" height="475px" id="lemmagroup" scrolling="yes"></iframe>
+				<iframe class="resized"  width="100%" height="475px" id="normgroup" scrolling="yes"></iframe>
 			</td>
 			<td>
 				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
@@ -120,7 +120,7 @@
 		<tr style = "text-align:right;">
 			<td></td>
 			<td>
-				<button class = "iframebutton" onclick="updateFocus(0);">Lemma</button>
+				<button class = "iframebutton" onclick="updateFocus(0);">Normierung</button>
 				<button class = "iframebutton" onclick="updateFocus(3);">Token</button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
 			</td>
@@ -142,38 +142,38 @@
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
 		if(focus==3){
-			source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")
+			source = source.replace("normsumperyear","normcountperyear")}else{source = source.replace("normcountperyear","normsumperyear")
 		}
-		if(curlemma.length>0){
+		if(curnorm.length>0){
 			document.getElementById("timeline").src=source
-			document.title="Lemma "+curlemma
+			document.title="Normierung "+curlemma
 		}
 	}
 	
 	var updateZipf = function(){
 		loading("zipf")
 		loading("stats")
-		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmauniqueness"
-		document.getElementById("stats").src="boxplot.html?data=lemmamapping/_lemmauniqueness"
+		document.getElementById("zipf").src="zipf.html?data=normmapping/_normuniqueness"
+		document.getElementById("stats").src="boxplot.html?data=normmapping/_normuniqueness"
 	}
 	
-	var lemmaClick = function(lemma, hover){
+	var pointClick = function(norm, hover){
 		document.getElementById("lemmatext").innerHTML = hover
-		document.getElementById("lemma").value = lemma
+		document.getElementById("norm").value = norm
 		updateTimeline()
 	}
 	
 	var callDolnoserbski = function(){
-		curlemma = document.getElementById("lemma").value.trim()
-		if(curlemma.length>0){
-			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curlemma, "_blank")
+		curnorm = document.getElementById("norm").value.trim()
+		if(curnorm.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curnorm, "_blank")
 		}
 	}
 	
 	var callLemmatree = function(){
-		curlemma = document.getElementById("lemma").value.trim()
-		if(curlemma.length>0){
-			window.open("../lemmavariation?lemma="+curlemma, "_blank")
+		curnorm = document.getElementById("norm").value.trim()
+		if(curnorm.length>0){
+			window.open("../lemmavariation?norm="+curnorm, "_blank")
 		}
 	}
 	
@@ -181,14 +181,14 @@
 		loading("timeline")
 		loading("lemmagroup")
 		loading("tokengroup")
-		curlemma = document.getElementById("lemma").value.trim()
+		curnorm = document.getElementById("norm").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		if(curlemma.length>0){
-			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
-			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
+		if(curnorm.length>0){
+			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
+			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
 		}
-		document.title="Lemma "+curlemma
+		document.title="Normierung "+curnorm
 	}
 
 	focus = 0

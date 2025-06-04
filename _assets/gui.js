@@ -15,6 +15,7 @@ function embedding(iframeid){
 }
 
 function printlink(elementid){
+	loading(elementid)
 	url = document.getElementById(elementid).src
 	if(url.includes('&print=1')){url = url.replace('&print=1','')}else{url += '&print=1'}
 	document.getElementById(elementid).src = url
