@@ -78,8 +78,7 @@
 				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
 			</script>
 		</td>
-		<td><label id = "lemmatext"></label></td>
-		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button></td>
+		<td><label id = "normtext"></label></td>
 	</tr>
 </table>
 
@@ -146,7 +145,7 @@
 		}
 		if(curnorm.length>0){
 			document.getElementById("timeline").src=source
-			document.title="Normierung "+curlemma
+			document.title="Normierung "+curnorm
 		}
 	}
 	
@@ -154,35 +153,30 @@
 		loading("zipf")
 		loading("stats")
 		document.getElementById("zipf").src="zipf.html?data=normmapping/_normuniqueness"
-		document.getElementById("stats").src="boxplot.html?data=normmapping/_normuniqueness"
+		document.getElementById("stats").src="piechart.html?data=normmapping/_normuniqueness"
 	}
 	
 	var pointClick = function(norm, hover){
-		document.getElementById("lemmatext").innerHTML = hover
+		document.getElementById("normtext").innerHTML = hover
 		document.getElementById("norm").value = norm
 		updateTimeline()
 	}
 	
-	var callDolnoserbski = function(){
-		curnorm = document.getElementById("norm").value.trim()
-		if(curnorm.length>0){
-			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curnorm, "_blank")
+		
+	var normClick = function(norm){
+		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
+		if(norm.length>0){
+			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+norm+"&sort&exact=1&focus="+focus
+			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+norm+"&sort&exact=1"
 		}
 	}
-	
-	var callLemmatree = function(){
-		curnorm = document.getElementById("norm").value.trim()
-		if(curnorm.length>0){
-			window.open("../lemmavariation?norm="+curnorm, "_blank")
-		}
-	}
-	
+
 	var updateTimeline = function(){
 		loading("timeline")
-		loading("lemmagroup")
+		loading("normgroup")
 		loading("tokengroup")
 		curnorm = document.getElementById("norm").value.trim()
-		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
+		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
 		if(curnorm.length>0){
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
 			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"

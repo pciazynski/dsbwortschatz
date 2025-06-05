@@ -12,15 +12,15 @@
 
 	diagramtitle = ""
 	var dataset = getQueryVariable("data")
-	var lemma = getQueryVariable("lemma")
+	var norm = getQueryVariable("norm")
 	var exact = getQueryVariable("exact")
 	var focus = getQueryVariable("focus")
 	var jitter = getQueryVariable("jitter")
 	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
 	if(focus.length==0){focus=0}else{focus = parseInt(focus)}
-	dataset = dataset +"?lemma="+lemma+"&sort"
-	if(focus==3){diagramtitle = "Token von Lemma "}else{diagramtitle="Lemma "}
-	diagramtitle += lemma
+	dataset = dataset +"?norm="+norm+"&sort"
+	if(focus==3){diagramtitle = "Token von Normierung "}else{diagramtitle="Normierung "}
+	diagramtitle += norm
 	
 	if(exact==1){dataset+="&exact"}else{diagramtitle += " inkl. ambig"}
 

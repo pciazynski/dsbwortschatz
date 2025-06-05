@@ -166,7 +166,9 @@ def index():
     cursor.execute("CREATE INDEX lemmafrequencyindex ON lemmafrequency(lemma);")
     cursor.execute("CREATE INDEX lemmatokenlemmaindex ON lemmatokenfrequency(lemma);")
     cursor.execute("CREATE INDEX lemmatokentokenindex ON lemmatokenfrequency(token);")
-
+    con.commit()
+    con.close()
+    
 def initTables():
     if os.path.exists("data/lemmamapping.db"):
         os.remove("data/lemmamapping.db")
@@ -230,7 +232,8 @@ def db():
         query = "INSERT INTO tokenlemmanormtypesubtypefrequency(token,lemma,norm,type,subtype,frequency) VALUES("+vals+")"
         cursor.execute(query)
     con.commit()
-
+    con.close()
+    
     index()
 
 

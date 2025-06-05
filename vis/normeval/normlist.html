@@ -11,17 +11,17 @@
 <body style="text-align:left;">
 <script>
 	var dataset = getQueryVariable("data")
-	var lemma = getQueryVariable("lemma")
-	dataset = dataset +"?lemma="+lemma+"&sort"
+	var norm = getQueryVariable("norm")
+	dataset = dataset +"?norm="+norm+"&sort"
 	data_arr = readPHP(dataset).split("\n");
 
 	str = "<table style='border-collapse: collapse;text-align:left;'>";
-	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Lemmagruppe & Exakte Suche</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Anzahl Textvorkommen</th>"
+	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Normierungsgruppe & Exakte Suche</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Anzahl Textvorkommen</th>"
 	str = str +"</tr>"
 
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
-		onclickfunction="parent.lemmaClick('"+arr[0].slice(1,-1)+"')"
+		onclickfunction="parent.normClick('"+arr[0].slice(1,-1)+"')"
 		resstr='<span style="color:'+getColor(arr[0])+';">▮</span>'+'<span style="cursor:pointer;" onclick='+onclickfunction+'>'+arr[0]+'</span>'
 		str = str + "<tr><td style='border: 2px solid black;padding:5px 5px 5px 5px;'>"+resstr+"</td><td style='border: 2px solid black;padding:5px 5px 5px 5px;'>"+arr[1]+"</td>"
 		str = str +'</tr>'
@@ -32,6 +32,6 @@
 	data_arr = ""
 	str = ""
 	
-	document.title = "Lemmaliste "+ lemma
+	document.title = "Normierung "+ norm
 </script>
 </body>

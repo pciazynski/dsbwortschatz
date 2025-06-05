@@ -15,7 +15,7 @@
 	var dataset = getQueryVariable("data")
 	var max = getQueryVariable("max")
 	var min = getQueryVariable("min")
-	var lemma = getQueryVariable("lemma")
+	var lemma = "|"+getQueryVariable("lemma")+"|"
 	var limit = getQueryVariable("limit")
 	data_arr = readTextFile(dataset).split("\n");
 	allText=""
@@ -31,10 +31,9 @@
 	}
 	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
 	limit=parseInt(limit)
-	for (var i = 0; i < limit; i++) {
+	for (var i = 0; i < limit; i++){
 		line = data_arr[i];
-		if(line.length>1)
-		{	
+		if(line.length>1){
 			tmp = line.split(sep)
 			if(lemma.length>0 && !add){
 				limit = Math.min(limit+1,data_arr.length)

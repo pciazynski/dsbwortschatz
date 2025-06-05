@@ -154,10 +154,18 @@
 		loading("zipf")
 		loading("stats")
 		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmauniqueness"
-		document.getElementById("stats").src="boxplot.html?data=lemmamapping/_lemmauniqueness"
+		document.getElementById("stats").src="piechart.html?data=lemmamapping/_lemmauniqueness"
 	}
 	
-	var lemmaClick = function(lemma, hover){
+	var lemmaClick = function(lemma){
+		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
+		if(lemma.length>0){
+			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&sort&exact=1&focus="+focus
+			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+lemma+"&sort&exact=1"
+		}
+	}
+	
+	var pointClick = function(lemma, hover){
 		document.getElementById("lemmatext").innerHTML = hover
 		document.getElementById("lemma").value = lemma
 		updateTimeline()
