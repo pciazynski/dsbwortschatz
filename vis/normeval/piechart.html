@@ -44,10 +44,14 @@
 			text:diagramtitle,
 			font: diagramfont
 		},
-
+		margin: {"b": 0, "l": 0, "r": 0},
+		legend: {
+			x: 1,
+			xanchor: 'right',
+			y: 1
+		},
 		annotations: watermarke()
 	};
-
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 	myPlot = document.getElementById('myDiv')
 	myPlot.on('plotly_click', function(data) {

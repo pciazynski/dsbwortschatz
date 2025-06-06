@@ -13,11 +13,17 @@
 <script>
 
 	var dataset = getQueryVariable("data")
+	if (getQueryVariable("sort")==1){dataset+="?sort"}
 	var max = getQueryVariable("max")
 	var min = getQueryVariable("min")
 	var lemma = "|"+getQueryVariable("lemma")+"|"
 	var limit = getQueryVariable("limit")
-	data_arr = readTextFile(dataset).split("\n");
+	if(dataset.includes(".php")){
+		data_arr = readPHP(dataset).split("\n");
+	}
+	else{
+		data_arr = readTextFile(dataset).split("\n");
+	}
 	allText=""
 	maxval = 0
 	diagramtitle = "Lemmahäufigkeiten"
@@ -41,6 +47,7 @@
 					add = true
 				}
 			}
+			if(tmp[0] === "||"){continue;}
 			if (!add){continue}
 			value  = parseInt(tmp[1])
 			if(max.length>0 & value > parseInt(max)){continue}
