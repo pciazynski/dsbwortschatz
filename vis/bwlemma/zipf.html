@@ -20,13 +20,14 @@
 	var limit = getQueryVariable("limit")
 	if(dataset.includes(".php")){
 		data_arr = readPHP(dataset).split("\n");
+		diagramtitle = "Menge der Types"
 	}
 	else{
 		data_arr = readTextFile(dataset).split("\n");
+		diagramtitle = "Lemmahäufigkeiten"
 	}
 	allText=""
 	maxval = 0
-	diagramtitle = "Lemmahäufigkeiten"
 
 	date= []
 	count = []
