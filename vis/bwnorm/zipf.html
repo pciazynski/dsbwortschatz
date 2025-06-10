@@ -16,7 +16,7 @@
 	if (getQueryVariable("sort")==1){dataset+="?sort"}
 	var max = getQueryVariable("max")
 	var min = getQueryVariable("min")
-	var lemma = "|"+getQueryVariable("lemma")+"|"
+	var norm = "|"+getQueryVariable("norm")+"|"
 	var limit = getQueryVariable("limit")
 	if(dataset.includes(".php")){
 		data_arr = readPHP(dataset).split("\n");
@@ -24,7 +24,7 @@
 	}
 	else{
 		data_arr = readTextFile(dataset).split("\n");
-		diagramtitle = "Lemmahäufigkeiten"
+		diagramtitle = "Normierung Häufigkeiten"
 	}
 	allText=""
 	maxval = 0
@@ -33,7 +33,7 @@
 	count = []
 	colors = []
 	add = true
-	if(lemma.length>2){
+	if(norm.length>2){
 		add = false
 	}
 	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
@@ -42,9 +42,9 @@
 		line = data_arr[i];
 		if(line.length>1){
 			tmp = line.split(sep)
-			if(lemma.length>2 && !add){
+			if(norm.length>2 && !add){
 				limit = Math.min(limit+1,data_arr.length)
-				if(tmp[0]===lemma){
+				if(tmp[0]===norm){
 					add = true
 				}
 			}
@@ -96,7 +96,7 @@
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 	myPlot = document.getElementById('myDiv')
 	myPlot.on("plotly_click", function(data) {
-		parent.document.getElementById("lemma").value = data.points[0].x;
+		parent.document.getElementById("norm").value = data.points[0].x
 		parent.updateTimeline()
 	});
 	document.title = diagramtitle

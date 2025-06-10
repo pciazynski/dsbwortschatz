@@ -72,8 +72,8 @@ def lemmamapping(urn):
                         lemmabag[lemma] = 1
                 if 'norm="' in we:
                     norm = "|"+we.split('norm="')[1].split('"')[0].replace('"','')+"|"
-                    if len(norm) == 2:
-                        norm=""
+                    #if len(norm) == 2:
+                    #    norm=""
                 if "subtype" in we:
                     subtype = we.split('subtype="')[1].split('"')[0]
                 if "type" in we:

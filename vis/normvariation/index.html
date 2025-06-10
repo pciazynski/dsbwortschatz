@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<script src="../../_assets/gui.js"></script>
+	<script src="../../_assets/autocomplete.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="background-color:lightgray">
+
+<script>document.write(header())</script>
+
+<br><br>
+<br><br>
+
+<div class = "explain">
+	<p>
+		Hier können Normierungen hierarchisch betrachtet werden. Mehrere Normierungen können in einer Liste übergeben werden. Ist "Inklusive" aktiviert, wird nach Normierungsgruppen für jede einzelne Normierung gesucht. 
+		<br>
+		<strong>Baum</strong>: Linksklick fokussiert Nachbarn des geklickten Knotens. Doppelklick fokussiert das komplette Netzwerk.
+		<br>
+		<strong>Sunburst</strong>:Linksklick im Mittelstreifen fokussiert die gewählte Normierung und zeigt dessen Timeline. Linksklick auf die äußeren Elemente zeigt den Zeitverlauf und Info zur Wortform.
+	</p>
+</div>
+
+<table class="optionmenu" align="center">
+	<tr>
+		<td style="text-align:center;">Normierung</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:50%" id="norm" type="text" placeholder="Normierung"> 
+				<button onclick = "updateTree()">Enter</button> 
+			</div>
+			<script>
+				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
+			</script>
+		</td>
+		<td>Sende an </td>
+		<td style="text-align:left;"><button onclick = "addNormToList()">&#10149;Normierungsliste</button><br><button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button>
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Normierungsliste</td>
+		<td>
+			<input style="width:70%" id="normlist" type="text" placeholder="Kommasepariert" onchange = "">
+			<button onclick = "updateTreeFromList()">Enter</button> 
+		</td>
+		<td style="text-align:center;"><a href="?norm=MŁYŃSKI,KRABAT">Bspw MŁYŃSKI,KRABAT</a></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Inklusive</td>
+		<td>
+			<input type="checkbox" id="inclusive"/> 
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;">Regex</td>
+		<td>
+			<input style="width:70%" id="normregex" type="text" placeholder="" onchange = "">
+			<button onclick = "updateTreeFromRegex()">Enter</button> 
+		</td>
+		<td style="text-align:center;"><label>Bspw TE(J|N)</label></td>
+	</tr>
+	<tr>
+		<td style="text-align:center;"></td>
+		<td>
+		</td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="embedding('traviz');">HTML Embedding</button>
+	<button class = "iframebutton" onclick="diagrammlink('traviz');">Vollbild</button>
+	<button class = "iframebutton" onclick="datalink('traviz');">Rohdaten</button>
+	<div style="text-align:center;">
+		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
+	</div>
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 69%;">
+				<button class = "iframebutton" onclick="embedding('tree');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('tree');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('tree');">Rohdaten</button>
+			</td>
+			<td style = "width: 30%;">
+				<button class = "iframebutton" onclick="embedding('sunburst');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('sunburst');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('sunburst');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td>		
+				<iframe class="resized" width="100%" height="475px" id="tree" scrolling="yes"></iframe>
+			</td>
+			<td>		
+				<iframe class="resized" width="100%" height="475px" id="sunburst" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td>
+				Log. Gewichtung:<input type="checkbox" id="weight" onchange = 'switchweight()' checked="true"/> 
+			</td>
+			<td>
+				<button class = "iframebutton" onclick="hidewatermark('sunburst');">Quellenangabe</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<br>
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr>
+			<td style = "width: 100%;">
+				<iframe class="resized" width="100%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="500px" id="timeline" scrolling="yes"></iframe>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+
+<br><br>
+<script>
+
+	var tokenclick = function(tmp){
+		loading("timeline")
+		loading("tokeninfo")
+		if(tmp.length>0){
+			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
+			document.getElementById("tokeninfo").src="datalist.html?data=token2norm.php&token="+tmp
+		}
+	}
+	
+	var normclick = function(tmp){
+		loading("timeline")
+		if(tmp.length>0){
+			document.getElementById("timeline").src="normtimeline.html?datanormcountperyear.php&norm="+tmp+"&sort&focus=3&exact=1"
+		}
+	}
+
+	
+	var callDolnoserbski = function(){
+		curnorm = document.getElementById('norm').value.trim()
+		if(curnorm.length>0){
+			window.open('https://dolnoserbski.de/ortografija/slownik?wuraz='+curnorm, '_blank')
+		}
+	}
+	
+	var switchweight = function(){
+		if(document.getElementById('weight').checked){document.getElementById('tree').src = document.getElementById('tree').src + '&weight'}
+		else{document.getElementById('tree').src = document.getElementById('tree').src.replaceAll('&weight','')}
+	}
+	
+	var updateTreeFromRegex = function(){
+		curnorm = document.getElementById('normregex').value.trim()
+		if(curnorm.length>0){
+			loading("tree")
+			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
+			document.getElementById('tree').src='lemmatree_dagre.html?data=normtokenregex.php&sort&norm='+curnorm+weight
+			document.getElementById('sunburst').src='sunburst.html?data=normtokenregex.php&sort&norm='+curnorm+weight
+			document.getElementById('traviz').src='traviz.html?data=normtokenregex.php&sort&norm='+curnorm+weight
+			document.title=curnorm+"Normierungsbaum"
+		}
+	}
+	
+	var updateTreeFromList = function(){
+		curnorm = document.getElementById('lemmalist').value.trim()
+		if(curnorm.length>0){
+			loading("tree")
+			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
+			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
+			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
+			document.getElementById('sunburst').src='sunburst.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
+			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
+			document.title=curnorm+"Normierungsbaum"
+		}
+	}
+
+	var updateTree = function(){
+		curnorm = document.getElementById('norm').value.trim()
+		if(curnorm.length>0){
+			loading("tree")
+			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
+			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
+			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
+			document.getElementById('sunburst').src='sunburst.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
+			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
+			document.title=curnorm+"Normierungsbaum"
+		}
+	}
+	
+	var addLemmaToList = function(){
+		loading("tree")
+		tmp = document.getElementById("norm").value.trim()
+		tmp2 = document.getElementById("normlist").value.trim()
+		str = ""
+		if(tmp.length>0){
+			if(tmp2.length>0){str = ","}
+			str = tmp2+str+tmp
+			document.getElementById("normlist").value = str
+			document.getElementById('tree').src='lemmatree_dagre.html?data=normtoken.php&norm='+curnorm
+		}
+	}
+	
+	curnorm = getQueryVariable('norm')
+	if(curnorm.length>0){
+		if(curnorm.includes(",")){
+			document.getElementById('normlist').value = curnorm
+			updateTreeFromList()
+		
+		}else{
+				document.getElementById('norm').value = curnorm
+				updateTree()
+			}
+		document.getElementById('norm').scrollIntoView()
+	}
+	else{
+		document.getElementById('tree').src = 'error_token.html'
+	}
+	document.title="Normierungsbaum"
+</script>
+<br><br>
+<script>
+	document.write(footer())
+</script>
+</body>

@@ -103,6 +103,8 @@ str='<div  class="header">'+
 +'<a href="../lemmaeval/">Evaluation</a>'
 +'</td>'
 +'<td>'
++'<a href="../bwnorm/">Normierungen</a> | '
++'<a href="../normvariation/">Variation</a> | '
 +'<a href="../normeval/">Evaluation</a>'
 +'</td>'
 +'<td>'

@@ -17,7 +17,7 @@
 
 <div class = "explain">
 	<p>
-		Die Lemmata sind hier wahlweise nach Häufigkeitsrang oder Menge der zugehörigen Types aufgelistet. Ein Klick auf einen Balken fügt das Lemma unten ein.
+		Die Normierungen sind hier wahlweise nach Häufigkeitsrang oder Menge der zugehörigen Types aufgelistet. Ein Klick auf einen Balken fügt die Normierung unten ein.
 	</p>
 </div>
 
@@ -25,7 +25,7 @@
 	<tr>
 		<td style="text-align:right;">Minimum Häufigkeit</td>
 		<td>
-			<input type="number" value="1000" id="min" onchange="updateZipf()">
+			<input type="number" value="100" id="min" onchange="updateZipf()">
 		</td>
 	</tr>
 	<tr>
@@ -51,14 +51,14 @@
 
 <div class = "explain">
 	<p>
-		Hier können einzelne Lemma im Zeitverlauf dargestellt sowie inkludierende Lemmagruppen aufgelistet werden. 
-		Ein Klick auf einen Eintrag der Liste führt zu einer exakten Darstellung dieser Lemmagruppe. 
-		Die Betrachtung kann anhand der Lemmata oder der zugrundeliegenden Token erfolgen. 
+		Hier können einzelne Normierungen im Zeitverlauf dargestellt sowie inkludierende Normierungsgruppen aufgelistet werden. 
+		Ein Klick auf einen Eintrag der Liste führt zu einer exakten Darstellung dieser Normierungsgruppen. 
+		Die Betrachtung kann anhand der Normierungen oder der zugrundeliegenden Token erfolgen. 
 		Über den Link zu dolnoserbski.de finden sich weitere Informationen zu den Einträgen.
 		<br>
 		Ein Klick in der Timeline zeigt die Token bis zum angeklickten Jahr in einer Textvarianten-Visualisierung (TRAViz). Das Jahr kann ebenfalls über den Slider geändert werden. Wird der Slider deaktiviert, werden die Varianten des gesamten Zeitraums dargestellt. 
 		<br>
-		Über die Liste der Lemmagruppen kann der Input für TRAViz ebenfalls ausgewählt werden.
+		Über die Liste der Normierungsgruppen kann der Input für TRAViz ebenfalls ausgewählt werden.
 	</p>
 </div>
 
@@ -67,15 +67,15 @@
 		<td style="text-align:center;">Suchbegriff</td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
+				<input style="width:50%" id="norm" type="text" placeholder="Normierung"> 
 				<button onclick = "updateTimeline()">Inklusive Suche</button> 
 			</div>
 			<script>
-				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", "updateTimeline"); 
+				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", "updateTimeline"); 
 			</script>
 		</td>
-		<td><a href="?lemma=CHÓŚEBUZ">Bspw CHÓŚEBUZ</a></td>
-		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmavariation</button></td>
+		<td><a href="?norm=CHÓŚEBUZ">Bspw CHÓŚEBUZ</a></td>
+		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callNormtree()">&#10149;Normierungsvariation</button></td>
 	</tr>
 	<tr>
 		<td style="text-align:center;">Regex</td>
@@ -98,9 +98,9 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 19%;">
-				<button class = "iframebutton" onclick="embedding('lemmagroup');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('lemmagroup');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('lemmagroup');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('normgroup');">HTML Embedding</button>
+				<button class = "iframebutton" onclick="diagrammlink('normgroup');">Vollbild</button>
+				<button class = "iframebutton" onclick="datalink('normgroup');">Rohdaten</button>
 			</td>
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
@@ -115,7 +115,7 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				<iframe class="resized"  width="100%" height="475px" id="lemmagroup" scrolling="yes"></iframe>
+				<iframe class="resized"  width="100%" height="475px" id="normgroup" scrolling="yes"></iframe>
 			</td>
 			<td>
 				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
@@ -127,7 +127,7 @@
 		<tr style = "text-align:right;">
 			<td></td>
 			<td>
-				<button class = "iframebutton" onclick="updateFocus(0);">Lemma</button>
+				<button class = "iframebutton" onclick="updateFocus(0);">Norimierung</button>
 				<button class = "iframebutton" onclick="updateFocus(3);">Token</button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
 			</td>
@@ -192,7 +192,7 @@
 	
 	var zipfTypecount = function(){
 		loading("zipf")
-		document.getElementById("zipf").src="zipf.html?data=typecountperlemma.php&sort=1"
+		document.getElementById("zipf").src="zipf.html?data=typecountpernorm.php&sort=1"
 	}
 	
 	var updateYearlabel = function(){
@@ -202,31 +202,31 @@
 
 	
 	var updateTravizYear = function(){
-		if(curlemma.trim().length>0){
+		if(curnorm.trim().length>0){
 			loading("traviz")
 			url = document.getElementById("traviz").src.split("&year")[0]
 			yearfrom = document.getElementById("yearminslider").value
 			yearto = document.getElementById("yearmaxslider").value
 			if(yearto==maxDate && yearfrom == minDate) {
-				document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
+				document.getElementById("traviz").src = url.replace("normtokenperyear.php","normtoken.php")
 			}else{
 				year = "BETWEEN " + yearfrom + " AND " + yearto
-				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year="+year
+				document.getElementById("traviz").src = url.replace("normtoken.php","normtokenperyear.php")+"&year="+year
 			}
 		}
 	}
 	
 	var callDolnoserbski = function(){
-		curlemma = document.getElementById("lemma").value.trim()
-		if(curlemma.length>0){
-			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curlemma, "_blank")
+		curnorm = document.getElementById("norm").value.trim()
+		if(curnorm.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curnorm, "_blank")
 		}
 	}
 	
-	var callLemmatree = function(){
-		curlemma = document.getElementById("lemma").value.trim()
-		if(curlemma.length>0){
-			window.open("../lemmavariation?lemma="+curlemma, "_blank")
+	var callNormtree = function(){
+		curnorm = document.getElementById("norm").value.trim()
+		if(curnorm.length>0){
+			window.open("../normvariation?norm="+curnorm, "_blank")
 		}
 	}
 	
@@ -237,77 +237,75 @@
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
 		if(focus==3){
-			source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")
+			source = source.replace("normsumperyear","normcountperyear")}else{source = source.replace("normcountperyear","normsumperyear")
 		}
-		if(curlemma.length>0){
+		if(curnorm.length>0){
 			document.getElementById("timeline").src=source
-			document.title="Lemma "+curlemma
+			document.title="Normierung "+curnorm
 		}
 	}
 	
 	var updateTimelineRegex = function(){
 		loading("traviz")
 		loading("timeline")
-		loading("lemmagroup")
+		loading("normgroup")
 		loading("tokengroup")
-//		document.getElementById("year").disabled = true;
-		curlemma = document.getElementById("regexsearch").value.trim()
-		if(curlemma.length>0){
-			document.getElementById("timeline").src="timeline.html?data=lemmaregexsearch.php&lemma="+curlemma+"&sort&focus="+focus
-			document.getElementById("traviz").src="traviz.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
-			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curlemma+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
+		curnorm = document.getElementById("regexsearch").value.trim()
+		if(curnorm.length>0){
+			document.getElementById("timeline").src="timeline.html?data=normregexsearch.php&norm="+curnorm+"&sort&focus="+focus
+			document.getElementById("traviz").src="traviz.html?data=normregex2token.php&norm="+curnorm+"&sort"
+			document.getElementById("normgroup").src="normlist.html?data=normregexgroup.php&norm="+curnorm+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=normregex2token.php&norm="+curnorm+"&sort"
 		}
-		document.title="Lemma "+curlemma
+		document.title="Normierung "+curnorm
 	}
 
 	var updateTimeline = function(){
 		loading("traviz")
 		loading("timeline")
-		loading("lemmagroup")
+		loading("normgroup")
 		loading("tokengroup")
-		curlemma = document.getElementById("lemma").value.trim()
-		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		if(curlemma.length>0){
-			document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=0"
-			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
-			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
+		curnorm = document.getElementById("norm").value.trim()
+		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
+		if(curnorm.length>0){
+			document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+curnorm+"&sort&exact=0"
+			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
+			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
 		}
-		document.title="Lemma "+curlemma
+		document.title="Normierung "+curnorm
 	}
 	var updateZipf = function(){
 		loading("zipf")
-		curlemma = document.getElementById("min").value.trim()
-		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmabag&min="+curlemma
+		curnorm = document.getElementById("min").value.trim()
+		document.getElementById("zipf").src="zipf.html?data=normmapping/_normbag&min="+curnorm
 	}
 	
-	var lemmaClick = function(lemma){
+	var normClick = function(norm){
 		loading("timeline")
 		loading("tokengroup")
 		loading("traviz")
-		curlemma=lemma
-		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
-		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
-		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
-		document.title="Lemma "+curlemma
+		curnorm=norm
+		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
+		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&exact=1&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
+		document.title="Normierung "+curnorm
 	}
 	
 	var focus = 0;
 	updateZipf()
-	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
-	curlemma = getQueryVariable("lemma")
+	curnorm = getQueryVariable("norm")
 
-	if(curlemma.length>0){
-		document.getElementById("lemma").value = curlemma
+	if(curnorm.length>0){
+		document.getElementById("norm").value = curnorm
 		updateTimeline()
-		document.getElementById("lemma").scrollIntoView()
+		document.getElementById("norm").scrollIntoView()
 	}
 	else{
 		document.getElementById('timeline').src="error_token.html"
 	}
-	document.title="Lemma "+curlemma
+	document.title="Normierung "+curnorm
 
 </script>
 <br><br>
