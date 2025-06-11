@@ -9,8 +9,8 @@
 
 <script>
 	var dataset = getQueryVariable("data")
-	var norm = getQueryVariable('norm')
-	dataset = dataset +'?norm='+norm
+	var lemma = getQueryVariable('lemma')
+	dataset = dataset +'?lemma='+lemma
 	if (getQueryVariable("inclusive").length>0){dataset+="&inclusive"}
 
 	data_arr = readPHP(dataset).split("\n");
@@ -20,17 +20,17 @@
 	parentsarr = []
 	color = []
 	
-	includednorms = []
+	includedlemmas = []
 	
 	for (key in data_arr){
 		tmp = data_arr[key].split(sep)
 		if(tmp.length>=2){
 			tmp[0] = tmp[0]
-			if (tmp[0] in includednorms){
-				includednorms[tmp[0]] = includednorms[tmp[0]] + parseInt(tmp[2])
+			if (tmp[0] in includedlemmas){
+				includedlemmas[tmp[0]] = includedlemmas[tmp[0]] + parseInt(tmp[2])
 			}
 			else{
-				includednorms[tmp[0]] = parseInt(tmp[2])
+				includedlemmas[tmp[0]] = parseInt(tmp[2])
 			}
 			color.push(getColor(tmp[1]))
 			date.push(tmp[1])
@@ -41,17 +41,17 @@
 
 	sum = 0
 	
-	for (key in includednorms){
+	for (key in includedlemmas){
 		date.unshift(key)
-		parentsarr.unshift(norm)
-		count.unshift(includednorms[key])
+		parentsarr.unshift(lemma)
+		count.unshift(includedlemmas[key])
 		color.unshift(getColor(key))
-		sum += includednorms[key]
+		sum += includedlemmas[key]
 	}
-	date.unshift(norm)
+	date.unshift(lemma)
 	parentsarr.unshift("")
 	count.unshift(sum)
-	color.unshift(getColor(norm))
+	color.unshift(getColor(lemma))
 
 	var data = [{
 		type: "sunburst",
