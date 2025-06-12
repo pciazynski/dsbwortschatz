@@ -135,14 +135,14 @@
 <br><br>
 <script>
 
-	var tokenclick = function(tmp){
-		loading("timeline")
-		loading("tokeninfo")
-		if(tmp.length>0){
-			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
-			document.getElementById("tokeninfo").src="datalist.html?data=token2norm.php&token="+tmp
-		}
-	}
+	//var tokenclick = function(tmp){
+	//	loading("timeline")
+	//	loading("tokeninfo")
+	//	if(tmp.length>0){
+	//		document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
+	//		document.getElementById("tokeninfo").src="datalist.html?data=token2norm.php&token="+tmp
+	//	}
+	//}
 	
 	var normclick = function(tmp){
 		loading("timeline")
@@ -150,6 +150,7 @@
 			if(tmp.startsWith("|")){
 				tmp = tmp.substring(1,tmp.length-1)
 				funcall = "normtimeline.html?data=normcountperyear.php&norm="+tmp
+				document.getElementById('tokeninfo').src = 'error_token.html'
 			}
 			else{
 				funcall = "tokentimeline.html?data=tokencountperyear.php&token="+tmp
@@ -180,6 +181,8 @@
 			document.getElementById('tree').src='normtree_dagre.html?data=normtokenregex.php&sort&norm='+curnorm+weight
 			document.getElementById('traviz').src='traviz.html?data=normtokenregex.php&sort&norm='+curnorm+weight
 			document.title=curnorm+"Normierungsbaum"
+			document.getElementById('tokeninfo').src = 'error_token.html'
+			document.getElementById('timeline').src = 'error_token.html'
 		}
 	}
 	
@@ -192,6 +195,8 @@
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.title=curnorm+"Normierungsbaum"
+		document.getElementById('tokeninfo').src = 'error_token.html'
+		document.getElementById('timeline').src = 'error_token.html'
 		}
 	}
 
@@ -204,6 +209,8 @@
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.title=curnorm+"Normierungsbaum"
+			document.getElementById('tokeninfo').src = 'error_token.html'
+			document.getElementById('timeline').src = 'error_token.html'
 		}
 	}
 	
@@ -235,6 +242,8 @@
 	else{
 		document.getElementById('tree').src = 'error_token.html'
 	}
+	document.getElementById('tokeninfo').src = 'error_token.html'
+	document.getElementById('timeline').src = 'error_token.html'
 	document.title="Normierungsbaum"
 </script>
 <br><br>
