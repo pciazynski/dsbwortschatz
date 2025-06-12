@@ -47,7 +47,7 @@
 			<input style="width:70%" id="normlist" type="text" placeholder="Kommasepariert" onchange = "">
 			<button onclick = "updateTreeFromList()">Enter</button> 
 		</td>
-		<td style="text-align:center;"><a href="?norm=MŁYŃSKI,KRABAT">Bspw MŁYŃSKI,KRABAT</a></td>
+		<td style="text-align:center;"><a href="?norm=druge,francojski">Bspw druge,francojski</a></td>
 	</tr>
 	<tr>
 		<td style="text-align:center;">Inklusive</td>
@@ -89,26 +89,15 @@
 				<button class = "iframebutton" onclick="diagrammlink('tree');">Vollbild</button>
 				<button class = "iframebutton" onclick="datalink('tree');">Rohdaten</button>
 			</td>
-			<td style = "width: 30%;">
-				<button class = "iframebutton" onclick="embedding('sunburst');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('sunburst');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('sunburst');">Rohdaten</button>
-			</td>
 		</tr>
 		<tr>
 			<td>		
 				<iframe class="resized" width="100%" height="475px" id="tree" scrolling="yes"></iframe>
 			</td>
-			<td>		
-				<iframe class="resized" width="100%" height="475px" id="sunburst" scrolling="yes"></iframe>
-			</td>
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
 				Log. Gewichtung:<input type="checkbox" id="weight" onchange = 'switchweight()' checked="true"/> 
-			</td>
-			<td>
-				<button class = "iframebutton" onclick="hidewatermark('sunburst');">Quellenangabe</button>
 			</td>
 		</tr>
 	</table>
@@ -158,7 +147,15 @@
 	var normclick = function(tmp){
 		loading("timeline")
 		if(tmp.length>0){
-			document.getElementById("timeline").src="normtimeline.html?datanormcountperyear.php&norm="+tmp+"&sort&focus=3&exact=1"
+			if(tmp.startsWith("|")){
+				tmp = tmp.substring(1,tmp.length-1)
+				funcall = "normtimeline.html?data=normcountperyear.php&norm="+tmp
+			}
+			else{
+				funcall = "tokentimeline.html?data=tokencountperyear.php&token="+tmp
+				document.getElementById("tokeninfo").src="datalist.html?data=token2norm.php&token="+tmp
+			}
+			document.getElementById("timeline").src=funcall+"&sort&focus=3&exact=1"
 		}
 	}
 
@@ -180,21 +177,19 @@
 		if(curnorm.length>0){
 			loading("tree")
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
-			document.getElementById('tree').src='lemmatree_dagre.html?data=normtokenregex.php&sort&norm='+curnorm+weight
-			document.getElementById('sunburst').src='sunburst.html?data=normtokenregex.php&sort&norm='+curnorm+weight
+			document.getElementById('tree').src='normtree_dagre.html?data=normtokenregex.php&sort&norm='+curnorm+weight
 			document.getElementById('traviz').src='traviz.html?data=normtokenregex.php&sort&norm='+curnorm+weight
 			document.title=curnorm+"Normierungsbaum"
 		}
 	}
 	
 	var updateTreeFromList = function(){
-		curnorm = document.getElementById('lemmalist').value.trim()
+		curnorm = document.getElementById('normlist').value.trim()
 		if(curnorm.length>0){
 			loading("tree")
 			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
-			document.getElementById('sunburst').src='sunburst.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.title=curnorm+"Normierungsbaum"
 		}
@@ -207,13 +202,12 @@
 			if(document.getElementById('inclusive').checked){inclusive='&inclusive'}else{inclusive=""}
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
-			document.getElementById('sunburst').src='sunburst.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.title=curnorm+"Normierungsbaum"
 		}
 	}
 	
-	var addLemmaToList = function(){
+	var addNormToList = function(){
 		loading("tree")
 		tmp = document.getElementById("norm").value.trim()
 		tmp2 = document.getElementById("normlist").value.trim()
@@ -222,7 +216,7 @@
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
 			document.getElementById("normlist").value = str
-			document.getElementById('tree').src='lemmatree_dagre.html?data=normtoken.php&norm='+curnorm
+			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&norm='+curnorm
 		}
 	}
 	

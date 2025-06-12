@@ -35,6 +35,7 @@
 	if (getQueryVariable("inclusive").length>0 || norm.includes(',') || dataset.includes('regex.php')){rootel=true}else{rootel=false}
 	network = readPHP(dataset).split('\n')
 	lay='dagre'
+	norm = "Input:"+norm
 	if(rootel){nodes[norm] = 0}
 	for (key in network){
 		tmp = network[key].split(sep)
@@ -94,7 +95,7 @@
 		if( key.length>0)
 		{
 			if(weight){size = Math.min(100,Math.log(parseInt(nodes[key]))+10)}else{size=19}
-			if(key==norm){color = 'gray'}else{color='red'}
+			if(key==norm){color = 'gray'}else{color=getColor(key)}
 			cy.add({
 				data: { id: key,
 				color:color,
@@ -148,12 +149,14 @@
 		if(tappedBefore === tappedNow) {
 			tappedBefore = null;
 			cy.fit()
-		}	else{
-				tappedTimeout = setTimeout(function(){ tappedBefore = null; }, 300);
-				tappedBefore = tappedNow;
-				if (tappedNow!==cy){
-					cy.fit(event.target.neighborhood(),100)
+		}else{
+			tappedTimeout = setTimeout(function(){ tappedBefore = null; }, 300);
+			tappedBefore = tappedNow;
+			if (tappedNow!==cy){
+				cy.fit(event.target.neighborhood(),100)
 			}
+			if(!event.target.id().includes("Input:")){parent.normclick(event.target.id())}
+			
 		}
 	});
 	
