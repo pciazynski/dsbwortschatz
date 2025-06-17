@@ -35,32 +35,48 @@
 	return text.trim()
 }
 
-	norm = getQueryVariable('norm')
+	norm = getQueryVariable('norm').toUpperCase()
 	clickable = getQueryVariable('clickable')
 	if(norm.length>0){
 		data = readPHP("normprofile.php?norm="+norm).split("\n")
 		if(data.length>0){
 			if (clickable == 1){
-				if(data[1] != null){
-					tmparr = data[1].split("\t")
-					data[1] = ""
+				if(data[2] != null){
+					tmparr = data[2].split("\t")
+					data[2] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[1] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+token_count[0]+'</a>\t'
+						data[2] += '<a href="normprofile.html?norm='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
-					data[1] = data[1].trim()
+					data[2] = data[2].trim()
+				}
+				if(data[3] != null){
+					tmparr = data[3].split("\t")
+					data[3] = ""
+					for (key in tmparr){
+						token_count=tmparr[key].split(":")
+						data[3] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+					}
+					data[3] = data[3].trim()
 				}
 			}
-			
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			
-			infotext+='<tr><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td>'
-			//if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td>'}
+			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td>'
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwnorm/zipf.html?data=normmapping/_normbag&norm='+norm+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/normmapping/_normbag.txt">➚</a></td>'}
 			infotext+='<td> '+data[0]+'</td></tr>'
-			infotext+='<tr><td>Zugehörige Wortformen</td>'
-			//if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td>'}
+			
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td>'
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwnorm/timeline.html?data=normsumperyear.php&exact=1&focus=0&norm='+norm+'">❧</a> <a target="_blank" href = "'+miningURL+'php/normsumperyear.php?exact&norm='+norm+'">➚</a></td>'}
 			infotext+='<td> '+data[1]+'</td></tr>'
-
+			infotext+='<tr><td>Normierung inkl ambig</td>'
+			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwnorm/timeline.html?data=normsumperyear.php&sort&focus=0&exact=0&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/normsumperyear.php?sort&norm='+norm+'">➚</a></td>'}
+			infotext+='<td> '+data[2]+'</td></tr>'
+			infotext+='<tr><td>Wortformen</td>'
+			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwnorm/traviz.html?data=normtoken.php&sort&focus=0&exact=1&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/normtoken.php?sort&focus=0&exact=1&norm='+norm+'">➚</a></td>'}
+			infotext+='<td> '+data[3]+'</td></tr>'
+			
+			
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
@@ -70,12 +86,13 @@
 		if(clickable==1){clicktext += '<td><a href="?norm='+norm+'">Interaktionselemente entfernen</a></td>'}
 		else{clicktext += '<td><a href="?norm='+norm+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
 		clicktext+='</table>'
-		document.write('<h1 style="text-align:center;">Normprofil '+norm+'</h1>'+clicktext+infotext)
+		
+		document.write('<h1 style="text-align:center;">Normierung '+norm+'</h1>'+clicktext+infotext)
 	}
 </script>
 
 <script>
-	document.title='Normprofil '+norm
+	document.title='Normierung '+norm
 </script>
 
 </body>

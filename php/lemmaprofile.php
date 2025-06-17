@@ -11,7 +11,7 @@ if(isset($_GET['lemma'])){
 
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	
-	$query = 'SELECT frequency FROM lemmafrequency WHERE lemma="'.$lemma.'"';
+	$query = 'SELECT frequency FROM lemmafrequency WHERE lemma="|'.$lemma.'|"';
 	foreach($PDO->query($query.';') as $row){
 		$frequency = $row['frequency'];
 	}
@@ -23,11 +23,11 @@ if(isset($_GET['lemma'])){
 	
 	$query = 'SELECT Min(date) as mindate, Max(date) as maxdate FROM tokenlemmanormtypesubtypedatefrequency WHERE lemma = "|'.$lemma.'|"';
 	foreach($PDO->query($query.';') as $row){
-		$res.=$row['mindate'].$tab.$row['maxdate'].$nl;
+		$res.=$row['mindate'].$tab.$row['maxdate'];
 	}
 	$res=trim($res,$tab).$nl;
 
-	$query = 'SELECT lemma, SUM(frequency) as c FROM lemmatokenfrequency WHERE lemma LIKE "%|'.$lemma.'|%" GROUP BY lemma ORDER BY c DESC';
+	$query = 'SELECT lemma, SUM(frequency) as c FROM lemmafrequency WHERE lemma LIKE "%|'.$lemma.'|%" GROUP BY lemma ORDER BY c DESC';
 	foreach($PDO->query($query.';') as $row){
 		$res.=trim($row['lemma'],"|").$colon.$row['c'].$tab;
 	}
