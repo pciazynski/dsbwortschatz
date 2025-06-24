@@ -17,10 +17,10 @@
 		<td>
 			<div class="autocomplete">
 				<input style="width:70%" id="wantedtoken" type="text" placeholder="Wort">
-				<button onclick = "updateType()">Enter</button> 
+				<button onclick = "updateWord()">Enter</button> 
 			</div>
 			<script>
-				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateType"); 
+				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateWord"); 
 			</script>
 		</td>
 	</tr>
@@ -37,7 +37,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Gesuchte Noermierung</td>
+		<td style="text-align:center;">Gesuchte Normierung</td>
 		<td>
 			<div class="autocomplete">
 				<input style="width:70%" id="wantednorm" type="text" placeholder="Normierung">
@@ -48,7 +48,14 @@
 			</script>
 		</td>
 	</tr>
-	</table>
+	<tr>
+		<td style="text-align:center;">Optionen</td>
+		<td>
+			<input id="clickableCheckBox" type="checkbox" checked="false" onchange="switchClickable()">Interaktive Elemente</input>
+
+		</td>
+	</tr>
+</table>
 
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
@@ -73,36 +80,53 @@
 
 <script>
 
-	var updateType = function(){
+
+	var switchClickable = function(){
 		loading('profile')
-		tmp = document.getElementById('wantedtoken').value
-		document.getElementById('profile').src="wordprofile.html?word="+tmp
+		tmp = document.getElementById('profile').src
+		if(tmp.includes("&clickable=1")){tmp=tmp.replace("&clickable=1","")}else{tmp=tmp+"&clickable=1"}
+		document.getElementById('profile').src=tmp
 	}
 	
+	var updateWord = function(){
+		loading('profile')
+		tmp = document.getElementById('wantedtoken').value
+		if(document.getElementById('clickableCheckBox').checked){tmp+="&clickable=1"}
+		document.getElementById('profile').src="wordprofile.html?word="+tmp
+	}
+
 	var updateLemma = function(){
 		loading('profile')
 		tmp = document.getElementById('wantedlemma').value
+		if(document.getElementById('clickableCheckBox').checked){tmp+="&clickable=1"}
 		document.getElementById('profile').src="lemmaprofile.html?lemma="+tmp
 	}
 	
 	var updateNorm = function(){
 		loading('profile')
 		tmp = document.getElementById('wantednorm').value
+		if(document.getElementById('clickableCheckBox').checked){tmp+="&clickable=1"}
 		document.getElementById('profile').src="normprofile.html?norm="+tmp
 	}
-
-	wort = getQueryVariable('wort')
-	if(wort.length>0){
-		document.getElementById('wantedtoken').value=wort
-		updateType()
-		document.title="Wortprofil "+type
+	tmp = getQueryVariable('word')
+	if(tmp.length>0){
+		document.getElementById('wantedtoken').value=tmp
+		updateWord()
+		document.title="Wortprofil "+tmp
 	}
 	else{
-		lemma = getQueryVariable('lemma')
-		if(lemma.length>0){
-			document.getElementById('wantedlemma').value=lemma
+		tmp = getQueryVariable('lemma')
+		if(tmp.length>0){
+			document.getElementById('wantedlemma').value=tmp
 			updateLemma()
-			document.title="Lemmaprofil "+lemma
+			document.title="Lemmaprofil "+tmp
+		}else{
+			tmp = getQueryVariable('norm')
+			if(tmp.length>0){
+				document.getElementById('wantednorm').value=tmp
+				updateNorm()
+				document.title="Normierungsprofil "+tmp
+			}
 		}
 	}
 
