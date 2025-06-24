@@ -23,7 +23,7 @@
 	text=""
 	rawFile = new XMLHttpRequest();
 	rawFile.open("GET", miningURL+"php/"+file, false);
-	//alert(miningURL+"php/"+file)
+//	alert(miningURL+"php/"+file)
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
 			if(rawFile.status === 200 || rawFile.status == 0){
@@ -35,7 +35,7 @@
 	return text.trim()
 }
 
-	norm = getQueryVariable('norm').toUpperCase()
+	norm = getQueryVariable('norm')
 	clickable = getQueryVariable('clickable')
 	if(norm.length>0){
 		data = readPHP("normprofile.php?norm="+norm).split("\n")
@@ -55,7 +55,7 @@
 					data[3] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[3] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[3] += '<a href="wordprofile.html?word='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 					data[3] = data[3].trim()
 				}

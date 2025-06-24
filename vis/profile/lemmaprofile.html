@@ -35,7 +35,7 @@
 	return text.trim()
 }
 
-	lemma = getQueryVariable('lemma').toUpperCase()
+	lemma = getQueryVariable('lemma')
 	clickable = getQueryVariable('clickable')
 	if(lemma.length>0){
 		data = readPHP("lemmaprofile.php?lemma="+lemma).split("\n")
@@ -55,7 +55,7 @@
 					data[3] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[3] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[3] += '<a href="wordprofile.html?word='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 					data[3] = data[3].trim()
 				}

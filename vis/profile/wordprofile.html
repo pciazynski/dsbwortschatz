@@ -35,10 +35,10 @@
 	return text.trim()
 }
 
-	wort = getQueryVariable('wort').toLowerCase()
+	word = getQueryVariable('word').toLowerCase()
 	clickable = getQueryVariable('clickable')
-	if(wort.length>0){
-		data = readPHP("wordprofile.php?word="+wort).split("\n")
+	if(word.length>0){
+		data = readPHP("wordprofile.php?word="+word).split("\n")
 		if(data.length>1){
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			lemma = data[2].split(":")[0]
@@ -68,7 +68,7 @@
 					data[5] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[5] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[5] += '<a href="wordprofile.html?word='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 					data[5] = data[5].trim()
 				}
@@ -77,18 +77,18 @@
 					data[6] = ""
 					for (key in tmparr){
 						token_count=tmparr[key].split(":")
-						data[6] += '<a href="wordprofile.html?wort='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+						data[6] += '<a href="wordprofile.html?word='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 					data[6] = data[6].trim()
 				}
 			}
 			
 			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/zipf.html?data=bagofwords/_all&type='+wort+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/zipf.html?data=bagofwords/_all&type='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
 			infotext+='<td> '+data[0]+'</td></tr>'
 
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+wort+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+wort+'">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+word+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+word+'">➚</a></td>'}
 			infotext+='<td>'+data[1]+'</td></tr>'
 			
 			infotext+='<tr><td>Lemma</td>'
@@ -96,10 +96,10 @@
 			infotext+='<td> '+data[2]+'</td></tr>'
 			
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Linke&nbsp;Nachbarn(LogDice)</td>'
-			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+wort+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?right='+wort+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
+			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&right='+word+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?right='+word+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
 			infotext+='<td> '+data[5]+'</td></tr>'
 			infotext+='<tr><td>Rechte&nbsp;Nachbarn(LogDice)</td>'
-			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+wort+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?left='+wort+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
+			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/collocation/tokenwordnet.html?data=collocation.php&left='+word+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/collocation.php?left='+word+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
 			infotext+='<td> '+data[6]+'</td><td></td><td></td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Normierte&nbsp;Form</td>'
 			if(clickable==1){infotext+='<td></td>'}
@@ -107,22 +107,22 @@
 			infotext+='<tr><td>Typ</td>'
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
-			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+wort+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
+			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+word+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
 			infotext=infotext.replaceAll("\t",", ")+'</table>'
 		}
 		else{
 			infotext = "<br>Keine Daten"
 		}
 		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
-		if(clickable==1){clicktext += '<td><a href="?wort='+wort+'">Interaktionselemente entfernen</a></td>'}
-		else{clicktext += '<td><a href="?wort='+wort+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
+		if(clickable==1){clicktext += '<td><a href="?word='+word+'">Interaktionselemente entfernen</a></td>'}
+		else{clicktext += '<td><a href="?word='+word+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
 		clicktext+='</table>'
-		document.write('<h1 style="text-align:center;">Wortprofil '+wort+'</h1>'+clicktext+infotext)
+		document.write('<h1 style="text-align:center;">Wortprofil '+word+'</h1>'+clicktext+infotext)
 	}
 </script>
 
 <script>
-	document.title='Wortprofil '+wort
+	document.title='Wortprofil '+word
 </script>
 
 </body>
