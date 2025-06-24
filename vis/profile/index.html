@@ -36,6 +36,18 @@
 			</script>
 		</td>
 	</tr>
+	<tr>
+		<td style="text-align:center;">Gesuchte Noermierung</td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:70%" id="wantednorm" type="text" placeholder="Normierung">
+				<button onclick = "updateNorm()">Enter</button> 
+			</div>
+			<script>
+				autocomplete("wantednorm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", "updateNorm"); 
+			</script>
+		</td>
+	</tr>
 	</table>
 
 <div class = "iframediv">
@@ -63,18 +75,22 @@
 
 	var updateType = function(){
 		loading('profile')
-		el = document.getElementById('profile')
-		wort = document.getElementById('wantedtoken').value
-		document.getElementById('profile').src="wordprofile.html?wort="+wort
+		tmp = document.getElementById('wantedtoken').value
+		document.getElementById('profile').src="wordprofile.html?word="+tmp
 	}
 	
 	var updateLemma = function(){
 		loading('profile')
-		el = document.getElementById('profile')
-		lemma = document.getElementById('wantedlemma').value
-		document.getElementById('profile').src="lemmaprofile.html?lemma="+lemma
+		tmp = document.getElementById('wantedlemma').value
+		document.getElementById('profile').src="lemmaprofile.html?lemma="+tmp
 	}
 	
+	var updateNorm = function(){
+		loading('profile')
+		tmp = document.getElementById('wantednorm').value
+		document.getElementById('profile').src="normprofile.html?norm="+tmp
+	}
+
 	wort = getQueryVariable('wort')
 	if(wort.length>0){
 		document.getElementById('wantedtoken').value=wort
