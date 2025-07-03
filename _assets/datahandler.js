@@ -26,18 +26,18 @@ function ctsrequest(url){
 
 
 function readPHP(file){
-	text=""
+	textstr=""
 	rawFile = new XMLHttpRequest();
 	rawFile.open("GET", phpurl+file, false);
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
 			if(rawFile.status === 200 || rawFile.status == 0){
-				text = rawFile.responseText;
+				textstr = rawFile.responseText;
 			}
 		}
 	}
 	rawFile.send(null);
-	return text.trim()
+	return textstr.trim()
 }
 
 function getQueryVariable(variable) {
