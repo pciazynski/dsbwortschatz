@@ -37,7 +37,7 @@ function readPHP(file){
 		}
 	}
 	rawFile.send(null);
-	return textstr.trim()
+	return textstr
 }
 
 function getQueryVariable(variable) {
