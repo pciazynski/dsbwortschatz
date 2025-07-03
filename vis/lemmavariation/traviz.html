@@ -17,12 +17,13 @@
 	if (getQueryVariable("inclusive").length>0){dataset+="&inclusive"}
 	if (getQueryVariable("sort").length>0){dataset+="&sort"}
 
-	data_arr = readPHP(dataset).split("\n");
+	data_arr = readPHP(dataset).trim().split("\n");
 	travdata = []
 	colors = []
 	
 	for (var i = 0;i<data_arr.length;i++){
 		linearr = data_arr[i].split(sep)
+		console.log(linearr[1])
 		colors.push(getColor(linearr[1]))
 		travdata.push({edition:linearr[0]+":"+linearr[1],text:linearr[1].split("").join(' ')})
 	}

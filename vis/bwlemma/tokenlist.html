@@ -15,7 +15,7 @@
 	var exact = getQueryVariable("exact")
 	dataset = dataset +"?lemma="+lemma+"&sort"
 	if (exact.length>0){title=lemma;dataset+="&exact=1"}else{title="..|"+lemma+"|..";}
-	data_arr = readPHP(dataset).split("\n");
+	data_arr = readPHP(dataset).trim().split("\n");
 
 
 	str = "<table style='border-collapse: collapse;text-align:left;'>";

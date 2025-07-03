@@ -22,7 +22,7 @@
 		diagramtitle = "Dok. Lemma:"+ token
 		param = "&deletexml&highlight="+token
 	}
-	data_arr = readPHP(dataset).split('\n');
+	data_arr = readPHP(dataset).trim().split('\n');
 	
 	str = '<table class="clicktable">';
 	if(dataset.includes("?token")){

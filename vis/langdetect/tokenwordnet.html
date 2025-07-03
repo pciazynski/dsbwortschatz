@@ -30,7 +30,7 @@
 	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right+'&limit=500&sortBy=frequency'
 	if(typeof deulist === 'undefined'){deulist = readTextFile("langdetect3/deu_slim").split("n")}
 	
-	network = readPHP(dataset).split('\n')
+	network = readPHP(dataset).trim().split('\n')
 	if(network.length<100){lay='cose'}else{lay='random'}
 
 	for (key in network){

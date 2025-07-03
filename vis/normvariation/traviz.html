@@ -17,7 +17,7 @@
 	if (getQueryVariable("inclusive").length>0){dataset+="&inclusive"}
 	if (getQueryVariable("sort").length>0){dataset+="&sort"}
 
-	data_arr = readPHP(dataset).split("\n");
+	data_arr = readPHP(dataset).trim().split("\n");
 	travdata = []
 	colors = []
 	

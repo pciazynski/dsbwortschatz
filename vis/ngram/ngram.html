@@ -17,7 +17,7 @@
 	var filter = getQueryVariable("filter")
 	if(filter.length>0){dataset += "&filter="+filter}
 	
-	data_arr = readPHP(dataset).split("\n");
+	data_arr = readPHP(dataset).trim().split("\n");
 	
 	
 	str = "<table style='border-collapse: collapse;text-align:left;'>";
