@@ -24,7 +24,6 @@ cursor = con.cursor()
 
 with open ("learn/dnw-audio-urls.txt", "r", encoding="utf8") as inf:
     for line in inf.readlines():
-        print(line)
         vals = '"'+line+'"'
         query="INSERT INTO urls(url) VALUES("+vals+")"
         cursor.execute(query)

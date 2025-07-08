@@ -4,6 +4,7 @@ import os
 import shutil
 import sqlite3
 from config import *
+from pythoncts import *
 
 lemmabag = {}
 bagofwords = {}
@@ -44,10 +45,7 @@ def lemmamapping(urn):
     global ctsurl
     global copyrighttoken
     requestctsurl(urn)
-    res = ""
-    data = urlopen(ctsurl+"plain/passage.php?urn="+urn+"&copyrighttoken="+copyrighttoken) 
-    for line in data: 
-        res+=line.decode('utf-8')
+    res = textpassage(urn,"&copyrighttoken="+copyrighttoken)
     
     wordelements = res.split("<w")
     res = ""
@@ -118,8 +116,7 @@ def process(foldername):
         for token_lemma,value in sorted(wb.items(), key = lambda x:x[1], reverse=True):
             outf.write(token_lemma+"\t"+str(value)+"\n")
 
-def collect():
-    global count
+def reset():
     if not os.path.exists("data"):
         os.mkdir("data")
     if os.path.exists("data/lemmamapping"):
@@ -128,14 +125,33 @@ def collect():
     if os.path.exists("data/lemmamappingperyear"):
         shutil.rmtree("data/lemmamappingperyear")
     os.mkdir("data/lemmamappingperyear")
-    for line in inventory("dsb").split("\n"):
+
+def getdoclist(ctsns):
+    tmplist = ""
+    if os.path.exists("urnlist.txt"):
+        with open("urnlist.txt","r",encoding="utf8") as inf:
+            for line in inf:
+                tmplist+=line
+    else:
+        tmplist = inventory(ctsns)
+    return tmplist.strip()
+
+
+def collect():
+    global count
+    reset()
+    print("Collect...")
+    doclist = getdoclist(ctsns).split("\n")
+    if count == -1:
+        count = len(doclist)
+    for line in doclist:
         urn = line.split("\t")[0]
         urnarr = urn.split(".")
         year = line.split("\t")[2]
 
         if (len(year)>1 and count!=0):
-            count-=1
             print(str(count)+" "+urn)
+            count-=1
             with open ("data/lemmamapping/"+urn.replace(":","_")+".txt", "w",encoding="utf8") as outf,open ("data/lemmamappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                 rs = lemmamapping(urn)
                 outf.write(rs)

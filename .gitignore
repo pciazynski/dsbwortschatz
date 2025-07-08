@@ -9,6 +9,7 @@ data/
 config.py
 passagecache.txt
 _error.txt
+urnlist.txt
 
 .ht*
 *.zip

@@ -4,6 +4,7 @@ import os
 import shutil
 import sqlite3
 from config import *
+from pythoncts import *
 
 normbag = {}
 bagofwords = {}
@@ -13,41 +14,18 @@ with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as bwin:
         linearr = line.split("\t")
         bagofwords[linearr[0]] = int(linearr[1])
 
-def inventory(endpoint):
-    global ctsurl
-    requestctsurl(endpoint)
-    res = ""
-    print(ctsurl+"plain/editions.php")
-    data = urlopen(ctsurl+"plain/editions.php") 
-    for line in data: 
-        res+=line.decode('utf-8')
-    return res.strip()
-
-
-def requestctsurl(ns):
-    global ctsurl
-    if len(ctsurl) == 0:
-        if not ns.startswith("urn:cts"):
-            ns = "urn:cts:"+ns
-        ns = ns.split(":")[2]
-        data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
-        for line in data: 
-            ctsurl+=line.decode('utf-8')
-        
-
 def tokencheck(token):
     if not token in bagofwords:
         return False
     return True
+
+
     
 def normmapping(urn):
     global ctsurl
     global copyrighttoken
-    requestctsurl(urn)
-    res = ""
-    data = urlopen(ctsurl+"plain/passage.php?urn="+urn+"&copyrighttoken="+copyrighttoken) 
-    for line in data: 
-        res+=line.decode('utf-8')
+    res = textpassage(urn,"&copyrighttoken="+copyrighttoken)
+
     
     wordelements = res.split("<w")
     res = ""
@@ -118,8 +96,7 @@ def process(foldername):
         for token_norm,value in sorted(wb.items(), key = lambda x:x[1], reverse=True):
             outf.write(token_norm+"\t"+str(value)+"\n")
 
-def collect():
-    global count
+def reset():
     if not os.path.exists("data"):
         os.mkdir("data")
     if os.path.exists("data/normmapping"):
@@ -128,14 +105,32 @@ def collect():
     if os.path.exists("data/normmappingperyear"):
         shutil.rmtree("data/normmappingperyear")
     os.mkdir("data/normmappingperyear")
-    for line in inventory("dsb").split("\n"):
+    
+def getdoclist(ctsns):
+    tmplist = ""
+    if os.path.exists("urnlist.txt"):
+        with open("urnlist.txt","r",encoding="utf8") as inf:
+            for line in inf:
+                tmplist+=line
+    else:
+        tmplist = inventory(ctsns)
+    return tmplist.strip()
+
+def collect():
+    global count
+    reset()
+    print("Collect...")
+    doclist = getdoclist(ctsns).split("\n")
+    if count == -1:
+        count = len(doclist)
+    for line in doclist:
         urn = line.split("\t")[0]
         urnarr = urn.split(".")
         year = line.split("\t")[2]
 
         if (len(year)>1 and count!=0):
-            count-=1
             print(str(count)+" "+urn)
+            count-=1
             with open ("data/normmapping/"+urn.replace(":","_")+".txt", "w",encoding="utf8") as outf,open ("data/normmappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                 rs = normmapping(urn)
                 outf.write(rs)

@@ -6,6 +6,9 @@ n=sys.argv[1]
 
 deudict = {}
 ff = {}
+falsefriends = True
+deufound = True
+
 if not os.path.exists("data"):
     os.mkdir("data")
 if os.path.exists("data/langDetect"+n):
@@ -21,13 +24,23 @@ def addff(tmp):
         ff[tmp.replace("ẜ","ſ")] = 1
         ff[tmp.replace("ſ","ẜ")] = 1
         ff[tmp.replace("ſ","s")] = 1
-#d
         
-with open("learn/falsefriends.txt", "r", encoding = "utf8") as inf:
-    for line in inf:
-        tmp = line.strip().lower()
-        addff(tmp)
+
+if falsefriends:
+    with open("learn/falsefriends.txt", "r", encoding = "utf8") as inf:
+        for line in inf:
+            tmp = line.strip().lower()
+            addff(tmp)
             
+if deufound:
+    with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
+        for line in inf:
+            tmp = line.strip().lower()
+            deudict[tmp] = 1
+            #tmp = tmp.replace("ſ","s").replace("ẜ","s")
+            #deudict[tmp] = 1
+    print("load deu_found:" + str(len(deudict)))
+
 with open("learn/deu_mixed-typical_2011_1M-words.txt", "r", encoding = "utf8") as inf:
     for line in inf:
         tmp = line.strip().lower()
@@ -68,31 +81,6 @@ with open("learn/deu_ids_a-h.txt", "r", encoding = "utf8") as inf:
             
 print("load deu_ids_a-h:" + str(len(deudict)))
 
-intermedieateresults = False
-
-if intermedieateresults:
-    with open("learn/deu_found.txt", "r", encoding = "utf8") as inf:
-        for line in inf:
-            tmp = line.strip().lower()
-            deudict[tmp] = 1
-            tmp = tmp.replace("ſ","s").replace("ẜ","s")
-            deudict[tmp] = 1
-
-    print("load deu_found:" + str(len(deudict)))
-
-    with open("learn/deu_intermediateresults.txt", "r", encoding = "utf8") as inf:
-        for line in inf:
-            tmp = (line+" ").split("\t")[0].strip().lower()
-            if not tmp in ff and len(tmp)>1:
-                deudict[tmp] = 1
-                tmp = tmp.replace("ſ","s").replace("ẜ","s")
-                deudict[tmp] = 1
-                
-    print("load deu_intermediateresults:" + str(len(deudict)))
-
-
-
-
 with open("data/ngram"+n+"/_all.txt", "r", encoding = "utf8") as inf,open("data/langDetect"+n+"/ngram"+n+"_deu.txt", "w", encoding = "utf8") as deuoutf, open("data/langDetect"+n+"/ngram"+n+"_mix.txt", "w", encoding = "utf8") as mixoutf, open("data/langDetect"+n+"/ngram"+n+"_dsb.txt", "w", encoding = "utf8") as dsboutf, open("data/langDetect"+n+"/ngram"+n+"_langDetect.txt", "w", encoding = "utf8") as langDetect:
     for line in inf:
         #line = line.replace("ſ","s").replace("ẜ","s")
@@ -120,6 +108,7 @@ with open("data/ngram"+n+"/_all.txt", "r", encoding = "utf8") as inf,open("data/
                 mixoutf.write(line.strip()+"\t"+str(occ_deu)+"\n")
         langDetect.write(tmp+"\t"+str(occ_deu)+"\n")
 
+
 deudict = {}
 dsbdict = {}
 mixdict = {}
@@ -128,45 +117,48 @@ mix2dict = {}
 
 with open("data/langDetect"+n+"/ngram"+n+"_mix.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmparr = line.split("\t")[0].split(" ")
-        for tmp in tmparr:
-            mixdict[tmp] = 1
-            if line.split("\t")[2].strip() == "1":
-                mix1dict[tmp] = 1
-            if line.split("\t")[2].strip() == "2":
-                mix2dict[tmp] = 1
-
+        if len(line.strip())>2:
+            tmparr = line.split("\t")[0].split(" ")
+            for tmp in tmparr:
+                mixdict[tmp] = 1
+                if line.split("\t")[2].strip() == "1":
+                    mix1dict[tmp] = 1
+                if line.split("\t")[2].strip() == "2":
+                    mix2dict[tmp] = 1
 
 with open("data/langDetect"+n+"/ngram"+n+"_deu.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmparr = line.split("\t")[0].split(" ")
-        for tmp in tmparr:
-            deudict[tmp] = 1
+        if len(line.strip())>2:
+            tmparr = line.split("\t")[0].split(" ")
+            for tmp in tmparr:
+                deudict[tmp] = 1
 
 with open("data/langDetect"+n+"/ngram"+n+"_dsb.txt", "r", encoding = "utf8") as inf:
     for line in inf:
-        tmparr = line.split("\t")[0].split(" ")
-        for tmp in tmparr:
-            dsbdict[tmp] = 1
-
+        if len(line.strip())>2:
+            tmparr = line.split("\t")[0].split(" ")
+            for tmp in tmparr:
+                dsbdict[tmp] = 1
 
 with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as inf, open("data/langDetect"+n+"/deu.txt", "w", encoding = "utf8") as deuoutf, open("data/langDetect"+n+"/deu_slim.txt", "w", encoding = "utf8") as deuoutfslim, open("data/langDetect"+n+"/dsb.txt", "w", encoding = "utf8") as dsboutf, open("data/langDetect"+n+"/dsb_slim.txt", "w", encoding = "utf8") as dsboutfslim,open("data/langDetect"+n+"/mix.txt", "w", encoding = "utf8") as mixoutf,open("data/langDetect"+n+"/mix1.txt", "w", encoding = "utf8") as mix1outf,open("data/langDetect"+n+"/mix2.txt", "w", encoding = "utf8") as mix2outf:
     for line in inf:
-        #line = line.replace("ſ","s").replace("ẜ","s")
-        line = line.lower()
-        tmp = line.split("\t")[0].strip()
-        if tmp in deudict and not tmp in dsbdict and not tmp in mixdict:
-            deuoutf.write(line)
-            deuoutfslim.write(line.split("\t")[0]+"\n")
-        if tmp in dsbdict and not tmp in deudict and not tmp in mixdict:
-            dsboutf.write(line)
-            dsboutfslim.write(line.split("\t")[0]+"\n")
-        if tmp in mixdict:
-            mixoutf.write(line)
-        if tmp in mix1dict and not tmp in mix2dict:
-            mix1outf.write(line)
-        if tmp in mix2dict:
-            mix2outf.write(line)
+        if len(line.strip())>2:
+            #line = line.replace("ſ","s").replace("ẜ","s")
+            line = line.lower()
+            tmp = line.split("\t")[0].strip()
+            if not tmp.isdigit():
+                if tmp in deudict and not tmp in dsbdict and not tmp in mixdict:
+                    deuoutf.write(line)
+                    deuoutfslim.write(line.split("\t")[0]+"\n")
+                if tmp in dsbdict and not tmp in deudict and not tmp in mixdict:
+                    dsboutf.write(line)
+                    dsboutfslim.write(line.split("\t")[0]+"\n")
+                if tmp in mixdict:
+                    mixoutf.write(line)
+                if tmp in mix1dict and not tmp in mix2dict:
+                    mix1outf.write(line)
+                if tmp in mix2dict:
+                    mix2outf.write(line)
 
 def index():
     con = sqlite3.connect("data/langDetect"+n+".db")
@@ -182,7 +174,6 @@ def index():
     
     con.commit()
     con.close()
-
 
 def initTables():
     if os.path.exists("data/langDetect"+n+".db"):

@@ -55,21 +55,29 @@ def process(foldername):
                 for line in inf:
                     outf.write(line)
 
+def getdoclist(ctsns):
+    tmplist = ""
+    if os.path.exists("urnlist.txt"):
+        with open("urnlist.txt","r",encoding="utf8") as inf:
+            for line in inf:
+                tmplist+=line
+    else:
+        tmplist = inventory(ctsns)
+    return tmplist.strip()
+
 def collect():
     global count
     reset()
     print("Collect...")
-    doclist = inventory("dsb").split("\n")
+    doclist = getdoclist(ctsns).split("\n")
     if count == -1:
         count = len(doclist)
-            
     for line in doclist:
         urn = line.split("\t")[0]
-        print(str(count)+" "+urn)
         urnarr = urn.split(".")
         year = line.split("\t")[2]
-
         if (len(year)>1 and count!=0):
+            print(str(count)+" "+urn)
             count-=1
             rs = langseparation(urn)
             if len(rs.strip())>0:
@@ -119,7 +127,6 @@ def db():
                     tokenarr = token.split(":")
                     tokencountdict[tokenarr[0]] = tokenarr[1]
                 tokenarr = rs[3].split(",")
-                print(yearfile)
                 for token in tokenarr:
                     if len(token.strip())>0:
                         vals =  "'"+tokenarr[0].strip()+"','"+rs[0].strip()+"','"+docurn.strip()+"','"+yearfile.replace(".txt","")+"','"+rs[1].strip()+"',"+str(tokencountdict[token])

@@ -1,36 +1,11 @@
-from urllib.request import urlopen
 import sys
 import os
 import shutil
 import sqlite3
 from config import *
+from pythoncts import *
 
 doc_year = {}
-
-
-def inventory():
-    global ctsurl
-    res = ""
-    print(ctsurl+"plain/editions.php")
-    data = urlopen(ctsurl+"plain/editions.php") 
-    for line in data: 
-        res+=line.decode('utf-8')
-    return res.strip()
-
-
-def errorlog(errormsg):
-    with open("_ERROR.txt", "a", encoding="utf8") as erroutf:
-        erroutf.write(errormsg+"\n")
-
-def bagofwords(urn):
-    global ctsurl
-    res = ""
-    data = urlopen(ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
-    for line in data: 
-        res+=line.decode('utf-8')
-    if(len(res.strip())==0):
-        errorlog("EMPTY:"+ctsurl+"tm/bagofwords.php?urn="+urn+"&sort&lowercase")
-    return res.strip()
 
 def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
@@ -124,11 +99,21 @@ def reset():
         shutil.rmtree("data/bagofwordsperyear")
     os.mkdir("data/bagofwordsperyear")
 
+def getdoclist(ctsns):
+    tmplist = ""
+    if os.path.exists("urnlist.txt"):
+        with open("urnlist.txt","r",encoding="utf8") as inf:
+            for line in inf:
+                tmplist+=line
+    else:
+        tmplist = inventory(ctsns)
+    return tmplist.strip()
+    
 def collect():
     global count
     reset()
     print("Collect...")
-    doclist = inventory().split("\n")
+    doclist = getdoclist(ctsns).split("\n")
     if count == -1:
         count = len(doclist)
     for line in doclist:
@@ -138,15 +123,16 @@ def collect():
 
         if (len(year)>1 and count!=0):
             doc_year[urn] = year
-            count-=1
             print(str(count)+" "+urn)
+            count-=1
             with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
                 rs = bagofwords(urn)
                 if sanitycheck(rs):
                     outf.write(rs)
                     outyf.write(rs+"\n")
                 else:
-                    errorlog("bagofwords incomplete:"+urn)
+                    with open("_ERROR.txt","a",encoding="utf8") as errf:
+                        errf.write("Error Bagofwords:-->"+urn+"\n")
     process("data/bagofwords")
 
 def initTables():
@@ -155,7 +141,6 @@ def initTables():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
     cursor.execute("CREATE TABLE tokendatecount(token VARCHAR (50),date DATE,frequency INTEGER);")
-    cursor.execute("CREATE TABLE tokencount(token VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE TABLE urnwordbag(urn VARCHAR (50),date DATE,wordbag text);")
     con.commit()
     con.close()
@@ -164,12 +149,11 @@ def index():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
     print("Indexing...")
-    cursor.execute("CREATE INDEX tokenindex ON tokencount(token);")
-    cursor.execute("CREATE INDEX tokendateindex ON tokendatecount(token);")
-    cursor.execute("CREATE INDEX tokendatedateindex ON tokendatecount(date);")
+    cursor.execute("CREATE INDEX tokenindex ON tokendatecount(token);")
     cursor.execute("CREATE INDEX tokenurnindex ON urnwordbag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urnwordbag(wordbag);")
     cursor.execute("CREATE INDEX urndateindex ON urnwordbag(date);")
+    cursor.execute("CREATE INDEX dateindex ON tokendatecount(date);")
     con.commit()
     con.close()
 
@@ -179,15 +163,6 @@ def db():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
 
-    with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as inf:
-        for line in inf.readlines():
-            if len(line.strip())>0:
-                linearr = line.split("\t")
-                vals = '"'+linearr[0]+'",'+linearr[1]
-                query="INSERT INTO tokencount(token,frequency) VALUES("+vals+")"
-                cursor.execute(query)
-    con.commit()
-        
     yearfiles = sorted(os.listdir("data/bagofwordsperyear"))
     for year in yearfiles:
         #print("sql bagofwordsperyear:"+year)
