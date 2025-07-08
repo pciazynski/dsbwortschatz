@@ -38,6 +38,12 @@ if(isset($_GET['lemma'])){
 		$res.=$row['token'].$colon.$row['frequency'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
+
+	$query = 'SELECT token, SUM(frequency) as c FROM lemmatokenfrequency WHERE lemma LIKE "%|'.$lemma.'|%" GROUP BY token ORDER BY c DESC';
+	foreach($PDO->query($query.';') as $row){
+		$res.=trim($row['token'],"|").$colon.$row['c'].$tab;
+	}
+	$res=trim($res,$tab).$nl;
 	
 	print($res);
 }

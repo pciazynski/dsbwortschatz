@@ -38,7 +38,11 @@ if(isset($_GET['norm'])){
 		$res.=$row['token'].$colon.$row['frequency'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
-	
+	$query = 'SELECT token, frequency FROM normtokenfrequency WHERE norm LIKE "%|'.$norm.'|%" ORDER BY frequency DESC';
+	foreach($PDO->query($query.';') as $row){
+		$res.=$row['token'].$colon.$row['frequency'].$tab;
+	}
+	$res=trim($res,$tab).$nl;	
 	print($res);
 }
 ?>
