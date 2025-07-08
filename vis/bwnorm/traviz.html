@@ -14,7 +14,7 @@
 	var norm = getQueryVariable('norm')
 	dataset = dataset +'?norm='+norm
 	if (getQueryVariable("sort").length>0){dataset+="&sort"}
-	if (getQueryVariable("exact")==="1"){dataset+="&exact"}
+	if (getQueryVariable("exact")==="1"){dataset+="&exact=1"}
 	var year = getQueryVariable('year')
 	if (year.length>0){dataset+="&year="+year}
 
