@@ -151,7 +151,7 @@ def index():
     cursor = con.cursor()
     print("Indexing...")
     cursor.execute("CREATE INDEX tokenindex ON tokencount(token);")
-    cursor.execute("CREATE INDEX tokenindex ON tokendatecount(token);")
+    cursor.execute("CREATE INDEX tokendateindex ON tokendatecount(token);")
     cursor.execute("CREATE INDEX tokenurnindex ON urnwordbag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urnwordbag(wordbag);")
     cursor.execute("CREATE INDEX urndateindex ON urnwordbag(date);")
