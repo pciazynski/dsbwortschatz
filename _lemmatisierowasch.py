@@ -72,9 +72,9 @@ def lemmamapping(urn):
                     norm = "|"+we.split('norm="')[1].split('"')[0].replace('"','')+"|"
                     #if len(norm) == 2:
                     #    norm=""
-                if "subtype" in we:
+                if "subtype=" in we:
                     subtype = we.split('subtype="')[1].split('"')[0]
-                if "type" in we:
+                if "type=" in we:
                     wetype = we.split('type="')[1].split('"')[0]
                 if len(lemma.strip())>0:
                     res +=token +"\t"+lemma+"\t"+norm+"\t"+wetype+"\t"+subtype +"\n"
