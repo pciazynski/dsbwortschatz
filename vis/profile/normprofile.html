@@ -5,7 +5,7 @@
 <body style="background-color:white">
 
 <script>
-	var miningURL="https://digilab.serbski-institut.de/dsbtekstmining/"
+	var miningURL='https://'+window.location.hostname+"/"+window.location.pathname.split("/")[1]
 	var ctsurl = "https://urncts.eu/cts/dsb/"
 	function getQueryVariable(variable) {
 		var query = window.location.search.substring(1);
@@ -38,6 +38,11 @@
 	norm = getQueryVariable('norm')
 	clickable = getQueryVariable('clickable')
 	if(norm.length>0){
+		today = new Date();
+		dd = String(today.getDate()).padStart(2, '0');
+		mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		yyyy = today.getFullYear();
+		today = dd + '.' + mm + '.' + yyyy;
 		data = readPHP("normprofile.php?norm="+norm).split("\n")
 		if(data.length>0){
 			if (clickable == 1){
@@ -89,7 +94,8 @@
 			infotext+='<td> '+data[4]+'</td></tr>'
 			
 			
-			infotext=infotext.replaceAll("\t",", ")+'</table>'
+			infotext=infotext.replaceAll("\t",", ")
+			infotext += '<tr><td></td><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
 		}
 		else{
 			infotext = "<br>Keine Daten"

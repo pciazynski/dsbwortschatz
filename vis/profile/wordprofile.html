@@ -5,7 +5,7 @@
 <body style="background-color:white">
 
 <script>
-	var miningURL="https://digilab.serbski-institut.de/dsbtekstmining/"
+	var miningURL='https://'+window.location.hostname+"/"+window.location.pathname.split("/")[1]
 	var ctsurl = "https://urncts.eu/cts/dsb/"
 	function getQueryVariable(variable) {
 		var query = window.location.search.substring(1);
@@ -22,8 +22,8 @@
 	function readPHP(file){
 	text=""
 	rawFile = new XMLHttpRequest();
-	rawFile.open("GET", miningURL+"php/"+file, false);
-//	alert(miningURL+"php/"+file)
+	rawFile.open("GET", miningURL+"/php/"+file, false);
+//	alert(miningURL+"/php/"+file)
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
 			if(rawFile.status === 200 || rawFile.status == 0){
@@ -38,6 +38,11 @@
 	word = getQueryVariable('word').toLowerCase()
 	clickable = getQueryVariable('clickable')
 	if(word.length>0){
+		today = new Date();
+		dd = String(today.getDate()).padStart(2, '0');
+		mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		yyyy = today.getFullYear();
+		today = dd + '.' + mm + '.' + yyyy;
 		data = readPHP("wordprofile.php?word="+word).split("\n")
 		if(data.length>1){
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
@@ -109,7 +114,8 @@
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
 			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+word+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
-			infotext=infotext.replaceAll("\t",", ")+'</table>'
+			infotext=infotext.replaceAll("\t",", ")
+			infotext += '<tr><td></td><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
 		}
 		else{
 			infotext = "<br>Keine Daten"
@@ -117,7 +123,8 @@
 		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
 		if(clickable==1){clicktext += '<td><a href="?word='+word+'">Interaktionselemente entfernen</a></td>'}
 		else{clicktext += '<td><a href="?word='+word+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
-		clicktext+='</table>'
+		clicktext += '</table>'
+
 		document.write('<h1 style="text-align:center;">Wortprofil '+word+'</h1><p style="text-align:center;">Die Vollständigkeit der Daten entspricht dem Bearbeitungsstand des Textkorpus.</p>'+clicktext+infotext)
 	}
 </script>
