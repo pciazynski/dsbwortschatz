@@ -52,9 +52,9 @@ def normmapping(urn):
                         normbag[norm] = normbag[norm]+1
                     else:
                         normbag[norm] = 1
-                if "subtype" in we:
+                if "subtype=" in we:
                     subtype = we.split('subtype="')[1].split('"')[0]
-                if "type" in we:
+                if "type=" in we:
                     wetype = we.split('type="')[1].split('"')[0]
                 if len(norm.strip())>0:
                     res +=token +"\t"+lemma+"\t"+norm+"\t"+wetype+"\t"+subtype +"\n"
