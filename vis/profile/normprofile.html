@@ -22,7 +22,7 @@
 	function readPHP(file){
 	text=""
 	rawFile = new XMLHttpRequest();
-	rawFile.open("GET", miningURL+"php/"+file, false);
+	rawFile.open("GET", miningURL+"/php/"+file, false);
 //	alert(miningURL+"php/"+file)
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
