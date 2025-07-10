@@ -13,7 +13,7 @@
 	var dataset = getQueryVariable("data")
 	var lemma = getQueryVariable("lemma")
 	dataset = dataset +"?lemma="+lemma+"&sort"
-	data_arr = readPHP(dataset).split("\n");
+	data_arr = readPHP(dataset).trim().split("\n");
 
 	str = "<table style='border-collapse: collapse;text-align:left;'>";
 	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Lemmagruppe & Exakte Suche</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Anzahl Textvorkommen</th>"
