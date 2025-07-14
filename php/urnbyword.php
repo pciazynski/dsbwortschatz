@@ -13,7 +13,7 @@ if (isset($_GET['lemma'])){
 	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	$query = 'SELECT urn, date FROM urnwordbag WHERE wordbag LIKE "%|'.str_replace(",",'|%" OR wordbag LIKE "%|',$token).'|%"';
 
-	(isset($_GET['year'])) ? $query .= ' AND date =='.$_GET['year'] : NULL;
+	(isset($_GET['year'])) ? $query .= ' AND date '.$_GET['year'] : NULL;
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
 
 	$tab = "\t";
@@ -30,7 +30,7 @@ elseif (isset($_GET['token'])){
 	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	$query = 'SELECT urn, date FROM urnwordbag WHERE wordbag LIKE "%|'.str_replace(",",'|%" OR wordbag LIKE "%|',$_GET['token']).'|%"';
 
-	(isset($_GET['year'])) ? $query .= ' AND date =='.$_GET['year'] : NULL;
+	(isset($_GET['year'])) ? $query .= ' AND date '.$_GET['year'] : NULL;
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
 
 	$tab = "\t";
