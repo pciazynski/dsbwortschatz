@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../_assets/gui.js"></script>
 	<script src="../../_assets/autocomplete.js"></script>
 	<link rel="stylesheet" href="../../digilabstyles.css">
@@ -46,14 +48,14 @@
 	<table class="multiiframe" align="center">
 		<tr style = "text-align:right;">
 			<td width="65%">
-				<button class = "iframebutton" onclick="embedding('globalwordnet');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('globalwordnet');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('globalwordnet');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('globalwordnet');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('globalwordnet');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('globalwordnet');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('globallist');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('globallist');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('globallist');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('globallist');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('globallist');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('globallist');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>
@@ -120,14 +122,14 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				<button class = "iframebutton" onclick="embedding('rightwordnet');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('leftwordnet');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('leftwordnet');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('rightwordnet');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('leftwordnet');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('leftwordnet');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('rightwordnet');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('rightwordnet');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('rightwordnet');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('rightwordnet');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('rightwordnet');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('rightwordnet');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 

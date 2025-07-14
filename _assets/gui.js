@@ -2,7 +2,7 @@ function loading(elementid){
 	var ifrm = document.getElementById(elementid);
 	ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;
 	ifrm.document.open();
-	ifrm.document.write('Loading...');
+	ifrm.document.write(lang_loading);
 	ifrm.document.close();
 }
 

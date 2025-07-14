@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../_assets/gui.js"></script>
 	<link rel="stylesheet" href="../../digilabstyles.css">
 </head>
@@ -63,13 +65,13 @@
 </script>
 
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('zipf');">HTML Embedding</button>
-	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+	<button class = "iframebutton" onclick="embedding('zipf');"><script>document.write(lang_htmlembedding)</script></button>
+	<button class = "iframebutton" onclick="diagrammlink('zipf');"><script>document.write(lang_fullscreen)</script></button>
+	<button class = "iframebutton" onclick="datalink('zipf');"><script>document.write(lang_rawdata)</script></button>
 	<div style="text-align:center;">
 		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
 	</div>
-	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');"><script>document.write(lang_source)</script></button>
 	<div style="text-align:center;">
 		<iframe class="resized"  width="100%" height="130px" id="charlist" scrolling="yes"></iframe>
 	</div>

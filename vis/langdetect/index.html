@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../_assets/gui.js"></script>
 	<script src="../../_assets/autocomplete.js"></script>
 	<link rel="stylesheet" href="../../digilabstyles.css">
@@ -42,24 +44,24 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				<button class = "iframebutton" onclick="embedding('dsb');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('dsb');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('dsb');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('dsb');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('dsb');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('dsb');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('mix1');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('mix1');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('mix1');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('mix1');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('mix1');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('mix1');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('mixn1');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('mixn1');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('mixn1');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('mixn1');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('mixn1');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('mixn1');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('deu');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('deu');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('deu');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('deu');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('deu');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('deu');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>
@@ -119,19 +121,19 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 40%;">
-				<button class = "iframebutton" onclick="embedding('leftwordnet');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('leftwordnet');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('leftwordnet');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('leftwordnet');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('leftwordnet');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('leftwordnet');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td style = "width: 20%;">
-				<button class = "iframebutton" onclick="embedding('ngram');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('ngram');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('ngram');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('ngram');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('ngram');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('ngram');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td style = "width: 40%;">
-				<button class = "iframebutton" onclick="embedding('rightwordnet');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('rightwordnet');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('rightwordnet');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('rightwordnet');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('rightwordnet');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('rightwordnet');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>
@@ -178,24 +180,24 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				<button class = "iframebutton" onclick="embedding('filterdeu0');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('filterdeu0');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('filterdeu0');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('filterdeu0');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('filterdeu0');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('filterdeu0');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('filterdeu1');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('filterdeu1');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('filterdeu1');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('filterdeu1');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('filterdeu1');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('filterdeu1');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('filterdeu2');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('filterdeu2');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('filterdeu2');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('filterdeu2');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('filterdeu2');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('filterdeu2');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="embedding('filterdeu3');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('filterdeu3');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('filterdeu3');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('filterdeu3');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('filterdeu3');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('filterdeu3');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>

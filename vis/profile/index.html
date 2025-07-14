@@ -2,6 +2,8 @@
 <meta charset="utf-8">
 <head>
 	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
 	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../_assets/gui.js"></script>
 	<script src="../../_assets/autocomplete.js"></script>
@@ -61,9 +63,9 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="embedding('profile');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('profile');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('profile');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('profile');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('profile');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('profile');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>

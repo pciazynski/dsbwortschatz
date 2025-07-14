@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../_assets/gui.js"></script>
 	<script src="../../_assets/autocomplete.js"></script>
 	<link rel="stylesheet" href="../../digilabstyles.css">
@@ -76,14 +78,14 @@
 </script>
 
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('zipf');">HTML Embedding</button>
-	<button class = "iframebutton" onclick="diagrammlink('zipf');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('zipf');">Rohdaten</button>
+	<button class = "iframebutton" onclick="embedding('zipf');"><script>document.write(lang_htmlembedding)</script></button>
+	<button class = "iframebutton" onclick="diagrammlink('zipf');"><script>document.write(lang_fullscreen)</script></button>
+	<button class = "iframebutton" onclick="datalink('zipf');"><script>document.write(lang_rawdata)</script></button>
 	<div style="text-align:center;">
 		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
 	</div>
 	<button class = "iframebutton" onclick="threeD('zipf');">3D / 2D</button>
-	<button class = "iframebutton" onclick="hidewatermark('zipf');">Quellenangabe</button>
+	<button class = "iframebutton" onclick="hidewatermark('zipf');"><script>document.write(lang_source)</script></button>
 	</div>
 <br><br>
 
@@ -150,9 +152,9 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('timeline');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('timeline');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>
@@ -163,7 +165,7 @@
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
 				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzeltoken)</button>
-				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 		</tr>
 	</table>
@@ -195,13 +197,13 @@
 	</tr>
 </table>
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('timespan');">HTML Embedding</button>
-	<button class = "iframebutton" onclick="diagrammlink('timespan');">Vollbild</button>
-	<button class = "iframebutton" onclick="datalink('timespan');">Rohdaten</button>
+	<button class = "iframebutton" onclick="embedding('timespan');"><script>document.write(lang_htmlembedding)</script></button>
+	<button class = "iframebutton" onclick="diagrammlink('timespan');"><script>document.write(lang_fullscreen)</script></button>
+	<button class = "iframebutton" onclick="datalink('timespan');"><script>document.write(lang_rawdata)</script></button>
 	<div style="text-align:center;">
 		<iframe class="resized" width="100%" height="475px" id="timespan" scrolling="yes"></iframe>
 	</div>
-	<button class = "iframebutton" onclick="hidewatermark('timespan');">Quellenangabe</button>
+	<button class = "iframebutton" onclick="hidewatermark('timespan');"><script>document.write(lang_source)</script></button>
 </div>
 </div>
 
