@@ -35,6 +35,6 @@
 	", n<sub>max</sub>: "+max+
 	"<br>s<sup>2</sup>: "+varianz(N).toFixed(decicount)+
 	", s: "+standardabweichung(N).toFixed(decicount)+
-	'</br>'+readTextFile("lemmamapping/_stats"))
+	'<br/>'+readTextFile("lemmamapping/_stats").replaceAll("\n","<br>"))
 </script>
 </body>
