@@ -1,5 +1,27 @@
 import os
 
+bw = {}
+bl = {}
+
+with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as bwin:
+    for line in bwin:
+        linearr = line.split("\t")
+        bl[linearr[0]] = 1
+
+unlem = 0
+lem = 0
+with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("data/lemmamapping/_yay.txt", "w", encoding="utf8") as outlem,open ("data/lemmamapping/_nay.txt", "w", encoding="utf8") as outunlem:
+    for line in bwin:
+        linearr = line.split("\t")
+        if linearr[0] in bl:
+            outlem.write(line)
+            lem += 1
+        else:
+            unlem += 1
+            outunlem.write(line)
+with open ("data/lemmamapping/_stats.txt", "w", encoding="utf8") as out:
+    out.write("Lemmatisiert / Alle: "+str(lem)+" / "+str(lem+unlem)+"\n")
+
 lemmabag = {}
 lemmaambiquebag = {}
 lemmagroupbag = {}
@@ -46,3 +68,7 @@ with open("data/lemmamapping/_lemmauniqueness.txt", "w", encoding="utf8") as out
     for lemma,value in sorted(lemmauniquenessbag.items(), key = lambda x:x[1], reverse=True):
         outf.write(lemma+"\t"+str(lemmauniquenessbag[lemma]) + "\t" + str(lemmaunique[lemma]) +"\t" + str(lemmaambiquebag[lemma]) + "\n")
         
+
+
+        
+

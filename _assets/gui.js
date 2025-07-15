@@ -57,10 +57,10 @@ str='<div  class="header">'+
 +lang_textcorpus
 +'</td>'
 +'<td>'
-+lang_words
++'<a href="../profile/">'+lang_profile+'</a>'
 +'</td>'
 +'<td>'
-+'<a href="../profile/">'+lang_profile+'</a>'
++lang_words
 +'</td>'
 +'<td>'
 +lang_lemmafy
@@ -91,11 +91,11 @@ str='<div  class="header">'+
 +'<a href="../stats/">'+lang_statistics+'</a>'
 +'</td>'
 +'<td>'
++'</td>'
++'<td>'
 +'<a href="../bwtoken/">'+lang_frequency+'</a> | '
 +'<a href="../bwtime/">Verwendungszeitraum</a> | '
 +'<a href="../tokenrec/">Token-Abdeckung</a> '
-+'</td>'
-+'<td>'
 +'</td>'
 +'<td>'
 +'<a href="../bwlemma/">'+lang_frequency+'</a> | '

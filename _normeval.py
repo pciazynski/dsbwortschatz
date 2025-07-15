@@ -1,5 +1,28 @@
 import os
 
+bw = {}
+bl = {}
+
+with open ("data/normmapping/_all.txt", "r", encoding="utf8") as bwin:
+    for line in bwin:
+        linearr = line.split("\t")
+        bl[linearr[0]] = 1
+
+yay = 0
+nay = 0
+with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("data/normmapping/_yay.txt", "w", encoding="utf8") as outyay,open ("data/normmapping/_nay.txt", "w", encoding="utf8") as outnay:
+    for line in bwin:
+        linearr = line.split("\t")
+        if linearr[0] in bl:
+            outyay.write(line)
+            yay += 1
+        else:
+            nay += 1
+            outnay.write(line)
+with open ("data/normmapping/_stats.txt", "w", encoding="utf8") as out:
+    out.write("Normiert / Alle: "+str(yay)+" / "+str(yay+nay)+"\n")
+    
+    
 normbag = {}
 normambiquebag = {}
 normgroupbag = {}
