@@ -3,7 +3,7 @@ import os
 bw = {}
 bl = {}
 incons = 0
-with open ("data/normmapping/_all.txt", "r", encoding="utf8") as bwin, open ("data/lemmamapping/_inconsistencies.txt", "w", encoding="utf8") as incout:
+with open ("data/normmapping/_all.txt", "r", encoding="utf8") as bwin, open ("data/normmapping/_inconsistencies.txt", "w", encoding="utf8") as incout:
     for line in bwin:
         linearr = line.split("\t")
         if linearr[0] in bl:
