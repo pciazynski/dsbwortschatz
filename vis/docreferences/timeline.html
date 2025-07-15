@@ -11,14 +11,20 @@
 <script>
 
 	var dataset = getQueryVariable("data")
-	var token = getQueryVariable("token")
+	var word = getQueryVariable("word")
 	var lemma = getQueryVariable("lemma")
+	var norm = getQueryVariable("norm")
 	if(lemma.length >0){
 		dataset = dataset +"?lemma="+lemma+"&sort"
-		diagramtitle = "Dokumente mit Lemma:"+ lemma
+		diagramtitle = "Dokumente mit Lemmatisierung:"+ lemma
 	}else{
-		dataset = dataset +"?token="+token+"&sort"
-		diagramtitle = "Dokumente mit Token:"+ token
+		if(norm.length >0){
+			dataset = dataset +"?norm="+norm+"&sort"
+			diagramtitle = "Dokumente mit Normierung:"+ norm
+		}else{
+			dataset = dataset +"?word="+word+"&sort"
+			diagramtitle = "Dokumente mit Wort:"+ word
+		}
 	}
 	data_arr = readPHP(dataset).split("\n");
 	maxval = 0

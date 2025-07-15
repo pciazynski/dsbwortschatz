@@ -131,11 +131,13 @@ def collect():
         if (len(year)>1 and count!=0):
             print(str(count)+" "+urn)
             count-=1
-            with open ("data/normmapping/"+urn.replace(":","_")+".txt", "w",encoding="utf8") as outf,open ("data/normmappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
-                rs = normmapping(urn)
-                outf.write(rs)
-                outyf.write(rs)
-
+            rs = normmapping(urn)
+            if len(rs.strip())>0:
+                with open ("data/normmapping/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/normmappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
+                    outf.write(rs)
+                    outyf.write(rs)
+            else:
+                count+=1
     process("data/normmapping")
     with open ("data/normmapping/_normbag.txt", "w",encoding="utf8") as outf:
         for token,value in sorted(normbag.items(), key = lambda x:x[1], reverse=True):
@@ -161,6 +163,9 @@ def index():
     cursor.execute("CREATE INDEX normfrequencyindex ON normfrequency(norm);")
     cursor.execute("CREATE INDEX normtokenlemmaindex ON normtokenfrequency(norm);")
     cursor.execute("CREATE INDEX normtokentokenindex ON normtokenfrequency(token);")
+    cursor.execute("CREATE INDEX normurnindex ON urndatenormbag(urn);")
+    cursor.execute("CREATE INDEX urnindex ON urndatenormbag(normbag);")
+    cursor.execute("CREATE INDEX urndateindex ON urndatenormbag(date);")
     con.commit()
     con.close()
     
@@ -169,6 +174,7 @@ def initTables():
         os.remove("data/normmapping.db")
     con = sqlite3.connect("data/normmapping.db")
     cursor = con.cursor()
+    cursor.execute("CREATE TABLE urndatenormbag(urn VARCHAR (50),date DATE,normbag text);")
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
     cursor.execute("CREATE TABLE normfrequency(norm VARCHAR (50),frequency INTEGER);")
@@ -183,6 +189,12 @@ def db():
 
     normtokenbag = {}
     lemmatokennormtypesubtypebag = {}
+    doc_year = {}
+    doclist = getdoclist(ctsns).split("\n")
+    for line in doclist:
+        urn_date = line.split("\t")
+        doc_year[urn_date[0]] = urn_date[2]
+        
 
     yearfiles = sorted(os.listdir("data/normmappingperyear"))
     for year in yearfiles:
@@ -215,6 +227,22 @@ def db():
                 linearr = line.split("\t")
                 vals = '"'+linearr[0]+'",'+linearr[1].strip()
                 query="INSERT INTO normfrequency(norm,frequency) VALUES("+vals+")"
+                cursor.execute(query)
+        con.commit()
+    files = sorted(os.listdir("data/normmapping"))
+    for file in files:
+        if file.startswith("urn_#_"):
+            with open ("data/normmapping/"+file, "r", encoding="utf8") as inf:
+                normbag = "|"
+                for line in inf.readlines():
+                    if len(line.strip())>0:
+                        normbag += line.split("\t")[0]+"|"
+                while("||" in normbag):
+                    normbag = normbag.replace("||","|")
+                urn = file.replace(".txt","").replace("_#_",":")
+                year = doc_year[urn]
+                vals = '"'+urn+'","'+year+'","'+normbag+'"'
+                query="INSERT INTO urndatenormbag(urn,date,normbag) VALUES("+vals+")"
                 cursor.execute(query)
         con.commit()
     for normtoken in normtokenbag:

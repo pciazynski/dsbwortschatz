@@ -26,22 +26,22 @@
 		<td style='text-align:center;'>Token</td>
 		<td>
 			<div class='autocomplete'>
-				<input style='width:70%' id='token' type='text' placeholder='Token'>
-				<button onclick = 'updateToken()'>Enter</button> 
+				<input style='width:70%' id='word' type='text' placeholder='Wort'>
+				<button onclick = 'updateWord()'>Enter</button> 
 			</div>
 			<script>
-				autocomplete('token', 'prefixsearch.php?&cutoff=2&limit=20&token=', ''); 
+				autocomplete('word', 'prefixsearch.php?&cutoff=2&limit=20&token=', ''); 
 			</script>
 		</td>
 		<td>
-			<a href="?token=bismark">Beispiel Bismark</a>
+			<a href="?word=bismark">Beispiel Bismark</a>
 		</td>
 	</tr>
 	<tr>
-		<td style='text-align:center;'>Lemma</td>
+		<td style='text-align:center;'>Lemmatisierung</td>
 		<td>
 			<div class='autocomplete'>
-				<input style='width:70%' id='lemma' type='text' placeholder='Lemma'>
+				<input style='width:70%' id='lemma' type='text' placeholder='Lemmatisierung'>
 				<button onclick = 'updateLemma()'>Enter</button> 
 			</div>
 			<script>
@@ -52,7 +52,22 @@
 			<a href="?lemma=BISMARCK">Beispiel BISMARCK</a>
 		</td>
 	</tr>
-</table>
+	<tr>
+		<td style='text-align:center;'>Normierung</td>
+		<td>
+			<div class='autocomplete'>
+				<input style='width:70%' id='norm' type='text' placeholder='Normierung'>
+				<button onclick = 'updateNorm()'>Enter</button> 
+			</div>
+			<script>
+				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
+			</script>
+		</td>
+		<td>
+			<a href="?lemma=BISMARCK">Beispiel BISMARCK</a>
+		</td>
+	</tr>
+	</table>
 <br><br>
 
 <div class = "iframediv">
@@ -97,24 +112,36 @@
 		}
 	}
 	
-	var updateToken = function(){
-		tmp = document.getElementById('token').value.trim()
+	var updateWord = function(){
+		tmp = document.getElementById('word').value.trim()
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&token='+tmp
-			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&token='+tmp
+			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&word='+tmp
+			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&word='+tmp
 			document.title=tmp+" Dok.nachweise "
 		}
 	}
 	
+	var updateNorm = function(){
+		tmp = document.getElementById('norm').value.trim()
+		if(tmp.length>0){
+			loading('timeline')
+			loading('doclist')
+			document.getElementById('doclist').src = 'doclist.html?data=urnbynorm.php&norm='+tmp
+			document.getElementById('timeline').src = 'timeline.html?data=urnbynorm.php&norm='+tmp
+			document.title=tmp+" Dok.nachweise "
+		}
+	}
+
+
 	var updateLemma = function(){
 		tmp = document.getElementById('lemma').value.trim()
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&lemma='+tmp
-			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&lemma='+tmp
+			document.getElementById('doclist').src = 'doclist.html?data=urnbylemma.php&lemma='+tmp
+			document.getElementById('timeline').src = 'timeline.html?data=urnbylemma.php&lemma='+tmp
 			document.title=tmp+" Dok.nachweise "
 		}
 	}
@@ -123,13 +150,20 @@
 	
 	document.title="Dok.nachweise"
 	tmplemma = getQueryVariable('lemma')
+	tmpnorm = getQueryVariable('norm')
 	if(tmplemma.length>0){
 		document.getElementById('lemma').value = tmplemma
 		updateLemma()
 	}
 	else{
-		document.getElementById('token').value = getQueryVariable('token')
-		updateToken()
+		if(tmpnorm.length>0){
+			document.getElementById('norm').value = tmpnorm
+			updateNorm()
+		}
+		else{
+			document.getElementById('word').value = getQueryVariable('word')
+			updateToken()
+		}
 	}
 
 </script>

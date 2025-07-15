@@ -11,22 +11,29 @@
 <body style="text-align:left;">
 <script>
 	var dataset = getQueryVariable('data')
-	var token = getQueryVariable('token')
+	var word = getQueryVariable('word')
 	var lemma = getQueryVariable("lemma")
+	var norm = getQueryVariable("norm")
 	if(lemma.length >0){
 		dataset = dataset +"?lemma="+lemma+"&sort"
-		diagramtitle = "Dok. Lemma:"+ lemma
+		diagramtitle = "Dok. Lemmatisierung:"+ lemma
 		param = "&highlight="+lemma
 	}else{
-		dataset = dataset +"?token="+token+"&sort"
-		diagramtitle = "Dok. Lemma:"+ token
-		param = "&deletexml&highlight="+token
+		if(norm.length >0){
+			dataset = dataset +"?norm="+norm+"&sort"
+			diagramtitle = "Dok. Normierung:"+ norm
+			param = "&highlight="+norm
+		}else{
+			dataset = dataset +"?word="+word+"&sort"
+			diagramtitle = "Dok. Wort:"+ word
+			param = "&deletexml&highlight="+word
+		}
 	}
 	data_arr = readPHP(dataset).trim().split('\n');
 	
 	str = '<table class="clicktable">';
-	if(dataset.includes("?token")){
-		str += str + '<tr><th>Jahr</th><th>Tokensuche <br>(untokenisiert)</th><th>Tokenverteilung <br>Dia | Data</th><th>Lese-<br>freundlich</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
+	if(dataset.includes("urnbyword")){
+		str += str + '<tr><th>Jahr</th><th>Tokensuche <br>(untokenisiert)</th><th>Wortverteilung <br>Dia | Data</th><th>Lese-<br>freundlich</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
 	}
 	else{
 		str += '<tr><th>Jahr</th><th>Lesemodus</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
@@ -44,14 +51,14 @@
 		//Remove Versioning Timestamp
 		tmpname = tmpname.substring(0,tmpname.lastIndexOf(" "))
 		
-		onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+token+"', '_blank')"
+		onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+word+"', '_blank')"
 		onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
 		onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
-		onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+token+"&lowercase', '_blank')"
-		onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+token+"&lowercase', '_blank')"
+		onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+word+"&lowercase', '_blank')"
+		onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+word+"&lowercase', '_blank')"
 		onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+tmpname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
 		resstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
-		if(dataset.includes("?token")){
+		if(dataset.includes("urnbyword")){
 			str += '<tr><td>'+arr[1]+'</td><td> <span onclick="'+onclickfun0+'"> &#10008;</span> </td><td> <span onclick="'+onclickfun3+'"> &#10087;</span> | <span onclick="'+onclickfun4+'"> &#10138; </span></td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
 		}
 		else{
@@ -63,7 +70,7 @@
 	document.write(str)
 	data_arr = ""
 	str = ""
-	document.title = 'Dok-liste '+ token
+	document.title = diagramtitle
 
 </script>
 </body>

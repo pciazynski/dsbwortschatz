@@ -152,10 +152,13 @@ def collect():
         if (len(year)>1 and count!=0):
             print(str(count)+" "+urn)
             count-=1
-            with open ("data/lemmamapping/"+urn.replace(":","_")+".txt", "w",encoding="utf8") as outf,open ("data/lemmamappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
-                rs = lemmamapping(urn)
-                outf.write(rs)
-                outyf.write(rs)
+            rs = lemmamapping(urn)
+            if len(rs.strip())>0:
+                with open ("data/lemmamapping/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/lemmamappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
+                    outf.write(rs)
+                    outyf.write(rs)
+            else:
+                count+=1
 
     process("data/lemmamapping")
     with open ("data/lemmamapping/_lemmabag.txt", "w",encoding="utf8") as outf:
@@ -182,6 +185,9 @@ def index():
     cursor.execute("CREATE INDEX lemmafrequencyindex ON lemmafrequency(lemma);")
     cursor.execute("CREATE INDEX lemmatokenlemmaindex ON lemmatokenfrequency(lemma);")
     cursor.execute("CREATE INDEX lemmatokentokenindex ON lemmatokenfrequency(token);")
+    cursor.execute("CREATE INDEX lemmaurnindex ON urndatelemmabag(urn);")
+    cursor.execute("CREATE INDEX urnindex ON urndatelemmabag(lemmabag);")
+    cursor.execute("CREATE INDEX urndateindex ON urndatelemmabag(date);")
     con.commit()
     con.close()
     
@@ -190,6 +196,7 @@ def initTables():
         os.remove("data/lemmamapping.db")
     con = sqlite3.connect("data/lemmamapping.db")
     cursor = con.cursor()
+    cursor.execute("CREATE TABLE urndatelemmabag(urn VARCHAR (50),date DATE,lemmabag text);")
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
     cursor.execute("CREATE TABLE lemmafrequency(lemma VARCHAR (50),frequency INTEGER);")
@@ -204,7 +211,13 @@ def db():
 
     lemmatokenbag = {}
     lemmatokennormtypesubtypebag = {}
+    doc_year = {}
 
+    doclist = getdoclist(ctsns).split("\n")
+    for line in doclist:
+        urn_date = line.split("\t")
+        doc_year[urn_date[0]] = urn_date[2]
+        
     yearfiles = sorted(os.listdir("data/lemmamappingperyear"))
     for year in yearfiles:
         print("sql lemmamappingperyear:"+year)
@@ -219,7 +232,6 @@ def db():
                         lemmatokennormtypesubtypebag[toklemnormtypesubtype] = lemmatokennormtypesubtypebag[toklemnormtypesubtype]+int(linearr[5])
                     else:
                         lemmatokennormtypesubtypebag[toklemnormtypesubtype] = int(linearr[5])
-                        
 
                     if toklem in lemmatokenbag:
                         lemmatokenbag[toklem] = lemmatokenbag[toklem]+int(linearr[5])
@@ -238,6 +250,26 @@ def db():
                 query="INSERT INTO lemmafrequency(lemma,frequency) VALUES("+vals+")"
                 cursor.execute(query)
         con.commit()
+
+    files = sorted(os.listdir("data/lemmamapping"))
+    for file in files:
+        print(file)
+        if file.startswith("urn_#_"):
+            print("sql bagofwordsperurn:"+file)
+            with open ("data/lemmamapping/"+file, "r", encoding="utf8") as inf:
+                lemmabag = "|"
+                for line in inf.readlines():
+                    if len(line.strip())>0:
+                        lemmabag += line.split("\t")[0]+"|"
+                while("||" in lemmabag):
+                    lemmabag = lammebag.replace("||","|")
+                urn = file.replace(".txt","").replace("_#_",":")
+                year = doc_year[urn]
+                vals = '"'+urn+'","'+year+'","'+lemmabag+'"'
+                query="INSERT INTO urndatelemmabag(urn,date,lemmabag) VALUES("+vals+")"
+                cursor.execute(query)
+        con.commit()
+    
     for lemmatoken in lemmatokenbag:
         vals = '"'+lemmatoken.replace("\t",'","')+'",'+str(lemmatokenbag[lemmatoken])
         query = "INSERT INTO lemmatokenfrequency(token,lemma,frequency) VALUES("+vals+")"

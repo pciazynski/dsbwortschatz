@@ -142,7 +142,7 @@ def initTables():
     cursor = con.cursor()
     cursor.execute("CREATE TABLE tokendatecount(token VARCHAR (50),date DATE,frequency INTEGER);")
     cursor.execute("CREATE TABLE tokencount(token VARCHAR (50),frequency INTEGER);")
-    cursor.execute("CREATE TABLE urnwordbag(urn VARCHAR (50),date DATE,wordbag text);")
+    cursor.execute("CREATE TABLE urndatewordbag(urn VARCHAR (50),date DATE,wordbag text);")
     con.commit()
     con.close()
 
@@ -152,10 +152,10 @@ def index():
     print("Indexing...")
     cursor.execute("CREATE INDEX tokenindex ON tokencount(token);")
     cursor.execute("CREATE INDEX tokendateindex ON tokendatecount(token);")
-    cursor.execute("CREATE INDEX tokenurnindex ON urnwordbag(urn);")
-    cursor.execute("CREATE INDEX urnindex ON urnwordbag(wordbag);")
-    cursor.execute("CREATE INDEX urndateindex ON urnwordbag(date);")
     cursor.execute("CREATE INDEX dateindex ON tokendatecount(date);")
+    cursor.execute("CREATE INDEX tokenurnindex ON urndatewordbag(urn);")
+    cursor.execute("CREATE INDEX urnindex ON urndatewordbag(wordbag);")
+    cursor.execute("CREATE INDEX urndateindex ON urndatewordbag(date);")
     con.commit()
     con.close()
 
@@ -199,7 +199,7 @@ def db():
                 urn = file.replace(".txt","").replace("_#_",":")
                 year = doc_year[urn]
                 vals = '"'+urn+'","'+year+'","'+wordbag+'"'
-                query="INSERT INTO urnwordbag(urn,date,wordbag) VALUES("+vals+")"
+                query="INSERT INTO urndatewordbag(urn,date,wordbag) VALUES("+vals+")"
                 cursor.execute(query)
         con.commit()
     index()

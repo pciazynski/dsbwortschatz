@@ -86,7 +86,7 @@ str='<div  class="header">'+
 +'</tr>'
 +'<tr style="text-align:center;">'
 +'<td>'
-+'<a href="../docperword/">Wortreferenzen</a> | '
++'<a href="../docreferences/">Wortreferenzen</a> | '
 +'<a href="../characters">Zeichen</a> | '
 +'<a href="../stats/">Statistiken</a>'
 +'</td>'
