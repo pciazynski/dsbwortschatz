@@ -2,10 +2,13 @@ import os
 
 bw = {}
 bl = {}
-
-with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as bwin:
+incons = 0 
+with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as bwin, open ("data/lemmamapping/_inconsistencies.txt", "w", encoding="utf8") as incout:
     for line in bwin:
         linearr = line.split("\t")
+        if linearr[0] in bl:
+            incout.write(linearr[0]+"\n")
+            incons+=1
         bl[linearr[0]] = 1
 
 unlem = 0
@@ -21,6 +24,7 @@ with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("dat
             outunlem.write(line)
 with open ("data/lemmamapping/_stats.txt", "w", encoding="utf8") as out:
     out.write("Lemmatisiert / Alle: "+str(lem)+" / "+str(lem+unlem)+"\n")
+    out.write("Inkonsistent: "+str(incons)+"\n")
 
 lemmabag = {}
 lemmaambiquebag = {}

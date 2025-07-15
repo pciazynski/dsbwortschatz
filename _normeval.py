@@ -2,10 +2,13 @@ import os
 
 bw = {}
 bl = {}
-
-with open ("data/normmapping/_all.txt", "r", encoding="utf8") as bwin:
+incons = 0
+with open ("data/normmapping/_all.txt", "r", encoding="utf8") as bwin, open ("data/lemmamapping/_inconsistencies.txt", "w", encoding="utf8") as incout:
     for line in bwin:
         linearr = line.split("\t")
+        if linearr[0] in bl:
+            incout.write(linearr[0]+"\n")
+            incons+=1
         bl[linearr[0]] = 1
 
 yay = 0
@@ -21,7 +24,8 @@ with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("dat
             outnay.write(line)
 with open ("data/normmapping/_stats.txt", "w", encoding="utf8") as out:
     out.write("Normiert / Alle: "+str(yay)+" / "+str(yay+nay)+"\n")
-    
+    out.write("Inkonsistent: "+str(incons)+"\n")
+
     
 normbag = {}
 normambiquebag = {}
