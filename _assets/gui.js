@@ -54,10 +54,10 @@ str='<div  class="header">'+
 '<table>'
 +'<tr style="text-align:center;">'
 +'<td>'
-+'Textkorpus'
++lang_textcorpus
 +'</td>'
 +'<td>'
-+lang_word
++lang_words
 +'</td>'
 +'<td>'
 +'<a href="../profile/">'+lang_profile+'</a>'
@@ -86,9 +86,9 @@ str='<div  class="header">'+
 +'</tr>'
 +'<tr style="text-align:center;">'
 +'<td>'
-+'<a href="../docreferences/">Wortreferenzen</a> | '
-+'<a href="../characters">Zeichen</a> | '
-+'<a href="../stats/">Statistiken</a>'
++'<a href="../docreferences/">'+lang_docreferences+'</a> | '
++'<a href="../characters">'+lang_characters+'</a> | '
++'<a href="../stats/">'+lang_statistics+'</a>'
 +'</td>'
 +'<td>'
 +'<a href="../bwtoken/">'+lang_frequency+'</a> | '
