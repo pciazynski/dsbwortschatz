@@ -253,7 +253,6 @@ def db():
 
     files = sorted(os.listdir("data/lemmamapping"))
     for file in files:
-        print(file)
         if file.startswith("urn_#_"):
             print("sql bagofwordsperurn:"+file)
             with open ("data/lemmamapping/"+file, "r", encoding="utf8") as inf:

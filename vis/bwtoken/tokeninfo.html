@@ -27,7 +27,7 @@
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
 		str += '<tr>'
-		str += "<td><a target='_blank' href=../docperword/?token="+token+">&#10149;</a></td>"
+		str += "<td><a target='_blank' href=../docreferences/?word="+token+">&#10149;</a></td>"
 		lemma = arr[0].slice(1,-1)
 		if(lemma.length>0){
 			str += "<td><a target='_blank' href=../bwlemma/?lemma="+lemma+">"+lemma+"</a></td>"
