@@ -9,7 +9,15 @@ with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as bwin, open ("d
         if linearr[0] in bl:
             incout.write(linearr[0]+"\n")
             incons+=1
+            bl[linearr[0]] = bl[linearr[0]] +1
+            if bl[linearr[0]] > 2:
+                print(linearr[0])
+
         bl[linearr[0]] = 1
+
+exit()
+
+
 
 unlem = 0
 lem = 0

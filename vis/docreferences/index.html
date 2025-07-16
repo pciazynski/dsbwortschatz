@@ -34,7 +34,7 @@
 			</script>
 		</td>
 		<td>
-			<a href="?word=bismark">Beispiel Bismark</a>
+			<a href="?word=krabat">Beispiel krabat</a>
 		</td>
 	</tr>
 	<tr>
@@ -49,7 +49,7 @@
 			</script>
 		</td>
 		<td>
-			<a href="?lemma=BISMARCK">Beispiel BISMARCK</a>
+			<a href="?lemma=KRABAT">Beispiel KRABAT</a>
 		</td>
 	</tr>
 	<tr>
@@ -64,11 +64,50 @@
 			</script>
 		</td>
 		<td>
-			<a href="?lemma=BISMARCK">Beispiel BISMARCK</a>
+			<a href="?norm=Krabat">Beispiel Krabat</a>
+		</td>
+	</tr>
+	<tr>
+		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">
+		</td>
+		<td>
+			<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateTimeframe()">
+			<br>
+			<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateTimeframe()">
 		</td>
 	</tr>
 	</table>
 <br><br>
+
+<script>
+	yearminslider.oninput = function() {
+		otherslider=document.getElementById("yearmaxslider")
+		otherslider.value=Math.max(otherslider.value,this.value)
+		yearminvalue.innerHTML = this.value
+		yearmaxvalue.innerHTML = otherslider.value
+	}
+
+	yearmaxslider.oninput = function() {
+		otherslider=document.getElementById("yearminslider")
+		otherslider.value=Math.min(otherslider.value,this.value)
+		yearminvalue.innerHTML = otherslider.value
+		yearmaxvalue.innerHTML = this.value
+	}
+	yearminslider.min=minDate
+
+	
+	yearmaxslider.min = minDate
+	yearmaxslider.max = maxDate
+	yearminslider.min = minDate
+	yearminslider.max = maxDate
+	yearminslider.value = minDate
+	yearmaxslider.value = maxDate
+	yearminvalue.innerHTML=minDate
+	yearmaxvalue.innerHTML = maxDate
+</script>
 
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
@@ -105,6 +144,17 @@
 
 <script>
 
+	var updateTimeframe = function(){
+		yearval = ""
+		yearmin = document.getElementById("yearminslider").value
+		yearmax = document.getElementById("yearmaxslider").value
+		if(yearmin > minDate || yearmax < maxDate){
+			yearval = "&year=BETWEEN "+yearmin + " AND "+yearmax
+		}
+		document.getElementById('doclist').src = document.getElementById('doclist').src.split("&year=")[0]+yearval
+		document.getElementById('timeline').src = document.getElementById('timeline').src.split("&year=")[0]+yearval
+	}
+	
 	var callDolnoserbski = function(){
 		tmp = document.getElementById('token').value.trim()
 		if(tmp.length>0){
@@ -117,8 +167,8 @@
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&word='+tmp
-			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&word='+tmp
+			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&word='+tmp+yearval
+			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&word='+tmp+yearval
 			document.title=tmp+" Dok.nachweise "
 		}
 	}
@@ -128,27 +178,26 @@
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbynorm.php&norm='+tmp
-			document.getElementById('timeline').src = 'timeline.html?data=urnbynorm.php&norm='+tmp
+			document.getElementById('doclist').src = 'doclist.html?data=urnbynorm.php&norm='+tmp+yearval
+			document.getElementById('timeline').src = 'timeline.html?data=urnbynorm.php&norm='+tmp+yearval
 			document.title=tmp+" Dok.nachweise "
 		}
 	}
-
 
 	var updateLemma = function(){
 		tmp = document.getElementById('lemma').value.trim()
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbylemma.php&lemma='+tmp
-			document.getElementById('timeline').src = 'timeline.html?data=urnbylemma.php&lemma='+tmp
+			document.getElementById('doclist').src = 'doclist.html?data=urnbylemma.php&lemma='+tmp+yearval
+			document.getElementById('timeline').src = 'timeline.html?data=urnbylemma.php&lemma='+tmp+yearval
 			document.title=tmp+" Dok.nachweise "
 		}
 	}
 	
-
-	
 	document.title="Dok.nachweise"
+	yearval = getQueryVariable('year')
+	if(yearval.length>0){yearval = "&year="+yearval}
 	tmplemma = getQueryVariable('lemma')
 	tmpnorm = getQueryVariable('norm')
 	if(tmplemma.length>0){
@@ -162,7 +211,7 @@
 		}
 		else{
 			document.getElementById('word').value = getQueryVariable('word')
-			updateToken()
+			updateWord()
 		}
 	}
 

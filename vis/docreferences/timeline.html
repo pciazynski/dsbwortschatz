@@ -14,6 +14,7 @@
 	var word = getQueryVariable("word")
 	var lemma = getQueryVariable("lemma")
 	var norm = getQueryVariable("norm")
+	var year = getQueryVariable("year")
 	if(lemma.length >0){
 		dataset = dataset +"?lemma="+lemma+"&sort"
 		diagramtitle = "Dokumente mit Lemmatisierung:"+ lemma
@@ -26,6 +27,7 @@
 			diagramtitle = "Dokumente mit Wort:"+ word
 		}
 	}
+	if(year.length>0){diagramtitle+="<br>"+year;dataset+="&year="+year}
 	data_arr = readPHP(dataset).split("\n");
 	maxval = 0
 	minval = 10000000

@@ -59,12 +59,11 @@
 		onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+word+"&lowercase', '_blank')"
 		onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+word+"&lowercase', '_blank')"
 		onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+tmpname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
-		resstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
 		if(dataset.includes("urnbyword")){
 			str += '<tr><td>'+arr[1]+'</td><td> <span onclick="'+onclickfun0+'"> &#10008;</span> </td><td> <span onclick="'+onclickfun3+'"> &#10087;</span> | <span onclick="'+onclickfun4+'"> &#10138; </span></td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
 		}
 		else{
-			str += '<tr><td>'+arr[1]+'</td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
+			str += '<tr><td>'+arr[1]+'</td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+tmpname+'</td>'
 		}
 		str += '</tr>'
 	}

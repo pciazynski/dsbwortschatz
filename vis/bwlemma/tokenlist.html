@@ -2,10 +2,14 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
 	<script src="../../lib/plotly-latest.min.js"></script>
 	<script src="../../_assets/datahandler.js"></script>
-	<script src="../../lib/config.js"></script>
 	<link rel="stylesheet" href="../../styles.css">
+
+
 </head>
 
 <body style="text-align:left;">
@@ -19,7 +23,7 @@
 
 
 	str = "<table style='border-collapse: collapse;text-align:left;'>";
-	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Tokenliste<br>"+title+"</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Anzahl Textvorkommen</th>"
+	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Tokenliste<br>"+title+"</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>"+lang_frequency+"</th>"
 	str = str +"</tr>"
 
 	for (var i = 0; i < data_arr.length; i++) {

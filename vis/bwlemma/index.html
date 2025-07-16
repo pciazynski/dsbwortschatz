@@ -135,27 +135,40 @@
 			</td>
 			<td></td>
 		</tr>
-	<tr>
-		<td>
-		</td>
-		<td style="background-color:white;text-align:center;">
-			<span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span>
-			<br>
-			<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateTravizYear()">
-			<br>
-			<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateTravizYear()">
-		</td>
-	</tr>
-	
-
+		<tr>
+			<td>
+			</td>
+			<td style="background-color:white;text-align:center;">
+				<span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span>
+				<br>
+				<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateTravizYear()">
+				<br>
+				<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateTravizYear()">
+			</td>
+		</tr>
 	</table>
-	
-	<button class = "iframebutton" onclick="embedding('traviz');"><script>document.write(lang_htmlembedding)</script></button>
-	<button class = "iframebutton" onclick="diagrammlink('traviz');"><script>document.write(lang_fullscreen)</script></button>
-	<button class = "iframebutton" onclick="datalink('traviz');"><script>document.write(lang_rawdata)</script></button>
-	<div style="text-align:center;">
-		<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
-	</div>
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 69%;">
+				<button class = "iframebutton" onclick="embedding('traviz');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('traviz');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('traviz');"><script>document.write(lang_rawdata)</script></button>
+			</td>
+			<td style = "width: 30%;">
+				<button class = "iframebutton" onclick="embedding('docref');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('docref');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('docref');"><script>document.write(lang_rawdata)</script></button>
+			</td>
+		</tr>
+		<tr style = "text-align:right;">
+			<td>
+				<iframe class="resized" width="100%" height="300px" id="traviz" scrolling="yes"></iframe>
+			</td>
+			<td>
+				<iframe class="resized" width="100%" height="300px" id="docref" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
 	
 </div>
 
@@ -210,11 +223,13 @@
 			yearfrom = document.getElementById("yearminslider").value
 			yearto = document.getElementById("yearmaxslider").value
 			if(yearto==maxDate && yearfrom == minDate) {
+				year = ""
 				document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
 			}else{
 				year = "BETWEEN " + yearfrom + " AND " + yearto
 				document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year="+year
 			}
+			document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+curlemma+"&year="+year
 		}
 	}
 	
