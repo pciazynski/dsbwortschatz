@@ -15,10 +15,6 @@ with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as bwin, open ("d
 
         bl[linearr[0]] = 1
 
-exit()
-
-
-
 unlem = 0
 lem = 0
 with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("data/lemmamapping/_yay.txt", "w", encoding="utf8") as outlem,open ("data/lemmamapping/_nay.txt", "w", encoding="utf8") as outunlem:
