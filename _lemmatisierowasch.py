@@ -256,12 +256,12 @@ def db():
         if file.startswith("urn_#_"):
             print("sql bagofwordsperurn:"+file)
             with open ("data/lemmamapping/"+file, "r", encoding="utf8") as inf:
-                lemmabag = "|"
+                lemmabag = "#"
                 for line in inf.readlines():
                     if len(line.strip())>0:
-                        lemmabag += line.split("\t")[0]+"|"
-                while("||" in lemmabag):
-                    lemmabag = lammebag.replace("||","|")
+                        lemmabag += line.split("\t")[1]+"#"
+                while("#||#" in lemmabag):
+                    lemmabag = lemmabag.replace("#||#","#")
                 urn = file.replace(".txt","").replace("_#_",":")
                 year = doc_year[urn]
                 vals = '"'+urn+'","'+year+'","'+lemmabag+'"'

@@ -97,6 +97,8 @@
 	if(parent.document.getElementById('yearminslider') != undefined){
 		myPlot.on('plotly_click', function(data) {
 			yearx=data.points[0].x;
+			parent.document.getElementById("yearminvalue").innerHTML = yearx
+			parent.document.getElementById("yearmaxvalue").innerHTML = yearx
 			parent.document.getElementById("yearminslider").value = yearx
 			parent.document.getElementById("yearmaxslider").value = yearx
 			parent.updateTravizYear()

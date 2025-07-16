@@ -233,12 +233,12 @@ def db():
     for file in files:
         if file.startswith("urn_#_"):
             with open ("data/normmapping/"+file, "r", encoding="utf8") as inf:
-                normbag = "|"
+                normbag = "#"
                 for line in inf.readlines():
                     if len(line.strip())>0:
-                        normbag += line.split("\t")[0]+"|"
-                while("||" in normbag):
-                    normbag = normbag.replace("||","|")
+                        normbag += line.split("\t")[2]+"#"
+                while("#||#" in normbag):
+                    normbag = normbag.replace("#||#","#")
                 urn = file.replace(".txt","").replace("_#_",":")
                 year = doc_year[urn]
                 vals = '"'+urn+'","'+year+'","'+normbag+'"'
