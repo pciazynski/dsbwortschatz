@@ -25,7 +25,7 @@
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:right;">Minimum Häufigkeit</td>
+		<td style="text-align:right;"><script>document.write(lang_frequency)</script></td>
 		<td>
 			<input type="number" value="1000" id="min" onchange="updateZipf()">
 		</td>
@@ -66,7 +66,7 @@
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Suchbegriff</td>
+		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
 				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
@@ -76,18 +76,18 @@
 				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", "updateTimeline"); 
 			</script>
 		</td>
-		<td><a href="?lemma=CHÓŚEBUZ">Bspw CHÓŚEBUZ</a></td>
-		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmavariation</button></td>
+		<td><a href="?lemma=CHÓŚEBUZ"><script>document.write(lang_example)</script> CHÓŚEBUZ</a></td>
+		<td style="text-align:left;"><script>document.write(lang_redirect)</script><button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callLemmatree()">&#10149;Lemmavariation</button></td>
 	</tr>
 	<tr>
 		<td style="text-align:center;">Regex</td>
 		<td>
 			<div class="autocomplete">
 				<input style="width:70%" id="regexsearch" type="text" placeholder="^ und $ werden angefügt" onchange = "">
-				<button onclick = "updateTimelineRegex()">Enter</button> 
+				<button onclick = "updateTimelineRegex()"><script>document.write(lang_enter)</script></button> 
 			</div>
 		</td>
-		<td style="text-align:center;">Bspw TE(J|N)</td>
+		<td style="text-align:center;"> <script>document.write(lang_example)</script>  TE(J|N)</td>
 	</tr>
 </table>
 
@@ -129,8 +129,8 @@
 		<tr style = "text-align:right;">
 			<td></td>
 			<td>
-				<button class = "iframebutton" onclick="updateFocus(0);">Lemma</button>
-				<button class = "iframebutton" onclick="updateFocus(3);">Token</button>
+				<button class = "iframebutton" onclick="updateFocus(0);"><script>document.write(lang_lemmafy)</script></button>
+				<button class = "iframebutton" onclick="updateFocus(3);"><script>document.write(lang_words)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
@@ -139,11 +139,11 @@
 			<td>
 			</td>
 			<td style="background-color:white;text-align:center;">
-				<span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span>
+				<span id="yearminvalue">_</span> - <span id="yearmaxvalue">_</span>
 				<br>
-				<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateTravizYear()">
+				<input type="range" class="slider" id="yearminslider" onchange="updateTravizYear()">
 				<br>
-				<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateTravizYear()">
+				<input type="range" class="slider" id="yearmaxslider" onchange="updateTravizYear()">
 			</td>
 		</tr>
 	</table>

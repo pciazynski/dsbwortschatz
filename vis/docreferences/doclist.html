@@ -2,6 +2,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
 	<script src="../../lib/plotly-latest.min.js"></script>
 	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
@@ -17,17 +19,20 @@
 	var year = getQueryVariable("year")
 	if(lemma.length >0){
 		dataset = dataset +"?lemma="+lemma+"&sort"
-		diagramtitle = "Dok. Lemmatisierung:"+ lemma
-		param = "&highlight="+lemma
+		diagramtitle = lang_docreferences + ' ' +lemma
+		param = ""
+		//param = "&highlight="+lemma
 	}else{
 		if(norm.length >0){
 			dataset = dataset +"?norm="+norm+"&sort"
-			diagramtitle = "Dok. Normierung:"+ norm
-			param = "&highlight="+norm
+			diagramtitle = lang_docreferences + ' ' +norm
+			param = ""
+			//param = "&highlight="+norm
 		}else{
 			dataset = dataset +"?word="+word+"&sort"
-			diagramtitle = "Dok. Wort:"+ word
-			param = "&deletexml&highlight="+word
+			diagramtitle = lang_docreferences + ' ' +word
+			param = ""
+			//param = "&deletexml&highlight="+word
 		}
 	}
 	if(year.length>0){diagramtitle+="<br>"+year;dataset+="&year="+year}
@@ -35,10 +40,10 @@
 	
 	str = '<table class="clicktable">';
 	if(dataset.includes("urnbyword")){
-		str += str + '<tr><th>Jahr</th><th>Tokensuche <br>(untokenisiert)</th><th>Wortverteilung <br>Dia | Data</th><th>Lese-<br>freundlich</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
+		str += str + '<tr><th>'+lang_year+'</th><th>'+lang_tokensearch+'</th><th>'+lang_worddistribution+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th>'
 	}
 	else{
-		str += '<tr><th>Jahr</th><th>Lesemodus</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
+	str += '<tr><th>'+lang_year+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th>'
 	}
 	str += '</tr>'
 

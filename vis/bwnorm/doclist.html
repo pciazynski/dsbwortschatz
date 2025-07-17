@@ -13,17 +13,17 @@
 <body style="text-align:left;">
 <script>
 	var dataset = getQueryVariable('data')
-	var lemma = getQueryVariable("lemma")
+	var norm = getQueryVariable("norm")
 	var year = getQueryVariable("year")
-	dataset = dataset +"?lemma="+lemma+"&sort"
-	diagramtitle = lang_docreferences + ' ' +lemma
+	dataset = dataset +"?norm="+norm+"&sort"
+	diagramtitle = lang_docreferences + ' ' +norm
 	param = ""
-	//param = "&highlight="+lemma
+	//param = "&highlight="+norm
 
 	if(year.length>0){diagramtitle+="<br>"+year;dataset+="&year="+year}
 	data_arr = readPHP(dataset).trim().split('\n');
 	if(data_arr.length>=0){
-
+		
 		str = '<table class="clicktable">';
 
 		str += '<tr><th>'+lang_year+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th>'

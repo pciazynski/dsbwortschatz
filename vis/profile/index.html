@@ -15,11 +15,11 @@
 <br><br>
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Gesuchtes Wort</td>
+		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
 		<td>
 			<div class="autocomplete">
 				<input style="width:70%" id="wantedtoken" type="text" placeholder="Wort">
-				<button onclick = "updateWord()">Enter</button> 
+				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateWord"); 
@@ -27,11 +27,11 @@
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Gesuchte Lemmatisierung</td>
+		<td style="text-align:center;"><script>document.write(lang_lemmafy)</script></td>
 		<td>
 			<div class="autocomplete">
 				<input style="width:70%" id="wantedlemma" type="text" placeholder="Lemma">
-				<button onclick = "updateLemma()">Enter</button> 
+				<button onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("wantedlemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", "updateLemma"); 
@@ -39,11 +39,11 @@
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Gesuchte Normierung</td>
+		<td style="text-align:center;"><script>document.write(lang_normify)</script></td>
 		<td>
 			<div class="autocomplete">
 				<input style="width:70%" id="wantednorm" type="text" placeholder="Normierung">
-				<button onclick = "updateNorm()">Enter</button> 
+				<button onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("wantednorm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", "updateNorm"); 
@@ -51,9 +51,9 @@
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Optionen</td>
+		<td style="text-align:center;"><script>document.write(lang_options)</script></td>
 		<td>
-			<input id="clickableCheckBox" type="checkbox" checked="false" onchange="switchClickable()">Interaktive Elemente</input>
+			<input id="clickableCheckBox" type="checkbox" checked="false" onchange="switchClickable()"><script>document.write(lang_options)</script></input>
 
 		</td>
 	</tr>
