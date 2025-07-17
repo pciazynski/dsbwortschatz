@@ -264,6 +264,7 @@
 			document.getElementById("timeline").src=source
 			document.title="Normierung "+curnorm
 		}
+		document.getElementById('docref').src = 'nodocref.html'
 	}
 	
 	var updateTimelineRegex = function(){
@@ -278,6 +279,7 @@
 			document.getElementById("normgroup").src="normlist.html?data=normregexgroup.php&norm="+curnorm+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=normregex2token.php&norm="+curnorm+"&sort"
 		}
+		document.getElementById('docref').src = 'error_docref.html'
 		document.title="Normierung "+curnorm
 	}
 
@@ -294,12 +296,14 @@
 			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
 		}
+		document.getElementById('docref').src = 'error_docref.html'
 		document.title="Normierung "+curnorm
 	}
 	var updateZipf = function(){
 		loading("zipf")
 		curnorm = document.getElementById("min").value.trim()
 		document.getElementById("zipf").src="zipf.html?data=normmapping/_normbag&min="+curnorm
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var normClick = function(norm){
@@ -311,7 +315,18 @@
 		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&exact=1&focus="+focus
 		document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
-		document.title="Normierung "+curnorm
+		url = document.getElementById("traviz").src.split("&year")[0]
+		yearfrom = document.getElementById("yearminslider").value
+		yearto = document.getElementById("yearmaxslider").value
+		if(yearto==maxDate && yearfrom == minDate) {
+			year = ""
+			document.getElementById("traviz").src = url.replace("normtokenperyear.php","normtoken.php")
+		}else{
+			year = "BETWEEN " + yearfrom + " AND " + yearto
+			document.getElementById("traviz").src = url.replace("normtoken.php","normtokenperyear.php")+"&year="+year
+		}
+		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+norm+"&year="+year
+		document.title=lang_normify+" "+curnorm
 	}
 	
 	var focus = 0;

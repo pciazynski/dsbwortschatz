@@ -261,6 +261,7 @@
 			document.getElementById("timeline").src=source
 			document.title="Lemma "+curlemma
 		}
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var updateTimelineRegex = function(){
@@ -277,6 +278,7 @@
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 		}
 		document.title="Lemma "+curlemma
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 
 	var updateTimeline = function(){
@@ -293,11 +295,13 @@
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
 		}
 		document.title="Lemma "+curlemma
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 	var updateZipf = function(){
 		loading("zipf")
 		curlemma = document.getElementById("min").value.trim()
 		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmabag&min="+curlemma
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var lemmaClick = function(lemma){
@@ -306,10 +310,20 @@
 		loading("traviz")
 		curlemma=lemma
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+lemma+"&exact=1&focus="+focus
 		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=1"
-		document.title="Lemma "+curlemma
+		url = document.getElementById("traviz").src.split("&year")[0]
+		yearfrom = document.getElementById("yearminslider").value
+		yearto = document.getElementById("yearmaxslider").value
+		if(yearto==maxDate && yearfrom == minDate) {
+			year = ""
+			document.getElementById("traviz").src = url.replace("lemmatokenperyear.php","lemmatoken.php")
+		}else{
+			year = "BETWEEN " + yearfrom + " AND " + yearto
+			document.getElementById("traviz").src = url.replace("lemmatoken.php","lemmatokenperyear.php")+"&year="+year
+		}
+		document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+lemma+"&year="+year
+		document.title=lang_lemmafy+" "curlemma
 	}
 	
 	var focus = 0;
