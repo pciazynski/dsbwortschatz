@@ -94,9 +94,11 @@
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 	myPlot = document.getElementById('myDiv')
 	document.title = diagramtitle
-	if(parent.document.getElementById('yearminslider') != undefined){
+	//if(parent.document.getElementById('yearminslider') != undefined)
+	{
 		myPlot.on('plotly_click', function(data) {
 			yearx=data.points[0].x;
+			parent.curnorm = data.points[0].text.split("(")[0].slice(1,-1)
 			parent.document.getElementById("yearminvalue").innerHTML = yearx
 			parent.document.getElementById("yearmaxvalue").innerHTML = yearx
 			parent.document.getElementById("yearminslider").value = yearx
