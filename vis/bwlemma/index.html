@@ -31,10 +31,10 @@
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:right;">Betrachte</td>
+		<td style="text-align:right;"><script>document.write(lang_sorting)</script></td>
 		<td>
-			<button onclick ="updateZipf()">Häufigkeitsrang</button>
-			<button onclick ="zipfTypecount()">Menge der Types</button>
+			<button onclick ="updateZipf()"><script>document.write(lang_frequency)</script></button>
+			<button onclick ="zipfTypecount()"><script>document.write(lang_typecount)</script></button>
 		</td>
 	</tr>
 </table>
@@ -70,7 +70,7 @@
 		<td>
 			<div class="autocomplete">
 				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
-				<button onclick = "updateTimeline()">Inklusive Suche</button> 
+				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
 				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", "updateTimeline"); 
@@ -88,6 +88,7 @@
 			</div>
 		</td>
 		<td style="text-align:center;"> <script>document.write(lang_example)</script>  TE(J|N)</td>
+		<td></td>
 	</tr>
 </table>
 
