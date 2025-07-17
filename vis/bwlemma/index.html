@@ -129,16 +129,18 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td></td>
-			<td>
+			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="updateFocus(0);"><script>document.write(lang_lemmafy)</script></button>
 				<button class = "iframebutton" onclick="updateFocus(3);"><script>document.write(lang_words)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
 		</tr>
+	</table>
+	<br/><br/>
+	<table align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr>
-			<td>
-			</td>
+			<td style = "width: 19%;"></td>
 			<td style="background-color:white;text-align:center;">
 				<span id="yearminvalue">_</span> - <span id="yearmaxvalue">_</span>
 				<br>
@@ -146,9 +148,10 @@
 				<br>
 				<input type="range" class="slider" id="yearmaxslider" onchange="updateTravizYear()">
 			</td>
+			<td style = "width: 19%;"></td>
 		</tr>
 	</table>
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+	<table align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 69%;">
 				<button class = "iframebutton" onclick="embedding('traviz');"><script>document.write(lang_htmlembedding)</script></button>
