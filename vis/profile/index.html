@@ -18,8 +18,8 @@
 		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="wantedtoken" type="text" placeholder="Wort">
-				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
+				<input style="width:50%" id="wantedtoken" type="text">
+				<button style="width:30%" onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("wantedtoken", "prefixsearch.php?&cutoff=2&limit=20&token=", "updateWord"); 
@@ -30,8 +30,8 @@
 		<td style="text-align:center;"><script>document.write(lang_lemmafy)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="wantedlemma" type="text" placeholder="Lemma">
-				<button onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
+				<input style="width:50%" id="wantedlemma" type="text">
+				<button style="width:30%" onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("wantedlemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", "updateLemma"); 
@@ -42,8 +42,8 @@
 		<td style="text-align:center;"><script>document.write(lang_normify)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="wantednorm" type="text" placeholder="Normierung">
-				<button onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
+				<input style="width:50%" id="wantednorm" type="text">
+				<button style="width:30%" onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("wantednorm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", "updateNorm"); 
