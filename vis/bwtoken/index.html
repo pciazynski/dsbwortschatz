@@ -36,15 +36,15 @@
 		</td>
 	</tr>
 	<tr>
-		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
+		<td></td><td style="text-align:center;"><span id="yearminvalue">_</span> - <span id="yearmaxvalue">_</span></td><td></td>
 	</tr>
 	<tr>
 		<td style="text-align:right;">
 		</td>
 		<td>
-			<input type="range"  max="14" value="0" class="slider" id="yearminslider" onchange="updateZipf()">
+			<input type="range" class="slider" id="yearminslider" onchange="updateZipf()">
 			<br>
-			<input type="range" min="0" max="14" value="14" class="slider" id="yearmaxslider" onchange="updateZipf()">
+			<input type="range" class="slider" id="yearmaxslider" onchange="updateZipf()">
 		</td>
 	</tr>
 	
@@ -89,49 +89,39 @@
 	</div>
 <br><br>
 
-
-<div class = "explain">
-	<p>
-		Hier werden Worthäufigkeiten nach Jahren dargestellt. Einzeltokens können per Autovervollständigung oder Klick auf die Zipfverteilung gewählt werden.
-		Statt einzelnen Tokens kann kommasepariert eine Tokenliste oder ein Regex übergeben werden.
-		Es kann zwischen absoluten und relativen Worthäufigkeiten gewechselt werden. Relativ bezieht sich hier auf die Summe der Vorkommen des individuellen Tokens.
-		Für Einzeltokens kann eine lineare Regression der Worthäufigkeiten statt einem Scatterplot angezeigt werden.
-	</p>
-</div>
-
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Suchbegriff</td>
+		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="token" type="text" placeholder="Token">
-				<button onclick = "updateTimeline()">Enter</button> 
+				<input style="width:70%" id="token" type="text">
+				<button onclick = "updateTimeline()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("token", "prefixsearch.php?cutoff=2&limit=20&token=", "updateTimeline"); 
 			</script>
 		</td>
-		<td style="text-align:left;">Sende an <button onclick = "addTokenToList()">&#10149;Tokenliste</button></td>
+		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addTokenToList()">&#10149;<script>document.write(lang_list)</script></button></td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Regex</td>
+		<td style="text-align:center;">Regex ^...$</td>
 		<td>
 			<div>
-				<input style="width:70%" id="regexsearch" type="text" placeholder="^ und $ werden angefügt" onchange = "">
-				<button onclick = "updateTimelineRegex()">Enter</button> 
+				<input style="width:70%" id="regexsearch" type="text" onchange = "">
+				<button onclick = "updateTimelineRegex()"><script>document.write(lang_enter)</script></button> 
 			</div>
 		</td>
-		<td style="text-align:center;">Bspw w(o|a)n(a|i)</td>
+		<td style="text-align:center;"><script>document.write(lang_example)</script> w(o|a)n(a|i)</td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Tokenliste</td>
+		<td style="text-align:center;"><script>document.write(lang_list)</script></td>
 		<td>
 			<div>
-				<input style="width:70%" id="tokenlist" type="text" placeholder="Kommasepariert" onchange = "">
-				<button onclick = "updateTimelineTokenList()">Enter</button> 
+				<input style="width:70%" id="tokenlist" type="text" onchange = "">
+				<button onclick = "updateTimelineTokenList()"><script>document.write(lang_enter)</script></button> 
 			</div>
 		</td>
-		<td style="text-align:center;">Bspw druge,woni</td>
+		<td style="text-align:center;"><script>document.write(lang_example)</script> druge,woni</td>
 	</tr>
 </table>
 <br><br>
@@ -319,6 +309,7 @@
 		document.getElementById("tokeninfo").scrollIntoView()
 	}
 	else{
+		document.getElementById('tokeninfo').src="error_token.html"
 		document.getElementById('timeline').src="error_token.html"
 	}
 	

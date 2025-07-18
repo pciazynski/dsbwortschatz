@@ -266,7 +266,7 @@
 			document.getElementById("timeline").src=source
 			document.title="Normierung "+curnorm
 		}
-		document.getElementById('docref').src = 'nodocref.html'
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var updateTimelineRegex = function(){
@@ -344,6 +344,8 @@
 	}
 	else{
 		document.getElementById('timeline').src="error_token.html"
+		document.getElementById('normgroup').src="error_token.html"
+		document.getElementById('tokengroup').src="error_token.html"
 	}
 	document.title="Normierung "+curnorm
 

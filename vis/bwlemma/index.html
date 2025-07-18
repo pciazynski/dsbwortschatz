@@ -69,7 +69,7 @@
 		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:50%" id="lemma" type="text" placeholder="Lemma"> 
+				<input style="width:50%" id="lemma" type="text"> 
 				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
@@ -343,6 +343,8 @@
 	}
 	else{
 		document.getElementById('timeline').src="error_token.html"
+		document.getElementById('lemmagroup').src="error_token.html"
+		document.getElementById('tokengroup').src="error_token.html"
 	}
 	document.title="Lemma "+curlemma
 

@@ -14,57 +14,50 @@
 <br><br>
 <br><br>
 
-<div class = 'explain'>
-	<p>
-		Hier können Dokumente gelistet werden, die ein angegebenes Token enthalten. Die Dokumente werden auch auf einer Zeitleiste positioniert.<br>
-		Ein Klick auf die URNs in der Liste öffnet das Dokument über einen CTS Request und highlighted dabei das Token.
-	</p>
-</div>
-
 <table class='optionmenu' align='center'>
 	<tr>
-		<td style='text-align:center;'>Token</td>
+		<td style='text-align:center;'><script>document.write(lang_word)</script></td>
 		<td>
 			<div class='autocomplete'>
-				<input style='width:70%' id='word' type='text' placeholder='Wort'>
-				<button onclick = 'updateWord()'>Enter</button> 
+				<input style='width:70%' id='word' type='text'>
+				<button onclick = 'updateWord()'><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete('word', 'prefixsearch.php?&cutoff=2&limit=20&token=', ''); 
 			</script>
 		</td>
 		<td>
-			<a href="?word=krabat">Beispiel krabat</a>
+			<a href="?word=krabat"><script>document.write(lang_example)</script> krabat</a>
 		</td>
 	</tr>
 	<tr>
-		<td style='text-align:center;'>Lemmatisierung</td>
+		<td style='text-align:center;'><script>document.write(lang_lemmafy)</script></td>
 		<td>
 			<div class='autocomplete'>
-				<input style='width:70%' id='lemma' type='text' placeholder='Lemmatisierung'>
-				<button onclick = 'updateLemma()'>Enter</button> 
+				<input style='width:70%' id='lemma' type='text'>
+				<button onclick = 'updateLemma()'><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
 			</script>
 		</td>
 		<td>
-			<a href="?lemma=KRABAT">Beispiel KRABAT</a>
+			<a href="?lemma=KRABAT"><script>document.write(lang_example)</script> KRABAT</a>
 		</td>
 	</tr>
 	<tr>
-		<td style='text-align:center;'>Normierung</td>
+		<td style='text-align:center;'><script>document.write(lang_normify)</script></td>
 		<td>
 			<div class='autocomplete'>
-				<input style='width:70%' id='norm' type='text' placeholder='Normierung'>
-				<button onclick = 'updateNorm()'>Enter</button> 
+				<input style='width:70%' id='norm' type='text'>
+				<button onclick = 'updateNorm()'><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
 			</script>
 		</td>
 		<td>
-			<a href="?norm=Krabat">Beispiel Krabat</a>
+			<a href="?norm=Krabat"><script>document.write(lang_example)</script> Krabat</a>
 		</td>
 	</tr>
 	<tr>

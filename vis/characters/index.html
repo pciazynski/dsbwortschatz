@@ -13,15 +13,9 @@
 
 <br><br>
 
-<div class = "explain">
-	<p>
-		Hier werden als Buchstaben behandelte Zeichen nach Häufigkeit sortiert dargestellt (Zipf Ranking).
-	</p>
-</div>
-
 <table class="optionmenu" align="center">
 	<tr>
-		<td></td><td style="text-align:left;"><a href="../../php/urnbychar.php?char=�">Suche nach Encodingfehlern</a></td><td></td>
+		<td></td><td style="text-align:left;"><a href="../../php/urnbychar.php?char=�"><script>document.write(lang_search_encoding_error)</script></a></td><td></td>
 	</tr>
 	<tr>
 		<td></td><td style="text-align:center;"><span id="yearminvalue">0</span> - <span id="yearmaxvalue">14</span></td><td></td>
@@ -79,33 +73,22 @@
 
 <br><br>
 
-
-<div class = "explain">
-	<p>
-		Hier werden als Buchstaben behandelte Zeichen nach Jahren dargestellt. 
-		Einzelne Zeichen können per Eingabe oder Klick auf die Zipfverteilung gewählt werden.
-		Statt einzelnen Zeichen kann kommasepariert eine Liste übergeben werden.
-		Es kann zwischen absoluten und relativen Zeichenhäufigkeiten gewechselt werden. Relativ bezieht sich hier auf die Summe der Vorkommen des individuellen Zeichens.
-		Für zinzelne Zeichen kann eine lineare Regression der Häufigkeiten statt einem Scatterplot angezeigt werden.
-	</p>
-</div>
-
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Suchbegriff</td>
+		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
-			<input style="width:70%" id="charinput" type="text" placeholder="Zeichen">
-			<button onclick = "updateTimeline()">Enter</button> 
+			<input style="width:70%" id="charinput" type="text">
+			<button onclick = "updateTimeline()"><script>document.write(lang_enter)</script></button> 
 		</td>
-		<td style="text-align:left;">Sende an <button onclick = "addToList()">&#10149;Liste</button></td>
+		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addToList()">&#10149;<script>document.write(lang_list)</script></button></td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Liste</td>
+		<td style="text-align:center;"><script>document.write(lang_list)</script> </td>
 		<td>
-			<input style="width:70%" id="charlistinput" type="text" placeholder="Kommasepariert" onchange = "">
-			<button onclick = "updateTimelineList()">Enter</button> 
+			<input style="width:70%" id="charlistinput" type="text" onchange = "">
+			<button onclick = "updateTimelineList()"><script>document.write(lang_enter)</script></button> 
 		</td>
-		<td style="text-align:center;">Bspw a,b</td>
+		<td style="text-align:center;"><script>document.write(lang_example)</script> a,b</td>
 	</tr>
 </table>
 <br><br>
@@ -114,9 +97,9 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="embedding('timeline');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('timeline');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('timeline');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('timeline');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="datalink('timeline');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>
@@ -128,7 +111,7 @@
 			<td style = "width: 100%;">
 				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzelne Zeichen)</button>
 				<button class = "iframebutton" onclick="empty('timeline');">Alle / Einzelne Zeichen</button>
-				<button class = "iframebutton" onclick="hidewatermark('timeline');">Quellenangabe</button>
+				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 		</tr>
 	</table>
@@ -138,14 +121,14 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
 			<td style = "width: 69%;">
-				<button class = "iframebutton" onclick="embedding('doctimeline');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('doctimeline');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('doctimeline');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('doctimeline');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('doctimeline');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('doctimeline');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 			<td style = "width: 30%;">
-				<button class = "iframebutton" onclick="embedding('doclist');">HTML Embedding</button>
-				<button class = "iframebutton" onclick="diagrammlink('doclist');">Vollbild</button>
-				<button class = "iframebutton" onclick="datalink('doclist');">Rohdaten</button>
+				<button class = "iframebutton" onclick="embedding('doclist');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('doclist');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('doclist');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
 		<tr>
@@ -158,7 +141,7 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td style = "width: 69%;">
-				<button class = "iframebutton" onclick="hidewatermark('doctimeline');">Quellenangabe</button>
+				<button class = "iframebutton" onclick="hidewatermark('doctimeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
 		</tr>
@@ -254,7 +237,7 @@
 		updateTimeline()
 	}
 	else{
-		document.getElementById('timeline').src="error_char.html"
+		document.getElementById('timeline').src="error_token.html"
 	}
 	
 
