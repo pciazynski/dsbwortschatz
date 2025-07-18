@@ -322,10 +322,12 @@
 		yearto = document.getElementById("yearmaxslider").value
 		if(yearto==maxDate && yearfrom == minDate) {
 			year = ""
-			document.getElementById("traviz").src = url.replace("normtokenperyear.php","normtoken.php")
+			document.getElementById("traviz").src = "traviz.html?data=normtoken.php&norm="+norm+"&exact=1&sort"
+			//document.getElementById("traviz").src = url.replace("normtokenperyear.php","normtoken.php")
 		}else{
 			year = "BETWEEN " + yearfrom + " AND " + yearto
-			document.getElementById("traviz").src = url.replace("normtoken.php","normtokenperyear.php")+"&year="+year
+			document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+norm+"&exact=1&sort&year="+year
+			//document.getElementById("traviz").src = url.replace("normtoken.php","normtokenperyear.php")+"&year="+year
 		}
 		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+norm+"&year="+year
 		document.title=lang_normify+" "+curnorm
