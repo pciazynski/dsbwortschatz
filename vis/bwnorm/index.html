@@ -25,16 +25,16 @@
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:right;">Minimum Häufigkeit</td>
+		<td style="text-align:right;"><script>document.write(lang_frequency)</script></td>
 		<td>
 			<input type="number" value="100" id="min" onchange="updateZipf()">
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:right;">Betrachte</td>
+		<td style="text-align:right;"><script>document.write(lang_sorting)</script></td>
 		<td>
-			<button onclick ="updateZipf()">Häufigkeitsrang</button>
-			<button onclick ="zipfTypecount()">Menge der Types</button>
+			<button onclick ="updateZipf()"><script>document.write(lang_frequency)</script></button>
+			<button onclick ="zipfTypecount()"><script>document.write(lang_typecount)</script></button>
 		</td>
 	</tr>
 </table>
@@ -66,18 +66,18 @@
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Suchbegriff</td>
+		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:50%" id="norm" type="text" placeholder="Normierung"> 
-				<button onclick = "updateTimeline()">Inklusive Suche</button> 
+				<input style="width:50%" id="norm" type="text"> 
+				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
 				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", "updateTimeline"); 
 			</script>
 		</td>
-		<td><a href="?norm=Chóśebuz">Bspw Chóśebuz</a></td>
-		<td style="text-align:left;">Sende an <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callNormtree()">&#10149;Normierungsvariation</button></td>
+		<td><a href="?norm=Chóśebuz"><script>document.write(lang_example)</script> Chóśebuz</a></td>
+		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button><button onclick = "callNormtree()">&#10149;<script>document.write(lang_variation)</script></button></td>
 	</tr>
 <!--
 	<tr>
@@ -131,8 +131,8 @@
 		<tr style = "text-align:right;">
 			<td></td>
 			<td>
-				<button class = "iframebutton" onclick="updateFocus(0);">Normierung</button>
-				<button class = "iframebutton" onclick="updateFocus(3);">Token</button>
+				<button class = "iframebutton" onclick="updateFocus(0);"><script>document.write(lang_normify)</script></button>
+				<button class = "iframebutton" onclick="updateFocus(3);"><script>document.write(lang_words)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
