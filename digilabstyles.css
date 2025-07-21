@@ -4,6 +4,7 @@ body{
 	line-height: 1.5;
 	color: #000;
 	background-color:#F4F4F4;
+	font-family: 'Open Sans', sans-serif;
 }
 
 iframe{
@@ -98,7 +99,8 @@ div.header> table > tbody > tr{
 div.header> table > tbody > tr >td{
 	text-align:center;
 	color:white;
-	font-size: 0.8rem;
+	font-size: 0.875emrem;
+#	text-transform: uppercase;
 }
 
 div.header> table > tbody > tr >td >a{
