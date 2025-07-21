@@ -95,7 +95,12 @@
 			
 			
 			infotext=infotext.replaceAll("\t",", ")
-			infotext += '<tr><td></td><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
+			if (clickable == 1){
+				infotext += '<tr><td></td><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
+			}
+			else{
+				infotext += '<tr><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
+			}
 		}
 		else{
 			infotext = "<br>Keine Daten"

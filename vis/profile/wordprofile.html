@@ -115,7 +115,12 @@
 			infotext+='<td> '+data[4]+'</td></tr>'
 			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+word+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
 			infotext=infotext.replaceAll("\t",", ")
-			infotext += '<tr><td></td><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
+			if (clickable == 1){
+				infotext += '<tr><td></td><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
+			}
+			else{
+				infotext += '<tr><td></td><td>Quelle: '+miningURL+'. Accessed ' +today+'</td></tr></table>'
+			}
 		}
 		else{
 			infotext = "<br>Keine Daten"
