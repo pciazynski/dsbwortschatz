@@ -5,7 +5,7 @@
 <body style="background-color:white">
 
 <script>
-	var miningURL = window.location.protocol+'//'+window.location.hostname+"/"+window.location.pathname.split("/")[1]
+	var miningURL = window.location.protocol+'//'+window.location.hostname+"/"+window.location.pathname.split("/")[1]+"/"
 	var ctsurl = "https://urncts.eu/cts/dsb/"
 	function getQueryVariable(variable) {
 		var query = window.location.search.substring(1);
@@ -22,7 +22,7 @@
 	function readPHP(file){
 	text=""
 	rawFile = new XMLHttpRequest();
-	rawFile.open("GET", miningURL+"/php/"+file, false);
+	rawFile.open("GET", miningURL+"php/"+file, false);
 	//alert(miningURL+"php/"+file)
 	rawFile.onreadystatechange = function (){
 		if(rawFile.readyState === 4){
