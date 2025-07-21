@@ -21,61 +21,48 @@
 	<p>
 		Hier können Normierungen hierarchisch betrachtet werden. Mehrere Normierungen können in einer Liste übergeben werden. Ist "Inklusive" aktiviert, wird nach Normierungsgruppen für jede einzelne Normierung gesucht. 
 		<br>
-		<strong>Baum</strong>: Linksklick fokussiert Nachbarn des geklickten Knotens. Doppelklick fokussiert das komplette Netzwerk.
-		<br>
-		<strong>Sunburst</strong>:Linksklick im Mittelstreifen fokussiert die gewählte Normierung und zeigt dessen Timeline. Linksklick auf die äußeren Elemente zeigt den Zeitverlauf und Info zur Wortform.
+		<strong>Netzwerk</strong>: Linksklick fokussiert Nachbarn des geklickten Knotens. Doppelklick fokussiert das komplette Netzwerk.
 	</p>
 </div>
 
 <table class="optionmenu" align="center">
 	<tr>
-		<td style="text-align:center;">Normierung</td>
+		<td style="text-align:right;">
+			<script>document.write(lang_normify)</script>
+		</td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:50%" id="norm" type="text" placeholder="Normierung"> 
-				<button onclick = "updateTree()">Enter</button> 
+				<input style="width:70%" id="norm" type="text"> 
+				<button onclick = "updateTree()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
 				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
 			</script>
 		</td>
-		<td>Sende an </td>
-		<td style="text-align:left;"><button onclick = "addNormToList()">&#10149;Normierungsliste</button><br><button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button>
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:center;">Normierungsliste</td>
 		<td>
-			<input style="width:70%" id="normlist" type="text" placeholder="Kommasepariert" onchange = "">
-			<button onclick = "updateTreeFromList()">Enter</button> 
+			<script>document.write(lang_redirect)</script>
+			<button onclick = "addNormToList()">&#10149;<script>document.write(lang_list)</script></button> <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button>
 		</td>
-		<td style="text-align:center;"><a href="?norm=druge,francojski">Bspw druge,francojski</a></td>
 	</tr>
 	<tr>
-		<td style="text-align:center;">Inklusive</td>
+		<td style="text-align:right;"><script>document.write(lang_list)</script></td>
+		<td>
+			<input style="width:70%" id="normlist" type="text" onchange = "">
+			<button onclick = "updateTreeFromList()"><script>document.write(lang_enter)</script></button> 
+		</td>
+		<td>
+			<a href="?norm=druge,francojski"><script>document.write(lang_example)</script> druge,francojski</a>
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">
+			<script>document.write(lang_ambigsearch)</script>
+		</td>
 		<td>
 			<input type="checkbox" id="inclusive"/> 
 		</td>
-		<td></td>
-		<td></td>
+		<td></td><td></td>
 	</tr>
-<!--
-	<tr>
-		<td style="text-align:center;">Regex</td>
-		<td>
-			<input style="width:70%" id="normregex" type="text" placeholder="" onchange = "">
-			<button onclick = "updateTreeFromRegex()">Enter</button> 
-		</td>
-		<td style="text-align:center;"><label>Bspw TE(J|N)</label></td>
-	</tr>
-	<tr>
-		<td style="text-align:center;"></td>
-		<td>
-		</td>
-		<td></td>
-		<td></td>
-	</tr>
--->
 </table>
 
 
@@ -101,7 +88,7 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				Log. Gewichtung:<input type="checkbox" id="weight" onchange = 'switchweight()' checked="true"/> 
+				<script>document.write(lang_logweight)</script><input type="checkbox" id="weight" onchange = 'switchweight()' checked="true"/> 
 			</td>
 		</tr>
 	</table>
@@ -139,15 +126,6 @@
 <br><br>
 <script>
 
-	//var tokenclick = function(tmp){
-	//	loading("timeline")
-	//	loading("tokeninfo")
-	//	if(tmp.length>0){
-	//		document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
-	//		document.getElementById("tokeninfo").src="datalist.html?data=token2norm.php&token="+tmp
-	//	}
-	//}
-	
 	var normclick = function(tmp){
 		loading("timeline")
 		if(tmp.length>0){
@@ -184,7 +162,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtokenregex.php&sort&norm='+curnorm+weight
 			document.getElementById('traviz').src='traviz.html?data=normtokenregex.php&sort&norm='+curnorm+weight
-			document.title=curnorm+"Normierungsbaum"
+			document.title=curnorm
 			document.getElementById('tokeninfo').src = 'error_token.html'
 			document.getElementById('timeline').src = 'error_token.html'
 		}
@@ -198,7 +176,7 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&norm='+curnorm+inclusive+weight
-			document.title=curnorm+"Normierungsbaum"
+			document.title=curnorm
 		document.getElementById('tokeninfo').src = 'error_token.html'
 		document.getElementById('timeline').src = 'error_token.html'
 		}
@@ -248,7 +226,7 @@
 	}
 	document.getElementById('tokeninfo').src = 'error_token.html'
 	document.getElementById('timeline').src = 'error_token.html'
-	document.title="Normierungsbaum"
+	document.title=lang_variation+" "+lang_normify
 </script>
 <br><br>
 <script>
