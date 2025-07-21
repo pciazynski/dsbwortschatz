@@ -52,7 +52,7 @@
 	<div style="text-align:center;">
 		<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
 	</div>
-	<button class = "iframebutton" onclick="linreg('timeline');"><script>document.write(lang_linreg)</script> / Timeline</button>
+	<button class = "iframebutton" onclick="linreg('timeline');"><script>document.write(lang_linreg)</script> / Scatter</button>
 	<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 </div>
 
@@ -70,15 +70,19 @@
 
 
 	var worttot = function(){
+		loading('timeline')
+		loading('wortgenese')
 		document.getElementById('timeline').src="timeline.html?data=bagofwords/_minmaxyearmax"
 		document.getElementById('wortgenese').src="timespan.html?data=bagofwords/_minmaxyearmax"
-		document.title="Worttot"
+		document.title=lang_disappear
 	}
 	
 	var wortgenese = function(){
+		loading('timeline')
+		loading('wortgenese')
 		document.getElementById('timeline').src="timeline.html?data=bagofwords/_minmaxyearmin"
 		document.getElementById('wortgenese').src="timespan.html?data=bagofwords/_minmaxyearmin"
-		document.title="Wortgenese"
+		document.title=lang_genesis
 	}
 	
 	wortgenese()
