@@ -74,7 +74,7 @@ str='<div  class="header">'+
 +'</td>'
 +'<td>'
 +'<a href="../bwtoken/">'+lang_frequency+'</a> | '
-+'<a href="../bwtime/">'+lang_timerange+'</a> | '
++'<a href="../bwtime/">'+lang_genesis_disappear+'</a> | '
 +'<a href="../tokenrec/">'+lang_coverage+'</a> '
 +'</td>'
 +'<td>'

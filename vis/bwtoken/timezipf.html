@@ -39,10 +39,9 @@
 	if(count> data_arr.length){count= data_arr.length}
 
 	for (var i = offset; i < offset+count; i++) {
-		line = data_arr[i].trim();
-		if(line.length>1)
-		{	
-			tmp = line.split(sep)
+		line = data_arr[i]
+		if(line.length>1){
+			tmp = line.trim().split(sep)
 			dateA = tmp[1]
 			dateB = tmp[2]
 			if (dateA === dateB){date[dateA]=i;addLabel(dateA,tmp[0])}
