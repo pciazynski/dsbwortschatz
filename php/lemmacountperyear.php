@@ -9,7 +9,6 @@ if (isset($_GET['lemma'])){
 	$query = 'SELECT * FROM tokenlemmanormtypesubtypedatefrequency';
 	(isset($_GET['exact'])) ? $query .= ' WHERE lemma = "|'.$lemma.'|"' : $query .= ' WHERE lemma LIKE "%|'.$lemma.'|%"';
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
-	print($query);
 	$tab = "\t";
 	$nl = "\n";
 	$res = '';
