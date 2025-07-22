@@ -22,7 +22,7 @@
 	str = str + '<tr><th>Dokument-<br>nachweise</th><th>Lemma</th><th>Deutsch<br>(dolnoserbski.de)<br></th><th>Vorlesen<br>(dolnoserbski.de)</th><th>Token</th><th>Norm</th><th>Type</th><th>Subtype</th>'
 	str = str +"</tr>"
 
-
+	
 
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
@@ -41,8 +41,8 @@
 		}
 		else{normtoken = token}
 		
-		readtoken = readPHP("psedcytassearch.php?token="+normtoken)
-		if(readtoken.length==0){readtoken = readPHP("psedcytassearch.php?token="+token)}
+		readtoken = readPHP("psedcytassearch.php?token="+normtoken).trim()
+		if(readtoken.length==0){readtoken = readPHP("psedcytassearch.php?token="+token).trim()}
 		if(readtoken.length > 0){
 			leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
 			onclickfun = "document.getElementById('audioplayer').src='"+leseurl+"';document.getElementById('audioplayer').play()"
