@@ -2,14 +2,14 @@
 header('Content-Type: text/plain');
 
 #token,lemma,norm,type,subtype,date,frequency
-$token = str_replace(",",'" OR lemma LIKE "%|',$_GET['lemma']);
 
 if (isset($_GET['lemma'])){
+	$lemma = str_replace(",",'|%" OR lemma LIKE "%|',$_GET['lemma']);
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT * FROM tokenlemmanormtypesubtypedatefrequency';
-	(isset($_GET['exact'])) ? $query .= ' WHERE lemma = "|'.$token.'|"' : $query .= ' WHERE lemma LIKE "%|'.$token.'|%"';
+	(isset($_GET['exact'])) ? $query .= ' WHERE lemma = "|'.$lemma.'|"' : $query .= ' WHERE lemma LIKE "%|'.$lemma.'|%"';
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
-	
+	print($query);
 	$tab = "\t";
 	$nl = "\n";
 	$res = '';

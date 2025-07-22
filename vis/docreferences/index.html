@@ -23,7 +23,7 @@
 				<button onclick = 'updateWord()'><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete('word', 'prefixsearch.php?&cutoff=2&limit=20&token=', ''); 
+				autocomplete('word', 'prefixsearch.php?limit=30&token=', ''); 
 			</script>
 		</td>
 		<td>
@@ -38,7 +38,7 @@
 				<button onclick = 'updateLemma()'><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("lemma", "prefixlemmasearch.php?&cutoff=2&limit=20&lemma=", ""); 
+				autocomplete("lemma", "prefixlemmasearch.php?limit=30&lemma=", ""); 
 			</script>
 		</td>
 		<td>
@@ -53,7 +53,7 @@
 				<button onclick = 'updateNorm()'><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("norm", "prefixnormsearch.php?&cutoff=2&limit=20&norm=", ""); 
+				autocomplete("norm", "prefixnormsearch.php?limit=30&norm=", ""); 
 			</script>
 		</td>
 		<td>
