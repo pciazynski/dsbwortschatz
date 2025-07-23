@@ -166,6 +166,7 @@ def index():
     cursor.execute("CREATE INDEX normurnindex ON urndatenormbag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urndatenormbag(normbag);")
     cursor.execute("CREATE INDEX urndateindex ON urndatenormbag(date);")
+    cursor.execute("CREATE INDEX normnonambignorm ON normnonambig(norm);")
     con.commit()
     con.close()
     
@@ -179,6 +180,7 @@ def initTables():
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
     cursor.execute("CREATE TABLE normfrequency(norm VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE TABLE normtokenfrequency(norm VARCHAR (50),token VARCHAR ("+str(tokenlength)+"),frequency INTEGER);")
+    cursor.execute("CREATE TABLE normnonambig(norm VARCHAR (50),frequency INTEGER);")
     con.commit()
     con.close()
     
@@ -230,6 +232,25 @@ def db():
                 cursor.execute(query)
         con.commit()
     files = sorted(os.listdir("data/normmapping"))
+
+    wb_nonambig = {}
+    with open ("data/normmapping/_normbag.txt", "r", encoding="utf8") as inf:
+        for line in inf.readlines():
+            if len(line.strip())>0:
+                linearr = line.split("\t")
+                normarr = linearr[0].split("|")
+                for norm in normarr:
+                    if norm in wb_nonambig:
+                        wb_nonambig[norm] = wb_nonambig[norm] + int(linearr[1])
+                    else:
+                        wb_nonambig[norm] = int(linearr[1])
+                    
+    for norm in wb_nonambig:
+        vals = '"|'+norm+'|",'+str(wb_nonambig[norm])
+        query="INSERT INTO normnonambig(norm,frequency) VALUES("+vals+")"
+        cursor.execute(query)
+    con.commit()
+
     for file in files:
         if file.startswith("urn_#_"):
             with open ("data/normmapping/"+file, "r", encoding="utf8") as inf:

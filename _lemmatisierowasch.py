@@ -188,6 +188,7 @@ def index():
     cursor.execute("CREATE INDEX lemmaurnindex ON urndatelemmabag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urndatelemmabag(lemmabag);")
     cursor.execute("CREATE INDEX urndateindex ON urndatelemmabag(date);")
+    cursor.execute("CREATE INDEX lemmanonambiglemma ON lemmanonambig(lemma);")
     con.commit()
     con.close()
     
@@ -201,6 +202,7 @@ def initTables():
     cursor.execute("CREATE TABLE tokenlemmanormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
     cursor.execute("CREATE TABLE lemmafrequency(lemma VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE TABLE lemmatokenfrequency(lemma VARCHAR (50),token VARCHAR ("+str(tokenlength)+"),frequency INTEGER);")
+    cursor.execute("CREATE TABLE lemmanonambig(lemma VARCHAR (50),frequency INTEGER);")
     con.commit()
     con.close()
     
@@ -251,6 +253,25 @@ def db():
                 cursor.execute(query)
         con.commit()
 
+    wb_nonambig = {}
+    with open ("data/lemmamapping/_lemmabag.txt", "r", encoding="utf8") as inf:
+        for line in inf.readlines():
+            if len(line.strip())>0:
+                linearr = line.split("\t")
+                lemmaarr = linearr[0].split("|")
+                for lemma in lemmaarr:
+                    if lemma in wb_nonambig:
+                        wb_nonambig[lemma] = wb_nonambig[lemma] + int(linearr[1])
+                    else:
+                        wb_nonambig[lemma] = int(linearr[1])
+                    
+    for lemma in wb_nonambig:
+        vals = '"|'+lemma+'|",'+str(wb_nonambig[lemma])
+        query="INSERT INTO lemmanonambig(lemma,frequency) VALUES("+vals+")"
+        cursor.execute(query)
+    con.commit()
+
+    
     files = sorted(os.listdir("data/lemmamapping"))
     for file in files:
         if file.startswith("urn_#_"):
