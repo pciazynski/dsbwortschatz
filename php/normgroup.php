@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/plain');
 
-$PDO = new PDO('sqlite:../data/lemmamapping.db');
+$PDO = new PDO('sqlite:../data/normmapping.db');
 $query = 'SELECT norm, SUM(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency';
 
 (isset($_GET['norm'])) ? $query .= ' WHERE norm LIKE "%|'.str_replace(",",'|%" OR norm LIKE "%|',$_GET['norm']).'|%"' : NULL;
