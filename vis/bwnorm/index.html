@@ -260,14 +260,14 @@
 
 	
 	var updateTravizYear = function(){
-		if(curnorm.trim().length>0){
+		if(exactnorm.trim().length>0){
 			loading("traviz")
 			url = document.getElementById("traviz").src.split("&year")[0]
 			yearfrom = document.getElementById("yearminslider").value
 			yearto = document.getElementById("yearmaxslider").value
 			year = "BETWEEN " + yearfrom + " AND " + yearto
-			document.getElementById("traviz").src = url.replace("normtoken.php","normtokenperyear.php")+"&year="+year
-			document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+curnorm+"&year="+year
+			document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactnorm+"&exact=1&sort&year="+year
+			document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactnorm+"&year="+year
 		}
 	}
 	
@@ -317,20 +317,19 @@
 	}
 	
 	var updateTimeline = function(){
-		loading("traviz")
 		loading("timeline")
 		loading("normgroup")
 		loading("tokengroup")
 		curnorm = document.getElementById("norm").value.trim()
 		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
 		if(curnorm.length>0){
-			document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+curnorm+"&sort&exact=0"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
 			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
 		}
 		document.getElementById('docref').src = 'error_docref.html'
-		document.title="Normierung "+curnorm
+		document.getElementById('traviz').src = 'error_docref.html'
+		document.title=lang_normify+" "+curnorm
 	}
 	var updateZipf = function(){
 		loading("zipf")
@@ -343,7 +342,7 @@
 		loading("timeline")
 		loading("tokengroup")
 		loading("traviz")
-		curnorm=norm
+		exactnorm=norm
 		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
 		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
 		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&exact=1&focus="+focus
@@ -360,7 +359,7 @@
 	var focus = 0;
 	updateZipf()
 	curnorm = getQueryVariable("norm")
-
+	exactnorm = ""
 	if(curnorm.length>0){
 		document.getElementById("norm").value = curnorm
 		updateTimeline()
