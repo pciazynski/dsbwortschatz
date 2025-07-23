@@ -344,16 +344,16 @@
 		loading("traviz")
 		exactnorm=norm
 		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
-		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
-		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&exact=1&focus="+focus
-		document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort&exact=1"
+		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+exactnorm+"&sort&exact=1"
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+exactnorm+"&exact=1&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+exactnorm+"&sort&exact=1"
 		url = document.getElementById("traviz").src.split("&year")[0]
 		yearfrom = document.getElementById("yearminslider").value
 		yearto = document.getElementById("yearmaxslider").value
 		year = "BETWEEN " + yearfrom + " AND " + yearto
-		document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+norm+"&exact=1&sort&year="+year
-		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+norm+"&year="+year
-		document.title=lang_normify+" "+curnorm
+		document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactnorm+"&exact=1&sort&year="+year
+		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactnorm+"&year="+year
+		document.title=lang_normify+" "+exactnorm
 	}
 	
 	var focus = 0;
