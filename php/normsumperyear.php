@@ -4,7 +4,7 @@ header('Content-Type: text/plain');
 #token,lemma,norm,type,subtype,date,frequency
 
 if (isset($_GET['norm'])){
-	$norm = str_replace(",",'" OR norm LIKE "%|',$_GET['norm']);
+	$token = str_replace(",",'|%" OR norm LIKE "%|',$_GET['norm']);
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$query = 'SELECT norm, SUM(frequency) as summe, date FROM tokenlemmanormtypesubtypedatefrequency';
 	(isset($_GET['exact'])) ? $query .= ' WHERE norm = "|'.$norm.'|"' : $query .= ' WHERE norm LIKE "%|'.$norm.'|%"';

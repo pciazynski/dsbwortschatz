@@ -69,7 +69,7 @@
 		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="lemma" type="text"> 
+				<input style="width:60%" id="lemma" type="text"> 
 				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
@@ -77,7 +77,7 @@
 			</script>
 		</td>
 		<td><a href="?lemma=CHÓŚEBUZ"><script>document.write(lang_example)</script> CHÓŚEBUZ</a></td>
-		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addToList()">&#10149;<script>document.write(lang_list)</script></button> <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button> <button onclick = "callLemmatree()">&#10149;<script>document.write(lang_variation)</script></button></td>
+		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addToList()">&#10149;<script>document.write(lang_list)</script></button> <button onclick = "callLemmatree()">&#10149;<script>document.write(lang_variation)</script></button> <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button></td>
 	</tr>
 	<tr>
 		<td style="text-align:center;">Regex</td>
@@ -278,57 +278,48 @@
 		}
 		if(curlemma.length>0){
 			document.getElementById("timeline").src=source
-			document.title="Lemma "+curlemma
+			document.title=lang_lemmafy+" "+curlemma
 		}
-//		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var updateTimelineRegex = function(){
-//		loading("traviz")
 		loading("timeline")
 		loading("lemmagroup")
 		loading("tokengroup")
-//		document.getElementById("year").disabled = true;
 		curlemma = document.getElementById("regexsearch").value.trim()
 		if(curlemma.length>0){
 			document.getElementById("timeline").src="timeline.html?data=lemmaregexsearch.php&lemma="+curlemma+"&sort&focus="+focus
-			//document.getElementById("traviz").src="traviz.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
 		}
-		document.title="Lemma "+curlemma
+		document.title=lang_lemmafy+" "+curlemma
 		document.getElementById('docref').src = 'error_docref.html'
 		document.getElementById('traviz').src = 'error_docref.html'
 	}
 
 	var updateTimelineList = function(){
-//		loading("docref")
-//		loading("traviz")
 		loading("timeline")
 		loading("lemmagroup")
 		loading("tokengroup")
 		curlemma = document.getElementById("lemmalist").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-//			document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=0"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
 		}
-		document.title="Lemma "+curlemma
+		document.title=lang_lemmafyfy+" "+curlemma
 		document.getElementById('traviz').src = 'error_docref.html'
 		document.getElementById('docref').src = 'error_docref.html'
 	}
 
 	var updateTimeline = function(){
-//		loading("traviz")
 		loading("timeline")
 		loading("lemmagroup")
 		loading("tokengroup")
 		curlemma = document.getElementById("lemma").value.trim()
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-			//document.getElementById("traviz").src="traviz.html?data=lemmatoken.php&lemma="+curlemma+"&sort&exact=0"
 			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
@@ -365,7 +356,6 @@
 	
 	var focus = 0;
 	updateZipf()
-	//document.getElementById('zipf').src="zipf.html?data=lemmamapping/_lemmabag&min=1000"
 	curlemma = getQueryVariable("lemma")
 	exactlemma = ""
 	if(curlemma.length>0){
@@ -378,7 +368,7 @@
 		document.getElementById('lemmagroup').src="error_token.html"
 		document.getElementById('tokengroup').src="error_token.html"
 	}
-	document.title="Lemma "+curlemma
+	document.title=lang_lemmafy+" "+curlemma
 
 </script>
 <br><br>
