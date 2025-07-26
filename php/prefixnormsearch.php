@@ -8,7 +8,7 @@ if (strlen($norm)>=1){
 	(isset($_GET['cutoff'])) ? $cutoff = ' GROUP BY SUBSTRING(norm,1,'.strlen($norm)+$_GET['cutoff'].')' : $cutoff = '';
 	(isset($_GET['ambig'])) ? $dbname = 'normfrequency':$dbname = 'normnonambig';
 
-	$query = 'SELECT DISTINCT norm FROM '.$dbname.' WHERE norm LIKE "|'.$norm.'%"'.$cutoff.' ORDER BY frequency DESC LIMIT '.$limit;
+	$query = 'SELECT DISTINCT norm FROM '.$dbname.' WHERE norm LIKE "|'.$norm.'%"'.$cutoff.' ORDER BY norm LIMIT '.$limit;
 
 	$nl = "\n";
 	$res = '';

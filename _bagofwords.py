@@ -165,6 +165,11 @@ def db():
     con = sqlite3.connect("data/bagofwords.db")
     cursor = con.cursor()
 
+    doclist = getdoclist(ctsns).split("\n")
+    for line in doclist:
+        urn_date = line.split("\t")
+        doc_year[urn_date[0]] = urn_date[2]
+
     with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as inf:
         for line in inf.readlines():
             if len(line.strip())>0:
