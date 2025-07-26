@@ -18,7 +18,7 @@
 		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:30%" id="wantedtoken" type="text" onkeydown="if(event.key === 'Enter'){updateWord();}">
+				<input style="width:30%" id="wantedtoken" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateWord();}">
 				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
@@ -30,7 +30,7 @@
 		<td style="text-align:center;"><script>document.write(lang_lemmafy)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:30%" id="wantedlemma" type="text" onkeydown="if(event.key === 'Enter'){updateLemma();}">
+				<input style="width:30%" id="wantedlemma" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateLemma();}">
 				<button onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
@@ -42,7 +42,7 @@
 		<td style="text-align:center;"><script>document.write(lang_normify)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:30%" id="wantednorm" type="text" onkeydown="if(event.key === 'Enter'){updateNorm();}">
+				<input style="width:30%" id="wantednorm" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateNorm();}">
 				<button onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
@@ -80,6 +80,13 @@
 <br><br>
 
 <script>
+
+function closeAllLists(elmnt) {
+	var x = document.getElementsByClassName("autocomplete-items");
+	for (var i = 0; i < x.length; i++) {
+		x[i].parentNode.removeChild(x[i]);
+	}
+}
 
 	var switchClickable = function(){
 		loading('profile')
