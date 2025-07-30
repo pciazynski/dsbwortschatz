@@ -7,7 +7,7 @@ if (strlen($norm)>=1){
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 	(isset($_GET['ambig'])) ? $dbname = 'normfrequency':$dbname = 'normnonambig';
 
-	$query = 'SELECT DISTINCT norm FROM '.$dbname.' WHERE norm LIKE "|%'.$norm.'" ORDER BY norm LIMIT '.$limit;
+	$query = 'SELECT DISTINCT norm FROM '.$dbname.' WHERE norm LIKE "|%'.$norm.'|" ORDER BY norm LIMIT '.$limit;
 
 	$nl = "\n";
 	$res = '';

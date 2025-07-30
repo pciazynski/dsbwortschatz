@@ -7,7 +7,7 @@ if (strlen($lemma)>=1){
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 	(isset($_GET['ambig'])) ? $dbname = 'lemmafrequency':$dbname = 'lemmanonambig';
 	
-	$query = 'SELECT DISTINCT lemma FROM '.$dbname.' WHERE lemma LIKE "|%'.$lemma.'" ORDER BY lemma LIMIT '.$limit;
+	$query = 'SELECT DISTINCT lemma FROM '.$dbname.' WHERE lemma LIKE "|%'.$lemma.'|" ORDER BY lemma LIMIT '.$limit;
 
 	$nl = "\n";
 	$res = '';
