@@ -21,18 +21,6 @@
 		</td>
 	</tr>
 	<tr>
-		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
-		<td>
-			<div class="autocomplete">
-				<input style="width:30%" id="wantedword" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateWord();}">
-				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
-			</div>
-			<script>
-				autocomplete("wantedword", "prefixsearch.php?limit=30&sortby=frequency&word=", "updateWord"); 
-			</script>
-		</td>
-	</tr>
-	<tr>
 		<td style="text-align:center;"><script>document.write(lang_lemmafy)</script></td>
 		<td>
 			<div class="autocomplete">
@@ -53,6 +41,18 @@
 			</div>
 			<script>
 				autocomplete("wantednorm", "prefixnormsearch.php?limit=30&sortby=frequency&norm=", "updateNorm"); 
+			</script>
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
+		<td>
+			<div class="autocomplete">
+				<input style="width:30%" id="wantedword" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateWord();}">
+				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
+			</div>
+			<script>
+				autocomplete("wantedword", "prefixsearch.php?limit=30&sortby=frequency&word=", "updateWord"); 
 			</script>
 		</td>
 	</tr>

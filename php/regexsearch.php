@@ -11,7 +11,7 @@ if (strlen($token)>=1){
 	
 	$PDO = new PDO('sqlite:../data/bagofwords.db');
 	$PDO->sqliteCreateFunction('regexp', '_sqliteRegexp', 2);
-	$query = 'SELECT DISTINCT * FROM tokendatecount WHERE token REGEXP "'.$token.'" LIMIT 1000';
+	$query = 'SELECT DISTINCT * FROM tokendatecount WHERE token REGEXP "'.$token.'" LIMIT 2100000';
 
 	$res = '';
 	$tab = "\t";
