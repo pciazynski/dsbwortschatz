@@ -66,6 +66,12 @@
 
 <table class="optionmenu" align="center">
 	<tr>
+		<td></td>
+		<td>
+			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+		</td>
+	</tr>
+	<tr>
 		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
@@ -73,7 +79,7 @@
 				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
-				autocomplete("norm", "prefixnormsearch.php?limit=30&norm=", ""); 
+				autocomplete("norm", "prefixnormsearch.php?limit=30&sortby=frequency&norm=", ""); 
 			</script>
 		</td>
 		<td><a href="?norm=Chóśebuz"><script>document.write(lang_example)</script> Chóśebuz</a></td>
@@ -218,6 +224,12 @@
 
 <br><br>
 <script>
+
+	var switchPrefixsearch = function(){
+		tmp = document.getElementById('prefixsearchCheckBox').checked
+		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
+		autocomplete("norm", "prefixnormsearch.php?limit=30&sortby="+tmp+"&norm=", ""); 
+	}
 
 	var addToList = function(){
 		tmp = document.getElementById("norm").value.trim()

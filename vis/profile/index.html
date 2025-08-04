@@ -15,6 +15,12 @@
 <br><br>
 <table class="optionmenu" align="center">
 	<tr>
+		<td></td>
+		<td>
+			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+		</td>
+	</tr>
+	<tr>
 		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
 		<td>
 			<div class="autocomplete">
@@ -22,7 +28,7 @@
 				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantedword", "prefixsearch.php?limit=20&sortby=frequency&word=", "updateWord"); 
+				autocomplete("wantedword", "prefixsearch.php?limit=30&sortby=frequency&word=", "updateWord"); 
 			</script>
 		</td>
 	</tr>
@@ -34,7 +40,7 @@
 				<button onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantedlemma", "prefixlemmasearch.php?limit=20&sortby=frequency&lemma=", "updateLemma"); 
+				autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30&sortby=frequency&lemma=", "updateLemma"); 
 			</script>
 		</td>
 	</tr>
@@ -46,7 +52,7 @@
 				<button onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantednorm", "prefixnormsearch.php?limit=20&sortby=frequency&norm=", "updateNorm"); 
+				autocomplete("wantednorm", "prefixnormsearch.php?limit=30&sortby=frequency&norm=", "updateNorm"); 
 			</script>
 		</td>
 	</tr>
@@ -54,8 +60,6 @@
 		<td style="text-align:center;"><script>document.write(lang_options)</script></td>
 		<td>
 			<input id="clickableCheckBox" type="checkbox" checked="false" onchange="switchClickable()"><script>document.write(lang_interactive)</script></input>
-			<br/>
-			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
 		</td>
 	</tr>
 </table>
@@ -88,17 +92,13 @@
 			x[i].parentNode.removeChild(x[i]);
 		}
 	}
+
 	var switchPrefixsearch = function(){
 		tmp = document.getElementById('prefixsearchCheckBox').checked
-		if(tmp){
-			tmp = 'alphabet'
-		}else{
-			tmp = 'frequency'
-		}
-		autocomplete("wantedword", "prefixsearch.php?limit=20&sortby="+tmp+"&word=", "updateWord"); 
-		autocomplete("wantedlemma", "prefixlemmasearch.php?limit=20&sortby="+tmp+"&lemma=", "updateLemma"); 
-		autocomplete("wantednorm", "prefixnormsearch.php?limit=20&sortby="+tmp+"&norm=", "updateNorm");
-		
+		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
+		autocomplete("wantedword", "prefixsearch.php?limit=30&sortby="+tmp+"&word=", "updateWord"); 
+		autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", "updateLemma"); 
+		autocomplete("wantednorm", "prefixnormsearch.php?limit=30&sortby="+tmp+"&norm=", "updateNorm");
 	}
 	
 	var switchClickable = function(){

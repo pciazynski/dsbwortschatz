@@ -91,6 +91,12 @@
 
 <table class="optionmenu" align="center">
 	<tr>
+		<td></td>
+		<td>
+			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+		</td>
+	</tr>
+	<tr>
 		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
@@ -98,7 +104,7 @@
 				<button onclick = "updateTimeline()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("token", "prefixsearch.php?limit=30&word=", "updateTimeline"); 
+				autocomplete("token", "prefixsearch.php?limit=30&sortby=frequency&word=", "updateTimeline"); 
 			</script>
 		</td>
 		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addTokenToList()">&#10149;<script>document.write(lang_list)</script></button></td>
@@ -200,6 +206,12 @@
 <br><br>
 
 <script>
+
+	var switchPrefixsearch = function(){
+		tmp = document.getElementById('prefixsearchCheckBox').checked
+		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
+		autocomplete("token", "prefixsearch.php?limit=30&sortby="+tmp+"&word=", ""); 
+	}
 
 	var threeD = function(iframeid){
 		loading(iframeid)
