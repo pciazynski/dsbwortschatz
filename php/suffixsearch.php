@@ -1,13 +1,13 @@
 <?php
 header('Content-Type: text/plain');
 
-(isset($_GET['token'])) ? $token = $_GET['token'] : NULL;
+(isset($_GET['word'])) ? $word = $_GET['word'] : NULL;
 
-if (strlen($token)>=1){
+if (strlen($word)>=1){
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 
 	$PDO = new PDO('sqlite:../data/bagofwords.db');
-	$query = 'SELECT DISTINCT token FROM tokencount WHERE token LIKE "%'.$token.'" ORDER BY token LIMIT '.$limit;
+	$query = 'SELECT DISTINCT token FROM tokencount WHERE token LIKE "%'.$word.'" ORDER BY token LIMIT '.$limit;
 
 	$nl = "\n";
 	$res = '';
