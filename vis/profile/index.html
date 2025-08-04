@@ -18,11 +18,11 @@
 		<td style="text-align:center;"><script>document.write(lang_word)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:30%" id="wantedtoken" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateWord();}">
+				<input style="width:30%" id="wantedword" type="text" onkeydown="closeAllLists();if(event.key === 'Enter'){updateWord();}">
 				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantedtoken", "prefixsearch.php?limit=20&token=", "updateWord"); 
+				autocomplete("wantedword", "prefixsearch.php?limit=20&sortby=frequency&word=", "updateWord"); 
 			</script>
 		</td>
 	</tr>
@@ -34,7 +34,7 @@
 				<button onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantedlemma", "prefixlemmasearch.php?limit=20&lemma=", "updateLemma"); 
+				autocomplete("wantedlemma", "prefixlemmasearch.php?limit=20&sortby=frequency&lemma=", "updateLemma"); 
 			</script>
 		</td>
 	</tr>
@@ -46,7 +46,7 @@
 				<button onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantednorm", "prefixnormsearch.php?limit=20&norm=", "updateNorm"); 
+				autocomplete("wantednorm", "prefixnormsearch.php?limit=20&sortby=frequency&norm=", "updateNorm"); 
 			</script>
 		</td>
 	</tr>
@@ -54,7 +54,8 @@
 		<td style="text-align:center;"><script>document.write(lang_options)</script></td>
 		<td>
 			<input id="clickableCheckBox" type="checkbox" checked="false" onchange="switchClickable()"><script>document.write(lang_interactive)</script></input>
-
+			<br/>
+			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
 		</td>
 	</tr>
 </table>
@@ -81,13 +82,25 @@
 
 <script>
 
-function closeAllLists(elmnt) {
-	var x = document.getElementsByClassName("autocomplete-items");
-	for (var i = 0; i < x.length; i++) {
-		x[i].parentNode.removeChild(x[i]);
+	function closeAllLists(elmnt) {
+		var x = document.getElementsByClassName("autocomplete-items");
+		for (var i = 0; i < x.length; i++) {
+			x[i].parentNode.removeChild(x[i]);
+		}
 	}
-}
-
+	var switchPrefixsearch = function(){
+		tmp = document.getElementById('prefixsearchCheckBox').checked
+		if(tmp){
+			tmp = 'alphabet'
+		}else{
+			tmp = 'frequency'
+		}
+		autocomplete("wantedword", "prefixsearch.php?limit=20&sortby="+tmp+"&word=", "updateWord"); 
+		autocomplete("wantedlemma", "prefixlemmasearch.php?limit=20&sortby="+tmp+"&lemma=", "updateLemma"); 
+		autocomplete("wantednorm", "prefixnormsearch.php?limit=20&sortby="+tmp+"&norm=", "updateNorm");
+		
+	}
+	
 	var switchClickable = function(){
 		loading('profile')
 		tmp = document.getElementById('profile').src
@@ -97,7 +110,7 @@ function closeAllLists(elmnt) {
 	
 	var updateWord = function(){
 		loading('profile')
-		tmp = document.getElementById('wantedtoken').value
+		tmp = document.getElementById('wantedword').value
 		if(document.getElementById('clickableCheckBox').checked){tmp+="&clickable=1"}
 		document.getElementById('profile').src="wordprofile.html?word="+tmp
 	}
@@ -117,7 +130,7 @@ function closeAllLists(elmnt) {
 	}
 	tmp = getQueryVariable('word')
 	if(tmp.length>0){
-		document.getElementById('wantedtoken').value=tmp
+		document.getElementById('wantedword').value=tmp
 		updateWord()
 		document.title="Wortprofil "+tmp
 	}
