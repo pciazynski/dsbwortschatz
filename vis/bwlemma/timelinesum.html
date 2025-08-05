@@ -58,14 +58,16 @@
 		var data = [{
 			x: date,
 			y: count,
-			name: 'Token Count',
-			type: 'scatter',
-			mode: "markers",
+			mode: 'lines+markers',
 			marker: {
 				size:markersize(data_arr.length),
 				opaciy:0.2,
 				color:"black"
-			}
+			},
+			line:{
+				color:"gray",
+				width: 1
+		}
 		}];
 
 		var layout = {
