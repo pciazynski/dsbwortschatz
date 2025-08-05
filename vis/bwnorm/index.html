@@ -133,21 +133,21 @@
 			</td>
 		</tr>
 		<tr style = "text-align:right;">
-			<td>
-				<iframe class="resized"  width="100%" height="475px" id="normgroup" scrolling="yes"></iframe>
+			<td valign="top" style = "text-align:right;">
+				<iframe class="resized"  width="100%" height="440px" id="normgroup" scrolling="yes"></iframe>
+				<button id = "focusbutton0" class = "iframebutton" onclick="updateFocus(0);">↪</button>
 			</td>
 			<td>
 				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
 			</td>
-			<td>
-				<iframe class="resized" width="100%" height="475px" id="tokengroup" scrolling="yes"></iframe>
+			<td valign="top" style = "text-align:left;">
+				<iframe class="resized" width="100%" height="440px" id="tokengroup" scrolling="yes"></iframe>
+				<button id = "focusbutton3" class = "iframebutton" onclick = "updateFocus(3);">↩</button>
 			</td>
 		</tr>
 		<tr style = "text-align:right;">
 			<td></td>
 			<td>
-				<button class = "iframebutton" onclick="updateFocus(0);"><script>document.write(lang_normify)</script></button>
-				<button class = "iframebutton" onclick="updateFocus(3);"><script>document.write(lang_words)</script></button>
 				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
@@ -307,14 +307,18 @@
 		}
 	}
 	
-	
 	var updateFocus = function(newfocus){
 		loading("timeline")
 		focus = newfocus
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
+		if(focus == 0){
+			document.getElementById("focusbutton3").style.boxShadow  = "none"
+			document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
+		}
 		if(focus==3){
-			source = source.replace("normsumperyear","normcountperyear")}else{source = source.replace("normcountperyear","normsumperyear")
+			document.getElementById("focusbutton0").style.boxShadow  = "none"
+			document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"			source = source.replace("normsumperyear","normcountperyear")}else{source = source.replace("normcountperyear","normsumperyear")
 		}
 		if(curnorm.length>0){
 			document.getElementById("timeline").src=source

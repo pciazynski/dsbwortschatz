@@ -132,22 +132,23 @@
 				<button class = "iframebutton" onclick="datalink('tokengroup');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
-		<tr style = "text-align:right;">
-			<td>
-				<iframe class="resized"  width="100%" height="475px" id="lemmagroup" scrolling="yes"></iframe>
+		<tr>
+			<td valign="top" style = "text-align:right;">
+				<iframe class = "resized"  width="100%" height="440px" id="lemmagroup" scrolling="yes"></iframe>
+				<button id = "focusbutton0" class = "iframebutton" onclick="updateFocus(0);">↪</button>
 			</td>
 			<td>
 				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
 			</td>
-			<td>
-				<iframe class="resized" width="100%" height="475px" id="tokengroup" scrolling="yes"></iframe>
+			<td valign="top" style = "text-align:left;">
+				<iframe class = "resized" width = "100%" height="440px" id = "tokengroup" scrolling="yes"></iframe>
+				<button id = "focusbutton3" class = "iframebutton" onclick = "updateFocus(3);">↩</button>
 			</td>
 		</tr>
 		<tr style = "text-align:right;">
-			<td></td>
+			<td>
+			</td>
 			<td style = "width: 60%;">
-				<button class = "iframebutton" onclick="updateFocus(0);"><script>document.write(lang_lemmafy)</script></button>
-				<button class = "iframebutton" onclick="updateFocus(3);"><script>document.write(lang_words)</script></button>
 				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
@@ -295,13 +296,20 @@
 		focus = newfocus
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
+		if(focus == 0){
+			document.getElementById("focusbutton3").style.boxShadow  = "none"
+			document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
+		}
 		if(focus==3){
+			document.getElementById("focusbutton0").style.boxShadow  = "none"
+			document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
 			source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")
 		}
 		if(curlemma.length>0){
 			document.getElementById("timeline").src=source
 			document.title=lang_lemmafy+" "+curlemma
 		}
+		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var updateTimelineRegex = function(){
