@@ -148,6 +148,7 @@
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="updateFocus(0);"><script>document.write(lang_lemmafy)</script></button>
 				<button class = "iframebutton" onclick="updateFocus(3);"><script>document.write(lang_words)</script></button>
+				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
@@ -227,6 +228,15 @@
 		tmp = document.getElementById('prefixsearchCheckBox').checked
 		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
 		autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", ""); 
+	}
+
+	var switchtimelinesum = function(){
+		tmp = document.getElementById('timeline')
+		if(tmp.src.includes("timeline.html")){
+			tmp.src = tmp.src.replace("timeline.html","timelinesum.html")
+		}else{
+			tmp.src = tmp.src.replace("timelinesum.html","timeline.html")
+		}
 	}
 
 	var addToList = function(){
