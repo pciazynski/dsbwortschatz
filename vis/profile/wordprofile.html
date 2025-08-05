@@ -88,13 +88,18 @@
 				}
 			}
 			
-			infotext+='<tr><td>Häufigkeit&nbsp;&&nbsp;Rang</td>'
+			infotext+='<tr><td>Häufigkeit</td>'
 			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/zipf.html?data=bagofwords/_all&token='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
-			infotext+='<td> '+data[0]+'</td></tr>'
-
-			infotext+='<tr style="background-color:#F0F3FA;"><td>Erstes&nbsp;&&nbsp;Letztes&nbsp;Auftreten</td>'
+			infotext+='<td> '+data[0].split("\t")[0]+'</td></tr>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Rang</td>'
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/zipf.html?data=bagofwords/_all&token='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
+			infotext+='<td> '+data[0].split("\t")[1]+'</td></tr>'
+			infotext+='<tr><td>Erster&nbsp;Beleg</td>'
 			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+word+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+word+'">➚</a></td>'}
-			infotext+='<td>'+data[1]+'</td></tr>'
+			infotext+='<td>'+data[1].split("\t")[0]+'</td></tr>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Letzter&nbsp;Beleg</td>'
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwtoken/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+word+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+word+'">➚</a></td>'}
+			infotext+='<td>'+data[1].split("\t")[1]+'</td></tr>'
 			infotext+='<tr><td>Lemma</td>'
 			if(clickable==1 & data[2]!=":"){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td>'}
 			if(data[2]==":"){data[2] = ""}
@@ -116,7 +121,7 @@
 			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+word+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
 			infotext=infotext.replaceAll("\t",", ")
 			if (clickable == 1){
-				infotext += '<tr><tr><td></td><td></td><td><a href="'+miningURL+'">'+miningURL+'</a> ' +today+'</td></tr></table>'
+				infotext += '<tr><tr><td></td><td></td><td>'+miningURL+' ' +today+'</td></tr></table>'
 			}
 			else{
 				infotext += '<tr><td></td><td>'+miningURL+' ' +today+'</td></tr></table>'
