@@ -296,14 +296,15 @@
 		focus = newfocus
 		sourcearr = document.getElementById("timeline").src.split("&focus=")
 		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
-		if(focus == 0){
-			document.getElementById("focusbutton3").style.boxShadow  = "none"
-			document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-		}
+
 		if(focus==3){
 			document.getElementById("focusbutton0").style.boxShadow  = "none"
 			document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
-			source = source.replace("lemmasumperyear","lemmacountperyear")}else{source = source.replace("lemmacountperyear","lemmasumperyear")
+			source = source.replace("lemmasumperyear","lemmacountperyear")}
+		else{
+			document.getElementById("focusbutton3").style.boxShadow  = "none"
+			document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
+			source = source.replace("lemmacountperyear","lemmasumperyear")
 		}
 		if(curlemma.length>0){
 			document.getElementById("timeline").src=source
