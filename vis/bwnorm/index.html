@@ -384,6 +384,7 @@
 	}
 	
 	var focus = 0;
+	document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
 	updateZipf()
 	curnorm = getQueryVariable("norm")
 	exactnorm = ""
@@ -397,6 +398,7 @@
 		document.getElementById('normgroup').src="error_token.html"
 		document.getElementById('tokengroup').src="error_token.html"
 	}
+	
 	document.title=lang_normify+" "+curnorm
 
 </script>
