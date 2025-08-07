@@ -14,7 +14,21 @@
 
 <script>document.write(header())</script>
 
-<br><br>
+<table class="optionmenu" align="center" style="width:80%;">
+	<tr>
+	<tr  style="text-align:center;">
+		<td>
+		<button onclick="location.href='../bwlemma';"><script>document.write(lang_lemmafy)</script></button>
+		</td>
+		<td>
+		<button onclick="location.href='../bwnorm';"><script>document.write(lang_normify)</script></button>
+		</td>
+		<td>
+		<button onclick="location.href='../bwtoken';"><script>document.write(lang_words)</script></button>
+		</td>
+	</tr>
+</table>
+
 <br><br>
 
 <div class = "explain">
@@ -68,7 +82,7 @@
 	<tr>
 		<td></td>
 		<td>
-			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+			<input id="prefixsearchCheckBox" checked type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
 		</td>
 	</tr>
 	<tr>
@@ -79,7 +93,7 @@
 				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
-				autocomplete("norm", "prefixnormsearch.php?limit=30&sortby=frequency&norm=", ""); 
+				autocomplete("norm", "prefixnormsearch.php?limit=30&sortby=alphabet&norm=", ""); 
 			</script>
 		</td>
 		<td><a href="?norm=Chóśebuz"><script>document.write(lang_example)</script> Chóśebuz</a></td>

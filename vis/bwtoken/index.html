@@ -12,6 +12,21 @@
 <body style="background-color:lightgray">
 <script>document.write(header())</script>
 
+<table class="optionmenu" align="center" style="width:80%;">
+	<tr>
+	<tr  style="text-align:center;">
+		<td>
+		<button onclick="location.href='../bwlemma';"><script>document.write(lang_lemmafy)</script></button>
+		</td>
+		<td>
+		<button onclick="location.href='../bwnorm';"><script>document.write(lang_normify)</script></button>
+		</td>
+		<td>
+		<button onclick="location.href='../bwtoken';"><script>document.write(lang_words)</script></button>
+		</td>
+	</tr>
+</table>
+
 <br><br>
 
 <div class = "explain">
@@ -93,7 +108,7 @@
 	<tr>
 		<td></td>
 		<td>
-			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+			<input id="prefixsearchCheckBox" checked type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
 		</td>
 	</tr>
 	<tr>
@@ -104,7 +119,7 @@
 				<button onclick = "updateTimeline()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("token", "prefixsearch.php?limit=30&sortby=frequency&word=", "updateTimeline"); 
+				autocomplete("token", "prefixsearch.php?limit=30&sortby=alphabet&word=", "updateTimeline"); 
 			</script>
 		</td>
 		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addTokenToList()">&#10149;<script>document.write(lang_list)</script></button></td>
@@ -167,6 +182,7 @@
 	</table>
 </div>
 
+<!--
 <br><br>
 
 <hr>
@@ -202,6 +218,7 @@
 	<button class = "iframebutton" onclick="hidewatermark('timespan');"><script>document.write(lang_source)</script></button>
 </div>
 </div>
+-->
 
 <br><br>
 

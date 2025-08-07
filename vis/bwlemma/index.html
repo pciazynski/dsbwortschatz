@@ -14,7 +14,21 @@
 
 <script>document.write(header())</script>
 
-<br><br>
+<table class="optionmenu" align="center" style="width:80%;">
+	<tr>
+	<tr  style="text-align:center;">
+		<td>
+		<button onclick="location.href='../bwlemma';"><script>document.write(lang_lemmafy)</script></button>
+		</td>
+		<td>
+		<button onclick="location.href='../bwnorm';"><script>document.write(lang_normify)</script></button>
+		</td>
+		<td>
+		<button onclick="location.href='../bwtoken';"><script>document.write(lang_words)</script></button>
+		</td>
+	</tr>
+</table>
+
 <br><br>
 
 <div class = "explain">
@@ -22,6 +36,7 @@
 		Die Lemmata sind hier wahlweise nach Häufigkeitsrang oder Menge der zugehörigen Types aufgelistet. Ein Klick auf einen Balken fügt das Lemma unten ein.
 	</p>
 </div>
+
 
 <table class="optionmenu" align="center">
 	<tr>
@@ -68,7 +83,7 @@
 	<tr>
 		<td></td>
 		<td>
-			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+			<input id="prefixsearchCheckBox" checked type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
 		</td>
 	</tr>
 	<tr>
@@ -79,7 +94,7 @@
 				<button onclick = "updateTimeline()"><script>document.write(lang_ambigsearch)</script></button> 
 			</div>
 			<script>
-				autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby=frequency&lemma=", ""); 
+				autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby=alphabet&lemma=", ""); 
 			</script>
 		</td>
 		<td><a href="?lemma=CHÓŚEBUZ"><script>document.write(lang_example)</script> CHÓŚEBUZ</a></td>

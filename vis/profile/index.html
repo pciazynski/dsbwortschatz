@@ -17,7 +17,7 @@
 	<tr>
 		<td></td>
 		<td>
-			<input id="prefixsearchCheckBox" type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+			<input id="prefixsearchCheckBox" checked type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
 		</td>
 	</tr>
 	<tr>
@@ -28,7 +28,7 @@
 				<button onclick = "updateLemma()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30&sortby=frequency&lemma=", "updateLemma"); 
+				autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30&sortby=alphabet&lemma=", "updateLemma"); 
 			</script>
 		</td>
 	</tr>
@@ -40,7 +40,7 @@
 				<button onclick = "updateNorm()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantednorm", "prefixnormsearch.php?limit=30&sortby=frequency&norm=", "updateNorm"); 
+				autocomplete("wantednorm", "prefixnormsearch.php?limit=30&sortby=alphabet&norm=", "updateNorm"); 
 			</script>
 		</td>
 	</tr>
@@ -52,7 +52,7 @@
 				<button onclick = "updateWord()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("wantedword", "prefixsearch.php?limit=30&sortby=frequency&word=", "updateWord"); 
+				autocomplete("wantedword", "prefixsearch.php?limit=30&sortby=alphabet&word=", "updateWord"); 
 			</script>
 		</td>
 	</tr>
