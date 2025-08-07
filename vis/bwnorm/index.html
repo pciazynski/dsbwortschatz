@@ -33,40 +33,6 @@
 
 <div class = "explain">
 	<p>
-		Die Normierungen sind hier wahlweise nach Häufigkeitsrang oder Menge der zugehörigen Types aufgelistet. Ein Klick auf einen Balken fügt die Normierung unten ein.
-	</p>
-</div>
-
-<table class="optionmenu" align="center">
-	<tr>
-		<td style="text-align:right;"><script>document.write(lang_frequency)</script></td>
-		<td>
-			<input type="number" value="100" id="min" onchange="updateZipf()">
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;"><script>document.write(lang_sorting)</script></td>
-		<td>
-			<button onclick ="updateZipf()"><script>document.write(lang_frequency)</script></button>
-			<button onclick ="zipfTypecount()"><script>document.write(lang_typecount)</script></button>
-		</td>
-	</tr>
-</table>
-
-<div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('zipf');"><script>document.write(lang_htmlembedding)</script></button>
-	<button class = "iframebutton" onclick="diagrammlink('zipf');"><script>document.write(lang_fullscreen)</script></button>
-	<button class = "iframebutton" onclick="datalink('zipf');"><script>document.write(lang_rawdata)</script></button>
-	<div style="text-align:center;">
-		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
-	</div>
-	<button class = "iframebutton" onclick="hidewatermark('zipf');"><script>document.write(lang_source)</script></button>
-</div>
-<br><br>
-
-
-<div class = "explain">
-	<p>
 		Hier können einzelne Normierungen im Zeitverlauf dargestellt sowie inkludierende Normierungsgruppen aufgelistet werden. 
 		Ein Klick auf einen Eintrag der Liste führt zu einer exakten Darstellung dieser Normierungsgruppen. 
 		Die Betrachtung kann anhand der Normierungen oder der zugrundeliegenden Token erfolgen. 
@@ -283,12 +249,6 @@
 		document.getElementById('docref').src = 'error_docref.html'
 	}
 
-	
-	var zipfTypecount = function(){
-		loading("zipf")
-		document.getElementById("zipf").src="zipf.html?data=typecountpernorm.php&sort=1"
-	}
-	
 	var updateYearlabel = function(){
 		tmp = parseInt(document.getElementById("yearminslider").value)
 		document.getElementById("yearlabel").innerHTML = tmp
@@ -372,13 +332,7 @@
 		document.getElementById('traviz').src = 'error_docref.html'
 		document.title=lang_normify+" "+curnorm
 	}
-	var updateZipf = function(){
-		loading("zipf")
-		curnorm = document.getElementById("min").value.trim()
-		document.getElementById("zipf").src="zipf.html?data=normmapping/_normbag&min="+curnorm
-		document.getElementById('docref').src = 'error_docref.html'
-	}
-	
+
 	var normClick = function(norm){
 		loading("timeline")
 		loading("tokengroup")
@@ -399,7 +353,6 @@
 	
 	var focus = 0;
 	document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-	updateZipf()
 	curnorm = getQueryVariable("norm")
 	exactnorm = ""
 	if(curnorm.length>0){

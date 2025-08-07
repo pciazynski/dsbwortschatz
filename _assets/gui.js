@@ -71,7 +71,7 @@ str='<div  class="header">'+
 +'<td>'
 +'</td>'
 +'<td>'
-+'<a href="../bwlemma/">'+lang_frequency+'</a> | '
++'<a href="../bwlemma/">'+lang_timeline+'</a> | '
 +'<a href="../lemmavariation/">'+lang_variation+'</a> | '
 +'<a href="../lemmaeval/">'+lang_evaluation+'</a> | '
 +'<a href="../profile/">'+lang_profile+'</a>'

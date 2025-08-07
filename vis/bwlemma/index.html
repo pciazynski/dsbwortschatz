@@ -33,41 +33,6 @@
 
 <div class = "explain">
 	<p>
-		Die Lemmata sind hier wahlweise nach Häufigkeitsrang oder Menge der zugehörigen Types aufgelistet. Ein Klick auf einen Balken fügt das Lemma unten ein.
-	</p>
-</div>
-
-
-<table class="optionmenu" align="center">
-	<tr>
-		<td style="text-align:right;"><script>document.write(lang_frequency)</script></td>
-		<td>
-			<input type="number" value="1000" id="min" onchange="updateZipf()">
-		</td>
-	</tr>
-	<tr>
-		<td style="text-align:right;"><script>document.write(lang_sorting)</script></td>
-		<td>
-			<button onclick ="updateZipf()"><script>document.write(lang_frequency)</script></button>
-			<button onclick ="zipfTypecount()"><script>document.write(lang_typecount)</script></button>
-		</td>
-	</tr>
-</table>
-
-<div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('zipf');"><script>document.write(lang_htmlembedding)</script></button>
-	<button class = "iframebutton" onclick="diagrammlink('zipf');"><script>document.write(lang_fullscreen)</script></button>
-	<button class = "iframebutton" onclick="datalink('zipf');"><script>document.write(lang_rawdata)</script></button>
-	<div style="text-align:center;">
-		<iframe class="resized"  width="100%" height="475px" id="zipf" scrolling="yes"></iframe>
-	</div>
-	<button class = "iframebutton" onclick="hidewatermark('zipf');"><script>document.write(lang_source)</script></button>
-</div>
-<br><br>
-
-
-<div class = "explain">
-	<p>
 		Hier können einzelne Lemma im Zeitverlauf dargestellt sowie inkludierende Lemmagruppen aufgelistet werden. 
 		Ein Klick auf einen Eintrag der Liste führt zu einer exakten Darstellung dieser Lemmagruppe. 
 		Die Betrachtung kann anhand der Lemmata oder der zugrundeliegenden Token erfolgen. 
@@ -267,11 +232,6 @@
 		updateTimelineList()
 	}
 	
-	var zipfTypecount = function(){
-		loading("zipf")
-		document.getElementById("zipf").src="zipf.html?data=typecountperlemma.php&sort=1"
-	}
-	
 	var updateYearlabel = function(){
 		tmp = parseInt(document.getElementById("yearminslider").value)
 		document.getElementById("yearlabel").innerHTML = tmp
@@ -374,14 +334,7 @@
 		document.getElementById('traviz').src = 'error_docref.html'
 		document.getElementById('docref').src = 'error_docref.html'
 	}
-	var updateZipf = function(){
-		loading("zipf")
-		curlemma = document.getElementById("min").value.trim()
-		document.getElementById("zipf").src="zipf.html?data=lemmamapping/_lemmabag&min="+curlemma
-		document.getElementById('docref').src = 'error_docref.html'
-		document.getElementById('traviz').src = 'error_docref.html'
-	}
-	
+
 	var lemmaClick = function(lemma){
 		loading("timeline")
 		loading("tokengroup")
@@ -402,7 +355,6 @@
 	
 	var focus = 0;
 	document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-	updateZipf()
 	curlemma = getQueryVariable("lemma")
 	exactlemma = ""
 	if(curlemma.length>0){
