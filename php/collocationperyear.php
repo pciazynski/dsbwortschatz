@@ -14,7 +14,7 @@ $nl = "\n";
 $res = '';
 
 if(strlen($leftright) > 0 and strlen($year)==4){
-	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE '.$leftright.' AND date =='.$year.' AND frequency >= '.$frequency;
+	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE '.$leftright.' AND date '.$year.' AND frequency >= '.$frequency;
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['date'].$tab.$row['left'].$tab.$row['right'].$tab.$row['frequency'].$nl;
 	}
@@ -26,7 +26,7 @@ elseif(strlen($leftright) > 0){
 	}
 }
 elseif(strlen($year)==4){
-	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE date =='.$year.' AND frequency >= '.$frequency;
+	$query = 'SELECT left, right, frequency, date FROM collocationperyear WHERE date '.$year.' AND frequency >= '.$frequency;
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['date'].$tab.$row['left'].$tab.$row['right'].$tab.$row['frequency'].$nl;
 	}
