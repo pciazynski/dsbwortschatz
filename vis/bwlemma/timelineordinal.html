@@ -58,13 +58,13 @@
 					val -= 1
 				}
 				
-				jittervalue = val + (jitter*(Math.random()))
+				//jittervalue = val + (jitter*(Math.random()))
 				date.push(tmp[1])
-				count.push(jittervalue)
+				count.push(val)
 				hovers.push(tmp[0]+"("+tmp[1]+")"+token+" "+tmp[2])
 				colors.push(getColor(tmp[focus]))
-				if (jittervalue<minval ){minval = jittervalue}
-				if (jittervalue>maxval ) {maxval = jittervalue}
+				if (val<minval ){minval = val}
+				if (val>maxval ) {maxval = val}
 				oldval[token] = value
 			}
 		}
