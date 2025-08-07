@@ -130,6 +130,7 @@
 			</td>
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
+				<button class = "iframebutton" onclick="switchordinal('timeline');"><script>document.write(lang_ordinal + "/" +lang_intervall)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
@@ -211,12 +212,21 @@
 		autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", ""); 
 	}
 
+	var switchordinal = function(){
+		tmp = document.getElementById('timeline')
+		if(tmp.src.includes("ordinal.html")){
+			tmp.src = tmp.src.replace("ordinal.html",".html")
+		}else{
+			tmp.src = tmp.src.replace(".html","ordinal.html")
+		}
+	}
+
 	var switchtimelinesum = function(){
 		tmp = document.getElementById('timeline')
-		if(tmp.src.includes("timeline.html")){
-			tmp.src = tmp.src.replace("timeline.html","timelinesum.html")
+		if(tmp.src.includes("timelinesum")){
+			tmp.src = tmp.src.replace("timelinesum","timeline")
 		}else{
-			tmp.src = tmp.src.replace("timelinesum.html","timeline.html")
+			tmp.src = tmp.src.replace("timeline","timelinesum")
 		}
 	}
 
