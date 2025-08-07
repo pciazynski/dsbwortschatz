@@ -48,23 +48,25 @@
 				tmp = line.split(sep)
 				value = parseInt(tmp[2])
 				if (tmp.length==4){token = ":"+tmp[3]}else{token=""}
+				
 				if (oldval[token] == undefined){
-					val = 1
+					val[token] = 1
 				}
 				else if(oldval[token] < value){
-					val += 1
+					val[token] += 1
 				}
 				else if(oldval[token] > value){
-					val -= 1
+					val[token] -= 1
 				}
 				
+				newval = val[token]
 				//jittervalue = val + (jitter*(Math.random()))
 				date.push(tmp[1])
-				count.push(val)
+				count.push(newval)
 				hovers.push(tmp[0]+"("+tmp[1]+")"+token+" "+tmp[2])
 				colors.push(getColor(tmp[focus]))
-				if (val<minval ){minval = val}
-				if (val>maxval ) {maxval = val}
+				if (newval<minval ){minval = newval}
+				if (newval>maxval ) {maxval = newval}
 				oldval[token] = value
 			}
 		}
