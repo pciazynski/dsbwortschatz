@@ -96,18 +96,27 @@ var layout = {
 	barmode: 'stack',
 	showlegend:false,
 	xaxis: 	{
-		linecolor: '#636363',
-		linewidth: 6,
-		dtick:5,
-		tickangle:90
+			automargin: true,
+			range:[minDate-2,maxDate+2],
+			linewidth: 1,
+			title:{
+				font:diagramfont
+			},
+			tickangle:90,
+			tickfont:diagramfont
 		},
-	yaxis: 	{
-		range:[0,100],
-		dtick:100
-}
+			yaxis:{
+			automargin: true,
+			range:[0,100],
+			title:{
+				text: 'Häufigkeit (Abs)',
+				font:diagramfont
+				}
+			},
+		annotations: watermarke()
 	};
 
-Plotly.newPlot('myDiv', data, layout);
+Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
 
 </script>
 
