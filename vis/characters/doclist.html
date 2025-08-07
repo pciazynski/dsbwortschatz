@@ -15,7 +15,7 @@
 	dataset = dataset +"?char="+token+"&sort"
 	diagramtitle = "Document per Zeichen:"+ token
 	param = "&deletexml&highlight="+token
-	data_arr = readPHP(dataset).split('\n');
+	data_arr = readPHP(dataset).trim().split('\n');
 	
 	str = '<table class="clicktable">';
 	if(dataset.includes("?token")){
