@@ -61,7 +61,7 @@
 				jittervalue = val + (jitter*(Math.random()))
 				date.push(tmp[1])
 				count.push(jittervalue)
-				hovers.push(tmp[0]+"("+tmp[1]+")"+token+" "+tmp[2]+" "+val)
+				hovers.push(tmp[0]+"("+tmp[1]+")"+token+" "+tmp[2])
 				colors.push(getColor(tmp[focus]))
 				if (jittervalue<minval ){minval = jittervalue}
 				if (jittervalue>maxval ) {maxval = jittervalue}
@@ -106,7 +106,8 @@
 				title:{
 					text: 'Häufigkeit (Abs)',
 					font:diagramfont
-					}
+					},
+					showticklabels:false
 				},
 			annotations: watermarke()
 		};
