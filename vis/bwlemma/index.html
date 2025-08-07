@@ -130,7 +130,6 @@
 			</td>
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
-				<button class = "iframebutton" onclick="switchordinal('timeline');"><script>document.write(lang_ordinal + "/" +lang_intervall)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
@@ -210,15 +209,6 @@
 		tmp = document.getElementById('prefixsearchCheckBox').checked
 		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
 		autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", ""); 
-	}
-
-	var switchordinal = function(){
-		tmp = document.getElementById('timeline')
-		if(tmp.src.includes("ordinal.html")){
-			tmp.src = tmp.src.replace("ordinal.html",".html")
-		}else{
-			tmp.src = tmp.src.replace(".html","ordinal.html")
-		}
 	}
 
 	var switchtimelinesum = function(){
