@@ -38,16 +38,18 @@
 </div>
 
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('tokenlength');"><script>document.write(lang_htmlembedding)</script></button>
-	<button class = "iframebutton" onclick="diagrammlink('tokenlength');"><script>document.write(lang_fullscreen)</script></button>
-	<button class = "iframebutton" onclick="datalink('tokenlength');"><script>document.write(lang_rawdata)</script></button>
-
+	<button class = "iframebutton" onclick="embedding('charactercount');"><script>document.write(lang_htmlembedding)</script></button>
+	<button class = "iframebutton" onclick="diagrammlink('charactercount');"><script>document.write(lang_fullscreen)</script></button>
+	<button class = "iframebutton" onclick="datalink('charactercount');"><script>document.write(lang_rawdata)</script></button>
 	<div style="text-align:center;">
-		<iframe class="resized" width="100%" height="475px" id="tokenlength" scrolling="yes"></iframe>
+		<iframe class="resized" width="100%" height="475px" id="charactercount" scrolling="yes"></iframe>
 	</div>
-	<button class = "iframebutton" onclick="diatype('tokenlength','barchart');">Bar</button>
-	<button class = "iframebutton" onclick="diatype('tokenlength','piechart');">Pie</button>
-	<button class = "iframebutton" onclick="hidewatermark('tokenlength');"><script>document.write(lang_source)</script></button>
+		<button class = "iframebutton" onclick="diatype('charactercount','boxplot');">Boxplot</button>
+		<button class = "iframebutton" onclick="diatype('charactercount','piechart');">Pie</button>
+		<button class = "iframebutton" onclick="diatype('charactercount','barchart');">Bar</button>
+		<button class = "iframebutton" onclick="switchLogScale('charactercount');"><script>document.write(lang_switchlogscale)</script></button>
+		<button class = "iframebutton" onclick="hidewatermark('charactercount');"><script>document.write(lang_source)</script></button>
+	</div>
 </div>
 
 <br><br>
@@ -58,17 +60,18 @@
 </div>
 
 <div class = "iframediv">
-	<button class = "iframebutton" onclick="embedding('charactercount');"><script>document.write(lang_htmlembedding)</script></button>
-	<button class = "iframebutton" onclick="diagrammlink('charactercount');"><script>document.write(lang_fullscreen)</script></button>
-	<button class = "iframebutton" onclick="datalink('charactercount');"><script>document.write(lang_rawdata)</script></button>
+	<button class = "iframebutton" onclick="embedding('tokenlength');"><script>document.write(lang_htmlembedding)</script></button>
+	<button class = "iframebutton" onclick="diagrammlink('tokenlength');"><script>document.write(lang_fullscreen)</script></button>
+	<button class = "iframebutton" onclick="datalink('tokenlength');"><script>document.write(lang_rawdata)</script></button>
+
 	<div style="text-align:center;">
-		<iframe class="resized" width="100%" height="475px" id="charactercount" scrolling="yes"></iframe>
+		<iframe class="resized" width="100%" height="475px" id="tokenlength" scrolling="yes"></iframe>
 	</div>
-		<button class = "iframebutton" onclick="diatype('charactercount','boxplot');">Boxplot</button>
-		<button class = "iframebutton" onclick="diatype('charactercount','barchart');">Bar</button>
-		<button class = "iframebutton" onclick="diatype('charactercount','piechart');">Pie</button>
-		<button class = "iframebutton" onclick="hidewatermark('charactercount');"><script>document.write(lang_source)</script></button>
-	</div>
+		<button class = "iframebutton" onclick="diatype('tokenlength','boxplot');">Boxplot</button>
+	<button class = "iframebutton" onclick="diatype('tokenlength','piechart');">Pie</button>
+	<button class = "iframebutton" onclick="diatype('tokenlength','barchart');">Bar</button>
+		<button class = "iframebutton" onclick="switchLogScale('tokenlength');"><script>document.write(lang_switchlogscale)</script></button>
+	<button class = "iframebutton" onclick="hidewatermark('tokenlength');"><script>document.write(lang_source)</script></button>
 </div>
 
 <br><br>
@@ -90,8 +93,8 @@
 	loading('charactercount')
 	
 	document.getElementById('stats').src="../../data/stats.txt"
-	document.getElementById('tokenlength').src = 'barchart.html?data=stats/characters'
-	document.getElementById('charactercount').src = 'barchart.html?data=stats/tokenlength'
+	document.getElementById('tokenlength').src = 'barchart.html?data=stats/tokenlength'
+	document.getElementById('charactercount').src = 'barchart.html?data=stats/characters'
 	document.title=lang_statistics
 
 </script>
