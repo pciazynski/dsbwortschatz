@@ -151,7 +151,6 @@ def collect():
 
         if (len(year)>1 and count!=0):
             print(str(count)+" "+urn)
-            count-=1
             rs = lemmamapping(urn)
             if len(rs.strip())>0:
                 with open ("data/lemmamapping/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/lemmamappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:

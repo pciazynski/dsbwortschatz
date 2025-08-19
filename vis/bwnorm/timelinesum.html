@@ -57,7 +57,7 @@
 		var data = [{
 			x: date,
 			y: count,
-			mode: 'lines+markers',
+			mode: 'markers',
 			marker: {
 				size:markersize(date.length)/2,
 				opaciy:0.2,
@@ -87,7 +87,7 @@
 			},
 			yaxis:{
 				automargin: true,
-				range:[0,maxval+maxval/10],
+				type:scale,
 				title:{
 					text: 'Häufigkeit (Abs)',
 					font:diagramfont

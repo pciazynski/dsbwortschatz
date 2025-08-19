@@ -112,16 +112,16 @@
 				<button class = "iframebutton" onclick="datalink('tokengroup');"><script>document.write(lang_rawdata)</script></button>
 			</td>
 		</tr>
-		<tr>
+		<tr style = "text-align:right;">
 			<td valign="top" style = "text-align:right;">
-				<iframe class = "resized"  width="100%" height="440px" id="lemmagroup" scrolling="yes"></iframe>
-				<button id = "focusbutton0" class = "iframebutton" onclick="updateFocus(0);">↪</button>
+				<iframe class = "resized"  width = "100%" height = "440px" id = "lemmagroup" scrolling="yes"></iframe>
+				<button id = "focusbutton0" class = "iframebutton" onclick = "updateFocus(0);">↪</button>
 			</td>
 			<td>
-				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+				<iframe class = "resized" width = "100%" height = "475px" id = "timeline" scrolling="yes"></iframe>
 			</td>
 			<td valign="top" style = "text-align:left;">
-				<iframe class = "resized" width = "100%" height="440px" id = "tokengroup" scrolling="yes"></iframe>
+				<iframe class = "resized" width = "100%" height = "440px" id = "tokengroup" scrolling="yes"></iframe>
 				<button id = "focusbutton3" class = "iframebutton" onclick = "updateFocus(3);">↩</button>
 			</td>
 		</tr>
@@ -130,6 +130,7 @@
 			</td>
 			<td style = "width: 60%;">
 				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
+				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 			<td></td>
@@ -267,21 +268,21 @@
 	
 	
 	var updateFocus = function(newfocus){
-		loading("timeline")
-		focus = newfocus
-		sourcearr = document.getElementById("timeline").src.split("&focus=")
-		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
-
-		if(focus==3){
-			document.getElementById("focusbutton0").style.boxShadow  = "none"
-			document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
-			source = source.replace("lemmasumperyear","lemmacountperyear")}
-		else{
-			document.getElementById("focusbutton3").style.boxShadow  = "none"
-			document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-			source = source.replace("lemmacountperyear","lemmasumperyear")
-		}
 		if(curlemma.length>0){
+			focus = newfocus
+			sourcearr = document.getElementById("timeline").src.split("&focus=")
+			source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
+
+			if(focus==3){
+				document.getElementById("focusbutton0").style.boxShadow  = "none"
+				document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
+				source = source.replace("lemmasumperyear","lemmacountperyear")}
+			else{
+				document.getElementById("focusbutton3").style.boxShadow  = "none"
+				document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
+				source = source.replace("lemmacountperyear","lemmasumperyear")
+			}
+			loading("timeline")
 			document.getElementById("timeline").src=source
 			document.title=lang_lemmafy+" "+curlemma
 		}

@@ -130,7 +130,6 @@ def collect():
 
         if (len(year)>1 and count!=0):
             print(str(count)+" "+urn)
-            count-=1
             rs = normmapping(urn)
             if len(rs.strip())>0:
                 with open ("data/normmapping/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/normmappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:

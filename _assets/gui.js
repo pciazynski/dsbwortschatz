@@ -21,6 +21,13 @@ function printlink(elementid){
 	document.getElementById(elementid).src = url
 }
 
+var switchLogScale = function(elementid){
+	loading(elementid)
+	url = document.getElementById(elementid).src
+	if(url.includes('&scale=log')){url=url.replaceAll('&scale=log','')}else{url+='&scale=log'}
+	document.getElementById(elementid).src = url
+}
+
 function nolanguage(elementid){
 	url = document.getElementById(elementid).src
 	url=url.replace('&lang=DEU','').replace('&lang=DSB','')
