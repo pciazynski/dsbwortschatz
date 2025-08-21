@@ -25,7 +25,7 @@
 		<button onclick="location.href='../statsnorm';"><script>document.write(lang_normify)</script></button>
 		</td>
 		<td>
-		<button onclick="location.href='../statstoken';"><script>document.write(lang_words)</script></button>
+		<button onclick="location.href='../statsword';"><script>document.write(lang_words)</script></button>
 		</td>
 	</tr>
 </table>
@@ -106,9 +106,29 @@
 	</div>
 <br><br>
 
+
+<div class = "iframediv">
+	<button class = "iframebutton" onclick="embedding('datesum');"><script>document.write(lang_htmlembedding)</script></button>
+	<button class = "iframebutton" onclick="diagrammlink('datesum');"><script>document.write(lang_fullscreen)</script></button>
+	<button class = "iframebutton" onclick="datalink('datesum');"><script>document.write(lang_rawdata)</script></button>
+	<div style="text-align:center;">
+		<iframe class="resized"  width="100%" height="475px" id="datesum" scrolling="yes"></iframe>
+	</div>
+	<button class = "iframebutton" onclick="switchTokenType('datesum');"><script>document.write(lang_switchtokentype)</script></button>
+	<button class = "iframebutton" onclick="switchLogScale('datesum');"><script>document.write(lang_switchlogscale)</script></button>
+	<button class = "iframebutton" onclick="printlink('datesum');"><script>document.write(lang_switchprintonline)</script></button>
+	<button class = "iframebutton" onclick="hidewatermark('datesum');"><script>document.write(lang_source)</script></button>
+	</div>
 <br><br>
 
 <script>
+
+	var switchTokenType = function(elementid){
+		loading(elementid)
+		url = document.getElementById(elementid).src
+		if(url.includes('tokensumperyear')){url=url.replaceAll('tokensumperyear','typesumperyear')}else{url=url.replaceAll('typesumperyear','tokensumperyear')}
+		document.getElementById(elementid).src = url
+	}
 
 	var threeD = function(iframeid){
 		loading(iframeid)
@@ -149,6 +169,7 @@
 	
 	updateZipf()
 	document.title=lang_words+" "+lang_statistics
+	document.getElementById('datesum').src = 'barchart.html?data=tokensumperyear.php'
 
 </script>
 
