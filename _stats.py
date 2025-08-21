@@ -4,7 +4,6 @@ import shutil
 shutil.copy("data/bagofwords/_tokensumperyear.txt","data/stats/_tokensumperyear.txt")
 shutil.copy("data/bagofwords/_typesumperyear.txt","data/stats/_typesumperyear.txt")
 shutil.copy("data/bagofwords/_typetokenratioperyear.txt","data/stats/_typetokenratioperyear.txt")
-exit()
 
 if os.path.exists("data/stats"):
     shutil.rmtree("data/stats")
