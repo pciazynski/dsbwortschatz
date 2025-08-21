@@ -1,6 +1,10 @@
 import os
 import shutil
 
+shutil.copy("data/bagofwords/_tokensumperyear.txt","data/stats/_tokensumperyear.txt")
+shutil.copy("data/bagofwords/_typesumperyear.txt","data/stats/_typesumperyear.txt")
+exit()
+
 if os.path.exists("data/stats"):
     shutil.rmtree("data/stats")
 os.mkdir("data/stats")

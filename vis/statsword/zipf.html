@@ -72,6 +72,7 @@
 		}
 	}];
 
+	if (getQueryVariable("scale")==="log"){minval = Math.log(1);maxval=Math.log(maxval)}else{minval=0;maxval=maxval+(maxval/10)+1}
 	var layout = {
 		barmode: 'stack',
 		title:diagramtitle,
@@ -85,8 +86,8 @@
 			tickfont:diagramfont
 			},
 		yaxis:{
-			automargin: true,
-			range:[0,maxval],
+			type:scale,
+			range: [minval, maxval],
 			title: {
 				text: 'Häufigkeit (Abs)',
 				font: diagramfont

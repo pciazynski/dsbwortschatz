@@ -6,6 +6,8 @@ from config import *
 from pythoncts import *
 
 doc_year = {}
+tokensumperyear = {}
+typesumperyear = {}
 
 def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
@@ -28,8 +30,16 @@ def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
             for line in inf:
+                year = int(yearfile.replace(".txt",""))
                 linearr=line.split("\t")
                 token = linearr[0]
+                if year in tokensumperyear:
+                    tokensumperyear[year] = tokensumperyear[year]+int(linearr[1])
+                    typesumperyear[year] = typesumperyear[year]+1
+                else:
+                    tokensumperyear[year] = int(linearr[1])
+                    typesumperyear[year] = 1
+
                 if token in wb:
                     wb[token] = wb[token] + int(linearr[1])
                 else:
@@ -37,7 +47,13 @@ def process(foldername):
     with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
         for token,value in sorted(wb.items(), key = lambda x:x[1], reverse=True):
             outf.write(token+"\t"+str(value)+"\n")
-    
+    with open (foldername+"/_tokensumperyear.txt", "w", encoding="utf8") as outf:
+        for year,value in sorted(tokensumperyear.items()):
+            outf.write(str(year)+"\t"+str(value)+"\n")
+    with open (foldername+"/_typesumperyear.txt", "w", encoding="utf8") as outf:
+        for year,value in sorted(typesumperyear.items()):
+            outf.write(str(year)+"\t"+str(value)+"\n")
+
     wb_max = dict()
     wb_min = dict()
     for yearfile in sorted(os.listdir(foldername+"peryear")):
@@ -208,14 +224,18 @@ def db():
                 cursor.execute(query)
         con.commit()
     index()
-    
+
+print("Bagofwords")
 if len(sys.argv)==2:
     if sys.argv[1] == "db":
+        print("DB")
         db()
     else:
         if sys.argv[1] == "collect":
+            print("Collect")
             collect()
 else:
+    print("Collect & DB")
     collect()
     db()
     

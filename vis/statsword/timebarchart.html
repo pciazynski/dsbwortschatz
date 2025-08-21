@@ -12,17 +12,20 @@
 	var dataset = getQueryVariable("data")
 	var print = getQueryVariable("print")
 
-	data_arr = readPHP(dataset).trim().split("\n");
+	data_arr = readTextFile(dataset).trim().split("\n");
 
 	date= []
 	count = []
-	diagramtitle = dataset.split(".php")[0]
 
+	diagramtitle = dataset.split(".php")[0]
+	maxval = 0
+	
 	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i];
 		if(line.length>1){
 			tmp = line.split(sep)
 			value  = parseInt(tmp[1])
+			if(value>maxval){maxval=value}
 			date.push(tmp[0])
 			count.push(value)
 		}
@@ -49,6 +52,9 @@
 			}
 		}];
 	}
+
+	
+	if (getQueryVariable("scale")==="log"){minval = Math.log(1);maxval=Math.log(maxval)}else{minval=0;maxval=maxval+maxval/10}
 	var layout = {
 		title:{
 			text:diagramtitle,
@@ -64,6 +70,7 @@
 		},
 		yaxis: {
 			type:scale,
+			range: [minval, maxval]
 		},
 		annotations: watermarke()
 	};
