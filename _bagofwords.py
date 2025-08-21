@@ -29,8 +29,8 @@ def process(foldername):
     wb = dict()
     for yearfile in sorted(os.listdir(foldername+"peryear")):
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
+            year = int(yearfile.replace(".txt",""))
             for line in inf:
-                year = int(yearfile.replace(".txt",""))
                 linearr=line.split("\t")
                 token = linearr[0]
                 if year in tokensumperyear:

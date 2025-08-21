@@ -1,13 +1,14 @@
 import os
 import shutil
 
-shutil.copy("data/bagofwords/_tokensumperyear.txt","data/stats/_tokensumperyear.txt")
-shutil.copy("data/bagofwords/_typesumperyear.txt","data/stats/_typesumperyear.txt")
-shutil.copy("data/bagofwords/_typetokenratioperyear.txt","data/stats/_typetokenratioperyear.txt")
 
 if os.path.exists("data/stats"):
     shutil.rmtree("data/stats")
 os.mkdir("data/stats")
+
+shutil.copy("data/bagofwords/_tokensumperyear.txt","data/stats/_tokensumperyear.txt")
+shutil.copy("data/bagofwords/_typesumperyear.txt","data/stats/_typesumperyear.txt")
+shutil.copy("data/bagofwords/_typetokenratioperyear.txt","data/stats/_typetokenratioperyear.txt")
 
 toksum = 0
 typesum = 0
