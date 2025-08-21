@@ -115,7 +115,8 @@
 	<div style="text-align:center;">
 		<iframe class="resized"  width="100%" height="475px" id="datesum" scrolling="yes"></iframe>
 	</div>
-	<button class = "iframebutton" onclick="switchTokenType('datesum');"><script>document.write(lang_switchtokentype)</script></button>
+	<button class = "iframebutton" onclick="switchTokenTypeRatio('datesum');"><script>document.write(lang_tokentyperatio)</script></button>
+	<button class = "iframebutton" onclick="switchTokenType('datesum');"><script>document.write(lang_switchtokentypesum)</script></button>
 	<button class = "iframebutton" onclick="switchLogScale('datesum');"><script>document.write(lang_switchlogscale)</script></button>
 	<button class = "iframebutton" onclick="printlink('datesum');"><script>document.write(lang_switchprintonline)</script></button>
 	<button class = "iframebutton" onclick="hidewatermark('datesum');"><script>document.write(lang_source)</script></button>
@@ -127,10 +128,17 @@
 	var switchTokenType = function(elementid){
 		loading(elementid)
 		url = document.getElementById(elementid).src
-		if(url.includes('_tokensumperyear')){url=url.replaceAll('_tokensumperyear','_typesumperyear')}else{url=url.replaceAll('_typesumperyear','_tokensumperyear')}
+		if(url.includes('_tokensumperyear')){url=url.replaceAll('_tokensumperyear','_typesumperyear')}else{url=url.replaceAll('_typesumperyear','_tokensumperyear').replaceAll('_typetokenratioperyear','_tokensumperyear')}
 		document.getElementById(elementid).src = url
 	}
 
+	var switchTokenTypeRatio = function(elementid){
+		loading(elementid)
+		url = document.getElementById(elementid).src
+		url=url.replaceAll('_tokensumperyear','_typetokenratioperyear').replaceAll('_typesumperyear','_typetokenratioperyear')
+		document.getElementById(elementid).src = url
+	}
+	
 	var threeD = function(iframeid){
 		loading(iframeid)
 		el = document.getElementById(iframeid)

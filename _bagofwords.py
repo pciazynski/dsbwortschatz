@@ -53,6 +53,9 @@ def process(foldername):
     with open (foldername+"/_typesumperyear.txt", "w", encoding="utf8") as outf:
         for year,value in sorted(typesumperyear.items()):
             outf.write(str(year)+"\t"+str(value)+"\n")
+    with open (foldername+"/_typetokenratioperyear.txt", "w", encoding="utf8") as outf:
+        for year,value in sorted(typesumperyear.items()):
+            outf.write(str(year)+"\t"+str(typesumperyear[year] / tokensumperyear[year])+"\n")
 
     wb_max = dict()
     wb_min = dict()
