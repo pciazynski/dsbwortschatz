@@ -12,7 +12,7 @@ if (isset($_GET['token'])){
 	$res = '';
 
 	foreach($PDO->query($query.';') as $row){
-		$res.=$tab.$row['token'].$tab.$row['norm'].$tab.$row['type'].$tab.$row['subtype'].$nl;
+		$res.=$row['token'].$tab.$row['norm'].$tab.$row['type'].$tab.$row['subtype'].$nl;
 	}
 	
 	print($res);
