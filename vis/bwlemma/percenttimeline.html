@@ -105,7 +105,7 @@ for (key in resmatrix){
 
 var layout = {
 	barmode: 'stack',
-	showlegend:true,
+	showlegend:false,
 	title:diagramtitle,
 	hovermode:'closest',
 	xaxis: 	{
@@ -120,14 +120,32 @@ var layout = {
 		},
 			yaxis:{
 			hoverformat: '.3f',
-			range:[0,110]
+			range:[0,110],
 			title:{
 				text: 'Häufigkeit (%)',
 				font:diagramfont
 				}
 			},
-		annotations: watermarke()
-	};
+	legend:{
+		x:0.1, 
+		y:0.1, 
+		//traceorder:"normal",
+		font:{
+			family:diagramfont,
+			size:9
+		},
+	},
+	annotations: watermarke(),
+	updatemenus: [{
+		type: 'buttons',
+		buttons: [{
+			label: 'Filter',
+			method: 'relayout',
+			args: ['showlegend', false],
+			args2: ['showlegend', true]
+			}]
+	}]
+};
 
 Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
 

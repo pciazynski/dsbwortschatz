@@ -126,8 +126,17 @@ var layout = {
 				font:diagramfont
 				}
 			},
-		annotations: watermarke()
-	};
+		annotations: watermarke(),
+	updatemenus: [{
+		type: 'buttons',
+		buttons: [{
+			label: 'Filter',
+			method: 'relayout',
+			args: ['showlegend', false],
+			args2: ['showlegend', true]
+		}]
+	}]
+};
 
 Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
 
