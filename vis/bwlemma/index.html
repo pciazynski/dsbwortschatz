@@ -207,26 +207,30 @@
 <br><br>
 <script>
 
-	var switchpercenttimeline  = function(elid){
-		tmp = document.getElementById(elid)
-		if(tmp.src.includes("percenttimeline")){
-			tmp.src = tmp.src.replace("percenttimeline","timeline")
-		}else{
-			tmp.src = tmp.src.replace("timeline","percenttimeline")
-		}	}
-	
+
 	var switchPrefixsearch = function(){
 		tmp = document.getElementById('prefixsearchCheckBox').checked
 		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
 		autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", ""); 
 	}
 
+	var switchpercenttimeline  = function(elid){
+		tmp = document.getElementById(elid)
+		url = tmp.src.replaceAll("sum.html",".html")
+		if(url.includes("percenttimeline")){
+			tmp.src = url.replace("percenttimeline","timeline")
+		}else{
+			tmp.src = url.replace("timeline","percenttimeline")
+		}
+	}
+	
 	var switchtimelinesum = function(elid){
 		tmp = document.getElementById(elid)
+		url = tmp.src.replaceAll("percent","")
 		if(tmp.src.includes("timelinesum")){
-			tmp.src = tmp.src.replace("timelinesum","timeline")
+			tmp.src = url.replace("timelinesum","timeline")
 		}else{
-			tmp.src = tmp.src.replace("timeline","timelinesum")
+			tmp.src = url.replace("timeline","timelinesum")
 		}
 	}
 
