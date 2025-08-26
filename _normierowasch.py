@@ -246,7 +246,7 @@ def db():
                 normbag = "#"
                 for line in inf.readlines():
                     if len(line.strip())>0:
-                        normbag += line.split("\t")[2]+"#"
+                        normbag += line.split("\t")[1]+"#"
                 while("#||#" in normbag):
                     normbag = normbag.replace("#||#","#")
                 urn = file.replace(".txt","").replace("_#_",":")
