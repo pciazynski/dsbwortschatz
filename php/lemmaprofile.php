@@ -21,7 +21,7 @@ if(isset($_GET['lemma'])){
 	}
 	$res .= $frequency.$tab.$rank.$nl;
 	
-	$query = 'SELECT Min(date) as mindate, Max(date) as maxdate FROM tokenlemmanormtypesubtypedatefrequency WHERE lemma = "|'.$lemma.'|"';
+	$query = 'SELECT Min(date) as mindate, Max(date) as maxdate FROM tokenlemmatypesubtypedatefrequency WHERE lemma = "|'.$lemma.'|"';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['mindate'].$tab.$row['maxdate'];
 	}

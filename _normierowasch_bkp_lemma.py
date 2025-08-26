@@ -33,9 +33,17 @@ def normmapping(urn):
         if("</w" in we):
             wetype = ""
             subtype=""
+            lemma=""
             norm=""
             token = we.split('>')[1].split('</')[0].replace('"',' ').replace("'"," ").replace(".","").strip().lower()
             if tokencheck(token):
+                if 'lemma="' in we:
+                    lemma = "|"+we.split('lemma="')[1].split('"')[0].replace('"',' ').replace("'"," ").strip()+"|"
+                    #if len(lemma) == 2:
+                    #    lemma=""
+                    #else:
+                        #lemmaarr=lemma.split("|")
+                        #for lemmatoken in lemmaarr:
                 if 'norm="' in we:
                     norm = "|"+we.split('norm="')[1].split('"')[0].replace('"','')+"|"
                     #if len(norm) == 2:
@@ -49,7 +57,7 @@ def normmapping(urn):
                 if "type=" in we:
                     wetype = we.split('type="')[1].split('"')[0]
                 if len(norm.strip())>0:
-                    res +=token +"\t"+norm+"\t"+wetype+"\t"+subtype +"\n"
+                    res +=token +"\t"+lemma+"\t"+norm+"\t"+wetype+"\t"+subtype +"\n"
             else:
                 with open("_error.txt", "a", encoding="utf8") as errout:
                     errout.write(urn+" normierowasch unknown token "+token + "\n")
@@ -79,11 +87,11 @@ def process(foldername):
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
             for line in inf:
                 linearr=line.split("\t")
-                token_norm = linearr[0]+"\t"+linearr[1]+"\t"+linearr[2]+"\t"+linearr[3]
+                token_norm = linearr[0]+"\t"+linearr[1]+"\t"+linearr[2]+"\t"+linearr[3]+"\t"+linearr[4]
                 if token_norm in wb:
-                    wb[token_norm] = wb[token_norm] + int(linearr[4])
+                    wb[token_norm] = wb[token_norm] + int(linearr[5])
                 else:
-                    wb[token_norm] = int(linearr[4])
+                    wb[token_norm] = int(linearr[5])
     with open (foldername+"/_all.txt", "w", encoding="utf8") as outf:
         for token_norm,value in sorted(wb.items(), key = lambda x:x[1], reverse=True):
             outf.write(token_norm+"\t"+str(value)+"\n")
@@ -122,7 +130,6 @@ def collect():
 
         if (len(year)>1 and count!=0):
             print(str(count)+" "+urn)
-            count -= 1
             rs = normmapping(urn)
             if len(rs.strip())>0:
                 with open ("data/normmapping/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/normmappingperyear/"+year+".txt", "a",encoding="utf8") as outyf:
@@ -141,17 +148,19 @@ def index():
     con = sqlite3.connect("data/normmapping.db")
     cursor = con.cursor()
     print("Indexing...")
-    cursor.execute("CREATE INDEX tokenindextype ON tokennormtypesubtypefrequency(token);")
-    cursor.execute("CREATE INDEX normindextype ON tokennormtypesubtypefrequency(norm);")
-    cursor.execute("CREATE INDEX typeindextype ON tokennormtypesubtypefrequency(type);")
-    cursor.execute("CREATE INDEX subtypeindextype ON tokennormtypesubtypefrequency(subtype);")
-    cursor.execute("CREATE INDEX tokenindex ON tokennormtypesubtypedatefrequency(token);")
-    cursor.execute("CREATE INDEX normindex ON tokennormtypesubtypedatefrequency(norm);")
-    cursor.execute("CREATE INDEX typeindex ON tokennormtypesubtypedatefrequency(type);")
-    cursor.execute("CREATE INDEX subtypeindex ON tokennormtypesubtypedatefrequency(subtype);")
-    cursor.execute("CREATE INDEX dateindex ON tokennormtypesubtypedatefrequency(date);")
+    cursor.execute("CREATE INDEX tokenindextype ON tokenlemmanormtypesubtypefrequency(token);")
+    cursor.execute("CREATE INDEX lemmaindextype ON tokenlemmanormtypesubtypefrequency(lemma);")
+    cursor.execute("CREATE INDEX normindextype ON tokenlemmanormtypesubtypefrequency(norm);")
+    cursor.execute("CREATE INDEX typeindextype ON tokenlemmanormtypesubtypefrequency(type);")
+    cursor.execute("CREATE INDEX subtypeindextype ON tokenlemmanormtypesubtypefrequency(subtype);")
+    cursor.execute("CREATE INDEX tokenindex ON tokenlemmanormtypesubtypedatefrequency(token);")
+    cursor.execute("CREATE INDEX lemmaindex ON tokenlemmanormtypesubtypedatefrequency(lemma);")
+    cursor.execute("CREATE INDEX normindex ON tokenlemmanormtypesubtypedatefrequency(norm);")
+    cursor.execute("CREATE INDEX typeindex ON tokenlemmanormtypesubtypedatefrequency(type);")
+    cursor.execute("CREATE INDEX subtypeindex ON tokenlemmanormtypesubtypedatefrequency(subtype);")
+    cursor.execute("CREATE INDEX dateindex ON tokenlemmanormtypesubtypedatefrequency(date);")
     cursor.execute("CREATE INDEX normfrequencyindex ON normfrequency(norm);")
-    cursor.execute("CREATE INDEX normtokenindex ON normtokenfrequency(norm);")
+    cursor.execute("CREATE INDEX normtokenlemmaindex ON normtokenfrequency(norm);")
     cursor.execute("CREATE INDEX normtokentokenindex ON normtokenfrequency(token);")
     cursor.execute("CREATE INDEX normurnindex ON urndatenormbag(urn);")
     cursor.execute("CREATE INDEX urnindex ON urndatenormbag(normbag);")
@@ -166,8 +175,8 @@ def initTables():
     con = sqlite3.connect("data/normmapping.db")
     cursor = con.cursor()
     cursor.execute("CREATE TABLE urndatenormbag(urn VARCHAR (50),date DATE,normbag text);")
-    cursor.execute("CREATE TABLE tokennormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
-    cursor.execute("CREATE TABLE tokennormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
+    cursor.execute("CREATE TABLE tokenlemmanormtypesubtypedatefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),date DATE,frequency INTEGER);")
+    cursor.execute("CREATE TABLE tokenlemmanormtypesubtypefrequency(token VARCHAR ("+str(tokenlength)+"),lemma VARCHAR (50),norm VARCHAR (50),type VARCHAR (10),subtype VARCHAR (10),frequency INTEGER);")
     cursor.execute("CREATE TABLE normfrequency(norm VARCHAR (50),frequency INTEGER);")
     cursor.execute("CREATE TABLE normtokenfrequency(norm VARCHAR (50),token VARCHAR ("+str(tokenlength)+"),frequency INTEGER);")
     cursor.execute("CREATE TABLE normnonambig(norm VARCHAR (50),frequency INTEGER);")
@@ -180,7 +189,7 @@ def db():
     cursor = con.cursor()
 
     normtokenbag = {}
-    tokennormtypesubtypebag = {}
+    lemmatokennormtypesubtypebag = {}
     doc_year = {}
     doclist = getdoclist(ctsns).split("\n")
     for line in doclist:
@@ -195,21 +204,22 @@ def db():
             for line in inf.readlines():
                 if len(line.strip())>0:
                     linearr = line.split("\t")
-                    toknorm = linearr[0]+"\t"+linearr[1]
-                    toknormtypesubtype = linearr[0]+"\t"+linearr[1]+"\t"+linearr[2]+"\t"+linearr[3]
+                    toknorm = linearr[0]+"\t"+linearr[2]
+                    toklemnormtypesubtype = linearr[0]+"\t"+linearr[1]+"\t"+linearr[2]+"\t"+linearr[3]+"\t"+linearr[4]
 
-                    if toknormtypesubtype in tokennormtypesubtypebag:
-                        tokennormtypesubtypebag[toknormtypesubtype] = tokennormtypesubtypebag[toknormtypesubtype]+int(linearr[4])
+                    if toklemnormtypesubtype in lemmatokennormtypesubtypebag:
+                        lemmatokennormtypesubtypebag[toklemnormtypesubtype] = lemmatokennormtypesubtypebag[toklemnormtypesubtype]+int(linearr[5])
                     else:
-                        tokennormtypesubtypebag[toknormtypesubtype] = int(linearr[4])
+                        lemmatokennormtypesubtypebag[toklemnormtypesubtype] = int(linearr[5])
+                        
 
                     if toknorm in normtokenbag:
-                        normtokenbag[toknorm] = normtokenbag[toknorm]+int(linearr[4])
+                        normtokenbag[toknorm] = normtokenbag[toknorm]+int(linearr[5])
                     else:
-                        normtokenbag[toknorm] = int(linearr[4])
+                        normtokenbag[toknorm] = int(linearr[5])
 
-                    vals = '"'+linearr[0]+'","'+linearr[1]+'","'+linearr[2]+'","'+linearr[3]+'",'+year.replace(".txt","")+','+linearr[4].strip()
-                    query="INSERT INTO tokennormtypesubtypedatefrequency(token,norm,type,subtype,date,frequency) VALUES("+vals+")"
+                    vals = '"'+linearr[0]+'","'+linearr[1]+'","'+linearr[2]+'","'+linearr[3]+'","'+linearr[4]+'",'+year.replace(".txt","")+','+linearr[5].strip()
+                    query="INSERT INTO tokenlemmanormtypesubtypedatefrequency(token,lemma,norm,type,subtype,date,frequency) VALUES("+vals+")"
                     cursor.execute(query)
         con.commit()
     with open ("data/normmapping/_normbag.txt", "r", encoding="utf8") as inf:
@@ -260,9 +270,9 @@ def db():
         query = "INSERT INTO normtokenfrequency(token,norm,frequency) VALUES("+vals+")"
         cursor.execute(query)
     con.commit()
-    for toktypesubtypenorm in tokennormtypesubtypebag:
-        vals = '"'+toktypesubtypenorm.replace("\t",'","')+'",'+str(tokennormtypesubtypebag[toktypesubtypenorm])
-        query = "INSERT INTO tokennormtypesubtypefrequency(token,norm,type,subtype,frequency) VALUES("+vals+")"
+    for toklemtypesubtypenorm in lemmatokennormtypesubtypebag:
+        vals = '"'+toklemtypesubtypenorm.replace("\t",'","')+'",'+str(lemmatokennormtypesubtypebag[toklemtypesubtypenorm])
+        query = "INSERT INTO tokenlemmanormtypesubtypefrequency(token,lemma,norm,type,subtype,frequency) VALUES("+vals+")"
         cursor.execute(query)
     con.commit()
     con.close()

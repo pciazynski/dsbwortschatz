@@ -5,7 +5,7 @@ header('Content-Type: text/plain');
 
 if (isset($_GET['norm'])){
 	$norm = str_replace(",",'|%" OR norm LIKE "%|',$_GET['norm']);
-	$query = 'SELECT norm, SUM(frequency) as summe, date FROM tokenlemmanormtypesubtypedatefrequency';
+	$query = 'SELECT norm, SUM(frequency) as summe, date FROM tokennormtypesubtypedatefrequency';
 	(isset($_GET['exact'])) ? $query .= ' WHERE norm = "|'.$norm.'|"' : $query .= ' WHERE norm LIKE "%|'.$norm.'|%"';
 	
 	$query.= ' GROUP BY norm, date ';

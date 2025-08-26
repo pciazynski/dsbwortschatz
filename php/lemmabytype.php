@@ -5,7 +5,7 @@ header('Content-Type: text/plain');
 
 if (isset($_GET['type'])){
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
-	$query = 'SELECT lemma, subtype, SUM(frequency) as summe FROM tokenlemmanormtypesubtypedatefrequency WHERE type="'.$_GET['type'].'"';
+	$query = 'SELECT lemma, subtype, SUM(frequency) as summe FROM tokenlemmatypesubtypedatefrequency WHERE type="'.$_GET['type'].'"';
 	(isset($_GET['subtype'])) ?	$query.=' AND subtype="'.$_GET['subtype'].'"':NULL;
 
 	$query.=" GROUP BY lemma, subtype ";

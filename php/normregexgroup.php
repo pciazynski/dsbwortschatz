@@ -9,7 +9,7 @@ if (isset($_GET['norm'])){
 	
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 	$PDO->sqliteCreateFunction('regexp', '_sqliteRegexp', 2);
-	$query = 'SELECT norm, sum(frequency) as sumfreq FROM tokenlemmanormtypesubtypedatefrequency WHERE norm REGEXP "\|'.$_GET['norm'].'\|" GROUP BY norm ';
+	$query = 'SELECT norm, sum(frequency) as sumfreq FROM tokennormtypesubtypedatefrequency WHERE norm REGEXP "\|'.$_GET['norm'].'\|" GROUP BY norm ';
 
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY sumfreq DESC' : NULL;
 

@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
-	$query = 'SELECT Min(date) as mindate, Max(date) as maxdate FROM tokenlemmanormtypesubtypedatefrequency ';
+	$query = 'SELECT Min(date) as mindate, Max(date) as maxdate FROM tokenlemmatypesubtypedatefrequency ';
 	
 	$tab = "\t";
 	$nl = "\n";

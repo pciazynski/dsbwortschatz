@@ -5,7 +5,7 @@ header('Content-Type: text/plain');
 
 if (isset($_GET['norm'])){
 	$norm = str_replace(",",'|%" OR norm LIKE "%|',$_GET['norm']);
-	$query = 'SELECT * FROM tokenlemmanormtypesubtypedatefrequency';
+	$query = 'SELECT * FROM tokennormtypesubtypedatefrequency';
 	(isset($_GET['exact'])) ? $query .= ' WHERE norm = "|'.$norm.'|"' : $query .= ' WHERE norm LIKE "%|'.$norm.'|%"';
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY date ASC' : NULL;
 	
