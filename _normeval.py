@@ -35,7 +35,7 @@ normuniquebag = {}
 with open ("data/normmapping/_all.txt", "r", encoding="utf8") as inf:
     for line in inf:
         linearr = line.split("\t")
-        norm = linearr[2]
+        norm = linearr[1]
         norm = norm[1:-1]
         if len(norm) > 0:
             normarr = norm.split("|")
