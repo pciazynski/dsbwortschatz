@@ -38,7 +38,6 @@ sumperyear = []
 
 valmatrix = []
 resmatrix = []
-hovertextarr = []
 
 for (var i = 0; i < data_arr.length; i++) {
 	if(data_arr[i].trim().length>0){
@@ -53,23 +52,15 @@ for (var i = 0; i < data_arr.length; i++) {
 	}
 }
 
-
-	for (year in sumperyear){
-		console.log(year+" "+sumperyear[year])
-	}
-	
 	for (key in distinctobjects){
 		tmp1 = []
 		tmp2 = []
-		tmp3 = []
 		for (year in sumperyear){
 			tmp1[year] = 0
 			tmp2[year] = 0
-			tmp3[year] = 0
 		}
 		valmatrix[key] = tmp1
 		resmatrix[key] = tmp2
-		hovertextarr[key] = tmp3
 	}
 
 sum = 0
@@ -84,7 +75,6 @@ sum = 0
 			
 			if(valmatrix[key][year] == 0){valmatrix[key][year] = val}else{valmatrix[key][year] = valmatrix[key][year]+val}
 			res = (valmatrix[key][year] / sumperyear[year] ) * 100
-			hovertextarr[key][year] = key+":"+res.toFixed(3)+"%"
 			resmatrix[key][year] = res
 		}
 	}
@@ -104,10 +94,10 @@ for (key in resmatrix){
 	
 	var trace = {
 		x:years,
+		name:key,
 		y:ys,
+		hovertemplate:"%{x} "+key+" %{y}%",
 		type: 'bar',
-		text: hovertextarr[key][year],
-		hoverinfo: 'text',
 		marker: {color: getColor(key)}
 	};
 	data.push(trace)
@@ -115,8 +105,9 @@ for (key in resmatrix){
 
 var layout = {
 	barmode: 'stack',
-	showlegend:false,
+	showlegend:true,
 	title:diagramtitle,
+	hovermode:'closest',
 	xaxis: 	{
 			automargin: true,
 			range:[minDate-2,maxDate+2],
@@ -128,6 +119,7 @@ var layout = {
 			tickfont:diagramfont
 		},
 			yaxis:{
+			hoverformat: '.3f',
 			automargin: true,
 			title:{
 				text: 'Häufigkeit (%)',
