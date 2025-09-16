@@ -73,7 +73,11 @@ div.iframediv{
 	text-align:right;
 }
 
-button.iframebutton:hover {
+button.iframebutton:disabled {
+	background-color:#F4F4F4;
+}
+
+button.iframebutton:hover:enabled {
 	background-color:#006AB2;
 	color:white;
 }

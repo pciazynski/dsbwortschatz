@@ -16,7 +16,7 @@
 	var lemmalist = getQueryVariable("lemma").split(",")
 	var jitter = getQueryVariable("jitter")
 	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
-	diagramtitle="Jahressumme Lemma"
+	diagramtitle="Jahressumme Lemma inkl. ambig"
 	var data = []
 	maxval = 0
 	minval = 10000000

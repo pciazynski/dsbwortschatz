@@ -129,8 +129,8 @@
 			<td>
 			</td>
 			<td style = "width: 60%;">
-				<button class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
-				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
+				<button id = "switchpercenttimelinebutton" class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
+				<button id = "switchtimelinesumbutton" class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
 				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
@@ -216,7 +216,7 @@
 
 	var switchpercenttimeline  = function(elid){
 		tmp = document.getElementById(elid)
-		url = tmp.src.replaceAll("sum.html",".html")
+		url = tmp.src.replaceAll("sumlist.html",".html").replaceAll("sum.html",".html")
 		if(url.includes("percenttimeline")){
 			tmp.src = url.replace("percenttimeline","timeline")
 		}else{
@@ -226,7 +226,7 @@
 	
 	var switchtimelinesum = function(elid){
 		tmp = document.getElementById(elid)
-		url = tmp.src.replaceAll("percent","")
+		url = tmp.src.replaceAll("percent","").replaceAll("sumlist.html",".html")
 		if(tmp.src.includes("timelinesum")){
 			tmp.src = url.replace("timelinesum","timeline")
 		}else{
@@ -300,6 +300,8 @@
 			document.title=lang_lemmafy+" "+curlemma
 		}
 		document.getElementById('docref').src = 'error_docref.html'
+		document.getElementById('switchtimelinesumbutton').disabled = false;
+		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 	
 	var updateTimelineRegex = function(){
@@ -333,6 +335,8 @@
 		document.title=lang_lemmafy+" "+curlemma
 		document.getElementById('traviz').src = 'error_docref.html'
 		document.getElementById('docref').src = 'error_docref.html'
+		document.getElementById('switchtimelinesumbutton').disabled = true;
+		document.getElementById('switchpercenttimelinebutton').disabled = true;
 	}
 
 	var updateTimeline = function(){
@@ -349,6 +353,8 @@
 		document.title=lang_lemmafy+" "+curlemma
 		document.getElementById('traviz').src = 'error_docref.html'
 		document.getElementById('docref').src = 'error_docref.html'
+		document.getElementById('switchtimelinesumbutton').disabled = false;
+		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 
 	var lemmaClick = function(lemma){
@@ -367,6 +373,8 @@
 		document.getElementById("traviz").src = "traviz.html?data=lemmatokenperyear.php&lemma="+exactlemma+"&exact=1&sort&year="+year
 		document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+exactlemma+"&year="+year
 		document.title=lang_lemmafy+" "+exactlemma
+		document.getElementById('switchtimelinesumbutton').disabled = false;
+		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 	
 	var focus = 0;
