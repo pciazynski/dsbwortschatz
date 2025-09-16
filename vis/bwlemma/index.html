@@ -285,7 +285,7 @@
 			focus = newfocus
 			sourcearr = document.getElementById("timeline").src.split("&focus=")
 			source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
-
+			if(source.includes("timelinesumlist")){source = source.replaceAll("timelinesumlist","timeline")}
 			if(focus==3){
 				document.getElementById("focusbutton0").style.boxShadow  = "none"
 				document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
@@ -322,9 +322,11 @@
 		loading("lemmagroup")
 		loading("tokengroup")
 		curlemma = document.getElementById("lemmalist").value.trim()
+		document.getElementById("focusbutton0").style.boxShadow  = "none"
+		document.getElementById("focusbutton0").style.boxShadow  = "none"
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
 		if(curlemma.length>0){
-			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
+			document.getElementById("timeline").src="timelinesumlist.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
 			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
 		}
