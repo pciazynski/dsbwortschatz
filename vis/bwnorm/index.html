@@ -128,8 +128,8 @@
 		<tr style = "text-align:right;">
 			<td></td>
 			<td>
-				<button class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
-				<button class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
+				<button id = "switchpercenttimelinebutton" class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
+				<button id = "switchtimelinesumbutton" class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
 				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
@@ -248,19 +248,23 @@
 	}
 
 	var updateTimelineList = function(){
-		loading("timeline")
-		loading("normgroup")
-		loading("tokengroup")
 		curnorm = document.getElementById("normlist").value.trim()
-		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
 		if(curnorm.length>0){
-			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
+			loading("timeline")
+			loading("normgroup")
+			loading("tokengroup")
+			if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
+			document.getElementById("timeline").src="timelinesumlist.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
 			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
 			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
+			document.getElementById("focusbutton0").style.boxShadow  = "none"
+			document.getElementById("focusbutton3").style.boxShadow  = "none"
+			document.title=lang_normify+" "+curnorm
+			document.getElementById('traviz').src = 'error_docref.html'
+			document.getElementById('docref').src = 'error_docref.html'
+			document.getElementById('switchtimelinesumbutton').disabled = true;
+			document.getElementById('switchpercenttimelinebutton').disabled = true;
 		}
-		document.title=lang_normify+" "+curnorm
-		document.getElementById('traviz').src = 'error_docref.html'
-		document.getElementById('docref').src = 'error_docref.html'
 	}
 
 	var updateYearlabel = function(){
@@ -296,24 +300,27 @@
 	}
 	
 	var updateFocus = function(newfocus){
-		loading("timeline")
-		focus = newfocus
-		sourcearr = document.getElementById("timeline").src.split("&focus=")
-		source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
-		if(focus==3){
-			document.getElementById("focusbutton0").style.boxShadow  = "none"
-			document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
-			source = source.replace("normsumperyear","normcountperyear")}
-		else{
-			document.getElementById("focusbutton3").style.boxShadow  = "none"
-			document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-			source = source.replace("normcountperyear","normsumperyear")
-		}
 		if(curnorm.length>0){
+			focus = newfocus
+			sourcearr = document.getElementById("timeline").src.split("&focus=")
+			source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
+			if(source.includes("timelinesumlist")){source = source.replaceAll("timelinesumlist","timeline")}
+			if(focus==3){
+				document.getElementById("focusbutton0").style.boxShadow  = "none"
+				document.getElementById("focusbutton3").style.boxShadow  = "-7px 0px 3px 6px white"
+				source = source.replace("normsumperyear","normcountperyear")}
+			else{
+				document.getElementById("focusbutton3").style.boxShadow  = "none"
+				document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
+				source = source.replace("normcountperyear","normsumperyear")
+			}
+			loading("timeline")
 			document.getElementById("timeline").src=source
-			document.title="Normierung "+curnorm
+			document.title=lang_normify+" "+curnorm
+			document.getElementById('docref').src = 'error_docref.html'
+			document.getElementById('switchtimelinesumbutton').disabled = false;
+			document.getElementById('switchpercenttimelinebutton').disabled = false;
 		}
-		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	var updateTimelineRegex = function(){
@@ -329,6 +336,8 @@
 		document.getElementById('docref').src = 'error_docref.html'
 		document.getElementById('traviz').src = 'error_docref.html'
 		document.title=lang_normify+" "+curnorm
+		document.getElementById('switchtimelinesumbutton').disabled = false;
+		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 	
 	var updateTimeline = function(){
@@ -344,6 +353,8 @@
 		}
 		document.getElementById('docref').src = 'error_docref.html'
 		document.getElementById('traviz').src = 'error_docref.html'
+		document.getElementById('switchtimelinesumbutton').disabled = false;
+		document.getElementById('switchpercenttimelinebutton').disabled = false;
 		document.title=lang_normify+" "+curnorm
 	}
 
@@ -362,6 +373,8 @@
 		year = "BETWEEN " + yearfrom + " AND " + yearto
 		document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactnorm+"&exact=1&sort&year="+year
 		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactnorm+"&year="+year
+		document.getElementById('switchtimelinesumbutton').disabled = false;
+		document.getElementById('switchpercenttimelinebutton').disabled = false;
 		document.title=lang_normify+" "+exactnorm
 	}
 	

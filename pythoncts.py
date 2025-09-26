@@ -4,21 +4,21 @@ ctsurl=""
 oldns = ""
 manualurl = ""
 
-def setmanualurl(newurl):
+def cts_setmanualurl(newurl):
     global manualurl
     manualurl = newurl
     
-def setCtsSource(url):
+def cts_setCtsSource(url):
     global ctsurl
     ctsurl = url
     
-def requestCtsUrl(ns):
+def cts_nsurl(ns):
     global ctsurl
     data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
     for line in data:
         ctsurl+=line.decode('utf-8')
    
-def checkConfig(reference):
+def cts_checkConfig(reference):
     global ctsurl
     global manualurl
     global oldns
@@ -28,9 +28,9 @@ def checkConfig(reference):
         ctsurl = ""
         oldns = reference
     if(len(ctsurl) == 0 and len(manualurl)==0):
-        requestCtsUrl(reference)
+        cts_nsurl(reference)
 
-def requestFromCts (requesturl):
+def cts_requestFromCts (requesturl):
     global ctsurl
     global manualurl
     if len(manualurl)>0:
@@ -39,125 +39,123 @@ def requestFromCts (requesturl):
         thisurl = ctsurl
     
     res = ""
-#    print(thisurl+requesturl)
-#    exit()
     data = urlopen(thisurl+requesturl)
     for line in data: 
         res+=line.decode('utf-8')
     return res.strip("\n")
 
-def daterange(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/daterange.php")
+def cts_daterange(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/daterange.php")
 
-def doccount(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/doccount.php")
+def cts_doccount(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/doccount.php")
 
-def urncount(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/urncount.php")
+def cts_urncount(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/urncount.php")
 
-def dates(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/dates.php")
+def cts_dates(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/dates.php")
 
-def doclanguages(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/doclanguages.php")
+def cts_doclanguages(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/doclanguages.php")
 
-def authors(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/authors.php")
+def cts_authors(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/authors.php")
 
-def anyworkurn(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/anyworkurn.php")
+def cts_anyworkurn(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/anyworkurn.php")
 
-def anyurn(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/anyurn.php")
+def cts_anyurn(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/anyurn.php")
     
-def inventory(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/editions.php")
+def cts_inventory(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/editions.php")
     
-def docurns(ns):
-    checkConfig(ns)
-    return requestFromCts("plain/editionsslim.php")
+def cts_docurns(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/editionsslim.php")
 
     
-def urnsperlang(urn, params=""):
-    checkConfig(urn)
+def cts_urnsperlang(urn, params=""):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("plain/urnsperlang.php?urn="+urn+params)
+    return cts_requestFromCts("plain/urnsperlang.php?urn="+urn+params)
 
-def label(urn):
-    checkConfig(urn)
-    return requestFromCts("plain/label.php?urn="+urn)
+def cts_label(urn):
+    cts_checkConfig(urn)
+    return cts_requestFromCts("plain/label.php?urn="+urn)
 
-def prevnexturn(urn):
-    checkConfig(urn)
-    return requestFromCts("plain/prevnexturn.php?urn="+urn)
+def cts_prevnexturn(urn):
+    cts_checkConfig(urn)
+    return cts_requestFromCts("plain/prevnexturn.php?urn="+urn)
 
-def firsturn(urn):
-    checkConfig(urn)
-    return requestFromCts("plain/firsturn.php?urn="+urn)
+def cts_firsturn(urn):
+    cts_checkConfig(urn)
+    return cts_requestFromCts("plain/firsturn.php?urn="+urn)
 
-def validreff(urn):
-    checkConfig(urn)
-    return requestFromCts("plain/validreff.php?urn="+urn)
+def cts_validreff(urn):
+    cts_checkConfig(urn)
+    return cts_requestFromCts("plain/validreff.php?urn="+urn)
 
 
-def structuretext(urn, params=""):
-    checkConfig(urn)
+def cts_structuretext(urn, params=""):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("plain/structuretext.php?urn="+urn+params)
+    return cts_requestFromCts("plain/structuretext.php?urn="+urn+params)
 
-def structurebagofwords(urn, params="&sort&lowercase"):
-    checkConfig(urn)
+def cts_structurebagofwords(urn, params="&sort&lowercase"):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("tm/structurebagofwords.php?urn="+urn+params)
+    return cts_requestFromCts("tm/structurebagofwords.php?urn="+urn+params)
 
-def bagofwords(urn, params="&sort&lowercase"):
-    checkConfig(urn)
+def cts_bagofwords(urn, params="&sort&lowercase"):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("tm/bagofwords.php?urn="+urn+params)
+    return cts_requestFromCts("tm/bagofwords.php?urn="+urn+params)
 
-def ngram(urn,params="&sort&lowercase&n=3"):
-    checkConfig(urn)
+def cts_ngram(urn,params="&sort&lowercase&n=3"):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("tm/ngrams.php?urn="+urn+params)
+    return cts_requestFromCts("tm/ngrams.php?urn="+urn+params)
     
-def textpassage(urn, params="&deletexml"):
-    checkConfig(urn)
+def cts_passage(urn, params="&deletexml"):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("plain/passage.php?urn="+urn+params)
+    return cts_requestFromCts("plain/passage.php?urn="+urn+params)
 
-def textpassage_xml(urn, params="&deletexml"):
-    checkConfig(urn)
+def cts_passage_xml(urn, params="&deletexml"):
+    cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("cts/?request=GetPassage&urn="+urn+params)
+    return cts_requestFromCts("cts/?request=GetPassage&urn="+urn+params)
 
-def textsearch(urn, params=""):
+def cts_textsearch(urn, params=""):
     if not "snippet=" in params:
         return ""
-    checkConfig(urn)
+    cts_checkConfig(urn)
     if not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("plain/textsearch.php?urn="+urn+params)
+    return cts_requestFromCts("plain/textsearch.php?urn="+urn+params)
     
-def exactsearch(urn, params=""):
+def cts_exactsearch(urn, params=""):
     if not "snippet=" in params:
         return ""
-    checkConfig(urn)
+    cts_checkConfig(urn)
     if not params.startswith("&"):
         params = "&"+params
-    return requestFromCts("plain/exactsearch.php?urn="+urn+params)
+    return cts_requestFromCts("plain/exactsearch.php?urn="+urn+params)

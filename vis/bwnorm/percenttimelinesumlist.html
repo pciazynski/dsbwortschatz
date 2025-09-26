@@ -28,29 +28,29 @@
 
 	data_arr = readPHP(dataset).split("\n");
 
-	function formattext(labelvalue,val,sum){
-		prc = (val/sum*100).toFixed(1)
-		if (prc<10){prc ="0"+prc}
-		return labelvalue+": " + prc +"%"
-	}
-	distinctobjects = []
-	sumperyear = []
+function formattext(labelvalue,val,sum){
+	prc = (val/sum*100).toFixed(1)
+	if (prc<10){prc ="0"+prc}
+	return labelvalue+": " + prc +"%"
+}
+distinctobjects = []
+sumperyear = []
 
-	valmatrix = []
-	resmatrix = []
+valmatrix = []
+resmatrix = []
 
-	for (var i = 0; i < data_arr.length; i++) {
-		if(data_arr[i].trim().length>0){
-			tmp = data_arr[i].split(sep)
-			distinctobjects[tmp[focus]] = 0
-			if(sumperyear[tmp[1]] != undefined){
-				sumperyear[tmp[1]] = sumperyear[tmp[1]] + parseInt(tmp[2])
-			}
-			else{
-				sumperyear[tmp[1]] = parseInt(tmp[2])
-			}
+for (var i = 0; i < data_arr.length; i++) {
+	if(data_arr[i].trim().length>0){
+		tmp = data_arr[i].split(sep)
+		distinctobjects[tmp[focus]] = 0
+		if(sumperyear[tmp[1]] != undefined){
+			sumperyear[tmp[1]] = sumperyear[tmp[1]] + parseInt(tmp[2])
+		}
+		else{
+			sumperyear[tmp[1]] = parseInt(tmp[2])
 		}
 	}
+}
 
 	for (key in distinctobjects){
 		tmp1 = []
@@ -63,7 +63,7 @@
 		resmatrix[key] = tmp2
 	}
 
-	sum = 0
+sum = 0
 
 	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i].trim();
@@ -79,39 +79,36 @@
 		}
 	}
 
-	var data = []
-	var years = []
+var data = []
+var years = []
 
-	for (key in sumperyear){
-		years.push(key)
+for (key in sumperyear){
+	years.push(key)
+}
+
+for (key in resmatrix){
+	ys = []
+	for (year in sumperyear){
+		ys.push(resmatrix[key][year])
 	}
+	
+	var trace = {
+		x:years,
+		name:key,
+		y:ys,
+		hovertemplate:"%{x} "+key+" %{y}%",
+		type: 'bar',
+		marker: {color: getColor(key)}
+	};
+	data.push(trace)
+}
 
-	for (key in resmatrix){
-		ys = []
-		for (year in sumperyear){
-			ys.push(resmatrix[key][year])
-		}
-		
-		var trace = {
-			x:years,
-			name:key,
-			y:ys,
-			hovertemplate:"%{x} "+key+" %{y}%",
-			type: 'bar',
-			marker: {color: getColor(key)}
-		};
-		data.push(trace)
-	}
-
-	var layout = {
-		barmode: 'stack',
-		showlegend:true,
-		title:{
-			text:diagramtitle,
-			font:diagramfont
-		},
-		hovermode:'closest',
-		xaxis:{
+var layout = {
+	barmode: 'stack',
+	showlegend:false,
+	title:diagramtitle,
+	hovermode:'closest',
+	xaxis: 	{
 			automargin: true,
 			range:[minDate-2,maxDate+2],
 			linewidth: 1,
@@ -121,26 +118,36 @@
 			tickangle:90,
 			tickfont:diagramfont
 		},
-		yaxis:{
-		range:[0,110],
-		title:{
-			text: 'Häufigkeit (%)',
-			font:diagramfont
-			}
+			yaxis:{
+			hoverformat: '.3f',
+			range:[0,110],
+			title:{
+				text: 'Häufigkeit (%)',
+				font:diagramfont
+				}
+			},
+	legend:{
+		x:0.1, 
+		y:0.1, 
+		//traceorder:"normal",
+		font:{
+			family:diagramfont,
+			size:9
 		},
-		annotations: watermarke(),
-		updatemenus: [{
-			type: 'buttons',
-			buttons: [{
-				label: 'Filter',
-				method: 'relayout',
-				args: ['showlegend', false],
-				args2: ['showlegend', true]
+	},
+	annotations: watermarke(),
+	updatemenus: [{
+		type: 'buttons',
+		buttons: [{
+			label: 'Filter',
+			method: 'relayout',
+			args: ['showlegend', false],
+			args2: ['showlegend', true]
 			}]
-		}]
-	};
+	}]
+};
 
-	Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
+Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
 
 </script>
 

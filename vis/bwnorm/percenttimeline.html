@@ -28,30 +28,30 @@
 
 	data_arr = readPHP(dataset).split("\n");
 
-function formattext(labelvalue,val,sum){
-	prc = (val/sum*100).toFixed(1)
-	if (prc<10){prc ="0"+prc}
-	return labelvalue+": " + prc +"%"
-}
-distinctobjects = []
-sumperyear = []
+	function formattext(labelvalue,val,sum){
+		prc = (val/sum*100).toFixed(1)
+		if (prc<10){prc ="0"+prc}
+		return labelvalue+": " + prc +"%"
+	}
+	distinctobjects = []
+	sumperyear = []
 
-valmatrix = []
-resmatrix = []
-hovertextarr = []
+	valmatrix = []
+	resmatrix = []
+	hovertextarr = []
 
-for (var i = 0; i < data_arr.length; i++) {
-	if(data_arr[i].trim().length>0){
-		tmp = data_arr[i].split(sep)
-		distinctobjects[tmp[focus]] = 0
-		if(sumperyear[tmp[1]] != undefined){
-			sumperyear[tmp[1]] = sumperyear[tmp[1]] + parseInt(tmp[2])
-		}
-		else{
-			sumperyear[tmp[1]] = parseInt(tmp[2])
+	for (var i = 0; i < data_arr.length; i++) {
+		if(data_arr[i].trim().length>0){
+			tmp = data_arr[i].split(sep)
+			distinctobjects[tmp[focus]] = 0
+			if(sumperyear[tmp[1]] != undefined){
+				sumperyear[tmp[1]] = sumperyear[tmp[1]] + parseInt(tmp[2])
+			}
+			else{
+				sumperyear[tmp[1]] = parseInt(tmp[2])
+			}
 		}
 	}
-}
 
 	for (key in distinctobjects){
 		tmp1 = []
@@ -64,7 +64,7 @@ for (var i = 0; i < data_arr.length; i++) {
 		resmatrix[key] = tmp2
 	}
 
-sum = 0
+	sum = 0
 
 	for (var i = 0; i < data_arr.length; i++) {
 		line = data_arr[i].trim();
@@ -80,36 +80,39 @@ sum = 0
 		}
 	}
 
-var data = []
-var years = []
+	var data = []
+	var years = []
 
-for (key in sumperyear){
-	years.push(key)
-}
-
-for (key in resmatrix){
-	ys = []
-	for (year in sumperyear){
-		ys.push(resmatrix[key][year])
+	for (key in sumperyear){
+		years.push(key)
 	}
-	
-	var trace = {
-		x:years,
-		y:ys,
-		name:key,
-		hovertemplate:"%{x} "+key+" %{y}%",
-		type: 'bar',
-		marker: {color: getColor(key)}
-	};
-	data.push(trace)
-}
 
-var layout = {
-	barmode: 'stack',
-	showlegend:true,
-	title:diagramtitle,
-	hovermode:'closest',
-	xaxis: 	{
+	for (key in resmatrix){
+		ys = []
+		for (year in sumperyear){
+			ys.push(resmatrix[key][year])
+		}
+		
+		var trace = {
+			x:years,
+			y:ys,
+			name:key,
+			hovertemplate:"%{x} "+key+" %{y}%",
+			type: 'bar',
+			marker: {color: getColor(key)}
+		};
+		data.push(trace)
+	}
+
+	var layout = {
+		barmode: 'stack',
+		showlegend:true,
+		title:{
+			text:diagramtitle,
+			font:diagramfont
+		},
+		hovermode:'closest',
+		xaxis:{
 			automargin: true,
 			range:[minDate-2,maxDate+2],
 			linewidth: 1,
@@ -119,26 +122,26 @@ var layout = {
 			tickangle:90,
 			tickfont:diagramfont
 		},
-			yaxis:{
-			range:[0,110],
-			title:{
-				text: 'Häufigkeit (%)',
-				font:diagramfont
-				}
-			},
+		yaxis:{
+		range:[0,110],
+		title:{
+			text: 'Häufigkeit (%)',
+			font:diagramfont
+			}
+		},
 		annotations: watermarke(),
-	updatemenus: [{
-		type: 'buttons',
-		buttons: [{
-			label: 'Filter',
-			method: 'relayout',
-			args: ['showlegend', false],
-			args2: ['showlegend', true]
+		updatemenus: [{
+			type: 'buttons',
+			buttons: [{
+				label: 'Filter',
+				method: 'relayout',
+				args: ['showlegend', false],
+				args2: ['showlegend', true]
+			}]
 		}]
-	}]
-};
+	};
 
-Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
+	Plotly.newPlot('myDiv', data, layout,plotlyconfiguration);
 
 </script>
 
