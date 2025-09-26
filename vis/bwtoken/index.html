@@ -100,7 +100,8 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzeltoken)</button>
+				<button id = "switchpercenttimelinebutton" class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
+				<button id = "switchlinreg" class = "iframebutton" onclick="linreg('timeline');"><script>document.write(lang_linreg)</script></button>
 				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
@@ -185,6 +186,7 @@
 		if(tmp.length>0){
 			document.getElementById("timeline").src="timeline.html?data=regexsearch.php&token="+tmp+"&sort"
 		}
+		document.getElementById('switchlinreg').disabled = true;
 	}
 
 
@@ -195,8 +197,17 @@
 		}
 	}
 
+	var switchpercenttimeline  = function(elid){
+		tmp = document.getElementById(elid)
+		url = tmp.src.replaceAll("sum.html",".html").replaceAll('linreg_chart','timeline')
+		if(url.includes("percenttimeline")){
+			tmp.src = url.replace("percenttimeline","timeline")
+		}else{
+			tmp.src = url.replace("timeline","percenttimeline")
+		}
+	}
+
 	var addTokenToList = function(){
-		loading("timeline")
 		tmp = document.getElementById("token").value.trim()
 		tmp2 = document.getElementById("tokenlist").value.trim()
 		str = ""
@@ -204,7 +215,7 @@
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
 			document.getElementById("tokenlist").value = str
-			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+str+"&sort"
+			updateTimelineTokenList()
 		}
 	}
 
@@ -214,6 +225,7 @@
 		if(tmp.length>0){
 			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
 		}
+		document.getElementById('switchlinreg').disabled = true;
 	}
 
 	var updateTimeline = function(){
@@ -225,7 +237,7 @@
 			document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
 		}
 		document.title="Token "+tmp
-
+		document.getElementById('switchlinreg').disabled = false;
 	}
 		
 	token = getQueryVariable('token')
