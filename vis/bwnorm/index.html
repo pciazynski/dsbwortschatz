@@ -243,23 +243,23 @@
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
 			document.getElementById("normlist").value = str
+			updateTimelineList()
 		}
-		updateTimelineList()
 	}
 
 	var updateTimelineList = function(){
-		curnorm = document.getElementById("normlist").value.trim()
-		if(curnorm.length>0){
+		curitem = document.getElementById("normlist").value.trim()
+		if(curitem.length>0){
 			loading("timeline")
 			loading("normgroup")
 			loading("tokengroup")
 			if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
-			document.getElementById("timeline").src="timelinesumlist.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
-			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
+			document.getElementById("timeline").src="timelinesumlist.html?data="+funcall+".php&norm="+curitem+"&sort&focus="+focus
+			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curitem+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curitem+"&sort"
 			document.getElementById("focusbutton0").style.boxShadow  = "none"
 			document.getElementById("focusbutton3").style.boxShadow  = "none"
-			document.title=lang_normify+" "+curnorm
+			document.title=lang_normify+" "+curitem
 			document.getElementById('traviz').src = 'error_docref.html'
 			document.getElementById('docref').src = 'error_docref.html'
 			document.getElementById('switchtimelinesumbutton').disabled = true;
@@ -274,33 +274,33 @@
 
 	
 	var updateTravizYear = function(){
-		if(exactnorm.trim().length>0){
+		if(exactitem.trim().length>0){
 			loading("traviz")
 			url = document.getElementById("traviz").src.split("&year")[0]
 			yearfrom = document.getElementById("yearminslider").value
 			yearto = document.getElementById("yearmaxslider").value
 			year = "BETWEEN " + yearfrom + " AND " + yearto
-			document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactnorm+"&exact=1&sort&year="+year
-			document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactnorm+"&year="+year
+			document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactitem+"&exact=1&sort&year="+year
+			document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactitem+"&year="+year
 		}
 	}
 	
 	var callDolnoserbski = function(){
-		curnorm = document.getElementById("norm").value.trim()
-		if(curnorm.length>0){
-			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curnorm, "_blank")
+		curitem = document.getElementById("norm").value.trim()
+		if(curitem.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curitem, "_blank")
 		}
 	}
 	
 	var callNormtree = function(){
-		curnorm = document.getElementById("norm").value.trim()
-		if(curnorm.length>0){
-			window.open("../normvariation?norm="+curnorm, "_blank")
+		curitem = document.getElementById("norm").value.trim()
+		if(curitem.length>0){
+			window.open("../normvariation?norm="+curitem, "_blank")
 		}
 	}
 	
 	var updateFocus = function(newfocus){
-		if(curnorm.length>0){
+		if(curitem.length>0){
 			focus = newfocus
 			sourcearr = document.getElementById("timeline").src.split("&focus=")
 			source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
@@ -316,7 +316,7 @@
 			}
 			loading("timeline")
 			document.getElementById("timeline").src=source
-			document.title=lang_normify+" "+curnorm
+			document.title=lang_normify+" "+curitem
 			document.getElementById('docref').src = 'error_docref.html'
 			document.getElementById('switchtimelinesumbutton').disabled = false;
 			document.getElementById('switchpercenttimelinebutton').disabled = false;
@@ -324,66 +324,66 @@
 	}
 	
 	var updateTimelineRegex = function(){
-		loading("timeline")
-		loading("normgroup")
-		loading("tokengroup")
-		curnorm = document.getElementById("regexsearch").value.trim()
-		if(curnorm.length>0){
-			document.getElementById("timeline").src="timeline.html?data=normregexsearch.php&norm="+curnorm+"&sort&focus="+focus
-			document.getElementById("normgroup").src="normlist.html?data=normregexgroup.php&norm="+curnorm+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=normregex2token.php&norm="+curnorm+"&sort"
+		curitem = document.getElementById("regexsearch").value.trim()
+		if(curitem.length>0){
+			loading("timeline")
+			loading("normgroup")
+			loading("tokengroup")
+				document.getElementById("timeline").src="timeline.html?data=normregexsearch.php&norm="+curitem+"&sort&focus="+focus
+				document.getElementById("normgroup").src="normlist.html?data=normregexgroup.php&norm="+curitem+"&sort"
+				document.getElementById("tokengroup").src="tokenlist.html?data=normregex2token.php&norm="+curitem+"&sort"
+			document.getElementById('docref').src = 'error_docref.html'
+			document.getElementById('traviz').src = 'error_docref.html'
+			document.title=lang_normify+" "+curitem
+			document.getElementById('switchtimelinesumbutton').disabled = false;
+			document.getElementById('switchpercenttimelinebutton').disabled = false;
 		}
-		document.getElementById('docref').src = 'error_docref.html'
-		document.getElementById('traviz').src = 'error_docref.html'
-		document.title=lang_normify+" "+curnorm
-		document.getElementById('switchtimelinesumbutton').disabled = false;
-		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 	
 	var updateTimeline = function(){
-		loading("timeline")
-		loading("normgroup")
-		loading("tokengroup")
-		curnorm = document.getElementById("norm").value.trim()
-		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
-		if(curnorm.length>0){
-			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curnorm+"&sort&focus="+focus
-			document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curnorm+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curnorm+"&sort"
+		curitem = document.getElementById("norm").value.trim()
+		if(curitem.length>0){
+			loading("timeline")
+			loading("normgroup")
+			loading("tokengroup")
+			if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
+				document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+curitem+"&sort&focus="+focus
+				document.getElementById("normgroup").src="normlist.html?data=normgroup.php&norm="+curitem+"&sort"
+				document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+curitem+"&sort"
+			document.getElementById('docref').src = 'error_docref.html'
+			document.getElementById('traviz').src = 'error_docref.html'
+			document.getElementById('switchtimelinesumbutton').disabled = false;
+			document.getElementById('switchpercenttimelinebutton').disabled = false;
+			document.title=lang_normify+" "+curitem
 		}
-		document.getElementById('docref').src = 'error_docref.html'
-		document.getElementById('traviz').src = 'error_docref.html'
-		document.getElementById('switchtimelinesumbutton').disabled = false;
-		document.getElementById('switchpercenttimelinebutton').disabled = false;
-		document.title=lang_normify+" "+curnorm
 	}
 
-	var normClick = function(norm){
+	var itemClick = function(item){
 		loading("timeline")
 		loading("tokengroup")
 		loading("traviz")
-		exactnorm=norm
+		exactitem=item
 		if(focus==3){funcall = "normcountperyear"}else{funcall="normsumperyear"}
-		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+exactnorm+"&sort&exact=1"
-		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+exactnorm+"&exact=1&focus="+focus
-		document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+exactnorm+"&sort&exact=1"
+		document.getElementById("traviz").src="traviz.html?data=normtoken.php&norm="+exactitem+"&sort&exact=1"
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&norm="+exactitem+"&exact=1&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=normtoken.php&norm="+exactitem+"&sort&exact=1"
 		url = document.getElementById("traviz").src.split("&year")[0]
 		yearfrom = document.getElementById("yearminslider").value
 		yearto = document.getElementById("yearmaxslider").value
 		year = "BETWEEN " + yearfrom + " AND " + yearto
-		document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactnorm+"&exact=1&sort&year="+year
-		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactnorm+"&year="+year
+		document.getElementById("traviz").src = "traviz.html?data=normtokenperyear.php&norm="+exactitem+"&exact=1&sort&year="+year
+		document.getElementById('docref').src = 'doclist.html?data=urnbynorm.php&norm='+exactitem+"&year="+year
 		document.getElementById('switchtimelinesumbutton').disabled = false;
 		document.getElementById('switchpercenttimelinebutton').disabled = false;
-		document.title=lang_normify+" "+exactnorm
+		document.title=lang_normify+" "+exactitem
 	}
 	
 	var focus = 0;
 	document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-	curnorm = getQueryVariable("norm")
-	exactnorm = ""
-	if(curnorm.length>0){
-		document.getElementById("norm").value = curnorm
+	curitem = getQueryVariable("norm")
+	exactitem = ""
+	if(curitem.length>0){
+		document.getElementById("norm").value = curitem
 		updateTimeline()
 		document.getElementById("norm").scrollIntoView()
 	}
@@ -393,7 +393,7 @@
 		document.getElementById('tokengroup').src="error_token.html"
 	}
 	
-	document.title=lang_normify+" "+curnorm
+	document.title=lang_normify+" "+curitem
 
 </script>
 <br><br>

@@ -242,8 +242,8 @@
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
 			document.getElementById("lemmalist").value = str
+			updateTimelineList()
 		}
-		updateTimelineList()
 	}
 	
 	var updateYearlabel = function(){
@@ -253,35 +253,35 @@
 
 	
 	var updateTravizYear = function(){
-		if(exactlemma.trim().length>0){
+		if(exactitem.trim().length>0){
 			loading("traviz")
 			loading("docref")
 			url = document.getElementById("traviz").src.split("&year")[0]
 			yearfrom = document.getElementById("yearminslider").value
 			yearto = document.getElementById("yearmaxslider").value
 			year = "BETWEEN " + yearfrom + " AND " + yearto
-			document.getElementById("traviz").src = "traviz.html?data=lemmatokenperyear.php&lemma="+exactlemma+"&exact=1&sort&year="+year
-			document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+exactlemma+"&year="+year
+			document.getElementById("traviz").src = "traviz.html?data=lemmatokenperyear.php&lemma="+exactitem+"&exact=1&sort&year="+year
+			document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+exactitem+"&year="+year
 		}
 	}
 	
 	var callDolnoserbski = function(){
-		curlemma = document.getElementById("lemma").value.trim()
-		if(curlemma.length>0){
-			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curlemma, "_blank")
+		curitem = document.getElementById("lemma").value.trim()
+		if(curitem.length>0){
+			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+curitem, "_blank")
 		}
 	}
 	
 	var callLemmatree = function(){
-		curlemma = document.getElementById("lemma").value.trim()
-		if(curlemma.length>0){
-			window.open("../lemmavariation?lemma="+curlemma, "_blank")
+		curitem = document.getElementById("lemma").value.trim()
+		if(curitem.length>0){
+			window.open("../lemmavariation?lemma="+curitem, "_blank")
 		}
 	}
 	
 	
 	var updateFocus = function(newfocus){
-		if(curlemma.length>0){
+		if(curitem.length>0){
 			focus = newfocus
 			sourcearr = document.getElementById("timeline").src.split("&focus=")
 			source = sourcearr[0]+sourcearr[1].slice(1)+"&focus="+focus
@@ -297,7 +297,7 @@
 			}
 			loading("timeline")
 			document.getElementById("timeline").src=source
-			document.title=lang_lemmafy+" "+curlemma
+			document.title=lang_lemmafy+" "+curitem
 			document.getElementById('docref').src = 'error_docref.html'
 			document.getElementById('switchtimelinesumbutton').disabled = false;
 			document.getElementById('switchpercenttimelinebutton').disabled = false;
@@ -305,35 +305,35 @@
 	}
 	
 	var updateTimelineRegex = function(){
-		loading("timeline")
-		loading("lemmagroup")
-		loading("tokengroup")
-		curlemma = document.getElementById("regexsearch").value.trim()
-		if(curlemma.length>0){
-			document.getElementById("timeline").src="timeline.html?data=lemmaregexsearch.php&lemma="+curlemma+"&sort&focus="+focus
-			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curlemma+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curlemma+"&sort"
+		curitem = document.getElementById("regexsearch").value.trim()
+		if(curitem.length>0){
+			loading("timeline")
+			loading("lemmagroup")
+			loading("tokengroup")
+			document.getElementById("timeline").src="timeline.html?data=lemmaregexsearch.php&lemma="+curitem+"&sort&focus="+focus
+			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmaregexgroup.php&lemma="+curitem+"&sort"
+			document.getElementById("tokengroup").src="tokenlist.html?data=lemmaregex2token.php&lemma="+curitem+"&sort"
+			document.title=lang_lemmafy+" "+curitem
+			document.getElementById('docref').src = 'error_docref.html'
+			document.getElementById('traviz').src = 'error_docref.html'
+			document.getElementById('switchtimelinesumbutton').disabled = false;
+			document.getElementById('switchpercenttimelinebutton').disabled = false;
 		}
-		document.title=lang_lemmafy+" "+curlemma
-		document.getElementById('docref').src = 'error_docref.html'
-		document.getElementById('traviz').src = 'error_docref.html'
-		document.getElementById('switchtimelinesumbutton').disabled = false;
-		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 
 	var updateTimelineList = function(){
-		curlemma = document.getElementById("lemmalist").value.trim()
-		if(curlemma.length>0){
+		curitem = document.getElementById("lemmalist").value.trim()
+		if(curitem.length>0){
 			loading("timeline")
 			loading("lemmagroup")
 			loading("tokengroup")
 			document.getElementById("focusbutton0").style.boxShadow  = "none"
 			document.getElementById("focusbutton3").style.boxShadow  = "none"
 			if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-				document.getElementById("timeline").src="timelinesumlist.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
-				document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
-				document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
-			document.title=lang_lemmafy+" "+curlemma
+				document.getElementById("timeline").src="timelinesumlist.html?data="+funcall+".php&lemma="+curitem+"&sort&focus="+focus
+				document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curitem+"&sort"
+				document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curitem+"&sort"
+			document.title=lang_lemmafy+" "+curitem
 			document.getElementById('traviz').src = 'error_docref.html'
 			document.getElementById('docref').src = 'error_docref.html'
 			document.getElementById('switchtimelinesumbutton').disabled = true;
@@ -342,49 +342,49 @@
 	}
 
 	var updateTimeline = function(){
-		loading("timeline")
-		loading("lemmagroup")
-		loading("tokengroup")
-		curlemma = document.getElementById("lemma").value.trim()
-		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		if(curlemma.length>0){
-			document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curlemma+"&sort&focus="+focus
-			document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curlemma+"&sort"
-			document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curlemma+"&sort"
+		curitem = document.getElementById("lemma").value.trim()
+		if(curitem.length>0){
+			loading("timeline")
+			loading("lemmagroup")
+			loading("tokengroup")
+			if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
+				document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+curitem+"&sort&focus="+focus
+				document.getElementById("lemmagroup").src="lemmalist.html?data=lemmagroup.php&lemma="+curitem+"&sort"
+				document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+curitem+"&sort"
+			document.title=lang_lemmafy+" "+curitem
+			document.getElementById('traviz').src = 'error_docref.html'
+			document.getElementById('docref').src = 'error_docref.html'
+			document.getElementById('switchtimelinesumbutton').disabled = false;
+			document.getElementById('switchpercenttimelinebutton').disabled = false;
 		}
-		document.title=lang_lemmafy+" "+curlemma
-		document.getElementById('traviz').src = 'error_docref.html'
-		document.getElementById('docref').src = 'error_docref.html'
-		document.getElementById('switchtimelinesumbutton').disabled = false;
-		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 
-	var lemmaClick = function(lemma){
+	var itemClick = function(item){
 		loading("timeline")
 		loading("tokengroup")
 		loading("traviz")
 		loading("docref")
-		exactlemma=lemma
+		exactitem=item
 		if(focus==3){funcall = "lemmacountperyear"}else{funcall="lemmasumperyear"}
-		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+exactlemma+"&exact=1&focus="+focus
-		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+exactlemma+"&sort&exact=1"
+		document.getElementById("timeline").src="timeline.html?data="+funcall+".php&lemma="+exactitem+"&exact=1&focus="+focus
+		document.getElementById("tokengroup").src="tokenlist.html?data=lemmatoken.php&lemma="+exactitem+"&sort&exact=1"
 		url = document.getElementById("traviz").src.split("&year")[0].replaceAll("&exact=0","")
 		yearfrom = document.getElementById("yearminslider").value
 		yearto = document.getElementById("yearmaxslider").value
 		year = "BETWEEN " + yearfrom + " AND " + yearto
-		document.getElementById("traviz").src = "traviz.html?data=lemmatokenperyear.php&lemma="+exactlemma+"&exact=1&sort&year="+year
-		document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+exactlemma+"&year="+year
-		document.title=lang_lemmafy+" "+exactlemma
+		document.getElementById("traviz").src = "traviz.html?data=lemmatokenperyear.php&lemma="+exactitem+"&exact=1&sort&year="+year
+		document.getElementById('docref').src = 'doclist.html?data=urnbylemma.php&lemma='+exactitem+"&year="+year
+		document.title=lang_lemmafy+" "+exactitem
 		document.getElementById('switchtimelinesumbutton').disabled = false;
 		document.getElementById('switchpercenttimelinebutton').disabled = false;
 	}
 	
 	var focus = 0;
 	document.getElementById("focusbutton0").style.boxShadow  = "7px 0px 3px 6px white"
-	curlemma = getQueryVariable("lemma")
-	exactlemma = ""
-	if(curlemma.length>0){
-		document.getElementById("lemma").value = curlemma
+	curitem = getQueryVariable("lemma")
+	exactitem = ""
+	if(curitem.length>0){
+		document.getElementById("lemma").value = curitem
 		updateTimeline()
 		document.getElementById("lemma").scrollIntoView()
 	}
@@ -393,7 +393,7 @@
 		document.getElementById('lemmagroup').src="error_token.html"
 		document.getElementById('tokengroup').src="error_token.html"
 	}
-	document.title=lang_lemmafy+" "+curlemma
+	document.title=lang_lemmafy+" "+curitem
 
 </script>
 <br><br>
