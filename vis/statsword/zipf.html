@@ -32,6 +32,9 @@
 	allText=""
 	maxval = 0
 	
+	if(limit.length==0){limit=data_arr.length}
+	limit=parseInt(limit)
+	if(limit>data_arr.length){limit=data_arr.length}
 	
 	date= []
 	count = []
@@ -40,8 +43,6 @@
 	if(token.length>0){
 		add = false
 	}
-	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
-	limit=parseInt(limit)
 	for (var i = offset; i < limit; i++) {
 		line = data_arr[i];
 		if(line.length>1){	

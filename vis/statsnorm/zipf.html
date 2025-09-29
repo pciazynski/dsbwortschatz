@@ -29,6 +29,10 @@
 	allText=""
 	maxval = 0
 
+	if(limit.length==0){limit=data_arr.length}
+	limit=parseInt(limit)
+	if(limit>data_arr.length){limit=data_arr.length}
+
 	date= []
 	count = []
 	colors = []
@@ -36,8 +40,6 @@
 	if(norm.length>2){
 		add = false
 	}
-	if(limit.length==0 || limit>data_arr.length){limit=data_arr.length}
-	limit=parseInt(limit)
 	for (var i = 0; i < limit; i++){
 		line = data_arr[i];
 		if(line.length>1){

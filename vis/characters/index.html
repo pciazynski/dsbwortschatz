@@ -110,7 +110,8 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzelne Zeichen)</button>
+				<button id = "switchpercenttimelinebutton" class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
+				<button id = "switchlinreg" class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzelne Zeichen)</button>
 				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
 				<button class = "iframebutton" onclick="empty('timeline');">Alle / Einzelne Zeichen</button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
@@ -156,14 +157,27 @@
 
 <script>
 
+	var switchpercenttimeline  = function(elid){
+		tmp = document.getElementById(elid)
+		url = tmp.src.replaceAll('linreg_chart.html','timeline.html')
+		if(url.includes("percenttimeline")){
+			tmp.src = url.replace("percenttimeline.html","timeline.html")
+		}else{
+			tmp.src = url.replace("timeline.html","percenttimeline.html")
+		}
+	}
+
+
 	var empty = function(iframeid){
 		loading(iframeid)
 		tmp = document.getElementById("charinput").value.trim()
 		if(tmp.length>0){
 			if(document.getElementById(iframeid).src.includes("&char=")){
 				document.getElementById(iframeid).src="timeline.html?data=charcountperyear.php&sort"
+				document.getElementById('switchlinreg').disabled = true;
 			}else{
 				document.getElementById(iframeid).src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
+				document.getElementById('switchlinreg').disabled = false;
 			}
 		}
 	}
@@ -189,7 +203,7 @@
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
 			document.getElementById("charlistinput").value = str
-			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+str+"&sort"
+			updateTimelineList()
 		}
 	}
 
@@ -198,6 +212,7 @@
 		tmp = document.getElementById("charlistinput").value.trim()
 		if(tmp.length>0){
 			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
+			document.getElementById('switchlinreg').disabled = true;
 		}
 	}
 
@@ -209,6 +224,12 @@
 			document.getElementById('doclist').src = 'doclist.html?data=urnbychar.php&char='+tmp
 			document.getElementById("timeline").src="timeline.html?data=charcountperyear.php&char="+tmp+"&sort"
 			document.getElementById('doctimeline').src = 'doctimeline.html?data=urnbychar.php&char='+tmp
+			document.getElementById('switchlinreg').disabled = false;
+			document.getElementById('switchallorselected').disabled = false;
+		}else{
+			document.getElementById('timeline').src="timeline.html?data=charcountperyear.php&sort"
+			document.getElementById('switchlinreg').disabled = true;
+			document.getElementById('switchallorselected').disabled = true;
 		}
 		document.title="Zeichen "+tmp
 
@@ -238,14 +259,10 @@
 	character = getQueryVariable('char')
 	if(character.length>0){
 		document.getElementById('char').value=character
-		updateTimeline()
 	}
-	else{
-		document.getElementById('timeline').src="error_token.html"
-	}
-	
+	updateTimeline()
 
-	document.title="Zeichen "+character
+	document.title=lang_characters+' '+character
 
 </script>
 
