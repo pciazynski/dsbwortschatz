@@ -27,7 +27,7 @@
 		line = data_arr[i];
 		if(line.length>1){
 			tmp = line.split(sep)
-			ngram = tmp[0].slice(1,-1)
+			ngram = tmp[0].trim()
 			if(year.length==0){value  = parseInt(tmp[1])}
 			else{value  = parseInt(tmp[2])}
 			date.push(ngram)

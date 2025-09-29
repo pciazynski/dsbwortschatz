@@ -32,7 +32,7 @@
 		if(line.length>1)
 		{
 			tmp = line.split(sep)
-			ngram = tmp[0].slice(1,-1)
+			ngram = tmp[0].trim()
 			value  = parseInt(tmp[2])
 			jittervalue = value + (jitter*(Math.random()))
 			date.push(tmp[1])
