@@ -113,7 +113,7 @@
 				<button id = "switchpercenttimelinebutton" class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
 				<button id = "switchlinreg" class = "iframebutton" onclick="linreg('timeline');">Lin. Regression (nur Einzelne Zeichen)</button>
 				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
-				<button class = "iframebutton" onclick="empty('timeline');">Alle / Einzelne Zeichen</button>
+				<button  id = "switchallorselected" class = "iframebutton" onclick="empty('timeline');">Alle / Einzelne Zeichen</button>
 				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
 			</td>
 		</tr>
@@ -226,9 +226,11 @@
 			document.getElementById('doctimeline').src = 'doctimeline.html?data=urnbychar.php&char='+tmp
 			document.getElementById('switchlinreg').disabled = false;
 			document.getElementById('switchallorselected').disabled = false;
+			document.getElementById('switchallorselected').disabled = false;
 		}else{
 			document.getElementById('timeline').src="timeline.html?data=charcountperyear.php&sort"
 			document.getElementById('switchlinreg').disabled = true;
+			document.getElementById('switchallorselected').disabled = true;
 			document.getElementById('switchallorselected').disabled = true;
 		}
 		document.title="Zeichen "+tmp
