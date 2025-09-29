@@ -24,7 +24,7 @@ def tokencheck(token):
 def normmapping(urn):
     global ctsurl
     global copyrighttoken
-    res = textpassage(urn,"&copyrighttoken="+copyrighttoken)
+    res = cts_passage(urn,"&copyrighttoken="+copyrighttoken)
 
     
     wordelements = res.split("<w")
@@ -105,7 +105,7 @@ def getdoclist(ctsns):
             for line in inf:
                 tmplist+=line
     else:
-        tmplist = inventory(ctsns)
+        tmplist = cts_inventory(ctsns)
     return tmplist.strip()
 
 def collect():

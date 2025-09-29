@@ -14,17 +14,6 @@ with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as bwin:
         linearr = line.split("\t")
         bagofwords[linearr[0]] = int(linearr[1])
 
-def inventory(endpoint):
-    global ctsurl
-    requestctsurl(endpoint)
-    res = ""
-    print(ctsurl+"plain/editions.php")
-    data = urlopen(ctsurl+"plain/editions.php") 
-    for line in data: 
-        res+=line.decode('utf-8')
-    return res.strip()
-
-
 def requestctsurl(ns):
     global ctsurl
     if len(ctsurl) == 0:
@@ -45,7 +34,7 @@ def lemmamapping(urn):
     global ctsurl
     global copyrighttoken
     requestctsurl(urn)
-    res = textpassage(urn,"&copyrighttoken="+copyrighttoken)
+    res = cts_passage(urn,"&copyrighttoken="+copyrighttoken)
     
     wordelements = res.split("<w")
     res = ""
@@ -129,7 +118,7 @@ def getdoclist(ctsns):
             for line in inf:
                 tmplist+=line
     else:
-        tmplist = inventory(ctsns)
+        tmplist = cts_inventory(ctsns)
     return tmplist.strip()
 
 

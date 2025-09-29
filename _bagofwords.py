@@ -125,7 +125,7 @@ def getdoclist(ctsns):
             for line in inf:
                 tmplist+=line
     else:
-        tmplist = inventory(ctsns)
+        tmplist = cts_inventory(ctsns)
     return tmplist.strip()
     
 def collect():
@@ -145,7 +145,7 @@ def collect():
             print(str(count)+" "+urn)
             count-=1
             with open ("data/bagofwords/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/bagofwordsperyear/"+year+".txt", "a",encoding="utf8") as outyf:
-                rs = bagofwords(urn)
+                rs = cts_bagofwords(urn)
                 if sanitycheck(rs):
                     outf.write(rs)
                     outyf.write(rs+"\n")

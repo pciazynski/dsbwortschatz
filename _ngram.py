@@ -17,7 +17,7 @@ def getdoclist(ctsns):
             for line in inf:
                 tmplist+=line
     else:
-        tmplist = inventory(ctsns)
+        tmplist = cts_inventory(ctsns)
     return tmplist.strip()
     
 with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as bwin:
