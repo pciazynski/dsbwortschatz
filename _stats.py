@@ -33,19 +33,11 @@ with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as f:
             wordlenmax=toklen
         if wordlenmin>toklen:
             wordlenmin=toklen
-        for char in token:
-            if char in charcount:
-                charcount[char] = charcount[char] +1
-            else:
-                charcount[char] = 1
         if toklen in tokenlencount:
             tokenlencount[toklen] = tokenlencount[toklen] +1
         else:
             tokenlencount[toklen] = 1
 
-charcountstr = ""
-for token,value in sorted(charcount.items(), key = lambda x:x[1], reverse=True):
-    charcountstr += token+":"+str(value)+","
 toklenstr = ""
 for token,value in sorted(tokenlencount.items(), key = lambda x:x[1], reverse=True):
     toklenstr += str(token)+":"+str(value)+","
@@ -57,16 +49,11 @@ res += "Token length avg\t"+str(wordlensum/toksum)+"\n"
 res += "Token length min\t"+str(wordlenmin)+"\n"
 res += "Token length max\t"+str(wordlenmax)+"\n"
 res += "Token length Count\t"+str(toklenstr[:-1])+"\n"
-res += "Character Count\t"+str(charcountstr[:-1])+"\n"
 
 
 with open ("data/stats.txt", "w", encoding="utf8") as f:
     f.write(res)
     
-with open ("data/stats/characters.txt", "w", encoding="utf8") as f:
-    for token,value in sorted(charcount.items(), key = lambda x:x[1], reverse=True):
-        f.write(str(token)+tb+str(value)+nl)
-
 with open ("data/stats/tokenlength.txt", "w", encoding="utf8") as f:
     for token,value in sorted(tokenlencount.items(), key = lambda x:x[0], reverse=False):
         f.write(str(token)+tb+str(value)+nl)
