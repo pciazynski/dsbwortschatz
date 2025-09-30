@@ -14,18 +14,11 @@
 
 	diagramtitle = ""
 	var dataset = getQueryVariable("data")
-	var lemma = getQueryVariable("lemma")
-	var exact = getQueryVariable("exact")
-	var focus = getQueryVariable("focus")
 	var jitter = getQueryVariable("jitter")
 	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
 	if(focus.length==0){focus=0}else{focus = parseInt(focus)}
-	dataset = dataset +"?lemma="+lemma+"&sort"
-	if(focus==3){diagramtitle = "Token von Lemma "}else{diagramtitle="Lemma "}
-	diagramtitle += lemma
+	diagramtitle += dataset
 	
-	if(exact==1){dataset+="&exact"}else{diagramtitle += " inkl. ambig"}
-
 	data_arr = readPHP(dataset).split("\n");
 	if(data_arr.length>resultsetmax){document.write(lang_error_resultset_too_large);}
 	else{
@@ -41,13 +34,12 @@
 			line = data_arr[i];
 			if(line.length>1){
 				tmp = line.split(sep)
-				if (tmp.length==4){token = ":"+tmp[3]}else{token=""}
 				value = parseInt(tmp[2])
 				jittervalue = value + (jitter*(Math.random()))
 				date.push(tmp[1])
 				count.push(jittervalue)
-				hovers.push(tmp[0]+"("+tmp[1]+")"+token+" "+value)
-				colors.push(getColor(tmp[focus]))
+				hovers.push(tmp[0]+"("+tmp[1]+")"+value)
+				colors.push(getColor(tmp[0]))
 				if (value<minval ){minval = value}
 				if (value>maxval ) {maxval = value}
 			}
@@ -56,7 +48,7 @@
 		var data = [{
 			x: date,
 			y: count,
-			name: 'Token Count',
+			name: '',
 			hovertemplate: '%{text}',
 			type: 'scatter',
 			mode: "markers",
@@ -100,17 +92,10 @@
 		myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 		myPlot = document.getElementById('myDiv')
 		document.title = diagramtitle
-		if(parent.document.getElementById('yearminslider') != undefined){
-			myPlot.on('plotly_click', function(data) {
-				yearx=data.points[0].x;
-				parent.exactlemma = data.points[0].text.split("(")[0].slice(1,-1)
-				parent.document.getElementById("yearminvalue").innerHTML = yearx
-				parent.document.getElementById("yearmaxvalue").innerHTML = yearx
-				parent.document.getElementById("yearminslider").value = yearx
-				parent.document.getElementById("yearmaxslider").value = yearx
-				parent.updateTravizYear()
-			});
-		}
+		myPlot.on('plotly_click', function(data) {
+			yearx=data.points[0].x;
+			parent.metadataclick(data.points[0].text.split("(")[0],yearx)
+		});
 	}
 </script>
 </body>

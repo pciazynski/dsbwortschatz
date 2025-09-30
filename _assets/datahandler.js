@@ -40,6 +40,18 @@ function readPHP(file){
 	return textstr
 }
 
+async function readGeoJsonFile(file){
+	let response = await fetch(geourl+file+".json")
+	let txt = await response.text()
+	return txt
+}
+
+async function readPHP_async(file){
+	let response = await fetch(phpurl+file)
+	let txt = await response.text()
+	return txt
+}
+
 function getQueryVariable(variable) {
 	var query = window.location.search.substring(1);
 	var vars = query.split("&");

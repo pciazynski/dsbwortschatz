@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
+	<script src="../../lib/plotly-latest.min.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="text-align:left;">
+<script>
+	var dataset = getQueryVariable('data')
+	var author = getQueryVariable('author')
+	var year = getQueryVariable("year")
+	dataset+="?sort"
+	if(year.length>0){dataset+="&year="+year}
+	if(author.length>0){dataset+="&author="+author}
+	diagramtitle = dataset
+	data_arr = readPHP(dataset).trim("\n").split('\n');
+	param=""
+	
+	str = '<table class="clicktable">';
+	str += '<tr><th>'+lang_year+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th><th>'+lang_author+'</th>'
+	str += '</tr>'
+
+	for (var i = 0; i < data_arr.length; i++) {
+		arr = data_arr[i].split(sep)
+		urnarr = arr[0].split(":")[3].replaceAll("."," ").replaceAll("_"," ").split(" ")
+		bibname = ""
+		tmpname = arr[1]
+		for (var j = 0; j < urnarr.length; j++){
+			bibname += " "+urnarr[j].charAt(0).toUpperCase() + urnarr[j].slice(1)
+		}
+		//Remove Versioning Timestamp
+		bibname = bibname.substring(0,bibname.lastIndexOf(" "))
+		if(tmpname.length<1){
+			tmpname = bibname
+		}
+		if(arr[4] == 1){tmpname = "&#128274;"+tmpname}
+		
+		onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
+		onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
+		onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+bibname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
+		resstr='<span style="color:'+getColor(arr[3].replace(/[0-9]/g,""))+';">▮</span>'+arr[3]
+		str += '<tr><td>'+arr[2]+'</td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+tmpname+'</td><td>'+resstr+'</td>'
+
+		str += '</tr>'
+	}
+	str += '</table>';
+	document.write(str)
+	data_arr = ""
+	str = ""
+	document.title = diagramtitle
+
+</script>
+</body>

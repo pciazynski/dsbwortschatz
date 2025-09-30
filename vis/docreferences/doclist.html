@@ -36,7 +36,7 @@
 		}
 	}
 	if(year.length>0){diagramtitle+="<br>"+year;dataset+="&year="+year}
-	data_arr = readPHP(dataset).trim().split('\n');
+	data_arr = readPHP(dataset).trim("\n").split('\n');
 	
 	str = '<table class="clicktable">';
 	if(dataset.includes("urnbyword")){

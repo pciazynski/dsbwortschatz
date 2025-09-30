@@ -60,6 +60,7 @@ function header(){
 str='<div  class="header">'+
 '<table>'
 +'<tr style="text-align:center;">'
++'<td>'+lang_metadata+'</td>'
 +'<td>'+lang_textcorpus+'</td>'
 +'<td><a href="../characters">'+lang_characters+'</a></td>'
 +'<td>'+lang_word+'</td>'
@@ -69,6 +70,11 @@ str='<div  class="header">'+
 +'<td><a href="'+ctsurl+'?request=GetCapabilities">CTS Link</a></td>'
 +'</tr>'
 +'<tr style="text-align:center;">'
++'<td>'
++'<a href="../metadataauthor">'+lang_author+'</a> | '
++'<a href="../metadatadochierarchy">'+lang_dochierarchy+'</a>'
++'</td>'
+
 +'<td>'
 +'<a href="../docreferences/">'+lang_docreferences+'</a> | '
 +'<a href="../stats/">'+lang_statistics+'</a> | '
