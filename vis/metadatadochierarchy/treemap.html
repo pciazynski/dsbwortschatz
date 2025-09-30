@@ -3,7 +3,6 @@
 	<script src="../../lib/plotly-latest.min.js"></script>
 	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
-	<script src="../../lib/cts.js"></script>
 </head>
 
 <div id="myDiv" style="width: 100%;height:100vh;"><!-- Plotly chart will be drawn inside this DIV --></div>
@@ -25,13 +24,13 @@
 	for (i = 0; i < data_arr.length; i++) {
 		var linearr = data_arr[i].split(sep)
 		var urnarr = linearr[0].split(":")
-		var docurnarr = urnarr[3].replace("ik_1","ik.1").replace("ik_2","ik.2").replace("ja_1","ja.1").replace("ja_2","ja.2").split(".")
+		var docurnarr = urnarr[3].replace("plomje_","plomje.").replace("wossady_","wossady.").replace("wossadu_","wossadu.").replace("boh_","boh.").replace("glosy_","glosy.").replace("rozhlad_","rozhlad.").replace("letopis_","letopis.").replace("letopisa_","letopisa.").replace("nowiny_","nowiny.").replace("ik_1","ik.1").replace("ik_2","ik.2").replace("ja_1","ja.1").replace("ja_2","ja.2").split(".")
 		var urnpart = ""
 		var oldurnpart = ""
 		for (var j = 0;j<docurnarr.length;j++){
 			urnpart += docurnarr[j]+".";
 			var testurn=urnpart.slice(0,-1)
-			testurn = testurn.replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2")
+			testurn = testurn.replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2")
 			if (!(testurn in included)){
 				included[testurn] = 1
 				parents.push(ns+":"+oldurnpart.slice(0,-1))
@@ -39,7 +38,7 @@
 				date.push(ns+":"+testurn)
 			}
 			oldurnpart += docurnarr[j]+".";
-			oldurnpart = oldurnpart.replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2")
+			oldurnpart = oldurnpart.replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2")
 		}
 	}
 	var data = [{
@@ -49,9 +48,6 @@
 
 	}];
 	var layout = {
-		//margin: {l: 0, r: 0, b: 50, t: 50},
-//		width: "100%",
-//		height: "100%",
 		annotations: watermarke()
 	};
 
