@@ -16,7 +16,7 @@
 	var data_arr = (await readPHP_async(dataset)).split("\n");
 	var jitter = getQueryVariable("jitter")
 	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
-	var diagramtitle = dataset.replace("metadata","").split(".")[0]
+	var diagramtitle = dataset.replace("metadata","").split(".")[0].replace("peryear"," per year")
 	diagramtitle = diagramtitle.charAt(0).toUpperCase() + diagramtitle.slice(1)
 	
 	if(data_arr.length>resultsetmax){document.write(lang_error_resultset_too_large);}
