@@ -26,7 +26,8 @@
 			value  = parseInt(tmp[1])
 			date.push(tmp[0])
 			count.push(value)
-			colors.push(getColor(tmp[0]))
+			var col = (tmp[0] == 1) ? "red":"green";
+			colors.push(col)
 			if (value>maxval ) {maxval = value}
 		}
 	}
@@ -42,7 +43,7 @@
 
 	if (getQueryVariable("scale")==="log"){minval = Math.log(1);maxval=Math.log(maxval)}else{minval=0;maxval=maxval+(maxval/10)+1}
 	var layout = {
-		barmode: 'stack',
+		//barmode: 'stack',
 		title:{
 			text:diagramtitle,
 			font: diagramfont

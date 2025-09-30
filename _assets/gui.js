@@ -71,6 +71,7 @@ str='<div  class="header">'+
 +'</tr>'
 +'<tr style="text-align:center;">'
 +'<td>'
++'<a href="../metadatarestricted">'+lang_restricted+'</a> | '
 +'<a href="../metadataauthor">'+lang_author+'</a> | '
 +'<a href="../metadatadochierarchy">'+lang_dochierarchy+'</a>'
 +'</td>'

@@ -54,20 +54,20 @@
 <script>
 
 	var updateTimeline = function(){
-		document.getElementById('docview').src="timeline.html?data=metadataauthorperyear.php&sort"
+		document.getElementById('docview').src="timeline.html?data=metadatarestrictedperyear.php&sort"
 	}
 
 	var updateZipf = function(){
-		document.getElementById('docview').src="zipf.html?data=metadataauthor.php&sort"
+		document.getElementById('docview').src="zipf.html?data=metadatarestricted.php&sort"
 	}
 
 	var updatePie = function(){
-		document.getElementById('docview').src="piechart.html?data=metadataauthor.php"
+		document.getElementById('docview').src="piechart.html?data=metadatarestricted.php"
 	}
 	
-	var metadataclick = function(author,year){
-		params = "&author="+author
-		if(year.length>0){
+	var metadataclick = function(restricted,year){
+		params = "&restricted="+restricted
+		if(year>0){
 			params += "&year="+year
 		}
 		document.getElementById('doclist').src="doclist.html?data=metadata.php"+params
