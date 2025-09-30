@@ -14,12 +14,11 @@
 
 	diagramtitle = ""
 	var dataset = getQueryVariable("data")
+	data_arr = readPHP(dataset).split("\n");
 	var jitter = getQueryVariable("jitter")
 	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
-	if(focus.length==0){focus=0}else{focus = parseInt(focus)}
 	diagramtitle += dataset
 	
-	data_arr = readPHP(dataset).split("\n");
 	if(data_arr.length>resultsetmax){document.write(lang_error_resultset_too_large);}
 	else{
 		maxval = 0
