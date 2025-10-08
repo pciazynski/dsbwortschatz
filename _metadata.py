@@ -45,7 +45,7 @@ def initTables():
         os.remove("data/metadata.db")
     con = sqlite3.connect("data/metadata.db")
     cursor = con.cursor()
-    cursor.execute("CREATE TABLE docmeta(urn VARCHAR (50), title VARCHAR (50), author VARCHAR (50), restricted BOOLEAN, date INTEGER);")
+    cursor.execute("CREATE TABLE docmeta(urn VARCHAR (50), title VARCHAR (50), author VARCHAR (50), restricted BOOLEAN, date INTEGER, lang VARCHAR(50));")
     con.commit()
     con.close()
 
@@ -58,6 +58,7 @@ def index():
     cursor.execute("CREATE INDEX docmetaauthorindex ON docmeta(author);")
     cursor.execute("CREATE INDEX docmetatitleindex ON docmeta(title);")
     cursor.execute("CREATE INDEX docmetarestrindex ON docmeta(restricted);")
+    cursor.execute("CREATE INDEX docmetalangndex ON docmeta(lang);")
     con.commit()
     con.close()
 
@@ -68,9 +69,9 @@ def db():
     cursor = con.cursor()
     with open("data/metadata/_all.txt", "r",encoding="utf8") as inf:
         for line in inf:
-            values = line.strip("\n").replace("\t\t","\tNULL\t").replace("\t",'","').replace('"NULL"','NULL')
-            query = 'INSERT INTO docmeta(urn,title,date,author,restricted) VALUES("'+values+'")'
-            cursor.execute(query)
+            query = "INSERT INTO docmeta(urn,title,date,author,restricted,lang) VALUES(?,?,?,?,?,?)"
+            values = line.strip("\n").split("\t")
+            cursor.execute(query,values)
 
     con.commit()
     con.close()

@@ -73,9 +73,9 @@ str='<div  class="header">'+
 +'<td>'
 +'<a href="../metadatarestricted">'+lang_restricted+'</a> | '
 +'<a href="../metadataauthor">'+lang_author+'</a> | '
-+'<a href="../metadatadochierarchy">'+lang_dochierarchy+'</a>'
++'<a href="../metadatadochierarchy">'+lang_dochierarchy+'</a> | '
++'<a href="../metadatalang">'+lang_lang+'</a>'
 +'</td>'
-
 +'<td>'
 +'<a href="../docreferences/">'+lang_docreferences+'</a> | '
 +'<a href="../stats/">'+lang_statistics+'</a> | '
