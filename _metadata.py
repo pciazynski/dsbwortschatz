@@ -36,7 +36,9 @@ def collect():
     with open("data/metadata/_all.txt", "w",encoding="utf8") as outf:
         for line in doclist:
             urn = line.split("\t")[0]
-            if (count!=0):
+            year = line.split("\t")[2]
+
+            if (len(year)>1 and count!=0):
                 outf.write(line+"\n")
                 count-=1
 
@@ -70,7 +72,12 @@ def db():
     with open("data/metadata/_all.txt", "r",encoding="utf8") as inf:
         for line in inf:
             query = "INSERT INTO docmeta(urn,title,date,author,restricted,lang) VALUES(?,?,?,?,?,?)"
-            values = line.strip("\n").split("\t")
+            values = ['','','','','','']
+            tmp = line.strip("\n").split("\t")
+            counter = 0
+            for key in tmp:
+                values[counter] = key
+                counter+=1
             cursor.execute(query,values)
 
     con.commit()

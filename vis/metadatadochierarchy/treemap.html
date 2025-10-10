@@ -16,31 +16,29 @@
 	var i;
 	var date = []
 	var parents = []
-	var ns = "urn:cts:"+data_arr[0].split(":")[2]
-	date.push(ns+":")
+	var ns = "urn:cts:"+data_arr[0].split(":")[2]+":"
+	date.push(ns)
 	parents.push("")
 	var included = []
 	var parentsincluded = []
 	for (i = 0; i < data_arr.length; i++) {
-		var linearr = data_arr[i].split(sep)
+		var linearr = data_arr[i].replaceAll("con","con").split(sep)
 		var urnarr = linearr[0].split(":")
-		var docurnarr = urnarr[3].replace("plomje_","plomje.").replace("wossady_","wossady.").replace("wossadu_","wossadu.").replace("boh_","boh.").replace("glosy_","glosy.").replace("rozhlad_","rozhlad.").replace("letopis_","letopis.").replace("letopisa_","letopisa.").replace("nowiny_","nowiny.").replace("ik_1","ik.1").replace("ik_2","ik.2").replace("ja_1","ja.1").replace("ja_2","ja.2").split(".")
-		var urnpart = ""
-		var oldurnpart = ""
+		var docurnarr = urnarr[3].split(".")
+		var urnpart = ns
+		var oldurn = ns
 		for (var j = 0;j<docurnarr.length;j++){
 			urnpart += docurnarr[j]+".";
-			var testurn=urnpart.slice(0,-1)
-			testurn = testurn.replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2")
-			if (!(testurn in included)){
-				included[testurn] = 1
-				parents.push(ns+":"+oldurnpart.slice(0,-1))
-				parentsincluded[ns+":"+oldurnpart.slice(0,-1)] = 1
-				date.push(ns+":"+testurn)
+			if (included[urnpart] == null){
+				date.push(urnpart)
+				parents.push(oldurn)
+				included[urnpart]=1
 			}
-			oldurnpart += docurnarr[j]+".";
-			oldurnpart = oldurnpart.replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2")
+			oldurn += docurnarr[j]+".";
 		}
 	}
+	
+	
 	var data = [{
 		type: "treemap",
 		labels: date,
