@@ -22,7 +22,7 @@
 	var included = []
 	var parentsincluded = []
 	for (i = 0; i < data_arr.length; i++) {
-		var linearr = data_arr[i].replaceAll("con","con").split(sep)
+		var linearr = data_arr[i].replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2").split(sep)
 		var urnarr = linearr[0].split(":")
 		var docurnarr = urnarr[3].split(".")
 		var urnpart = ns
