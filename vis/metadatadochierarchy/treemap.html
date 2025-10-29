@@ -28,7 +28,7 @@
 		var urnpart = ns
 		var oldurn = ns
 		for (var j = 0;j<docurnarr.length;j++){
-			urnpart += docurnarr[j]+".";
+			(j == docurnarr.length-1) ? urnpart += docurnarr[j]+":":urnpart += docurnarr[j]+".";
 			if (included[urnpart] == null){
 				date.push(urnpart.replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2"))
 				parents.push(oldurn.replace("plomje.","plomje_").replace("wossady.","wossady_").replace("wossadu.","wossadu_").replace("boh.","boh_").replace("glosy.","glosy_").replace("rozhlad.","rozhlad_").replace("nowiny.","nowiny_").replace("letopis.","letopis_").replace("letopisa.","letopisa_").replace("ik.1","ik_1").replace("ik.2","ik_2").replace("ja.1","ja_1").replace("ja.2","ja_2"))
@@ -51,6 +51,13 @@
 
 	Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 	var myPlot = document.getElementById('myDiv')
-	
+	myPlot.on("plotly_click", function(data) {
+		if(parent.treeleafclick != null){
+			var tmplabel = data.points[0].label
+			if (parentkeys[tmplabel] == null){
+				parent.treeleafclick(tmplabel)
+			}
+		}
+	});	
 </script>
 </body>
