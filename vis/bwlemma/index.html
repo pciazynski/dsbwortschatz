@@ -62,7 +62,7 @@
 				autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby=alphabet&lemma=", ""); 
 			</script>
 		</td>
-		<td><a href="?lemma=CHÓŚEBUZ"><script>document.write(lang_example)</script> CHÓŚEBUZ</a></td>
+		<td><script>document.write(lang_example)</script> CHÓŚEBUZ</td>
 		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addToList()">&#10149;<script>document.write(lang_list)</script></button> <button onclick = "callLemmatree()">&#10149;<script>document.write(lang_variation)</script></button> <button onclick = "callDolnoserbski()">&#10149;dolnoserbski.de</button></td>
 	</tr>
 	<tr>
@@ -275,7 +275,7 @@
 	var callLemmatree = function(){
 		curitem = document.getElementById("lemma").value.trim()
 		if(curitem.length>0){
-			window.open("../lemmavariation?lemma="+curitem, "_blank")
+			window.open("../lemmavariation?lemma="+curitem+"&headerconf="+headerconf, "_blank")
 		}
 	}
 	
