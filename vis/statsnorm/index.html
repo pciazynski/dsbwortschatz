@@ -18,16 +18,16 @@
 	<tr>
 	<tr  style="text-align:center;">
 		<td>
-		<button onclick="location.href='../stats';"><script>document.write(lang_textcorpus)</script></button>
+		<button onclick="location.href='../stats?headerconf='+headerconf;"><script>document.write(lang_textcorpus)</script></button>
 		</td>
 		<td>
-		<button onclick="location.href='../statslemma';"><script>document.write(lang_lemmafy)</script></button>
+		<button onclick="location.href='../statslemma?headerconf='+headerconf;"><script>document.write(lang_lemmafy)</script></button>
 		</td>
 		<td>
-		<button onclick="location.href='../statsnorm';"><script>document.write(lang_normify)</script></button>
+		<button onclick="location.href='../statsnorm?headerconf='+headerconf;"><script>document.write(lang_normify)</script></button>
 		</td>
 		<td>
-		<button onclick="location.href='../statsword';"><script>document.write(lang_words)</script></button>
+		<button onclick="location.href='../statsword?headerconf='+headerconf;"><script>document.write(lang_words)</script></button>
 		</td>
 	</tr>
 </table>
@@ -65,35 +65,6 @@
 	</div>
 	<button class = "iframebutton" onclick="hidewatermark('zipf');"><script>document.write(lang_source)</script></button>
 </div>
-<br><br>
-
-<script>
-	yearminslider.oninput = function() {
-		otherslider=document.getElementById("yearmaxslider")
-		otherslider.value=Math.max(otherslider.value,this.value)
-		yearminvalue.innerHTML = this.value
-		yearmaxvalue.innerHTML = otherslider.value
-	}
-
-	yearmaxslider.oninput = function() {
-		otherslider=document.getElementById("yearminslider")
-		otherslider.value=Math.min(otherslider.value,this.value)
-		yearminvalue.innerHTML = otherslider.value
-		yearmaxvalue.innerHTML = this.value
-	}
-	yearminslider.min=minDate
-
-	
-	yearmaxslider.min = minDate
-	yearmaxslider.max = maxDate
-	yearminslider.min = minDate
-	yearminslider.max = maxDate
-	yearminslider.value = minDate
-	yearmaxslider.value = maxDate
-	yearminvalue.innerHTML=minDate
-	yearmaxvalue.innerHTML = maxDate
-
-</script>
 
 <br><br>
 <script>
@@ -127,7 +98,6 @@
 		loading("zipf")
 		tmp = document.getElementById("min").value.trim()
 		document.getElementById("zipf").src="zipf.html?data=normmapping/_normbag&min="+tmp
-		document.getElementById('docref').src = 'error_docref.html'
 	}
 	
 	updateZipf()

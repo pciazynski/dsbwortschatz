@@ -56,57 +56,67 @@ function datalink(elementid){
 	}
 }
 
+function hidemenu(headerconf,index){
+	headerconf=headerconf.split("")
+	headerconf[index] = '0'
+	return headerconf.join('')
+}
 function header(){
-str='<div  class="header">'+
+headerconftmp = getQueryVariable('headerconf')
+if(headerconftmp.length==6){headerconf=headerconftmp}
+str='<div class="header">'+
 '<table>'
 +'<tr style="text-align:center;">'
-+'<td>'+lang_metadata+'</td>'
-+'<td>'+lang_textcorpus+'</td>'
-+'<td><a href="../characters">'+lang_characters+'</a></td>'
-+'<td>'+lang_word+'</td>'
-+'<td>'+lang_connection+'</td>'
-+'<td>'+'SpoznajRec'+'</td>'
-//+'<td>'+'Entitäten'+'</td>'
-+'<td><a href="'+ctsurl+'?request=GetCapabilities">CTS Link</a></td>'
-+'</tr>'
+if(headerconf[0]!=='0'){str+='<td>'+lang_metadata+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,0)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
+if(headerconf[1]!=='0'){str+='<td>'+lang_textcorpus+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,1)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
+if(headerconf[2]!=='0'){str+='<td><a href="../characters?headerconf='+headerconf+'">'+lang_characters+'</a>&nbsp;<a  style="color:black;" href=".?headerconf='+hidemenu(headerconf,2)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
+if(headerconf[3]!=='0'){str+='<td>'+lang_word+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,3)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
+if(headerconf[4]!=='0'){str+='<td>'+lang_connection+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,4)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
+if(headerconf[5]!=='0'){str+='<td>'+'SpoznajRec'+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,5)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
+str+='<td><a href="'+ctsurl+'?request=GetCapabilities">CTS Link</a></td>'
+str+='</tr>'
 +'<tr style="text-align:center;">'
-+'<td>'
-+'<a href="../metadatarestricted">'+lang_restricted+'</a> | '
-+'<a href="../metadataauthor">'+lang_author+'</a> | '
-+'<a href="../metadatadochierarchy">'+lang_dochierarchy+'</a> | '
-+'<a href="../metadatalang">'+lang_lang+'</a>'
+if(headerconf[0]!=='0'){str+='<td>'
++'<a href="../metadatarestricted?headerconf='+headerconf+'">'+lang_restricted+'</a> | '
++'<a href="../metadataauthor?headerconf='+headerconf+'">'+lang_author+'</a> | '
++'<a href="../metadatadochierarchy?headerconf='+headerconf+'">'+lang_dochierarchy+'</a> | '
++'<a href="../metadatalang?headerconf='+headerconf+'">'+lang_lang+'</a>'
 +'</td>'
-+'<td>'
-+'<a href="../docreferences/">'+lang_docreferences+'</a> | '
-+'<a href="../stats/">'+lang_statistics+'</a> | '
-+'<a href="../tokenrec/">'+lang_coverage+'</a> | '
-+'<a href="../bwtime/">'+lang_genesis_disappear+'</a>'
+}
+if(headerconf[1]!=='0'){str+='<td>'
++'<a href="../docreferences?headerconf='+headerconf+'">'+lang_docreferences+'</a> | '
++'<a href="../stats?headerconf='+headerconf+'">'+lang_statistics+'</a> | '
++'<a href="../tokenrec?headerconf='+headerconf+'">'+lang_coverage+'</a> | '
++'<a href="../bwtime?headerconf='+headerconf+'">'+lang_genesis_disappear+'</a>'
 +'</td>'
-+'<td>'
+}
+if(headerconf[2]!=='0'){str+='<td>'
 +'</td>'
-+'<td>'
-+'<a href="../bwlemma/">'+lang_timeline+'</a> | '
-+'<a href="../lemmavariation/">'+lang_variation+'</a> | '
-+'<a href="../lemmaeval/">'+lang_evaluation+'</a> | '
-+'<a href="../profile/">'+lang_profile+'</a>'
+}
+if(headerconf[3]!=='0'){str+='<td>'
++'<a href="../bwlemma?headerconf='+headerconf+'">'+lang_timeline+'</a> | '
++'<a href="../lemmavariation?headerconf='+headerconf+'">'+lang_variation+'</a> | '
++'<a href="../lemmaeval?headerconf='+headerconf+'">'+lang_evaluation+'</a> | '
++'<a href="../profile?headerconf='+headerconf+'">'+lang_profile+'</a>'
 +'</td>'
-+'<td>'
-+'<a href="../collocation/">'+lang_collocation+'</a> | '
-+'<a href="../ngram/?n=3">Trigramme</a>'
+}
+if(headerconf[4]!=='0'){str+='<td>'
++'<a href="../collocation?headerconf='+headerconf+'">'+lang_collocation+'</a> | '
++'<a href="../ngram?headerconf='+headerconf+'&n=3">Trigramme</a>'
 +'</td>'
-+'<td>'
-+'<a href="../langdetect/?n=3">Rozeznaś</a> | <a href="../langrec/?n=3">Gódaś Rec</a> | '
-+'<a href="../langsep/">Zelenje Rec</a>'
+}
+if(headerconf[5]!=='0'){str+='<td>'
++'<a href="../langdetect?headerconf='+headerconf+'&n=3">Rozeznaś</a> | <a href="../langrec/?headerconf='+headerconf+'&n=3">Gódaś Rec</a> | '
++'<a href="../langsep?headerconf='+headerconf+'">Zelenje Rec</a>'
 +'</td>'
-//+'<td>'
-//+'<a href="../ner_place/">Orte</a>'
-//+'<a style="color:white;"  href="../ner_person/">Personen</a>'
-//+'</td>'
-+'<td>'
-+'</td>'
+}
+str+='<td id="resetmenubutton">'
+if(headerconf.includes('0')){str+='<a  style="color:black;" href=".">'+lang_resetmenu+'</a>'}
+str+='</td>'
 +'</tr>'
 +'</table>' 
 +'</div>'
+
 return str
 }
 
