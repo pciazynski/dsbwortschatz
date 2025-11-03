@@ -22,7 +22,7 @@
 		<button onclick="location.href='../bwnorm?headerconf='+headerconf;"><script>document.write(lang_normify)</script></button>
 		</td>
 		<td>
-		<button onclick="location.href='../bwtoken?headerconf='+headerconf;"><script>document.write(lang_words)</script></button>
+		<button onclick="location.href='../bwword?headerconf='+headerconf;"><script>document.write(lang_words)</script></button>
 		</td>
 	</tr>
 </table>
@@ -40,14 +40,14 @@
 		<td style="text-align:center;"><script>document.write(lang_searchitem)</script></td>
 		<td>
 			<div class="autocomplete">
-				<input style="width:70%" id="token" type="text">
+				<input style="width:70%" id="wordinput" type="text">
 				<button onclick = "updateTimeline()"><script>document.write(lang_enter)</script></button> 
 			</div>
 			<script>
-				autocomplete("token", "prefixsearch.php?limit=30&sortby=alphabet&word=", "updateTimeline"); 
+				autocomplete("wordinput", "prefixsearch.php?limit=30&sortby=alphabet&word=", "updateTimeline"); 
 			</script>
 		</td>
-		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addTokenToList()">&#10149;<script>document.write(lang_list)</script></button></td>
+		<td style="text-align:left;"><script>document.write(lang_redirect)</script> <button onclick = "addWordToList()">&#10149;<script>document.write(lang_list)</script></button></td>
 	</tr>
 	<tr>
 		<td style="text-align:center;">Regex ^...$</td>
@@ -63,8 +63,8 @@
 		<td style="text-align:center;"><script>document.write(lang_list)</script></td>
 		<td>
 			<div>
-				<input style="width:70%" id="tokenlist" type="text" onchange = "">
-				<button onclick = "updateTimelineTokenList()"><script>document.write(lang_enter)</script></button> 
+				<input style="width:70%" id="wordlist" type="text" onchange = "">
+				<button onclick = "updateTimelineWordList()"><script>document.write(lang_enter)</script></button> 
 			</div>
 		</td>
 		<td style="text-align:center;"><script>document.write(lang_example)</script> druge,woni</td>
@@ -76,7 +76,7 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
 		<tr>
 			<td style = "width: 100%;">
-				<iframe class="resized" width="50%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+				<iframe class="resized" width="50%" height="100px" id="wordinfo" scrolling="yes"></iframe>
 			</td>
 		</tr>
 	</table>
@@ -154,7 +154,7 @@
 	var switchPrefixsearch = function(){
 		tmp = document.getElementById('prefixsearchCheckBox').checked
 		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
-		autocomplete("token", "prefixsearch.php?limit=30&sortby="+tmp+"&word=", ""); 
+		autocomplete("wordinput", "prefixsearch.php?limit=30&sortby="+tmp+"&word=", ""); 
 	}
 
 	var threeD = function(iframeid){
@@ -170,7 +170,7 @@
 	
 	var linreg = function(iframeid){
 		loading(iframeid)
-		tmp = document.getElementById("token").value.trim()
+		tmp = document.getElementById("wordinput").value.trim()
 		if(tmp.length>0){
 			if(document.getElementById(iframeid).src.includes("timeline.html")){
 				document.getElementById(iframeid).src="linreg_chart.html?data=tokencountperyear.php&token="+tmp+"&sort"
@@ -191,7 +191,7 @@
 
 
 	var callDolnoserbski = function(){
-		tmp = document.getElementById("token").value.trim()
+		tmp = document.getElementById("wordinput").value.trim()
 		if(tmp.length>0){
 			window.open("https://dolnoserbski.de/ortografija/slownik?wuraz="+tmp, "_blank")
 		}
@@ -207,21 +207,21 @@
 		}
 	}
 
-	var addTokenToList = function(){
-		tmp = document.getElementById("token").value.trim()
-		tmp2 = document.getElementById("tokenlist").value.trim()
+	var addWordToList = function(){
+		tmp = document.getElementById("wordinput").value.trim()
+		tmp2 = document.getElementById("wordlist").value.trim()
 		str = ""
 		if(tmp.length>0){
 			if(tmp2.length>0){str = ","}
 			str = tmp2+str+tmp
-			document.getElementById("tokenlist").value = str
-			updateTimelineTokenList()
+			document.getElementById("wordlist").value = str
+			updateTimelineWordList()
 		}
 	}
 
-	var updateTimelineTokenList = function(){
+	var updateTimelineWordList = function(){
 		loading("timeline")
-		tmp = document.getElementById("tokenlist").value.trim()
+		tmp = document.getElementById("wordlist").value.trim()
 		if(tmp.length>0){
 			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
 		}
@@ -229,30 +229,30 @@
 	}
 
 	var updateTimeline = function(){
-		tmp = document.getElementById("token").value.trim()
+		tmp = document.getElementById("wordinput").value.trim()
 		if(tmp.length>0){
 			loading("timeline")
-			loading("tokeninfo")
+			loading("wordinfo")
 			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
-			document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
-			document.title="Token "+tmp
+			document.getElementById("wordinfo").src="wordinfo.html?data=token2lemma.php&token="+tmp
+			document.title="Word "+tmp
 			document.getElementById('switchlinreg').disabled = false;
 		}
 	}
 		
-	token = getQueryVariable('token')
-	if(token.length>0){
-		document.getElementById('token').value=token
+	curword = getQueryVariable('word')
+	if(curword.length>0){
+		document.getElementById('wordinput').value=curword
 		updateTimeline()
-		document.getElementById("tokeninfo").scrollIntoView()
+		document.getElementById("wordinfo").scrollIntoView()
 	}
 	else{
-		document.getElementById('tokeninfo').src="error_token.html"
+		document.getElementById('wordinfo').src="error_token.html"
 		document.getElementById('timeline').src="error_token.html"
 	}
 	
 
-	document.title="Token "+token
+	document.title="Wort "+curword
 
 </script>
 

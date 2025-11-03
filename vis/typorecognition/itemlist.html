@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="../../_assets/datahandler.js"></script>
+	<script src="../../lib/config.js"></script>
+	<link rel="stylesheet" href="../../digilabstyles.css">
+</head>
+
+<body style="text-align:left;">
+<script>
+	var dataset = getQueryVariable('data')
+	var data_arr = readTextFile(dataset).trim("\n").split('\n')
+	
+	str = '<div>';
+	data_arr = data_arr.sort()
+	for (var i = 0; i < data_arr.length; i++) {
+		item = data_arr[i].trim()
+		onclickfun = "parent.itemclick('"+item+"')"
+		str+= '<span class = "clickabletoken" onclick = "'+onclickfun+'">'+item+'</span> '
+	}
+	
+	str += '</div>';
+	document.write(str)
+	data_arr = ""
+	str = ""
+	document.title = dataset
+
+</script>
+</body>

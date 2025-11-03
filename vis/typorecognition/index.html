@@ -1,85 +1,84 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<meta charset='utf-8'>
 <head>
 	<script src="../../lib/config.js"></script>
 	<script src="../../lib/def_language.js"></script>
 	<script src="../../lib/my_language.js"></script>
-	<script src="../../_assets/datahandler.js"></script>
-	<script src="../../_assets/gui.js"></script>
-	<script src="../../_assets/autocomplete.js"></script>
-	<link rel="stylesheet" href="../../digilabstyles.css">
+	<script src='../../_assets/datahandler.js'></script>
+	<script src='../../_assets/gui.js'></script>
+	<script src='../../_assets/autocomplete.js'></script>
+	<link rel='stylesheet' href='../../digilabstyles.css'>
 </head>
-<body style="background-color:lightgray">
+<body style='background-color:lightgray'>
 <script>document.write(header())</script>
-
+<br><br>
 <br><br>
 
 <div class = "iframediv">
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr>
 			<td style = "width: 100%;">
-				<iframe class="resized" width="50%" height="100px" id="wordinfo" scrolling="yes"></iframe>
+				<iframe class='resized' width='100%' height='200px' id='typolist' scrolling='yes'></iframe>
 			</td>
 		</tr>
 	</table>
-</div>
-
-<div class = "iframediv">
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
-			<td style = "width: 100%;">
+			<td style = "width: 69%;">
 				<button class = "iframebutton" onclick="embedding('timeline');"><script>document.write(lang_htmlembedding)</script></button>
 				<button class = "iframebutton" onclick="diagrammlink('timeline');"><script>document.write(lang_fullscreen)</script></button>
 				<button class = "iframebutton" onclick="datalink('timeline');"><script>document.write(lang_rawdata)</script></button>
 			</td>
+			<td style = "width: 30%;">
+				<button class = "iframebutton" onclick="embedding('doclist');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('doclist');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('doclist');"><script>document.write(lang_rawdata)</script></button>
+			</td>
 		</tr>
 		<tr>
-			<td style = "width: 100%;">		
-				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+			<td>		
+				<iframe class='resized' width='100%' height='475px' id='timeline' scrolling='yes'></iframe>
+			</td>
+			<td>		
+				<iframe class='resized' width='100%' height='475px' id='doclist' scrolling='yes'></iframe>
 			</td>
 		</tr>
 		<tr style = "text-align:right;">
-			<td style = "width: 100%;">
-				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
-				<button class = "iframebutton" onclick="hidewatermark('timeline');"><script>document.write(lang_source)</script></button>
+			<td>
+				<button class = 'iframebutton' onclick='hidewatermark("timeline");'><script>document.write(lang_source)</script></button>
+			</td>
+			<td>
 			</td>
 		</tr>
 	</table>
 </div>
 
-<br><br>
-
 <script>
 
-	var updateTimeline = function(){
-		if(curword.length>0){
-			loading("timeline")
-			loading("wordinfo")
-			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+curword+"&sort"
-			document.getElementById("wordinfo").src="wordinfo.html?data=token2lemma.php&token="+curword
-			document.title="Wort "+curword
-			document.getElementById('switchlinreg').disabled = false;
+	var updateWord = function(){
+		if(curtypo.length>0){
+			loading('timeline')
+			loading('doclist')
+			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&word='+curtypo
+			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&word='+curtypo
 		}
 	}
-		
-	curword = getQueryVariable('word')
-	if(curword.length>0){
-		updateTimeline()
-		document.getElementById("wordinfo").scrollIntoView()
-	}
-	else{
-		document.getElementById('wordinfo').src="error_token.html"
-		document.getElementById('timeline').src="error_token.html"
+	
+	var itemclick = function(item){
+		curtypo = item
+		updateWord()
 	}
 	
-
-	document.title="Token "+token
+	document.getElementById('typolist').src = 'itemlist.html?data=typorecognition/typowords'
+	document.title=lang_typorec
+	curtypo = getQueryVariable("typo")
+	updateWord()
 
 </script>
 
 <br><br>
-
 <script>
 	document.write(footer())
 </script>
+
 </body>

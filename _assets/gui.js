@@ -85,6 +85,7 @@ if(headerconf[0]!=='0'){str+='<td>'
 }
 if(headerconf[1]!=='0'){str+='<td>'
 +'<a href="../docreferences?headerconf='+headerconf+'">'+lang_docreferences+'</a> | '
++'<a href="../typorecognition?headerconf='+headerconf+'">'+lang_typorec+'</a> | '
 +'<a href="../stats?headerconf='+headerconf+'">'+lang_statistics+'</a> | '
 +'<a href="../tokenrec?headerconf='+headerconf+'">'+lang_coverage+'</a> | '
 +'<a href="../bwtime?headerconf='+headerconf+'">'+lang_genesis_disappear+'</a>'
