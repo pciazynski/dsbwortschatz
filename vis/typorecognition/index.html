@@ -21,6 +21,11 @@
 				<iframe class='resized' width='100%' height='200px' id='typolist' scrolling='yes'></iframe>
 			</td>
 		</tr>
+		<tr>
+			<td style = "width: 100%;">
+				<iframe class='resized' width='100%' height='50px' id='typo' scrolling='yes'></iframe>
+			</td>
+		</tr>
 	</table>
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr style = "text-align:right;">
@@ -59,6 +64,7 @@
 		if(curtypo.length>0){
 			loading('timeline')
 			loading('doclist')
+			document.getElementById('typo').src = 'item.html?data=typorecognition/typos&item='+curtypo
 			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&word='+curtypo
 			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&word='+curtypo
 		}

@@ -11,6 +11,12 @@ function readTextFile(file){
 	return textstr
 }
 
+async function readTextFile_async(file){
+	let response = await fetch(dataurl+file+".txt")
+	let txt = await response.text()
+	return txt
+}
+
 function ctsrequest(url){
 	textstr=""
 	rawFile = new XMLHttpRequest();
