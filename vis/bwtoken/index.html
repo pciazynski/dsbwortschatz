@@ -229,15 +229,15 @@
 	}
 
 	var updateTimeline = function(){
-		loading("timeline")
-		loading("tokeninfo")
 		tmp = document.getElementById("token").value.trim()
 		if(tmp.length>0){
+			loading("timeline")
+			loading("tokeninfo")
 			document.getElementById("timeline").src="timeline.html?data=tokencountperyear.php&token="+tmp+"&sort"
 			document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
+			document.title="Token "+tmp
+			document.getElementById('switchlinreg').disabled = false;
 		}
-		document.title="Token "+tmp
-		document.getElementById('switchlinreg').disabled = false;
 	}
 		
 	token = getQueryVariable('token')
