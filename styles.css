@@ -25,7 +25,7 @@ h1{
 	vertical-align: text-bottom;
 }
 
-p{
+p, ul{
 	padding-left:5%;
 	padding-right:5%;
 	font-size: 0.875rem;
