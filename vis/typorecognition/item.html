@@ -11,8 +11,7 @@
 	var dataset = getQueryVariable('data')
 	var filter = getQueryVariable('item')
 	var data_arr = (await readTextFile_async(dataset)).trim("\n").split('\n')
-	
-	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><div>'
+	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><div style="font-size:2rem;">'
 	data_arr = data_arr.sort()
 	for (var i = 0; i < data_arr.length; i++) {
 		var linearr = data_arr[i].split(sep)
@@ -21,6 +20,7 @@
 		}
 	}
 	
+		console.log(str)
 	str += '</div>';
 	document.write(str)
 	data_arr = ""

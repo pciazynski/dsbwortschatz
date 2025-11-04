@@ -7,11 +7,13 @@
 </head>
 
 <body style="text-align:left;">
-<script type = "module">
+<script>
+<!--Async results in Indefinite Loading-->
+
 	var dataset = getQueryVariable('data')
 	var year = getQueryVariable('year')
 	var unique = getQueryVariable('unique')
-	var data_arr = (await readTextFile_async(dataset)).trim("\n").split('\n')
+	var data_arr = (readTextFile(dataset)).trim("\n").split('\n')
 	
 	var data_arr = data_arr.sort()
 	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head>'
@@ -46,6 +48,6 @@
 	data_arr = ""
 	str = ""
 	document.title = dataset
-
+	
 </script>
 </body>
