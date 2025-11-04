@@ -12,6 +12,7 @@ nl = "\n"
 sumtoklen = 0
 checkedwords = {}
 singleusewords = {}
+alreadyseen = {}
 
 if os.path.exists("data/typorecognition/typos.txt"):
     with open ("data/typorecognition/typos.txt","r",encoding="utf8") as bwin:
@@ -78,7 +79,9 @@ with open ("data/typorecognition/typos.txt", "a", encoding="utf8") as outf, open
                                 if counter>0:
                                     counter -= 1
                                 outf.write(token2+tab+token1+":"+str(bw[token1])+nl)
-                                outfwords.write(token2+tab+str(singleusewords[token2])+nl)
+                                if not token2 in alreadyseen:
+                                    outfwords.write(token2+tab+str(singleusewords[token2])+nl)
+                                    alreadyseen[token2] = 1
                                 print(token1+":"+token2+tab+str(bw[token1])+":"+str(bw[token2])+tab+str(ls)+tab+str(counter))
 end = datetime.now()
 #    for typo,token in sorted(res.items(),key = lambda x:x[1], reverse=False):
