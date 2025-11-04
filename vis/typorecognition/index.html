@@ -16,9 +16,26 @@
 
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+		<tr style = "text-align:right;">
+			<td style = "width: 100%;">
+				<button class = "iframebutton" onclick="embedding('timeline');"><script>document.write(lang_htmlembedding)</script></button>
+				<button class = "iframebutton" onclick="diagrammlink('timeline');"><script>document.write(lang_fullscreen)</script></button>
+				<button class = "iframebutton" onclick="datalink('timeline');"><script>document.write(lang_rawdata)</script></button>
+			</td>
+		</tr>
+		<tr>
+			<td style = "width: 100%;">		
+				<iframe class="resized" width="100%" height="475px" id="timeline" scrolling="yes"></iframe>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class = "iframediv">
+	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
 		<tr>
 			<td style = "width: 100%;">
-				<iframe class='resized' width='100%' height='200px' id='typolist' scrolling='yes'></iframe>
+				<iframe class='resized' width='100%' height='150' id='typolist' scrolling='yes'></iframe>
 			</td>
 		</tr>
 		<tr>
@@ -26,33 +43,9 @@
 				<iframe class='resized' width='100%' height='50px' id='typo' scrolling='yes'></iframe>
 			</td>
 		</tr>
-	</table>
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
-		<tr style = "text-align:right;">
-			<td style = "width: 69%;">
-				<button class = "iframebutton" onclick="embedding('timeline');"><script>document.write(lang_htmlembedding)</script></button>
-				<button class = "iframebutton" onclick="diagrammlink('timeline');"><script>document.write(lang_fullscreen)</script></button>
-				<button class = "iframebutton" onclick="datalink('timeline');"><script>document.write(lang_rawdata)</script></button>
-			</td>
-			<td style = "width: 30%;">
-				<button class = "iframebutton" onclick="embedding('doclist');"><script>document.write(lang_htmlembedding)</script></button>
-				<button class = "iframebutton" onclick="diagrammlink('doclist');"><script>document.write(lang_fullscreen)</script></button>
-				<button class = "iframebutton" onclick="datalink('doclist');"><script>document.write(lang_rawdata)</script></button>
-			</td>
-		</tr>
 		<tr>
-			<td>		
-				<iframe class='resized' width='100%' height='475px' id='timeline' scrolling='yes'></iframe>
-			</td>
-			<td>		
-				<iframe class='resized' width='100%' height='475px' id='doclist' scrolling='yes'></iframe>
-			</td>
-		</tr>
-		<tr style = "text-align:right;">
-			<td>
-				<button class = 'iframebutton' onclick='hidewatermark("timeline");'><script>document.write(lang_source)</script></button>
-			</td>
-			<td>
+			<td style = "width: 100%;">
+				<iframe class='resized' width='100%' height='100px' id='doclist' scrolling='yes'></iframe>
 			</td>
 		</tr>
 	</table>
@@ -62,11 +55,9 @@
 
 	var updateWord = function(){
 		if(curtypo.length>0){
-			loading('timeline')
 			loading('doclist')
 			document.getElementById('typo').src = 'item.html?data=typorecognition/typos&item='+curtypo
 			document.getElementById('doclist').src = 'doclist.html?data=urnbyword.php&word='+curtypo
-			document.getElementById('timeline').src = 'timeline.html?data=urnbyword.php&word='+curtypo
 		}
 	}
 	
@@ -75,7 +66,15 @@
 		updateWord()
 	}
 	
+	var timelineclick = function(item){
+		document.getElementById('typolist').src = 'itemlist.html?data=typorecognition/typowords&year='+item
+		document.getElementById('typo').src = null
+		document.getElementById('doclist').src = null
+	}
+	
+	
 	document.getElementById('typolist').src = 'itemlist.html?data=typorecognition/typowords'
+	document.getElementById('timeline').src = 'hist_timeline.html?data=typorecognition/typowords'
 	document.title=lang_typorec
 	curtypo = getQueryVariable("typo")
 	updateWord()

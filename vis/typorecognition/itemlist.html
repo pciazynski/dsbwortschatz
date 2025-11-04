@@ -9,14 +9,18 @@
 <body style="text-align:left;">
 <script type = "module">
 	var dataset = getQueryVariable('data')
+	var year = getQueryVariable('year')
 	var data_arr = (await readTextFile_async(dataset)).trim("\n").split('\n')
 	
 	var data_arr = data_arr.sort()
 	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><div>'
 	for (var i = 0; i < data_arr.length; i++) {
-		var item = data_arr[i].trim()
-		var onclickfun = "parent.itemclick('"+item+"')"
-		str+= '<span class="clickabletoken" onclick = "'+onclickfun+'">'+item+'</span> '
+		var itemarr = data_arr[i].trim().split(sep)
+		if(itemarr[1] === year || year.length==0){
+			var item = itemarr[0]
+			var onclickfun = "parent.itemclick('"+item+"')"
+			str+= '<span class="clickabletoken" onclick = "'+onclickfun+'">'+item+'</span> '
+		}
 	}
 	
 	str += '</div>';

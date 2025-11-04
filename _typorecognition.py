@@ -1,6 +1,5 @@
 from datetime import datetime
 import os
-import shutil
 import sys
 
 if not os.path.exists("data"):
@@ -12,6 +11,8 @@ tab = "\t"
 nl = "\n"
 sumtoklen = 0
 checkedwords = {}
+singleusewords = {}
+
 if os.path.exists("data/typorecognition/typos.txt"):
     with open ("data/typorecognition/typos.txt","r",encoding="utf8") as bwin:
         for line in bwin:
@@ -25,6 +26,12 @@ with open ("data/bagofwords/_all.txt","r",encoding="utf8") as bwin:
         bw[linearr[0]] = int(linearr[1])
         sumtoklen += len(linearr[0].strip())
 
+with open ("data/bagofwords/_singleusewords.txt","r",encoding="utf8") as bwin:
+    for line in bwin:
+        linearr = line.split(tab)
+        singleusewords[linearr[0]] = int(linearr[1])
+        
+        
 #Source https://www.python-kurs.eu/levenshtein_distanz.php
 def iterative_levenshtein(s, t):
     rows = len(s)+1
@@ -71,7 +78,7 @@ with open ("data/typorecognition/typos.txt", "a", encoding="utf8") as outf, open
                                 if counter>0:
                                     counter -= 1
                                 outf.write(token2+tab+token1+":"+str(bw[token1])+nl)
-                                outfwords.write(token2+nl)
+                                outfwords.write(token2+tab+str(singleusewords[token2])+nl)
                                 print(token1+":"+token2+tab+str(bw[token1])+":"+str(bw[token2])+tab+str(ls)+tab+str(counter))
 end = datetime.now()
 #    for typo,token in sorted(res.items(),key = lambda x:x[1], reverse=False):
