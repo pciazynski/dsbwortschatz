@@ -13,7 +13,7 @@
 	var data_arr = (await readTextFile_async(dataset)).trim("\n").split('\n')
 	
 	var data_arr = data_arr.sort()
-	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><div>'
+	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><strong>'+year+'</strong></br><div>'
 	for (var i = 0; i < data_arr.length; i++) {
 		var itemarr = data_arr[i].trim().split(sep)
 		if(itemarr[1] === year || year.length==0){

@@ -39,14 +39,16 @@
 			</td>
 		</tr>
 		<tr>
-			<td style = "width: 100%;">
-				<iframe class='resized' width='100%' height='50px' id='typo' scrolling='yes'></iframe>
+		<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
+			<tr>
+			<td style = "width: 39%;">
+				<iframe class='resized' width='100%' height='100px' id='typo' scrolling='yes'></iframe>
 			</td>
-		</tr>
-		<tr>
-			<td style = "width: 100%;">
+			<td style = "width: 60%;">
 				<iframe class='resized' width='100%' height='100px' id='doclist' scrolling='yes'></iframe>
 			</td>
+			</tr>
+		</table>
 		</tr>
 	</table>
 </div>
@@ -68,8 +70,8 @@
 	
 	var timelineclick = function(item){
 		document.getElementById('typolist').src = 'itemlist.html?data=typorecognition/typowords&year='+item
-		document.getElementById('typo').src = null
-		document.getElementById('doclist').src = null
+		document.getElementById('typo').src = "error_selecttoken.html"
+		document.getElementById('doclist').src = "error_selecttoken.html"
 	}
 	
 	
