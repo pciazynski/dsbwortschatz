@@ -14,12 +14,12 @@
 
 <script>
 	var dataset = getQueryVariable("data")
-	var token = getQueryVariable("token")
-	dataset = dataset +"?token="+token
+	var word = getQueryVariable("token")
+	dataset = dataset +"?token="+word
 	data_arr = readPHP(dataset).split("\n");
 
 	str = '<table class="clicktable">';
-	str = str + '<tr><th>Dokument-<br>nachweise</th><th>Lemma</th><th>Deutsch<br>(dolnoserbski.de)<br></th><th>Vorlesen<br>(dolnoserbski.de)</th><th>Token</th><th>Norm</th><th>Type</th><th>Subtype</th>'
+	str = str + '<tr><th>Dokument-<br>nachweise</th><th>Lemma</th><th>Deutsch<br>(dolnoserbski.de)<br></th><th>Vorlesen<br>(dolnoserbski.de)</th><th>Word</th><th>Norm</th><th>Type</th><th>Subtype</th>'
 	str = str +"</tr>"
 
 	
@@ -27,7 +27,7 @@
 	for (var i = 0; i < data_arr.length; i++) {
 		arr = data_arr[i].split(sep)
 		str += '<tr>'
-		str += "<td><a target='_blank' href=../docreferences/?word="+token+">&#10149;</a></td>"
+		str += "<td><a target='_blank' href=../docreferences/?word="+word+">&#10149;</a></td>"
 		lemma = arr[0].slice(1,-1)
 		if(lemma.length>0){
 			str += "<td><a target='_blank' href=../bwlemma/?lemma="+lemma+">"+lemma+"</a></td>"
@@ -39,12 +39,12 @@
 			if(normtoken.length==0){
 			}
 		}
-		else{normtoken = token}
+		else{normtoken = word}
 		
-		readtoken = readPHP("psedcytassearch.php?token="+normtoken).trim()
-		if(readtoken.length==0){readtoken = readPHP("psedcytassearch.php?token="+token).trim()}
-		if(readtoken.length > 0){
-			leseurl="https://dolnoserbski.de/dnw/audio/"+readtoken
+		readword = readPHP("psedcytassearch.php?word="+normtoken).trim()
+		if(readword.length==0){readword = readPHP("psedcytassearch.php?word="+word).trim()}
+		if(readword.length > 0){
+			leseurl="https://dolnoserbski.de/dnw/audio/"+readword
 			onclickfun = "document.getElementById('audioplayer').src='"+leseurl+"';document.getElementById('audioplayer').play()"
 			str += '<td onclick="'+onclickfun+'"> &#128266; </td>'
 		}
@@ -52,7 +52,7 @@
 			str += '<td></td>'
 		}
 		
-		str += "<td><a target='_blank' href=../bwtoken/?token="+token+">"+token+"</a></td>"
+		str += "<td><a target='_blank' href=../bwword/?word="+word+">"+word+"</a></td>"
 
 		for (var j=2;j<arr.length;j++){
 			str += "<td>"+arr[j]+"</td>"
