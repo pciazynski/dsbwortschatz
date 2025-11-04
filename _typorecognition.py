@@ -19,6 +19,7 @@ if os.path.exists("data/typorecognition/typos.txt"):
         for line in bwin:
             linearr = line.split(tab)
             checkedwords[linearr[1].split(":")[0]] = 1
+            alreadyseen[linearr[1].split(":")[0]] = 1
 
 bw = dict()
 with open ("data/bagofwords/_all.txt","r",encoding="utf8") as bwin:
