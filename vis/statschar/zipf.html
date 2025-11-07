@@ -16,12 +16,12 @@
 	
 	if(dataset.includes(".php")){
 		dataset+="?sort&year="+getQueryVariable("year")
-		data_arr = readPHP(dataset).split("\n");
-		diagramtitle = "Zeichenhäufigkeiten "+getQueryVariable("year")
+		data_arr = readPHP(dataset).trim().split("\n");
+		diagramtitle = "Character Frequency<br>"+getQueryVariable("year")
 	}
 	else{
 		data_arr = readTextFile(dataset).split("\n");
-		diagramtitle = "Zeichenhäufigkeiten "+dataset.split("/")[1]
+		diagramtitle = "Character Frequency<br>"+dataset.split("/")[1]
 	}
 	allText=""
 	maxval = 0
@@ -66,10 +66,10 @@
 			tickfont:diagramfont
 			},
 		yaxis:{
-			automargin: true,
 			type:scale,
+			range:[0,maxval],
 			title: {
-				text: 'Häufigkeit (Abs)',
+				text: 'Frequency (Abs)',
 				font: diagramfont
 				}
 			},

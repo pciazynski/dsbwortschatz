@@ -46,7 +46,7 @@
 	data = getQueryVariable("data")
 	var token = getQueryVariable("char")
 	dataset = data +"?char="+token+"&sort"
-	dataset = readPHP(dataset).trim().split("\n");
+	dataset = readPHP(dataset).split("\n");
 	var vorhersage = getQueryVariable("vorhersage")
 
 	x1 = []

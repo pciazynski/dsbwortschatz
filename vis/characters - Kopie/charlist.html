@@ -15,11 +15,11 @@
 	
 	if(dataset.includes(".php")){
 		dataset+="?sort&year="+getQueryVariable("year")
-		data_arr = readPHP(dataset).trim().split("\n");
+		data_arr = readPHP(dataset).split("\n");
 		diagramtitle = "Tokenhäufigkeiten "+getQueryVariable("year")
 	}
 	else{
-		data_arr = readTextFile(dataset).trim().split("\n");
+		data_arr = readTextFile(dataset).split("\n");
 		diagramtitle = "Tokenhäufigkeiten "+dataset.split("/")[1]
 	}
 	allText=""

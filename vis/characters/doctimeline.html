@@ -13,8 +13,8 @@
 	var dataset = getQueryVariable("data")
 	var token = getQueryVariable("char")
 	dataset = dataset +"?char="+token+"&sort"
-	diagramtitle = "Dokumente mit Zeichen:"+ token
-	data_arr = readPHP(dataset).split("\n");
+	diagramtitle = "Doc. with character:"+ token
+	data_arr = readPHP(dataset).trim().split("\n");
 	maxval = 0
 	minval = 10000000
 
@@ -80,7 +80,7 @@
 		},
 		yaxis: {
 			automargin: true,
-			type:scale,
+			range:[0,maxval+maxval/10],
 			title: {
 				text: 'Dokumente',
 				font:diagramfont

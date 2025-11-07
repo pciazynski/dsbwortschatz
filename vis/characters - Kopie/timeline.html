@@ -15,7 +15,7 @@
 	var jitter = getQueryVariable("jitter")
 	if(jitter.length==0){jitter=defjitter}else{jitter = parseFloat(jitter)}
 	if(token.length>0){dataset+="&char="+token}
-	data_arr = readPHP(dataset).trim().split("\n");
+	data_arr = readPHP(dataset).split("\n");
 	maxval = 0
 	minval = 10000000
 
@@ -23,7 +23,7 @@
 	count = []
 	hovers = []
 	colors = []
-	diagramtitle = ""
+	diagramtitle = "Zeichenhäufigkeit<br>"
 	tokenarr = token.split(",")
 	if (tokenarr.length>1){
 		for (var i = 0; i < tokenarr.length; i++){
@@ -79,8 +79,8 @@
 			tickfont:diagramfont
 		},
 		yaxis: {
+			automargin: true,
 			type:scale,
-			range:[0,maxval+maxval/10],
 			title: {
 				text: 'Häufigkeit (Abs)',
 				font:diagramfont

@@ -2,61 +2,56 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<script src="../../lib/plotly-latest.min.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
 	<script src="../../_assets/datahandler.js"></script>
 	<script src="../../lib/config.js"></script>
 	<link rel="stylesheet" href="../../digilabstyles.css">
 </head>
 
 <body style="text-align:left;">
-<script>
+<script type = "module">
+
 	var dataset = getQueryVariable('data')
-	var token = getQueryVariable('char')
-	dataset = dataset +"?char="+token+"&sort"
-	diagramtitle = "Document per Zeichen:"+ token
-	param = "&deletexml&highlight="+token
-	data_arr = readPHP(dataset).trim().split('\n');
-	
-	str = '<table class="clicktable">';
-	if(dataset.includes("?token")){
-		str += str + '<tr><th>Jahr</th><th>Zeichensuche</th><th>Zeichenverteilung <br>Dia | Data</th><th>Lese-<br>freundlich</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
-	}
-	else{
-		str += '<tr><th>Jahr</th><th>Lesemodus</th><th>Faksimile<br>Dig. Bibliothek</th><th>Dokument<br>CTS</th>'
-	}
-	str += '</tr>'
+	var chara = getQueryVariable('char')
+	dataset = dataset +"?char="+chara+"&sort"
+	var restr_arr = (await readPHP_async("metadata.php?restricted=1&slim")).trim("\n").split('\n')
+	var data_arr = (await readPHP_async(dataset)).trim('\n').split('\n');
+	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><table class="clicktable">'+
+	'<tr><th>'+lang_year+'</th><th>'+lang_tokensearch+'</th><th>'+lang_characters+"</br>"+lang_distribution+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th></tr>'
 
 	for (var i = 0; i < data_arr.length; i++) {
-		arr = data_arr[i].split(sep)
-		
-		urnarr = arr[0].split(":")[3].replaceAll("."," ").replaceAll("_"," ").split(" ")
-		tmpname = ""
+		var arr = data_arr[i].split(sep)
+		var urnarr = arr[0].split(":")[3].replaceAll("."," ").replaceAll("_"," ").split(" ")
+		var tmpname = ""
 		for (var j = 0; j < urnarr.length; j++){
 			tmpname += " "+urnarr[j].charAt(0).toUpperCase() + urnarr[j].slice(1)
 		}
 		//Remove Versioning Timestamp
 		tmpname = tmpname.substring(0,tmpname.lastIndexOf(" "))
-		
-		onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+token+"', '_blank')"
-		onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
-		onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
-		onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+token+"&lowercase', '_blank')"
-		onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+token+"&lowercase', '_blank')"
-		onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+tmpname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
-		resstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
-		if(dataset.includes("?token")){
-			str += '<tr><td>'+arr[1]+'</td><td> <span onclick="'+onclickfun0+'"> &#10008;</span> </td><td> <span onclick="'+onclickfun3+'"> &#10087;</span> | <span onclick="'+onclickfun4+'"> &#10138; </span></td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
+		var ctsstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
+		//Copyright restricted
+		if(restr_arr.includes(arr[0])){
+			var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
+			str += '<tr><td>'+arr[1]+'</td><td>&#128274;</td><td>&#128274;</td><td>&#128274;</td><td>&#128274;</td><td onclick="'+onclickfun2+'">&#128274;'+tmpname+'</td>'
 		}
+		//Copyright Free
 		else{
-			str += '<tr><td>'+arr[1]+'</td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
+			var onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+chara+"', '_blank')"
+			var onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
+			var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
+			var onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&character="+chara+"&lowercase', '_blank')"
+			var onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&character="+chara+"&lowercase', '_blank')"
+			var onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+tmpname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
+			var resstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
+			str += '<tr><td>'+arr[1]+'</td><td> <span onclick="'+onclickfun0+'"> &#10008;</span> </td><td> <span onclick="'+onclickfun3+'"> &#10087;</span> | <span onclick="'+onclickfun4+'"> &#10138; </span></td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
 		}
 		str += '</tr>'
 	}
-	str += '</table>';
-	document.write(str)
-	data_arr = ""
-	str = ""
-	document.title = 'Dok-liste '+ token
+	document.write(str+'</table>')
+	data_arr = null
+	str = null
+	document.title = lang_docreferences + chara
 
 </script>
 </body>
