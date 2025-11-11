@@ -97,10 +97,10 @@
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			
 			infotext+='<tr><td>Häufigkeit</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/statslemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td>'}
 			infotext+='<td> '+data[0].split("\t")[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rang</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/statslemma/zipf.html?data=lemmamapping/_lemmabag&lemma='+lemma+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/lemmamapping/_lemmabag.txt">➚</a></td>'}
 			infotext+='<td> '+data[0].split("\t")[1]+'</td></tr>'
 			infotext+='<tr><td>Erster&nbsp;Beleg</td>'
 			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&exact=1&focus=0&lemma='+lemma+'">❧</a> <a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?exact&lemma='+lemma+'">➚</a></td>'}
