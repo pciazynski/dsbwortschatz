@@ -4,6 +4,10 @@ header('Content-Type: text/plain');
 (isset($_GET['lemma'])) ? $lemma = $_GET['lemma'] : NULL;
 
 if (strlen($lemma)>=1){
+
+	#Workaround bc LIKE is case sensitive for multibyte. Does not apply to normprefixsearch.
+	$lemma = mb_strtoupper($lemma,'UTF-8');
+
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;
 	(isset($_GET['cutoff'])) ? $cutoff = ' GROUP BY SUBSTRING(lemma,1,'.strlen($lemma)+$_GET['cutoff'].')' : $cutoff = '';
 	(isset($_GET['ambig'])) ? $dbname = 'lemmafrequency':$dbname = 'lemmanonambig';
