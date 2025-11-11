@@ -23,6 +23,7 @@
 	count = []
 	colors = []
 	hovers = []
+	print = true
 	if(print){
 		for (var i = 0; i < data_arr.length; i++) {
 			line = data_arr[i];
@@ -78,6 +79,7 @@
 	var layout = {
 		barmode: 'stack',
 		title:diagramtitle,
+		hovermode:'x',
 		xaxis: {
 			automargin: true,
 			linewidth: 1,
