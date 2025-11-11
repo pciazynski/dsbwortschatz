@@ -44,7 +44,7 @@
 		yyyy = today.getFullYear();
 		today = dd + '.' + mm + '.' + yyyy;
 		data = readPHP("lemmaprofile.php?lemma="+lemma).split("\n")
-		if(data.length>0){
+		if(data.length>1){
 			data[5] = ""
 			if(data[4] != null){
 				tmparr = data[4].split("\t")
@@ -111,7 +111,7 @@
 			infotext+='<tr><td>Lemma&nbsp;inkl&nbsp;ambig</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=0&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmasumperyear.php?sort&lemma='+lemma+'">➚</a></td>'}
 			infotext+='<td> '+data[2]+'</td></tr>'
-			infotext+='<tr style="background-color:#F0F3FA;"><td>Belegte&nbsp;Wortformen unique</td>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Belegte&nbsp;Wortformen nicht ambig</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/traviz.html?data=lemmatoken.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmatoken.php?sort&focus=0&exact=1&lemma='+lemma+'">➚</a></td>'}
 			infotext+='<td> '+data[3]+'</td></tr>'
 			infotext+='<tr><td>Belegte&nbsp;Wortformen&nbsp;nur&nbsp;ambig</td>'
@@ -131,9 +131,8 @@
 			}
 		}
 		else{
-			infotext = "<br>Keine Daten"
+			infotext = 'Lemma existiert <a href="../bwlemma/?headerconf='+getQueryVariable('headerconf')+'&lemma='+lemma+'">nur ambig</a> oder ein Fehler ist passiert.'
 		}
-		console.log(infotext)
 		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
 		if(clickable==1){clicktext += '<td><a href="?lemma='+lemma+'">Interaktionselemente entfernen</a></td>'}
 		else{clicktext += '<td><a href="?lemma='+lemma+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
