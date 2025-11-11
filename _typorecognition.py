@@ -63,7 +63,7 @@ maxls = 1
 start = datetime.now()
 avgtoklen = int(sumtoklen / len(bw))
 res = {}
-typofrequency = 1
+typofrequency = 100
 
 print("Start " +start.strftime("%m/%d/%Y, %H:%M:%S")+" avgtoklen: "+str(avgtoklen))
 with open ("data/typorecognition/typos.txt", "a", encoding="utf8") as outf, open ("data/typorecognition/typowords.txt", "a", encoding="utf8") as outfwords:
