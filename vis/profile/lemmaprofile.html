@@ -45,6 +45,16 @@
 		today = dd + '.' + mm + '.' + yyyy;
 		data = readPHP("lemmaprofile.php?lemma="+lemma).split("\n")
 		if(data.length>0){
+			data[5] = ""
+			if(data[4] != null){
+				tmparr = data[4].split("\t")
+				tmparrseen = data[3].split("\t")
+				for (var i = 0;i<tmparr.length;i++){
+					if(!data[3].includes(tmparr[i]))
+					data[5]+=tmparr[i]+"\t"
+				}
+			}
+
 			if (clickable == 1){
 				if(data[2] != null){
 					tmparr = data[2].split("\t")
@@ -72,7 +82,17 @@
 						data[4] += '<a href="wordprofile.html?word='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
 					}
 					data[4] = data[4].trim()
-				}			}
+				}
+				if(data[5] != null){
+					tmparr = data[5].split("\t")
+					data[5] = ""
+					for (key in tmparr){
+						token_count=tmparr[key].split(":")
+						data[5] += '<a href="wordprofile.html?word='+token_count[0]+'&clickable=1">'+tmparr[key]+'</a>\t'
+					}
+					data[5] = data[5].trim()
+				}
+			}
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			
 			infotext+='<tr><td>Häufigkeit</td>'
@@ -93,6 +113,9 @@
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Belegte&nbsp;Wortformen</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/traviz.html?data=lemmatoken.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmatoken.php?sort&focus=0&exact=1&lemma='+lemma+'">➚</a></td>'}
 			infotext+='<td> '+data[3]+'</td></tr>'
+			infotext+='<tr><td>Belegte&nbsp;Wortformen&nbsp;nur&nbsp;ambig</td>'
+			if(clickable==1){infotext+='<td></td>'}
+			infotext+='<td> '+data[5]+'</td></tr>'
 			infotext+='<tr><td>Belegte&nbsp;Wortformen&nbsp;inkl&nbsp;ambig</td>'
 			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwlemma/traviz.html?data=lemmatoken.php&sort&focus=0&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/lemmatoken.php?sort&focus=0&lemma='+lemma+'">➚</a></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
@@ -109,6 +132,7 @@
 		else{
 			infotext = "<br>Keine Daten"
 		}
+		console.log(infotext)
 		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
 		if(clickable==1){clicktext += '<td><a href="?lemma='+lemma+'">Interaktionselemente entfernen</a></td>'}
 		else{clicktext += '<td><a href="?lemma='+lemma+'&clickable=1">Interaktionselemente anzeigen</a></td>'}

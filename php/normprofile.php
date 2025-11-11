@@ -27,18 +27,18 @@ if(isset($_GET['norm'])){
 	}
 	$res=trim($res,$tab).$nl;
 
-	$query = 'SELECT norm, SUM(frequency) as c FROM normfrequency WHERE norm LIKE "%|'.$norm.'|%" GROUP BY norm ORDER BY c DESC';
+	$query = 'SELECT norm, SUM(frequency) as c FROM normfrequency WHERE norm LIKE "%|'.$norm.'|%" GROUP BY norm ORDER BY c DESC,norm';
 	foreach($PDO->query($query.';') as $row){
 		$res.=trim($row['norm'],"|").$colon.$row['c'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
 	
-	$query = 'SELECT token, frequency FROM normtokenfrequency WHERE norm = "|'.$norm.'|" ORDER BY frequency DESC';
+	$query = 'SELECT token, frequency FROM normtokenfrequency WHERE norm = "|'.$norm.'|" ORDER BY frequency DESC,token';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['token'].$colon.$row['frequency'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
-	$query = 'SELECT token, frequency FROM normtokenfrequency WHERE norm LIKE "%|'.$norm.'|%" ORDER BY frequency DESC';
+	$query = 'SELECT token, frequency FROM normtokenfrequency WHERE norm LIKE "%|'.$norm.'|%" ORDER BY frequency DESC,token';
 	foreach($PDO->query($query.';') as $row){
 		$res.=$row['token'].$colon.$row['frequency'].$tab;
 	}
