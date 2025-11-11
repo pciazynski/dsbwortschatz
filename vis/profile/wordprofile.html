@@ -89,10 +89,10 @@
 			}
 			
 			infotext+='<tr><td>Häufigkeit</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwword/zipf.html?data=bagofwords/_all&token='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/statsword/zipf.html?data=bagofwords/_all&token='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
 			infotext+='<td> '+data[0].split("\t")[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rang</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwword/zipf.html?data=bagofwords/_all&token='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/statsword/zipf.html?data=bagofwords/_all&token='+word+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/bagofwords/_all.txt">➚</a></td>'}
 			infotext+='<td> '+data[0].split("\t")[1]+'</td></tr>'
 			infotext+='<tr><td>Erster&nbsp;Beleg</td>'
 			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwword/timeline.html?data=tokencountperyear.php&print&hidewatermark&sort&token='+word+'">❧</a> <a target="_blank" href = "'+miningURL+'php/tokencountperyear.php?sort&token='+word+'">➚</a></td>'}
