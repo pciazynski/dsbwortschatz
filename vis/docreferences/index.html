@@ -186,7 +186,7 @@
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbynorm.php&norm='+tmp+yearval
+			document.getElementById('doclist').src = 'doclistnorm.html?data=urnbynorm.php&norm='+tmp+yearval
 			document.getElementById('timeline').src = 'timeline.html?data=urnbynorm.php&norm='+tmp+yearval
 			document.title=tmp+" Dok.nachweise "
 		}
@@ -197,7 +197,7 @@
 		if(tmp.length>0){
 			loading('timeline')
 			loading('doclist')
-			document.getElementById('doclist').src = 'doclist.html?data=urnbylemma.php&lemma='+tmp+yearval
+			document.getElementById('doclist').src = 'doclistlemma.html?data=urnbylemma.php&lemma='+tmp+yearval
 			document.getElementById('timeline').src = 'timeline.html?data=urnbylemma.php&lemma='+tmp+yearval
 			document.title=tmp+" Dok.nachweise "
 		}
