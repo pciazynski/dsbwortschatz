@@ -44,7 +44,7 @@
 		yyyy = today.getFullYear();
 		today = dd + '.' + mm + '.' + yyyy;
 		data = readPHP("normprofile.php?norm="+norm).split("\n")
-		if(data.length>0){
+		if(data.length>1){
 			data[5] = ""
 			if(data[4] != null){
 				tmparr = data[4].split("\t")
@@ -127,17 +127,17 @@
 			else{
 				infotext += '<tr><td></td><td>'+miningURL+' ' +today+'</td></tr></table>'
 			}
+			clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
+			if(clickable==1){clicktext += '<td><a href="?norm='+norm+'">Interaktionselemente entfernen</a></td>'}
+			else{clicktext += '<td><a href="?norm='+norm+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
+			clicktext+='</table>'
+			
+			document.write('<h1 style="text-align:center;">Normierung '+norm+'</h1><p style="text-align:center;">Die Vollständigkeit der Daten entspricht dem Bearbeitungsstand des Textkorpus.</p>'+clicktext+infotext)
 		}
 		else{
-			infotext = "<br>Keine Daten"
+			document.write('<table align=center style="valign:top;border-collapse: collapse;"><tr><td>Normierung existiert <a target="_blank" href="../bwnorm/?headerconf='+getQueryVariable('headerconf')+'&norm='+norm+'">nur ambig</a> oder ein Fehler ist passiert.</td></tr></table>')
 		}
-		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
-		if(clickable==1){clicktext += '<td><a href="?norm='+norm+'">Interaktionselemente entfernen</a></td>'}
-		else{clicktext += '<td><a href="?norm='+norm+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
-		clicktext+='</table>'
-		
-		document.write('<h1 style="text-align:center;">Normierung '+norm+'</h1><p style="text-align:center;">Die Vollständigkeit der Daten entspricht dem Bearbeitungsstand des Textkorpus.</p>'+clicktext+infotext)
-	}
+}
 </script>
 
 <script>

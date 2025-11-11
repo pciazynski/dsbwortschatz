@@ -129,16 +129,16 @@
 			else{
 				infotext += '<tr><td></td><td>'+miningURL+' ' +today+'</td></tr></table>'
 			}
+			clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
+			if(clickable==1){clicktext += '<td><a href="?lemma='+lemma+'">Interaktionselemente entfernen</a></td>'}
+			else{clicktext += '<td><a href="?lemma='+lemma+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
+			clicktext+='</tr></table>'
+		
+			document.write('<h1 style="text-align:center;">Lemmaprofil '+lemma+'</h1><p style="text-align:center;">Die Vollständigkeit der Daten entspricht dem Bearbeitungsstand des Textkorpus.</p>'+clicktext+infotext)
 		}
 		else{
-			infotext = 'Lemma existiert <a href="../bwlemma/?headerconf='+getQueryVariable('headerconf')+'&lemma='+lemma+'">nur ambig</a> oder ein Fehler ist passiert.'
+			document.write('<table align=center style="valign:top;border-collapse: collapse;"><tr><td>Lemma existiert <a target="_blank" href="../bwlemma/?headerconf='+getQueryVariable('headerconf')+'&lemma='+lemma+'">nur ambig</a> oder ein Fehler ist passiert.</td></tr></table>')
 		}
-		clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
-		if(clickable==1){clicktext += '<td><a href="?lemma='+lemma+'">Interaktionselemente entfernen</a></td>'}
-		else{clicktext += '<td><a href="?lemma='+lemma+'&clickable=1">Interaktionselemente anzeigen</a></td>'}
-		clicktext+='</table>'
-		
-		document.write('<h1 style="text-align:center;">Lemmaprofil '+lemma+'</h1><p style="text-align:center;">Die Vollständigkeit der Daten entspricht dem Bearbeitungsstand des Textkorpus.</p>'+clicktext+infotext)
 	}
 </script>
 
