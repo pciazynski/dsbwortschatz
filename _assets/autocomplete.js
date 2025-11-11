@@ -24,7 +24,7 @@ function autocomplete(input, datasource, functioncall) {
 			b.addEventListener("click", function(e) {
 				document.getElementById(input).value = this.getElementsByTagName("input")[0].value;
 				closeAllLists();
-				window[functioncall]()
+				if(functioncall.length>0){window[functioncall]()}
 			});
 			a.appendChild(b);
 	}});

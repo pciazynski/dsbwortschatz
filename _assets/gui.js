@@ -109,7 +109,7 @@ if(headerconf[2]!=='0'){str+='<td>'
 if(headerconf[3]!=='0'){str+='<td>'
 +'<a href="../bwlemma?headerconf='+headerconf+'">'+lang_timeline+'</a> | '
 +'<a href="../lemmavariation?headerconf='+headerconf+'">'+lang_variation+'</a> | '
-+'<a href="../lemmaeval?headerconf='+headerconf+'">'+lang_evaluation+'</a> | '
+//+'<a href="../lemmaeval?headerconf='+headerconf+'">'+lang_evaluation+'</a> | '
 +'<a href="../profile?headerconf='+headerconf+'">'+lang_profile+'</a>'
 +'</td>'
 }
