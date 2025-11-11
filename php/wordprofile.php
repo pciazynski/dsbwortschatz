@@ -34,7 +34,7 @@ if(isset($_GET['word'])){
 	}
 	$PDO = new PDO('sqlite:../data/lemmamapping.db');
 
-	$query = 'SELECT lemma, SUM(frequency) as c FROM lemmatokenfrequency WHERE token = "'.$token.'"';
+	$query = 'SELECT lemma, SUM(frequency) as c FROM lemmatokenfrequency WHERE token = "'.$token.'" ORDER BY c DESC';
 	foreach($PDO->query($query.';') as $row){
 		$lemma=trim($row['lemma'],"|");
 		$res.=$lemma.$colon.$row['c'].$tab;
@@ -43,13 +43,14 @@ if(isset($_GET['word'])){
 	$res=trim($res,$tab).$nl;
 
 	
-	$query = 'SELECT norm, SUM(frequency) as c FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY norm ORDER BY c DESC';
+	$PDO = new PDO('sqlite:../data/normmapping.db');
+	$query = 'SELECT norm, SUM(frequency) as c FROM normtokenfrequency WHERE token = "'.$token.'" ORDER BY c DESC';
 	foreach($PDO->query($query.';') as $row){
 		$res.=trim($row['norm'],"|").$colon.$row['c'].$tab;
 	}
 	$res=trim($res,$tab).$nl;
 	
-	$query = 'SELECT type, SUM(frequency) as c FROM tokenlemmanormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY type';
+	$query = 'SELECT type, SUM(frequency) as c FROM tokennormtypesubtypedatefrequency WHERE token = "'.$token.'" GROUP BY type';
 	foreach($PDO->query($query.';') as $row){
 		(strlen(trim($row['type']))>0) ? $res.=$row['type'].$colon.$row['c'].$tab:NULL;
 	}
