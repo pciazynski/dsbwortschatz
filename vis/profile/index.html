@@ -21,6 +21,12 @@
 		</td>
 	</tr>
 	<tr>
+		<td></td>
+		<td>
+			<input id="ambigprefixsearchCheckBox" type="checkbox" onchange="switchAmbigPrefixsearch()"><script>document.write(lang_ambigprefixsearch)</script></input>
+		</td>
+	</tr>
+	<tr>
 		<td style="text-align:center;"><script>document.write(lang_lemmafy)</script></td>
 		<td>
 			<div class="autocomplete">
@@ -93,12 +99,20 @@
 		}
 	}
 
+	var switchAmbigPrefixsearch = function(){
+		tmp = document.getElementById('ambigprefixsearchCheckBox').checked
+		if(tmp){searchAmbig = '&ambig'}else{searchAmbig = ''}
+		autocomplete("wantedword", "prefixsearch.php?limit=30&sortby="+searchAmbig+searchSort+"&word=", "updateWord"); 
+		autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30"+searchAmbig+searchSort+"&lemma=", "updateLemma"); 
+		autocomplete("wantednorm", "prefixnormsearch.php?limit=30"+searchAmbig+searchSort+"&norm=", "updateNorm");
+	}
+
 	var switchPrefixsearch = function(){
 		tmp = document.getElementById('prefixsearchCheckBox').checked
-		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
-		autocomplete("wantedword", "prefixsearch.php?limit=30&sortby="+tmp+"&word=", "updateWord"); 
-		autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", "updateLemma"); 
-		autocomplete("wantednorm", "prefixnormsearch.php?limit=30&sortby="+tmp+"&norm=", "updateNorm");
+		if(tmp){searchSort = '&sortby=alphabet'}else{searchSort = '&sortby=frequency'}
+		autocomplete("wantedword", "prefixsearch.php?limit=30"+searchAmbig+searchSort+"&word=", "updateWord"); 
+		autocomplete("wantedlemma", "prefixlemmasearch.php?limit=30"+searchAmbig+searchSort+"&lemma=", "updateLemma"); 
+		autocomplete("wantednorm", "prefixnormsearch.php?limit=30"+searchAmbig+searchSort+"&norm=", "updateNorm");
 	}
 	
 	var switchClickable = function(){
@@ -129,6 +143,9 @@
 		document.getElementById('profile').src="normprofile.html?norm="+tmp
 	}
 	tmp = getQueryVariable('word')
+	searchSort = '&sortby=alphabet'
+	searchAmbig = ''
+	
 	if(tmp.length>0){
 		document.getElementById('wantedword').value=tmp
 		updateWord()
