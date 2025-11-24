@@ -66,6 +66,7 @@
 	}
 	
 	var metadataclick = function(author,year){
+		if(author==''){author='NULL'}
 		params = "&author="+author
 		if(year.length>0){
 			params += "&year="+year

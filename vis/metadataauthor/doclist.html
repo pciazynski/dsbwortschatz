@@ -17,13 +17,16 @@
 	var year = getQueryVariable("year")
 	dataset+="?sort"
 	if(year.length>0){dataset+="&year="+year}
-	if(author.length>0){dataset+="&author="+author}
+	if(author.length>0){
+		if(author=='NULL'){author=''}
+		dataset+="&author="+author
+	}
 	diagramtitle = dataset
 	data_arr = readPHP(dataset).trim("\n").split('\n');
 	param=""
 	
 	str = '<table class="clicktable">';
-	str += '<tr><th>'+lang_year+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th><th>'+lang_author+'</th>'
+	str += '<tr><th>'+lang_year+'</th><th>'+lang_ebook+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th>'
 	str += '</tr>'
 
 	for (var i = 0; i < data_arr.length; i++) {
@@ -44,8 +47,7 @@
 		onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
 		onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
 		onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+bibname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
-		resstr='<span style="color:'+getColor(arr[3].replace(/[0-9]/g,""))+';">▮</span>'+arr[3]
-		str += '<tr><td>'+arr[2]+'</td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+tmpname+'</td><td>'+resstr+'</td>'
+		str += '<tr><td>'+arr[2]+'</td><td onclick="'+onclickfun1+'"> &#x1F56E; </td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+tmpname+'</td>'
 
 		str += '</tr>'
 	}
