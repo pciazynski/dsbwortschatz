@@ -17,10 +17,7 @@
 	var year = getQueryVariable("year")
 	dataset+="?sort"
 	if(year.length>0){dataset+="&year="+year}
-	if(restricted.length>0){
-		if(restricted=='NULL'){restricted=''}
-		dataset+="&restricted="+restricted
-	}
+	dataset+="&restricted="+restricted
 	var diagramtitle = dataset
 	var data_arr = readPHP(dataset).trim("\n").split('\n');
 	var param=""
