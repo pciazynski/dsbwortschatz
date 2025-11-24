@@ -67,7 +67,7 @@
 	
 	var metadataclick = function(lang,year){
 		params = "&lang="+lang
-		if(year.length>0){
+		if((""+year).length>0){
 			params += "&year="+year
 		}
 		document.getElementById('doclist').src="doclist.html?data=metadata.php"+params
