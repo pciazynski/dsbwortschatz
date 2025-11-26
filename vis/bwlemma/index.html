@@ -217,7 +217,7 @@
 
 	var switchtimeflow  = function(elid){
 		tmp = document.getElementById(elid)
-		if(url.includes("timeflow")){
+		if(tmp.src.includes("timeflow")){
 			updateTimeline()
 		}else{
 			tmp.src = "timeflow.html?data=?data=lemmafamilytree.php&lemma="+curlemma
