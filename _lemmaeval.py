@@ -50,7 +50,7 @@ with open("data/lemmamapping/_lemmabag.txt","r", encoding="utf8") as inf:
 with open ("data/lemmamapping/_stats.txt", "w", encoding="utf8") as out:
     out.write("Lemmatisiert / Alle: "+str(lem)+" / "+str(lem+unlem)+"\n")
     out.write("Inkonsistent: "+str(incons)+"\n")
-    out.write("Sortierungsredundanz (ambige Einträge sortiert : ambige Einträge unsortiert : Betroffene Token ) : "+str(len(unsortedlist))+" : "+str(len(sortedlist))+" : "+str(unsortedtypecount-sortedtypecount)+"\n")
+    out.write("Sortierungsredundanz (ambige Einträge sortiert : ambige Einträge unsortiert : Betroffene Token ) : "+str(len(sortedlist))+" : "+str(len(unsortedlist))+" : "+str(unsortedtypecount-sortedtypecount)+"\n")
 
 lemmabag = {}
 lemmaambiquebag = {}

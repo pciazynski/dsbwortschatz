@@ -45,7 +45,7 @@ with open("data/normmapping/_normbag.txt","r", encoding="utf8") as inf:
 with open ("data/normmapping/_stats.txt", "w", encoding="utf8") as out:
     out.write("Normiert / Alle: "+str(yay)+" / "+str(yay+nay)+"\n")
     out.write("Inkonsistent: "+str(incons)+"\n")
-    out.write("Sortierungsredundanz (ambige Einträge sortiert : ambige Einträge unsortiert : Betroffene Token ) : "+str(len(unsortedlist))+" : "+str(len(sortedlist))+" : "+str(unsortedtypecount-sortedtypecount)+"\n")
+    out.write("Sortierungsredundanz (ambige Einträge sortiert : ambige Einträge unsortiert : Betroffene Token ) : "+str(len(sortedlist))+" : "+str(len(unsortedlist))+" : "+str(unsortedtypecount-sortedtypecount)+"\n")
 
     
 normbag = {}
