@@ -35,7 +35,7 @@
 	", n<sub>max</sub>: "+max+
 	"<br>s<sup>2</sup>: "+varianz(N).toFixed(decicount)+
 	", s: "+standardabweichung(N).toFixed(decicount)+
-	'</br>'+readTextFile("normmapping/_stats"))
+	'</br>'+readTextFile("normmapping/_stats").replaceAll("\n","</br>"))
 
 </script>
 </body>
