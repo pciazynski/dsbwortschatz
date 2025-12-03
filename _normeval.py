@@ -22,9 +22,30 @@ with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("dat
         else:
             nay += 1
             outnay.write(line)
+
+unsortedlist = {}
+sortedlist =  {}
+
+sortedtypecount = 0
+unsortedtypecount = 0
+
+with open("data/normmapping/_normbag.txt","r", encoding="utf8") as inf:
+    for line in inf:
+        count = int(line.split("\t")[1])
+        line = line.split("\t")[0]
+        linearr = line.split("|")
+        if(len(linearr)>3):
+            unsortedtypecount += count
+            unsortedlist["|".join(linearr)] = 1
+            linearr = sorted(linearr)
+            if not "|".join(linearr) in sortedlist:
+                sortedtypecount += count
+            sortedlist["|".join(linearr)] = 1
+
 with open ("data/normmapping/_stats.txt", "w", encoding="utf8") as out:
     out.write("Normiert / Alle: "+str(yay)+" / "+str(yay+nay)+"\n")
     out.write("Inkonsistent: "+str(incons)+"\n")
+    out.write("Sortierungsredundanz (ambige Einträge sortiert : ambige Einträge unsortiert : Betroffene Token ) : "+str(len(sortedlist))+" : "+str(len(sortedlist))+" : "+str(unsortedtypecount-sortedtypecount)+"\n")
 
     
 normbag = {}
