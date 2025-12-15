@@ -44,6 +44,9 @@ with open("data/lemmamapping/_lemmabag.txt","r", encoding="utf8") as inf:
             linearr = sorted(linearr)
             if not "|".join(linearr) in sortedlist:
                 sortedtypecount += count
+#            else:
+#                handle sorting-redundancies    
+#                print(line+"->"+"|".join(linearr))
             sortedlist["|".join(linearr)] = 1
 
 
