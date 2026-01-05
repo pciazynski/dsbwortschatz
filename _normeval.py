@@ -26,7 +26,7 @@ with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("dat
             progress[line.strip()] = 0
             outnay.write(line)
 
-with open ("data/lemmamapping/_progress.txt", "w", encoding="utf8") as outlemprogress:
+with open ("data/normmapping/_progress.txt", "w", encoding="utf8") as outlemprogress:
     for line,value in sorted(progress.items(), key = lambda x:x[1], reverse=True):
         outlemprogress.write(line+"\t"+str(progress[line]) + "\n")
     
