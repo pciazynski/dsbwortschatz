@@ -17,16 +17,24 @@ with open ("data/lemmamapping/_all.txt", "r", encoding="utf8") as bwin, open ("d
 
 unlem = 0
 lem = 0
+progress = {}
+
 with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("data/lemmamapping/_yay.txt", "w", encoding="utf8") as outlem,open ("data/lemmamapping/_nay.txt", "w", encoding="utf8") as outunlem:
     for line in bwin:
         linearr = line.split("\t")
         if linearr[0] in bl:
             outlem.write(line)
+            progress[line.strip()] = 1
             lem += 1
         else:
             unlem += 1
             outunlem.write(line)
+            progress[line.strip()] = 0
 
+with open ("data/lemmamapping/_progress.txt", "w", encoding="utf8") as outlemprogress:
+    for line,value in sorted(progress.items(), key = lambda x:x[1], reverse=True):
+        outlemprogress.write(line+"\t"+str(progress[line]) + "\n")
+    
 unsortedlist = {}
 sortedlist =  {}
 

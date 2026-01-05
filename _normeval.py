@@ -13,16 +13,24 @@ with open ("data/normmapping/_all.txt", "r", encoding="utf8") as bwin, open ("da
 
 yay = 0
 nay = 0
+progress = {}
 with open ("data/bagofwords/_all.txt", "r", encoding="utf8") as bwin, open ("data/normmapping/_yay.txt", "w", encoding="utf8") as outyay,open ("data/normmapping/_nay.txt", "w", encoding="utf8") as outnay:
     for line in bwin:
         linearr = line.split("\t")
         if linearr[0] in bl:
             outyay.write(line)
             yay += 1
+            progress[line.strip()] = 1
         else:
             nay += 1
+            progress[line.strip()] = 0
             outnay.write(line)
 
+with open ("data/lemmamapping/_progress.txt", "w", encoding="utf8") as outlemprogress:
+    for line,value in sorted(progress.items(), key = lambda x:x[1], reverse=True):
+        outlemprogress.write(line+"\t"+str(progress[line]) + "\n")
+    
+    
 unsortedlist = {}
 sortedlist =  {}
 
