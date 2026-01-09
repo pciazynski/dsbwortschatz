@@ -1,9 +1,5 @@
 # README #
 
-## License ##
-
-Creative Commons CC-BY-SA
-
 ## Zitation ##
 
 WIP

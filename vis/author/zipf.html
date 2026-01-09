@@ -26,7 +26,7 @@
 			value  = parseInt(tmp[1])
 			date.push(tmp[0])
 			count.push(value)
-			colors.push(getColor(tmp[0]))
+			colors.push(getColor(tmp[0], false))
 			if (value>maxval ) {maxval = value}
 		}
 	}

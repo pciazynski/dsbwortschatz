@@ -57,7 +57,7 @@
 			if(min.length>0 & value < parseInt(min)){continue}
 			date.push(tmp[0].substring(1,tmp[0].length-1))
 			count.push(value)
-			colors.push(getColor(tmp[0]))
+			colors.push(getColor(tmp[0], false))
 			if (value>maxval ) {maxval = value}
 		}
 	}
