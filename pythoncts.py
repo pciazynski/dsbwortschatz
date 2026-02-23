@@ -12,6 +12,14 @@ def cts_setCtsSource(url):
     global ctsurl
     ctsurl = url
     
+def cts_nslist():
+    global ctsurl
+    res = ""
+    data = urlopen("https://urncts.eu/namespaceresolver/index.php") 
+    for line in data:
+        res+=line.decode('utf-8')
+    return res
+
 def cts_nsurl(ns):
     global ctsurl
     data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
@@ -43,6 +51,11 @@ def cts_requestFromCts (requesturl):
     for line in data: 
         res+=line.decode('utf-8')
     return res.strip("\n")
+
+def cts_punctuation(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("plain/punctuation.php")
+
 
 def cts_daterange(ns):
     cts_checkConfig(ns)

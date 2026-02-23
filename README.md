@@ -1,8 +1,12 @@
 # README #
 
+## Lizenz ##
+Creative Commons CC BY-SA 4.0
+See License.txt
+
 ## Zitation ##
 
-WIP
+Jochen Tiepmar. DSB Tekstmining. Sorbisches Institut e.V, 2026. 
 
 ## Installation ##
 
@@ -12,12 +16,7 @@ git clone https://bitbucket.org/serbski-cottbus/dsbwortschatz.git
 
  * Verschiebe den Ordner in den www-Ordner
 cd [host]/dsbwortschatz
-python3 bagofwords.py
-python3 ngram.py 3
-python3 ngram.py 5
-python3 ner.py ortsliste PLACE
-python3 spoznajrec.py 3
-python3 stat.py
+python3 setup.py
 
 
  * Das Digilab sollte jetzt unter [host]/dsbwortschatz verfügbar sein.
