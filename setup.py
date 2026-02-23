@@ -26,5 +26,6 @@ subprocess.run(["python3","_psedcytas.py","3"])
 #subprocess.run(["python3","_zelenjerec.py","3"])
 subprocess.run(["python3","_typorecognition.py"]) 
 subprocess.run(["python3","_stats.py"]) 
+subprocess.run(["python3","_docu.py"]) 
 
 

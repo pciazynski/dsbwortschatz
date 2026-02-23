@@ -6,10 +6,12 @@
 # Node artifact files
 node_modules/
 data/
+doc/
 config.py
 passagecache.txt
 _error.txt
 urnlist.txt
+*.docu.txt
 
 .ht*
 *.zip
