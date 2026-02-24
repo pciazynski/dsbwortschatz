@@ -1,3 +1,4 @@
+python3 versionize.py
 set /p "msg=Kommentar: "
 git pull
 git add *

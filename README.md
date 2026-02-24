@@ -38,11 +38,6 @@ Cytoscape
 Shannon, P. et al., 2003. Cytoscape: a software environment for integrated models of biomolecular interaction networks. Genome research, 13(11), pp.2498–2504.
 
 
-Leaflet
-
-Cheng J, Schloerke B, Karambelkar B, Xie Y (2024). leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet' Library.
-
-
 logDice
 
 Rychl, P., 2008. A Lexicographer-Friendly Association Score. 
