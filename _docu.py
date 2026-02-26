@@ -21,13 +21,31 @@ for file in os.listdir("php"):
         for line in inf:
             if "new PDO" in line:
                 db = line.split("sqlite:../data/")[1].split(")")[0][:-1]
-                if not db in db_php:
-                    db_php[db] = file
+                if not "'.$n.'" in db:
+                    if not db in db_php:
+                        db_php[db] = file
+                    else:
+                        if not file in db_php[db]:
+                            db_php[db] = db_php[db] + ","+file
                 else:
-                    if not file in db_php[db]:
-                        db_php[db] = db_php[db] + ","+file
-                    
-                
+                    db2 = db.replace( "'.$n.'", "2")
+                    if not db2 in db_php:
+                        db_php[db2] = file
+                    else:
+                        if not file in db_php[db2]:
+                            db_php[db2] = db_php[db2] + ","+file
+                    db2 = db.replace( "'.$n.'", "3")
+                    if not db2 in db_php:
+                        db_php[db2] = file
+                    else:
+                        if not file in db_php[db2]:
+                            db_php[db2] = db_php[db2] + ","+file
+                    db2 = db.replace( "'.$n.'", "5")
+                    if not db2 in db_php:
+                        db_php[db2] = file
+                    else:
+                        if not file in db_php[db2]:
+                            db_php[db2] = db_php[db2] + ","+file
 
 
 def db(fn):
