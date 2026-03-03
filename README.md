@@ -12,10 +12,12 @@ Jochen Tiepmar. DSB Tekstmining. Sorbisches Institut e.V, 2026.
 
  * Clone das Repository
  
-git clone https://bitbucket.org/serbski-cottbus/dsbwortschatz.git
+git clone https://bitbucket.org/jtiepmar-serbski-cottbus/dsbwortschatz.git
 
  * Verschiebe den Ordner in den www-Ordner
+
 cd [host]/dsbwortschatz
+
 python3 setup.py
 
 
