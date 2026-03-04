@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/plain');
 
-(isset($_GET['word'])) ? $word = $_GET['word'] : NULL;
+(isset($_GET['word'])) ? $word = $_GET['word'] :  $word = '';
 
 if (strlen($word)>=1){
 	(isset($_GET['limit'])) ? $limit = $_GET['limit'] : $limit = 100;

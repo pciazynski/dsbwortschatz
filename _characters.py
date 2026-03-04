@@ -4,21 +4,25 @@ import sys
 import sqlite3
 
 from config import *
+from pythoncts import *
 
 
 doc_year = {}
 
-def inventory():
-    global ctsurl
-    res = ""
-    data = urlopen(ctsurl+"plain/editions.php") 
-    for line in data: 
-        res+=line.decode('utf-8')
-    return res.strip()
+def getdoclist(ctsns):
+    tmplist = ""
+    if os.path.exists("urnlist.txt"):
+        with open("urnlist.txt","r",encoding="utf8") as inf:
+            for line in inf:
+                tmplist+=line
+    else:
+        tmplist = cts_inventory(ctsns)
+    return tmplist.strip()
 
-doclist = inventory().split("\n")
+doclist = getdoclist(ctsns).split("\n")
 
 def process(foldername):
+    global doclist
     for line in doclist:
         urn = line.split("\t")[0]
         year = line.split("\t")[2]
