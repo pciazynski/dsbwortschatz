@@ -6,7 +6,7 @@ See License.txt
 
 ## Zitation ##
 
-Jochen Tiepmar. DSB Tekstmining. Sorbisches Institut e.V, 2026. 
+Jochen Tiepmar. Wortschatzinformationssystem: DSB. Sorbisches Institut e.V, 2026. 
 
 ## Installation ##
 
