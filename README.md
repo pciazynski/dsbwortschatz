@@ -45,3 +45,6 @@ logDice
 Rychl, P., 2008. A Lexicographer-Friendly Association Score. 
 	
 
+Language Separation
+
+Tiepmar, J. 2024. n-Gram based Language Separation for Minority Languages. MiLES conference. Turin.
