@@ -22,7 +22,7 @@
 	var data_arr = (await readPHP_async(dataset)).trim("\n").split('\n');
 	var restr_arr = (await readPHP_async("metadata.php?restricted=1&slim")).trim("\n").split('\n')
 	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><table class="clicktable">'+
-	'<tr><th>'+lang_year+'</th><th>'+lang_tokensearch+'</th><th>'+lang_lemmafy+"</br>"+lang_distribution+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_document+'<br>'+lang_cts+'</th></tr>'
+	'<tr><th>'+lang_year+'</th><th>'+lang_tokensearch+'</th><th>'+lang_lemmafy+"</br>"+lang_distribution+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_textapi+'</th></tr>'
 
 	for (var i = 0; i < data_arr.length; i++) {
 		var arr = data_arr[i].split(sep)
