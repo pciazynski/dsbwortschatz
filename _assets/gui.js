@@ -114,8 +114,7 @@ if(headerconf[3]!=='0'){str+='<td>'
 +'</td>'
 }
 if(headerconf[4]!=='0'){str+='<td>'
-+'<a href="../collocation?headerconf='+headerconf+'">'+lang_collocation+'</a> | '
-+'<a href="../ngram?headerconf='+headerconf+'&n=3">Trigramme</a>'
++'<a href="../collocation?headerconf='+headerconf+'">'+lang_collocation+'</a> '
 +'</td>'
 }
 if(headerconf[5]!=='0'){str+='<td>'

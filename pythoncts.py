@@ -22,10 +22,14 @@ def cts_nslist():
 
 def cts_nsurl(ns):
     global ctsurl
-    data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
-    for line in data:
-        ctsurl+=line.decode('utf-8')
-   
+    try:
+        data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
+        for line in data:
+            ctsurl+=line.decode('utf-8')
+    except:
+        print("ERROR: CTS Instance "+ns+" is not a registered CTS namespace. If you want to use an unregistered data set, you can set the endpoint URL manually in the file pythoncts.py")
+        exit()
+
 def cts_checkConfig(reference):
     global ctsurl
     global manualurl
@@ -47,15 +51,23 @@ def cts_requestFromCts (requesturl):
         thisurl = ctsurl
     
     res = ""
-    data = urlopen(thisurl+requesturl)
-    for line in data: 
-        res+=line.decode('utf-8')
+    try:
+        data = urlopen(thisurl+requesturl)
+        for line in data: 
+            res+=line.decode('utf-8')
+    except:
+        print("ERROR: Data Endpoint "+thisurl+" is unavailable. \nIf you want to use an alternative endpoint, you can set the URL manually in the file pythoncts.py. Else you can contact the administrator to communicate this issue. You can find administrative contacts for individual data instances at https://urncts.eu.")
+        exit()
     return res.strip("\n")
+
 
 def cts_punctuation(ns):
     cts_checkConfig(ns)
     return cts_requestFromCts("plain/punctuation.php")
 
+def cts_version(ns):
+    cts_checkConfig(ns)
+    return cts_requestFromCts("version.txt")
 
 def cts_daterange(ns):
     cts_checkConfig(ns)
@@ -98,6 +110,12 @@ def cts_docurns(ns):
     return cts_requestFromCts("plain/editionsslim.php")
 
     
+def cts_generatedpassage(urn, params=""):
+    cts_checkConfig(urn)
+    if len(params)>0 and not params.startswith("&"):
+        params = "&"+params
+    return cts_requestFromCts("plain/generatedpassage.php?urn="+urn+params)
+
 def cts_urnsperlang(urn, params=""):
     cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
