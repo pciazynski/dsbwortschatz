@@ -10,7 +10,7 @@ See https://bitbucket.org/jtiepmar-serbski-cottbus/dsbwortschatz/src/main/LICENS
 
 ## Zitation ##
 
-Jochen Tiepmar. Wortschatzinformationssystem: DSB. Sorbisches Institut e.V, 2026. 
+Tiepmar, J. Wortschatzinformationssystem: DSB. Sorbisches Institut e.V, 2026. 
 
 ## Installation ##
 
