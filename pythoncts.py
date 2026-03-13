@@ -54,7 +54,7 @@ def cts_requestFromCts (requesturl):
     
     res = ""
     cts_lastURL = thisurl+requesturl
-    
+    print(cts_lastURL)
     try:
         data = urlopen(cts_lastURL)
         for line in data: 

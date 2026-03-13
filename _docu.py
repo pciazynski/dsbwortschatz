@@ -15,10 +15,17 @@ with open("doc/data_consistency-"+curtime+".txt", "w",encoding="utf8") as out:
     out.write("File\tBytes\tMD5 Hash\tLast Modified\n")
 
 db_php = {}
+params_php = {}
 
 for file in os.listdir("php"):
     with open("php/"+file, "r", encoding="utf8") as inf:
         for line in inf:
+            if "isset(" in line:
+                param = line.split("$_GET['")[1].split("'")[0]
+                if file in params_php:
+                    params_php[file] = params_php[file]+","+param
+                else:
+                    params_php[file] = param
             if "new PDO" in line:
                 db = line.split("sqlite:../data/")[1].split(")")[0][:-1]
                 if not "'.$n.'" in db:
@@ -47,7 +54,9 @@ for file in os.listdir("php"):
                         if not file in db_php[db2]:
                             db_php[db2] = db_php[db2] + ","+file
 
-
+with open("doc/php_params.txt", "w", encoding="utf8") as outf:
+    for php in params_php:
+        outf.write(php+"\t"+params_php[php])
 def db(fn):
     global db_php
     print("DB "+fn)

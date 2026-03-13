@@ -7,6 +7,7 @@
 node_modules/
 data/
 doc/
+__pycache__/
 config.py
 passagecache.txt
 _error.txt
