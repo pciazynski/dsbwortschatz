@@ -129,7 +129,6 @@
 			<td>
 			</td>
 			<td style = "width: 60%;">
-				<button id = "switchtimeflowbutton" class = "iframebutton" onclick="switchtimeflow('timeline');"><script>document.write(lang_switchtimeflow)</script></button>
 				<button id = "switchpercenttimelinebutton" class = "iframebutton" onclick="switchpercenttimeline('timeline');"><script>document.write(lang_switchpercenttimeline)</script></button>
 				<button id = "switchtimelinesumbutton" class = "iframebutton" onclick="switchtimelinesum('timeline');"><script>document.write(lang_switchtimelinesum)</script></button>
 				<button class = "iframebutton" onclick="switchLogScale('timeline');"><script>document.write(lang_switchlogscale)</script></button>
@@ -213,16 +212,6 @@
 		tmp = document.getElementById('prefixsearchCheckBox').checked
 		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
 		autocomplete("lemma", "prefixlemmasearch.php?limit=30&sortby="+tmp+"&lemma=", ""); 
-	}
-
-	var switchtimeflow  = function(elid){
-		tmp = document.getElementById(elid)
-		curitem = document.getElementById("lemma").value.trim()
-		if(tmp.src.includes("timeflow")){
-			updateTimeline()
-		}else{
-			tmp.src = "timeflow.html?data=lemmafamilytree.php&lemma="+curitem
-		}
 	}
 
 	var switchpercenttimeline  = function(elid){

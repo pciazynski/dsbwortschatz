@@ -45,14 +45,18 @@ def cts_checkConfig(reference):
 def cts_requestFromCts (requesturl):
     global ctsurl
     global manualurl
+    global cts_lastURL
+    
     if len(manualurl)>0:
         thisurl = manualurl
     else:
         thisurl = ctsurl
     
     res = ""
+    cts_lastURL = thisurl+requesturl
+    
     try:
-        data = urlopen(thisurl+requesturl)
+        data = urlopen(cts_lastURL)
         for line in data: 
             res+=line.decode('utf-8')
     except:
