@@ -56,7 +56,7 @@ for file in os.listdir("php"):
 
 with open("doc/php_params.txt", "w", encoding="utf8") as outf:
     for php in params_php:
-        outf.write(php+"\t"+params_php[php])
+        outf.write(php+"\t"+params_php[php]+"\n")
 def db(fn):
     global db_php
     print("DB "+fn)

@@ -114,12 +114,13 @@ if(headerconf[3]!=='0'){str+='<td>'
 +'</td>'
 }
 if(headerconf[4]!=='0'){str+='<td>'
-+'<a href="../collocation?headerconf='+headerconf+'">'+lang_collocation+'</a> '
++'<a href="../collocation?headerconf='+headerconf+'">'+lang_collocation+'</a> | '
++'<a href="../ngram?headerconf='+headerconf+'&n=3">'+lang_trigram+'</a>'
 +'</td>'
 }
 if(headerconf[5]!=='0'){str+='<td>'
-+'<a href="../langdetect?headerconf='+headerconf+'&n=3">Rozeznaś</a> | <a href="../langrec/?headerconf='+headerconf+'&n=3">Gódaś Rec</a> | '
-+'<a href="../langsep?headerconf='+headerconf+'">Zelenje Rec</a>'
++'<a href="../langdetect?headerconf='+headerconf+'&n=3">'+lang_langdetect+'</a> | <a href="../langrec/?headerconf='+headerconf+'&n=3">'+lang_langrec+'</a> | '
++'<a href="../langsep?headerconf='+headerconf+'">'+lang_langsep+'</a>'
 +'</td>'
 }
 str+='<td id="resetmenubutton">'
