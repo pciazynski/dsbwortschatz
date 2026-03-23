@@ -1,4 +1,3 @@
-from urllib.request import urlopen
 import sys
 import os
 import shutil
@@ -25,16 +24,6 @@ with open("data/bagofwords/_all.txt", "r", encoding = "utf8") as bwin:
         linearr = line.split("\t")
         bagofwords[linearr[0]] = int(linearr[1])
 
-def requestctsurl(ns):
-    global ctsurl
-    if len(ctsurl) == 0:
-        if not ns.startswith("urn:cts"):
-            ns = "urn:cts:"+ns
-        ns = ns.split(":")[2]
-        data = urlopen("https://urncts.eu/namespaceresolver/"+ns) 
-        for line in data: 
-            ctsurl+=line.decode('utf-8')
-
 def tokencheck(line):
     linearr = line.split("\t")[0].split(" ")
     for token in linearr:
@@ -44,10 +33,8 @@ def tokencheck(line):
     
     
 def ngram(urn,ngramsize):
-    global ctsurl
-    requestctsurl(urn)
     res = ""
-    data = urlopen(ctsurl+"tm/ngrams.php?urn="+urn+"&sort&&lowercase&n="+str(ngramsize))
+    data = cts_ngram(urn,"&sort&&lowercase&n="+str(ngramsize))
     for line in data:
         line = line.decode('utf-8')    
         if tokencheck(line):

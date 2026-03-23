@@ -1,4 +1,3 @@
-from urllib.request import urlopen
 import sys
 import os
 import shutil
