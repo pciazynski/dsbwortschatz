@@ -4,7 +4,7 @@ header('Content-Type: text/plain');
 if (isset($_GET['author'])){
 	$PDO = new PDO('sqlite:../data/authors.db');
 	$query = 'SELECT * FROM authors WHERE author ="'.$_GET['author'].'"';
-	(isset($_GET['year'])) ? $query .= ' AND year '.$_GET['year'] : NULL;
+	(isset($_GET['year'])) ? $query .= ' AND year ='.$_GET['year'] : NULL;
 	$tab = "\t";
 	$nl = "\n";
 	$res = '';
