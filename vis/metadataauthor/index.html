@@ -14,17 +14,18 @@
 	<tr>
 	<tr  style="text-align:center;">
 		<td>
-			<button onclick="location.href='../author'"><script>document.write(lang_author)</script></button>
+			<button onclick="location.href='../metadataauthor'"><script>document.write(lang_author)</script></button>
 		</td>
 		<td>
-			<button onclick="location.href='../coauthor'"><script>document.write(lang_coauthor)</script></button>
+			<button onclick="location.href='../metadatacoauthor'"><script>document.write(lang_coauthor)</script></button>
 		</td>
 		<td>
-			<button onclick="location.href='../coauthornetwork'"><script>document.write(lang_coauthor+' '+lang_network) </script></button>
+			<button onclick="location.href='../metadatacoauthornetwork'"><script>document.write(lang_coauthor+' '+lang_network) </script></button>
 		</td>
 	</tr>
 </table>
 <br><br>
+
 
 <div class = "iframediv">
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:100%;">
@@ -50,10 +51,6 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
-				<button class = "iframebutton" onclick="switchLogScale('docview');"><script>document.write(lang_switchlogscale)</script></button>
-				<button class = "iframebutton" onclick="updatePie('docview');"><script>document.write(lang_piechart)</script></button>
-				<button class = "iframebutton" onclick="updateZipf('docview');"><script>document.write(lang_barchart)</script></button>
-				<button class = "iframebutton" onclick="updateTimeline('docview');"><script>document.write(lang_timeline)</script></button>
 				<button class = 'iframebutton' onclick='hidewatermark("docview");'><script>document.write(lang_source)</script></button>
 			</td>
 			<td>
@@ -66,23 +63,15 @@
 <script>
 
 	var updateTimeline = function(){
-		document.getElementById('docview').src="timeline.html?data=metadataauthorperyear.php&sort"
+		document.getElementById('docview').src="timeline.html?data=authorcountperyear.php&sort"
 	}
 
-	var updateZipf = function(){
-		document.getElementById('docview').src="zipf.html?data=metadataauthor.php&sort"
-	}
-
-	var updatePie = function(){
-		document.getElementById('docview').src="piechart.html?data=metadataauthor.php"
-	}
-	
 	var metadataclick = function(author,year){
 		params = "&author="+author
 		if((""+year).length>0){
 			params += "&year="+year
 		}
-		document.getElementById('doclist').src="doclist.html?data=metadata.php"+params
+		document.getElementById('doclist').src="doclist.html?data=urnbyauthor.php"+params
 	}
 	updateTimeline()
 	
