@@ -21,7 +21,7 @@
 	<button class = "iframebutton" onclick="diagrammlink('docview');"><script>document.write(lang_fullscreen)</script></button>
 	<button class = "iframebutton" onclick="datalink('docview');"><script>document.write(lang_rawdata)</script></button>
 	<div style="text-align:center;">
-		<iframe id="docview" class="resized"  width="100%" height="1000px;" style="background-color:white;" scrolling="yes"></iframe>
+		<iframe id="docview" class="resized"  width="100%" height="800px;" style="background-color:white;" scrolling="yes"></iframe>
 	</div>
 	<button class = "iframebutton" onclick="treemap();"><script>document.write(lang_treemap)</script></button>
 	<button class = "iframebutton" onclick="treenetwork();"><script>document.write(lang_network)</script></button>
@@ -50,7 +50,7 @@ var builddocview = function(){
 	document.getElementById('docview').src=curfun+'.html?data=metadataurnlist.php'
 }
 
-var curfun = 'treenetwork'
+var curfun = 'treemap'
 builddocview()
 
 </script>

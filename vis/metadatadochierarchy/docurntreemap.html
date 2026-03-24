@@ -1,0 +1,91 @@
+<!doctype html>
+<head>
+	<script src="lib/plotly-latest.min.js"></script>
+</head>
+
+<div id="myDiv" style="width: 100%;height:100vh;">
+
+<script>
+
+	var watermark = function(){
+		today = new Date();
+		today = String(today.getDate()).padStart(2, '0') + '.' + String(today.getMonth() + 1).padStart(2, '0') + '.' + today.getFullYear();
+		return [{
+			xref:'paper',
+			x:0,
+			yref:'paper',
+			y:1,
+			xanchor:'left',
+			yanchor:'bottom',
+			'text': '<span style="color:gray;"> Source: '+window.location.hostname+window.location.pathname+'. Accessed ' +today+'</span>',
+			showarrow: false
+		}]
+	}
+
+	rawFile = new XMLHttpRequest();
+	rawFile.open("GET", "../plain/editionsslim.php", false);
+	rawFile.onreadystatechange = function (){
+		if(rawFile.readyState === 4){
+			if(rawFile.status === 200 || rawFile.status == 0)
+			{textstr = rawFile.responseText;}
+		}}
+	rawFile.send(null);
+	
+	var data_arr = textstr.split("\n");
+	var i;
+	var date = []
+	var parents = []
+	var ns = "urn:cts:"+data_arr[0].split(":")[2]+":"
+	date.push(ns)
+	parents.push("")
+	parentskeys = []
+	var included = []
+	
+	for (i = 0; i < data_arr.length; i++) {
+		var urnarr = data_arr[i].split(":")
+		var docurnarr = urnarr[3].split(".")
+		var urnpart = ns
+		var oldurn = ns
+		for (var j = 0;j<docurnarr.length;j++){
+			(j == docurnarr.length-1) ? urnpart += docurnarr[j]+":":urnpart += docurnarr[j]+".";
+			if (included[urnpart] == null){
+				date.push(urnpart)
+				parents.push(oldurn)
+				parentskeys[oldurn] = 1
+				included[urnpart]=1
+			}
+			oldurn += docurnarr[j]+".";
+		}
+	}
+	
+	var data = [{
+		type: "treemap",
+		labels: date,
+		parents: parents
+
+	}];
+	var layout = {
+		annotations: watermark()
+	};
+
+	Plotly.newPlot('myDiv', data, layout);
+	var myPlot = document.getElementById('myDiv')
+	myPlot.on("plotly_click", function(data) {
+		var tmplabel = data.points[0].label
+		if (parentskeys[tmplabel] == undefined){
+			rawFile = new XMLHttpRequest();
+			rawFile.open("GET", "../plain/passage.php?deletexml&urn="+tmplabel, false);
+			rawFile.onreadystatechange = function (){
+				if(rawFile.readyState === 4){
+					if(rawFile.status === 200 || rawFile.status == 0)
+					{textstr = rawFile.responseText;}
+				}}
+			rawFile.send(null);
+			
+			alert(textstr);
+		}
+	});	
+
+
+</script>
+</body>
