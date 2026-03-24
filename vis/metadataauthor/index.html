@@ -51,6 +51,10 @@
 		</tr>
 		<tr style = "text-align:right;">
 			<td>
+				<button class = "iframebutton" onclick="switchLogScale('docview');"><script>document.write(lang_switchlogscale)</script></button>
+				<button class = "iframebutton" onclick="updatePie('docview');"><script>document.write(lang_piechart)</script></button>
+				<button class = "iframebutton" onclick="updateZipf('docview');"><script>document.write(lang_barchart)</script></button>
+				<button class = "iframebutton" onclick="updateTimeline('docview');"><script>document.write(lang_timeline)</script></button>
 				<button class = 'iframebutton' onclick='hidewatermark("docview");'><script>document.write(lang_source)</script></button>
 			</td>
 			<td>
@@ -63,7 +67,15 @@
 <script>
 
 	var updateTimeline = function(){
-		document.getElementById('docview').src="timeline.html?data=authorcountperyear.php&sort"
+		document.getElementById('docview').src="timeline.html?data=metadataauthorperyear.php&sort"
+	}
+
+	var updateZipf = function(){
+		document.getElementById('docview').src="zipf.html?data=metadataauthor.php&sort"
+	}
+
+	var updatePie = function(){
+		document.getElementById('docview').src="piechart.html?data=metadataauthor.php"
 	}
 
 	var metadataclick = function(author,year){
