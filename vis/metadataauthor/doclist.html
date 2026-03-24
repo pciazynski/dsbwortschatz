@@ -16,7 +16,7 @@
 	var author = getQueryVariable('author')
 	var year = getQueryVariable('year')
 	dataset+='?sort&author='+author
-	if(year.length>0){dataset+='&year=='+year}
+	if(year.length>0){dataset+='&year='+year}
 	var diagramtitle = dataset
 	var data_arr = (await readPHP_async(dataset)).trim("\n").split("\n");
 
