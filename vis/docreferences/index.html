@@ -136,7 +136,7 @@
 				<button class = 'iframebutton' onclick='hidewatermark("timeline");'><script>document.write(lang_source)</script></button>
 			</td>
 			<td>
-				<button class = "iframebutton" onclick="switchDtsCts('docref');"><script>document.write(lang_switch_CTS_DTS)</script></button>
+				<button class = "iframebutton" onclick="switchDtsCts();"><script>document.write(lang_switch_CTS_DTS)</script></button>
 			</td>
 		</tr>
 	</table>
@@ -145,12 +145,12 @@
 
 <script>
 
-	var switchDtsCts = function(elid){
-		elsrc = document.getElementById(elid).src;
+	var switchDtsCts = function(){
+		elsrc = document.getElementById('docref').src;
 		if(elsrc.includes("&textapi=dts")){
-			document.getElementById(elid).src = elsrc.replace("&textapi=dts","")
+			document.getElementById('docref').src = elsrc.replace("&textapi=dts","")
 		}else{
-			document.getElementById(elid).src = elsrc+"&textapi=dts"
+			document.getElementById('docref').src = elsrc+"&textapi=dts"
 		}
 	}
 	var switchPrefixsearch = function(){
