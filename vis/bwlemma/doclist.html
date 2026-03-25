@@ -34,7 +34,7 @@
 			var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
 		}
 		else{
-			var onclickfun2 = "window.open('"+ctsurl.substring(0,ctsurl.length-4)+"/dts/document/?id="+arr[0]+"', '_blank')"
+			var onclickfun2 = "window.open('"+ctsurl.slice(0,-5)+"/dts/document/?id="+arr[0]+"', '_blank')"
 		}
 		for (var j = 0; j < urnarr.length; j++){
 			tmpname += " "+urnarr[j].charAt(0).toUpperCase() + urnarr[j].slice(1)
@@ -54,7 +54,7 @@
 				var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
 			}
 			else{
-				var onclickfun2 = "window.open('"+ctsurl.substring(0,ctsurl.length-4)+"/dts/document/?id="+arr[0]+"', '_blank')"
+				var onclickfun2 = "window.open('"+ctsurl.slice(0,-5))+"/dts/document/?id="+arr[0]+"', '_blank')"
 			}
 			var onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+lemma+"', '_blank')"
 			var onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+lemma+"', '_blank')"
