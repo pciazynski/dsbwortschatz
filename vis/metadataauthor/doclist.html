@@ -15,6 +15,8 @@
 	var dataset = getQueryVariable('data')
 	var author = getQueryVariable('author')
 	var year = getQueryVariable('year')
+	var textapi = getQueryVariable("textapi").toLowerCase()
+	if(textapi!=="dts"){textapi="cts"}
 	dataset+='?sort&author='+author
 	if(year.length>0){dataset+='&year='+year}
 	var diagramtitle = dataset
@@ -23,7 +25,7 @@
 	var restr_arr = (await readPHP_async("metadata.php?restricted=1&slim")).trim("\n").split('\n')
 	var param=""
 	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><table class="clicktable">'+
-	'<tr><th>'+lang_year+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_textapi+'</th></tr>'
+	'<tr><th>'+lang_year+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_textapi + " ("+textapi.toUpperCase()+")"+'</th></tr>'
 
 	for (var i = 0; i < data_arr.length; i++) {
 		var arr = data_arr[i].split(sep)
@@ -47,7 +49,12 @@
 		else{
 			
 			//var onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
-			var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
+			if(textapi==="cts"){
+				var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+param+"', '_blank')"
+			}
+			else{
+				var onclickfun2 = "window.open('"+ctsurl.slice(0,-5)+"/dts/document/?id="+arr[0]+"', '_blank')"
+			}
 			var onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+bibname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
 			str += '<tr><td>'+arr[2]+'</td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+tmpname+'</td></tr>'
 		}

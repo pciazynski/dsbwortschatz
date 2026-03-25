@@ -45,6 +45,7 @@
 				<button class = 'iframebutton' onclick='hidewatermark("docview");'><script>document.write(lang_source)</script></button>
 			</td>
 			<td>
+				<button class = "iframebutton" onclick="switchDtsCts();"><script>document.write(lang_switch_CTS_DTS)</script></button>
 			</td>
 		</tr>
 	</table>
@@ -52,6 +53,16 @@
 
 
 <script>
+
+	var switchDtsCts = function(){
+		elsrc = document.getElementById('doclist').src;
+		if(elsrc.includes("&textapi=dts")){
+			document.getElementById('doclist').src = elsrc.replace("&textapi=dts","")
+		}else{
+			document.getElementById('doclist').src = elsrc+"&textapi=dts"
+		}
+	}
+
 
 	var updateTimeline = function(){
 		document.getElementById('docview').src="timeline.html?data=metadatarestrictedperyear.php&sort"
