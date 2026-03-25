@@ -146,11 +146,11 @@
 <script>
 
 	var switchDtsCts = function(){
-		elsrc = document.getElementById('docref').src;
+		elsrc = document.getElementById('doclist').src;
 		if(elsrc.includes("&textapi=dts")){
-			document.getElementById('docref').src = elsrc.replace("&textapi=dts","")
+			document.getElementById('doclist').src = elsrc.replace("&textapi=dts","")
 		}else{
-			document.getElementById('docref').src = elsrc+"&textapi=dts"
+			document.getElementById('doclist').src = elsrc+"&textapi=dts"
 		}
 	}
 	var switchPrefixsearch = function(){
