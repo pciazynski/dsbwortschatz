@@ -15,20 +15,27 @@
 	var dataset = getQueryVariable('data')
 	var word = getQueryVariable('word')
 	var year = getQueryVariable("year")
+	var textapi = getQueryVariable("textapi").toLowerCase()
+	if(textapi!=="dts"){textapi="cts"}
 	dataset = dataset +"?word="+word+"&sort"
 	var diagramtitle = lang_docreferences + ' ' +word
-
+	
 	if(year.length>0){diagramtitle+="<br>"+year;dataset+="&year="+year}
 	var data_arr = (await readPHP_async(dataset)).trim("\n").split('\n');
 	var restr_arr = (await readPHP_async("metadata.php?restricted=1&slim")).trim("\n").split('\n')
 	var str = '<head><link rel="stylesheet" href="../../digilabstyles.css"></head><table class="clicktable">'+
-	'<tr><th>'+lang_year+'</th><th>'+lang_tokensearch+'</th><th>'+lang_word+"</br>"+lang_distribution+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_textapi+'</th></tr>'
+	'<tr><th>'+lang_year+'</th><th>'+lang_tokensearch+'</th><th>'+lang_word+"</br>"+lang_distribution+'</th><th>'+lang_faksimilie+'<br>'+lang_digbibliothek+'</th><th>'+lang_textapi + " ("+textapi.toUpperCase()+")"+'</th></tr>'
 
 	for (var i = 0; i < data_arr.length; i++) {
 		var arr = data_arr[i].split(sep)
 		var urnarr = arr[0].split(":")[3].replaceAll("."," ").replaceAll("_"," ").split(" ")
 		var tmpname = ""
-		var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
+		if(textapi==="cts"){
+			var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
+		}
+		else{
+			var onclickfun2 = "window.open('"+ctsurl.substring(0,ctsurl.length-4)+"/dts/document/?id="+arr[0]+"', '_blank')"
+		}
 		for (var j = 0; j < urnarr.length; j++){
 			tmpname += " "+urnarr[j].charAt(0).toUpperCase() + urnarr[j].slice(1)
 		}
