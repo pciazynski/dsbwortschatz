@@ -32,16 +32,6 @@
 
 <br><br>
 
-<div class = "iframediv">
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
-		<tr>
-			<td style = "width: 100%;">
-				<iframe class="resized" width="50%" height="100px" id="wordinfo" scrolling="yes"></iframe>
-			</td>
-		</tr>
-	</table>
-</div>
-
 <div class = "explain">
 	<p>
 		<span style="color:green;"> ▮ </span>In Daten enthalten<br>
@@ -62,9 +52,6 @@
 
 	
 <script>
-	var showwordinfo = function(tmp){
-		document.getElementById("wordinfo").src="wordinfo.html?data=token2lemma.php&word="+tmp
-	}
 
 	var recognise = function(){
 		var punctRE = /[\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
@@ -78,8 +65,8 @@
 		for (var i = 0;i<textarr.length;i++){
 			word = textarr[i].trim()
 			if(oldword!== word){
-				//onclickfun = "window.open('../../vis/docperword/?word="+word+"')"
-				onclickfun = "showwordinfo('"+word+"')"
+				onclickfun = "window.open('../../vis/docperword/?word="+word+"')"
+				//onclickfun = "showwordinfo('"+word+"')"
 				if(knownlist.includes("\n"+word+"\t")){
 					text = text.replaceAll(" "+word+" ", ' <span class="clickableword" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+word+'</span> ')
 				}	
