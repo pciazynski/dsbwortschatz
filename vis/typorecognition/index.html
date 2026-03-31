@@ -81,13 +81,32 @@
 					<iframe class='resized' width='100%' height='100px' id='doclist' scrolling='yes'></iframe>
 				</td>
 			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+					<button class = "iframebutton" onclick="switchDtsCts();"><script>document.write(lang_switch_CTS_DTS)</script></button>
+				</td>
+			</tr>
 		</table>
 		</tr>
 	</table>
 </div>
+			<td>
+			</td>
 
 <script>
 
+
+	var switchDtsCts = function(){
+		elsrc = document.getElementById('doclist').src;
+		if(elsrc.includes("&textapi=dts")){
+			document.getElementById('doclist').src = elsrc.replace("&textapi=dts","")
+		}else{
+			document.getElementById('doclist').src = elsrc+"&textapi=dts"
+		}
+	}
+	
 	var updateWord = function(){
 		if(curtypo.length>0){
 			loading('doclist')
