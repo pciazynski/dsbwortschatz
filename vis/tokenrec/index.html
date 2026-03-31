@@ -36,7 +36,7 @@
 	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
 		<tr>
 			<td style = "width: 100%;">
-				<iframe class="resized" width="50%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
+				<iframe class="resized" width="50%" height="100px" id="wordinfo" scrolling="yes"></iframe>
 			</td>
 		</tr>
 	</table>
@@ -54,7 +54,7 @@
 	<tr>
 		<td>
 			<div style="width:90%;background-color:white;">
-				<label  style="width:90%;height:200px;" value = "" type="text" id="tokenrec" onchange="recognise()"></label >
+				<label  style="width:90%;height:200px;" value = "" type="text" id="wordrec" onchange="recognise()"></label >
 			</div>
 		</td>
 	</tr>
@@ -62,37 +62,36 @@
 
 	
 <script>
-	var showtokeninfo = function(tmp){
-		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
+	var showwordinfo = function(tmp){
+		document.getElementById("wordinfo").src="wordinfo.html?data=token2lemma.php&word="+tmp
 	}
 
 	var recognise = function(){
 		var punctRE = /[\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
 		//var punctRE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,.\/:;=?@\[\]^_`{|}~]/g;
-		document.getElementById('tokenrec').innerHTML = "Loading..."
+		document.getElementById('wordrec').innerHTML = "Loading..."
 		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
 		textarr = text.split(" ").sort()
-		oldtoken = ""
+		oldword = ""
 		
 		knownlist = "\n"+readTextFile("bagofwords/_all");
 		for (var i = 0;i<textarr.length;i++){
-			token = textarr[i].trim()
-			if(oldtoken!== token){
-				//onclickfun = "window.open('../../vis/docperword/?token="+token+"')"
-				onclickfun = "showtokeninfo('"+token+"')"
-				if(knownlist.includes("\n"+token+"\t")){
-					text = text.replaceAll(" "+token+" ", ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+token+'</span> ')
+			word = textarr[i].trim()
+			if(oldword!== word){
+				//onclickfun = "window.open('../../vis/docperword/?word="+word+"')"
+				onclickfun = "showwordinfo('"+word+"')"
+				if(knownlist.includes("\n"+word+"\t")){
+					text = text.replaceAll(" "+word+" ", ' <span class="clickableword" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+word+'</span> ')
 				}	
 				else {
-					text = text.replaceAll(" "+token+" ", ' <span style="color:black;">'+token +'</span> ')
+					text = text.replaceAll(" "+word+" ", ' <span style="color:black;">'+word +'</span> ')
 				}
-				oldtoken = token
+				oldword = word
 			}
 		}
 		
 		document.getElementById('tokenrec').innerHTML=text
 	}
-	document.title="Token-Abdeckung"
 
 
 
