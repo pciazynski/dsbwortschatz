@@ -65,7 +65,7 @@
 		for (var i = 0;i<textarr.length;i++){
 			word = textarr[i].trim()
 			if(oldword!== word){
-				onclickfun = "window.open('../../vis/docperword/?word="+word+"')"
+				onclickfun = "window.open('../../vis/docreferences/?word="+word+"')"
 				//onclickfun = "showwordinfo('"+word+"')"
 				if(knownlist.includes("\n"+word+"\t")){
 					text = text.replaceAll(" "+word+" ", ' <span class="clickableword" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+word+'</span> ')
