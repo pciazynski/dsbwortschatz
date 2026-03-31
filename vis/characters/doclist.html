@@ -17,7 +17,7 @@
 	dataset = dataset +"?char="+chara+"&sort"
 	var textapi = getQueryVariable("textapi").toLowerCase()
 	if(textapi!=="dts"){textapi="cts"}
-	var diagramtitle = lang_docreferences + ' ' +word
+	var diagramtitle = lang_docreferences + ' ' +chara
 	
 	if(year.length>0){diagramtitle+="<br>"+year;dataset+="&year="+year}
 	var data_arr = (await readPHP_async(dataset)).trim("\n").split('\n');
