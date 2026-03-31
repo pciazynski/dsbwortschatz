@@ -109,12 +109,12 @@ def collect():
 
             with open ("data/ngram"+n+"/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/ngram"+n+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
                 try:
-                    rs = ngram(urn,n)
+                    rs = ngram(urn,"&sort&lowercase&n=3")
                     outf.write(rs)
-                    outyf.write(rs)
+                    outyf.write(rs+"\n")
                 except:
                     with open("_ERROR.txt","a",encoding="utf8") as errf:
-                        errf.write("Error :-->"+urn+"\n")
+                        errf.write("Error nGram:-->"+urn+"\n")
 
     process("data/ngram"+n)
 
