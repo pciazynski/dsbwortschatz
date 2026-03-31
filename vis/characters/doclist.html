@@ -41,7 +41,7 @@
 		}
 		//Copyright Free
 		else{
-			var onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+word+"', '_blank')"
+			var onclickfun0 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textsearch.php?urn="+arr[0]+"&snippet="+chara+"', '_blank')"
 			//var onclickfun1 = "window.open('"+ctsurl.slice(0,-5)+"/fancy/ebook.php?urn="+arr[0]+"', '_blank')"
 			if(textapi==="cts"){
 				var onclickfun2 = "window.open('"+ctsurl+"?request=GetPassage&urn="+arr[0]+"', '_blank')"
@@ -49,8 +49,8 @@
 			else{
 				var onclickfun2 = "window.open('"+ctsurl.slice(0,-5)+"/dts/document/?id="+arr[0]+"', '_blank')"
 			}
-			var onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+word+"&lowercase&deletexml', '_blank')"
-			var onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+word+"&lowercase&deletexml', '_blank')"
+			var onclickfun3 = "window.open('"+ctsurl.slice(0,-5)+"/vis/textdistribution.html?urn="+arr[0]+"&snippet="+chara+"&lowercase&deletexml', '_blank')"
+			var onclickfun4 = "window.open('"+ctsurl.slice(0,-5)+"/plain/textdistribution.php?urn="+arr[0]+"&snippet="+chara+"&lowercase&deletexml', '_blank')"
 			var onclickfun5 = "window.open('https://dolnoserbski.de/biblioteka/pokaz/"+tmpname.toLowerCase().trim().replaceAll(" ","-")+"', '_blank')"
 			var resstr='<span style="color:'+getColor(arr[0].replace(/[0-9]/g,""))+';">▮</span>'+tmpname
 			str += '<tr><td>'+arr[1]+'</td><td> <span onclick="'+onclickfun0+'"> &#10008;</span> </td><td> <span onclick="'+onclickfun3+'"> &#10087;</span> | <span onclick="'+onclickfun4+'"> &#10138; </span></td><td onclick="'+onclickfun5+'"> &#128247; </td><td onclick="'+onclickfun2+'">'+resstr+'</td>'
