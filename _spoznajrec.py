@@ -200,7 +200,7 @@ def insertNgramIntoTable(name):
 
     with open ("data/langDetect"+n+"/ngram"+n+"_"+name+".txt", "r", encoding="utf8") as inf:
         inserts = []
-        
+        query = ""
         for line in inf.readlines():
             if len(line.strip())>0:
                 linearr = line.split("\t")
