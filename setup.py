@@ -6,6 +6,25 @@ import subprocess
 
 ns = sys.argv[1]
 
+if (len(sys.argv)==3):
+    count = sys.argv[2]
+else:
+    count = -1
+print(str(count)+" documents from " +ns)
+if os.path.exists("_error.txt"):
+    os.remove("_error.txt")
+    
+with open("config_def.py", "r", encoding="utf8") as confdef:
+    with open("config.py", "w", encoding="utf8") as conf:
+        for line in confdef:
+            if line.startswith("ctsns"):
+                line = 'ctsns="'+ns+'"\n'
+            if line.startswith("count"):
+                line = 'count='+str(count)+'\n'
+            conf.write(line)
+            
+confstr = ""
+
 print(ns)
 
 subprocess.run(["python3","_bagofwords.py"])
