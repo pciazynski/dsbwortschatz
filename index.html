@@ -39,18 +39,18 @@ function getTodayDate() {
 <a name="Beschreibung"></a><br><br><br>
 <h2>Beschreibung</h2>
 <p>
-Dies ist ein Digilab basierend auf dem Text Mining Tool <i>Canonical Text Miner</i>. Als Datenbasis wird die <b title ="Canonical Text Service">CTS</b> Instanz des Niedersorbischen Textkorpus verwendet. 
+Dies ist ein Wortschatzanalysewerkzeug im Rahmen der <a href="https://urncts.eu">Text Service Infrastruktur</a> . 
 <br>
-Die bereitgestellten Analysen entsprechen dem aktuellen Bearbeitungsstand der Tools und des Textkorpus und unterliegen Änderungen.
+Die bereitgestellten Analysen entsprechen dem aktuellen Bearbeitungsstand der Tools und des Textkorpus und unterliegen möglicherweise Änderungen.
 </p>
 <ul>
 Weiterführende Links:
 <li>
-<a href = "data/metadata/_all.txt">Text Inventory</a>
+<a href = "data/metadata/_all.txt">Included Documents</a>
 </li>
 <script>
 
-document.write('<li><a href = "'+ctsurl+'?request=GetCapabilities">Data Source (CTS Instance)</a></li>')
+document.write('<li><a href = "'+ctsurl.replace("/cts/","/plain/")+'editions.php">Data Source (Text API)</a></li>')
 </script>
 </ul> 
 

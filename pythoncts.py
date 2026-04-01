@@ -163,7 +163,7 @@ def cts_bagofwords(urn, params="&sort&lowercase"):
 
 #    data = urlopen(ctsurl+"tm/ngrams.php?urn="+urn+"&sort&&lowercase&n="+str(ngramsize))
 
-def cts_ngram(urn,params="&sort&lowercase&n=3"):
+def cts_ngram(urn,params=""):
     cts_checkConfig(urn)
     if len(params)>0 and not params.startswith("&"):
         params = "&"+params

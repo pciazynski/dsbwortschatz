@@ -31,21 +31,6 @@ def tokencheck(line):
             return False
     return True
     
-    
-def ngram(urn,ngramsize):
-    res = ""
-    data = cts_ngram(urn,"&sort&&lowercase&n="+str(ngramsize))
-    for line in data:
-        line = line.decode('utf-8')    
-        if tokencheck(line):
-            res+=line
-        else:
-            with open("_ERROR.txt", "a", encoding="utf8") as errout:
-                errout.write(urn+" ngram "+ngramsize+" unknown tokens in "+line + "\n")
-            #print(line)
-    return res
-    
-
 def process(foldername):
     for yearfile in sorted(os.listdir(foldername+"peryear")):
         print("process "+foldername+":"+yearfile)
@@ -109,7 +94,7 @@ def collect():
 
             with open ("data/ngram"+n+"/"+urn.replace(":","_#_")+".txt", "w",encoding="utf8") as outf,open ("data/ngram"+n+"peryear/"+year+".txt", "a",encoding="utf8") as outyf:
                 try:
-                    rs = ngram(urn,"&sort&lowercase&n=3")
+                    rs = cts_ngram(urn,"&sort&lowercase&n="+n)
                     outf.write(rs)
                     outyf.write(rs+"\n")
                 except:

@@ -257,7 +257,7 @@ def db():
     files = sorted(os.listdir("data/lemmamapping"))
     for file in files:
         if file.startswith("urn_#_"):
-            print("sql bagofwordsperurn:"+file)
+            print("sql lemmamappingperurn:"+file)
             with open ("data/lemmamapping/"+file, "r", encoding="utf8") as inf:
                 lemmabag = "#"
                 for line in inf.readlines():
