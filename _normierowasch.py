@@ -27,8 +27,13 @@ def normmapping(urn):
 
     
     wordelements = res.split("<w")
+    wecount = 0
+    insg = str(len(wordelements))
     res = ""
     for we in wordelements:
+        if str(wecount).endswith("00"):
+            print("\rItems:"+str(wecount)+"/"+insg, sep=' ', end='', flush=True)
+        wecount+=1
         if("</w" in we):
             wetype = ""
             subtype=""
@@ -52,7 +57,7 @@ def normmapping(urn):
             else:
                 with open("_ERROR.txt", "a", encoding="utf8") as errout:
                     errout.write(urn+" normierowasch unknown token "+token + "\n")
-                    
+    print("\rOK                                       ")
     return res
 
     
@@ -128,6 +133,7 @@ def collect():
                     outf.write(rs)
                     outyf.write(rs)
             else:
+                print("No Items")
                 count+=1
     process("data/normmapping")
     with open ("data/normmapping/_normbag.txt", "w",encoding="utf8") as outf:

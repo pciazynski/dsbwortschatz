@@ -35,10 +35,14 @@ def lemmamapping(urn):
     global copyrighttoken
     requestctsurl(urn)
     res = cts_passage(urn,"&copyrighttoken="+copyrighttoken)
-    
     wordelements = res.split("<w")
     res = ""
+    wecount = 0
+    insg = str(len(wordelements))
     for we in wordelements:
+        if str(wecount).endswith("00"):
+            print("\rItems:"+str(wecount)+"/"+insg, sep=' ', end='', flush=True)
+        wecount+=1
         if("</w" in we):
             wetype = ""
             subtype=""
@@ -65,7 +69,7 @@ def lemmamapping(urn):
             else:
                 with open("_ERROR.txt", "a", encoding="utf8") as errout:
                     errout.write(urn+" lemmatisierowasch unknown token "+token + "\n")
-                    
+    print("\rOK                                       ")
     return res
 
     
@@ -134,7 +138,7 @@ def collect():
         urnarr = urn.split(".")
         year = line.split("\t")[2]
 
-        if (len(year)>1 and count!=0):
+        if (len(year)>1 and count>0):
             print(str(count)+" "+urn)
             count -= 1
             rs = lemmamapping(urn)
@@ -143,6 +147,7 @@ def collect():
                     outf.write(rs)
                     outyf.write(rs)
             else:
+                print("No Items")
                 count+=1
 
     process("data/lemmamapping")
