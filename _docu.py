@@ -10,6 +10,8 @@ import hashlib
 if not os.path.exists("doc"):
     os.mkdir("doc")
 
+print("Compiling Documentation in doc-folder")
+
 curtime = str(datetime.datetime.now()).replace("-","_").replace(":","_").replace(".","_")
 with open("doc/data_consistency-"+curtime+".txt", "w",encoding="utf8") as out:
     out.write("File\tBytes\tMD5 Hash\tLast Modified\n")
@@ -17,6 +19,7 @@ with open("doc/data_consistency-"+curtime+".txt", "w",encoding="utf8") as out:
 db_php = {}
 params_php = {}
 
+print("\tGET Parameters per PHP Script")
 for file in os.listdir("php"):
     with open("php/"+file, "r", encoding="utf8") as inf:
         for line in inf:
@@ -57,9 +60,9 @@ for file in os.listdir("php"):
 with open("doc/php_params.txt", "w", encoding="utf8") as outf:
     for php in params_php:
         outf.write(php+"\t"+params_php[php]+"\n")
+
 def db(fn):
     global db_php
-    print("DB "+fn)
     if fn in db_php:
         scripts = db_php[fn]
     else:
@@ -96,6 +99,7 @@ def lastmodified(filename):
     return str(time.ctime(os.path.getmtime(filename)))
     
     
+print("\tDatabase Fingerprints for Consistency Checks (Versionised)")
 with open("doc/data_consistency-"+curtime+".txt", "a",encoding="utf8") as out:
         for file in os.listdir("data"):
             if os.path.isdir("data/"+file):
@@ -104,6 +108,7 @@ with open("doc/data_consistency-"+curtime+".txt", "a",encoding="utf8") as out:
             else:
                 out.write(file+"\t"+str(os.path.getsize("data/"+file))+"\t"+file2md5("data/"+file)+"\t"+lastmodified("data/"+file)+"\n")
 
+print("\tSQL Database Schemata (Versionised)")
 for file in os.listdir("data"):
     if file.endswith(".db"):
         db(file)

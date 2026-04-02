@@ -63,7 +63,7 @@ def lemmamapping(urn):
                 if len(lemma.strip())>0:
                     res +=token +"\t"+lemma+"\t"+wetype+"\t"+subtype +"\n"
             else:
-                with open("_error.txt", "a", encoding="utf8") as errout:
+                with open("_ERROR.txt", "a", encoding="utf8") as errout:
                     errout.write(urn+" lemmatisierowasch unknown token "+token + "\n")
                     
     return res

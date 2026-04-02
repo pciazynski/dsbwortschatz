@@ -40,6 +40,12 @@ var switchLogScale = function(elementid){
 	document.getElementById(elementid).src = url
 }
 
+var threeD = function(iframeid){
+	loading(iframeid)
+	el = document.getElementById(iframeid)
+	if(el.src.includes("3d.html")){el.src=el.src.replace("3d.html",".html")}else{el.src=el.src.replace(".html","3d.html")}
+}
+
 function nolanguage(elementid){
 	url = document.getElementById(elementid).src
 	url=url.replace('&lang=DEU','').replace('&lang=DSB','')

@@ -50,7 +50,7 @@ def normmapping(urn):
                 if len(norm.strip())>0:
                     res +=token +"\t"+norm+"\t"+wetype+"\t"+subtype +"\n"
             else:
-                with open("_error.txt", "a", encoding="utf8") as errout:
+                with open("_ERROR.txt", "a", encoding="utf8") as errout:
                     errout.write(urn+" normierowasch unknown token "+token + "\n")
                     
     return res

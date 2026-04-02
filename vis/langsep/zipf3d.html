@@ -78,14 +78,16 @@
 				title: "Häufigkeitsrang"
 			},
 			yaxis:{
+				type:scale,
 				title: "Tokenlänge"
 			},
 			zaxis:{
+				type:scale,
 				title: "Häufigkeit (Abs)"
 			}
 		},
 		annotations: watermarke()
-		};
+	};
 
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 

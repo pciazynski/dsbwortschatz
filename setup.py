@@ -28,6 +28,7 @@ confstr = ""
 print(ns)
 
 subprocess.run(["python3","_bagofwords.py"])
+subprocess.run(["python3","_charmix.py"])
 subprocess.run(["python3","_singleusewords.py"])
 subprocess.run(["python3","_metadata.py"])
 subprocess.run(["python3","_authors.py"])
