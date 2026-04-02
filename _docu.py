@@ -18,8 +18,9 @@ with open("doc/data_consistency-"+curtime+".txt", "w",encoding="utf8") as out:
 
 db_php = {}
 params_php = {}
+vis_php = {}
 
-print("\tGET Parameters per PHP Script")
+print("\tGET Parameters per PHP Script  in doc/php_params.txt")
 for file in os.listdir("php"):
     with open("php/"+file, "r", encoding="utf8") as inf:
         for line in inf:
@@ -57,9 +58,33 @@ for file in os.listdir("php"):
                         if not file in db_php[db2]:
                             db_php[db2] = db_php[db2] + ","+file
 
+print("\tPHP scripts per vis module in doc/vis_php.txt")
+
 with open("doc/php_params.txt", "w", encoding="utf8") as outf:
     for php in params_php:
         outf.write(php+"\t"+params_php[php]+"\n")
+
+for folder in os.listdir("vis"):
+    if not folder.endswith(".html"):
+        for file in os.listdir("vis/"+folder):
+            with open("vis/"+folder+"/"+file, "r", encoding="utf8") as inf:
+                for line in inf:
+                    for php in params_php:
+                        if php in line:
+                            if php in vis_php:
+                                vis_php[php] = vis_php[php] + ","+folder+"/"+file
+                            else:
+                                vis_php[php] = folder+"/"+file
+with open("doc/vis_php.txt", "w", encoding="utf8") as outf:
+    for php in sorted(params_php):
+        if not php in vis_php:
+            outf.write(php+"\tNONE\n")
+
+
+
+with open("doc/vis_php.txt", "a", encoding="utf8") as outf:
+    for php in sorted(vis_php):
+        outf.write(php+"\t"+vis_php[php]+"\n")
 
 def db(fn):
     global db_php
@@ -99,7 +124,7 @@ def lastmodified(filename):
     return str(time.ctime(os.path.getmtime(filename)))
     
     
-print("\tDatabase Fingerprints for Consistency Checks (Versionised)")
+print("\tDatabase Fingerprints for Consistency Checks in doc/data_consistency-"+curtime+".txt")
 with open("doc/data_consistency-"+curtime+".txt", "a",encoding="utf8") as out:
         for file in os.listdir("data"):
             if os.path.isdir("data/"+file):
@@ -108,7 +133,7 @@ with open("doc/data_consistency-"+curtime+".txt", "a",encoding="utf8") as out:
             else:
                 out.write(file+"\t"+str(os.path.getsize("data/"+file))+"\t"+file2md5("data/"+file)+"\t"+lastmodified("data/"+file)+"\n")
 
-print("\tSQL Database Schemata (Versionised)")
+print("\tSQL Database Schemata in doc/database_files-"+curtime+".txt")
 for file in os.listdir("data"):
     if file.endswith(".db"):
         db(file)
