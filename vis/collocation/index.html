@@ -104,17 +104,6 @@
 </table>
 
 <div class = "iframediv">
-	<table  align="center" style = "padding:1px;border-spacing: 2px; text-align:center;background-color:lightgray;width:90%;">
-		<tr>
-			<td style = "width: 100%;">
-				<iframe class="resized" width="50%" height="100px" id="tokeninfo" scrolling="yes"></iframe>
-			</td>
-		</tr>
-	</table>
-</div>
-
-
-<div class = "iframediv">
 	<table class="multiiframe" align="center">
 		<tr>
 			<th><script>document.write(lang_prev_word)</script></th>
@@ -196,9 +185,6 @@
 		document.getElementById("logdicemaxvaluetoken").innerHTML = this.value+".9"
 	}	
 	
-	var showtokeninfo = function(tmp){
-		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+tmp
-	}
 
 
 	var sortTokenlistBy = function(sortByWhat){
@@ -237,7 +223,6 @@
 
 		document.getElementById('leftwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&right="+token+"&logdice="+logdice
 		document.getElementById('rightwordnet').src="tokenwordnet.html?data=collocation.php&frequency="+min+"&left="+token+"&logdice="+logdice
-		document.getElementById("tokeninfo").src="tokeninfo.html?data=token2lemma.php&token="+token
 	}
 	update()
 	document.title="Kollokation"
