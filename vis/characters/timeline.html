@@ -47,6 +47,7 @@
 			if (jittervalue>maxval ) {maxval = jittervalue}
 		}
 	}
+	if (getQueryVariable("scale")==="log"){minval = Math.log(1);maxval=Math.log(maxval)}else{minval=0;maxval=maxval+(maxval/10)+1}
 	var data = [{
 		x: date,
 		y: count,
