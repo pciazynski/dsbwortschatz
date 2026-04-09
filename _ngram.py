@@ -37,12 +37,13 @@ def process(foldername):
         wb = dict()
         with open (foldername+"peryear/"+yearfile, "r", encoding="utf8") as inf:
             for line in inf:
-                linearr=line.split("\t")
-                token = linearr[0]
-                if token in wb:
-                    wb[token] = wb[token] + int(linearr[1])
-                else:
-                    wb[token] = int(linearr[1])
+                if len(line.strip())>0:
+                    linearr=line.split("\t")
+                    token = linearr[0]
+                    if token in wb:
+                        wb[token] = wb[token] + int(linearr[1])
+                    else:
+                        wb[token] = int(linearr[1])
         with open (foldername+"peryear/"+yearfile, "w", encoding="utf8") as outf:
             for token,value in sorted(wb.items(), key = lambda x:x[1], reverse=True):
                 outf.write(token+"\t"+str(value)+"\n")
