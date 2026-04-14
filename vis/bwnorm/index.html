@@ -173,6 +173,13 @@
 				<iframe class="resized" width="100%" height="300px" id="docref" scrolling="yes"></iframe>
 			</td>
 		</tr>
+		<tr style = "text-align:right;">
+			<td>
+			</td>
+			<td>
+				<button class = "iframebutton" onclick="switchDtsCts();"><script>document.write(lang_switch_CTS_DTS)</script></button>
+			</td>
+		</tr>
 	</table>
 	
 </div>
@@ -208,6 +215,15 @@
 <br><br>
 <script>
 
+	var switchDtsCts = function(){
+		elsrc = document.getElementById('docref').src;
+		if(elsrc.includes("&textapi=dts")){
+			document.getElementById('docref').src = elsrc.replace("&textapi=dts","")
+		}else{
+			document.getElementById('docref').src = elsrc+"&textapi=dts"
+		}
+	}
+	
 	var switchPrefixsearch = function(){
 		tmp = document.getElementById('prefixsearchCheckBox').checked
 		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
