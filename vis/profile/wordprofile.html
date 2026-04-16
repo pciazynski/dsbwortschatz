@@ -79,6 +79,9 @@
 			if(clickable==1 & data[2]!=":"){infotext+='<td><a target="_blank" href = "../../vis/bwlemma/timeline.html?data=lemmasumperyear.php&sort&focus=0&exact=1&lemma='+lemma+'">❧</a>&nbsp;<a target="_blank" href = "../../php/lemmasumperyear.php?sort&exact=1&lemma='+lemma+'">➚</a></td>'}
 			if(data[2]==":"){data[2] = ""}
 			infotext+='<td> '+data[2]+'</td></tr>'
+			infotext+='<tr style="background-color:#F0F3FA;"><td>Normierte&nbsp;Form</td>'
+			if(clickable==1){infotext+='<td></td>'}
+			infotext+='<td> '+data[3]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Linke&nbsp;Nachbarn(LogDice)</td>'
 			if(clickable==1 & data[5]!=undefined){infotext+='<td><a target="_blank" href = "../../vis/collocation/tokenwordnet.html?data=collocation.php&right='+word+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "../../php/collocation.php?right='+word+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
 			if(data[5]==undefined){data[5] = ""}
@@ -87,9 +90,6 @@
 			if(clickable==1 & data[6]!=undefined){infotext+='<td><a target="_blank" href = "../../vis/collocation/tokenwordnet.html?data=collocation.php&left='+word+'&logdice=0-14&sortBy=logdice&limit=10">❧</a>&nbsp;<a target="_blank" href = "../../php/collocation.php?left='+word+'&logdice=0-14&sortBy=logdice&limit=10">➚</a></td>'}
 			if(data[6]==undefined){data[6] = ""}
 			infotext+='<td> '+data[6]+'</td><td></td><td></td></tr>'
-			infotext+='<tr style="background-color:#F0F3FA;"><td>Normierte&nbsp;Form</td>'
-			if(clickable==1){infotext+='<td></td>'}
-			infotext+='<td> '+data[3]+'</td></tr>'
 			infotext+='<tr><td>Typ</td>'
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
