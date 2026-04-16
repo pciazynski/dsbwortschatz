@@ -1,40 +1,15 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
+	<script src="../../lib/config.js"></script>
+	<script src="../../lib/def_language.js"></script>
+	<script src="../../lib/my_language.js"></script>
+	<script src="../../_assets/datahandler.js"></script>
 </head>
 <body style="background-color:white">
 
 <script>
-	var miningURL=window.location.protocol+'//'+window.location.hostname+"/"+window.location.pathname.split("/")[1]+"/"
-	var ctsurl = "https://urncts.eu/cts/dsb/"
-	function getQueryVariable(variable) {
-		var query = window.location.search.substring(1);
-		var vars = query.split("&");
-		for (var i=0;i<vars.length;i++) {
-			var pair = vars[i].split("=");
-			if (pair[0] == variable) {
-				return decodeURIComponent(pair[1]);
-			}
-		} 
-		return ""
-	}
 	
-	function readPHP(file){
-	text=""
-	rawFile = new XMLHttpRequest();
-	rawFile.open("GET", miningURL+"php/"+file, false);
-//	alert(miningURL+"php/"+file)
-	rawFile.onreadystatechange = function (){
-		if(rawFile.readyState === 4){
-			if(rawFile.status === 200 || rawFile.status == 0){
-				text = rawFile.responseText;
-			}
-		}
-	}
-	rawFile.send(null);
-	return text.trim()
-}
-
 	norm = getQueryVariable('norm')
 	clickable = getQueryVariable('clickable')
 	if(norm.length>0){
@@ -95,37 +70,37 @@
 			infotext = '<table align=center style="valign:top;border: 2px solid black;border-collapse: collapse;">'
 			
 			infotext+='<tr><td>Häufigkeit</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/statsnorm/zipf.html?data=normmapping/_normbag&norm='+norm+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/normmapping/_normbag.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "../../vis/statsnorm/zipf.html?data=normmapping/_normbag&norm='+norm+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "../../data/normmapping/_normbag.txt">➚</a></td>'}
 			infotext+='<td> '+data[0].split("\t")[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Rang</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/statsnorm/zipf.html?data=normmapping/_normbag&norm='+norm+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'data/normmapping/_normbag.txt">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "../../vis/statsnorm/zipf.html?data=normmapping/_normbag&norm='+norm+'&limit=100">❧</a>&nbsp;<a target="_blank" href = "../../data/normmapping/_normbag.txt">➚</a></td>'}
 			infotext+='<td> '+data[0].split("\t")[1]+'</td></tr>'
 			infotext+='<tr><td>Erster&nbsp;Beleg</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwnorm/timeline.html?data=normsumperyear.php&exact=1&focus=0&norm='+norm+'">❧</a> <a target="_blank" href = "'+miningURL+'php/normsumperyear.php?exact&norm='+norm+'">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "../../vis/bwnorm/timeline.html?data=normsumperyear.php&exact=1&focus=0&norm='+norm+'">❧</a> <a target="_blank" href = "../../php/normsumperyear.php?exact&norm='+norm+'">➚</a></td>'}
 			infotext+='<td> '+data[1].split("\t")[0]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Letzter&nbsp;Beleg</td>'
-			if(clickable==1){infotext+='<td> <a target="_blank" href = "'+miningURL+'vis/bwnorm/timeline.html?data=normsumperyear.php&exact=1&focus=0&norm='+norm+'">❧</a> <a target="_blank" href = "'+miningURL+'php/normsumperyear.php?exact&norm='+norm+'">➚</a></td>'}
+			if(clickable==1){infotext+='<td> <a target="_blank" href = "../../vis/bwnorm/timeline.html?data=normsumperyear.php&exact=1&focus=0&norm='+norm+'">❧</a> <a target="_blank" href = "../../php/normsumperyear.php?exact&norm='+norm+'">➚</a></td>'}
 			infotext+='<td> '+data[1].split("\t")[1]+'</td></tr>'
 			infotext+='<tr><td>Normierung&nbsp;inkl&nbsp;ambig</td>'
-			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwnorm/timeline.html?data=normsumperyear.php&sort&focus=0&exact=0&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/normsumperyear.php?sort&norm='+norm+'">➚</a></td>'}
+			if(clickable==1){infotext+='<td><a target="_blank" href = "../../vis/bwnorm/timeline.html?data=normsumperyear.php&sort&focus=0&exact=0&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "../../php/normsumperyear.php?sort&norm='+norm+'">➚</a></td>'}
 			infotext+='<td> '+data[2]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Belegte&nbsp;Wortformen nicht ambig</td>'
-			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwnorm/traviz.html?data=normtoken.php&sort&focus=0&exact=1&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/normtoken.php?sort&focus=0&exact=1&norm='+norm+'">➚</a></td>'}
+			if(clickable==1){infotext+='<td><a target="_blank" href = "../../vis/bwnorm/traviz.html?data=normtoken.php&sort&focus=0&exact=1&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "../../php/normtoken.php?sort&focus=0&exact=1&norm='+norm+'">➚</a></td>'}
 			infotext+='<td> '+data[3]+'</td></tr>'
 			infotext+='<tr><td>Belegte&nbsp;Wortformen&nbsp;nur&nbsp;ambig</td>'
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[5]+'</td></tr>'
 			infotext+='<tr style="background-color:#F0F3FA;"><td>Belegte&nbsp;Wortformen&nbsp;ambig</td>'
-			if(clickable==1){infotext+='<td><a target="_blank" href = "'+miningURL+'vis/bwnorm/traviz.html?data=normtoken.php&sort&focus=0&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "'+miningURL+'php/normtoken.php?sort&focus=0&norm='+norm+'">➚</a></td>'}
+			if(clickable==1){infotext+='<td><a target="_blank" href = "../../vis/bwnorm/traviz.html?data=normtoken.php&sort&focus=0&norm='+norm+'">❧</a>&nbsp;<a target="_blank" href = "../../php/normtoken.php?sort&focus=0&norm='+norm+'">➚</a></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
 			
 			
 			infotext=infotext.replaceAll("\t",", ")
 			if (clickable == 1){
-				infotext += '<tr><td></td><td></td><td>'+miningURL+' ' +today+'</td></tr></table>'
+				infotext += '<tr><td></td><td></td><td>'+wm_title+'</td></tr></table>'
 			}
 			else{
-				infotext += '<tr><td></td><td>'+miningURL+' ' +today+'</td></tr></table>'
+				infotext += '<tr><td></td><td>'+wm_title+'</td></tr></table>'
 			}
 			clicktext = '<table align=center style="valign:top;border-collapse: collapse;"><tr>'
 			if(clickable==1){clicktext += '<td><a href="?norm='+norm+'">Interaktionselemente entfernen</a></td>'}

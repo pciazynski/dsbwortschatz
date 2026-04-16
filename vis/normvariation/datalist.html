@@ -15,14 +15,14 @@
 	data_arr = readPHP(dataset).split("\n");
 
 	str = "<table style='border-collapse: collapse;text-align:left;'>";
-	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Normierung (Link)</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Deutsch (Link)</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Token</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Norm</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Type</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Subtype</th>"
+	str = str + "<tr><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Normierung (Link)</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Deutsch (dolnoserbski.de)</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Token</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Norm</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Type</th><th style='border: 2px solid black;padding:5px 5px 5px 5px;'>Subtype</th>"
 	str = str +"</tr>"
 
 	for (var i = 0; i < data_arr.length; i++) {
 		if(data_arr[i].trim().length>0){
 			arr = data_arr[i].split(sep)
 			str = str + "<tr>"
-			str = str + "<td style='border: 2px solid black;padding:5px 5px 5px 5px;'><a target='_blank' href=../bwnorm/?norm="+arr[0].slice(1,-1)+">"+arr[0].slice(1,-1)+"</a></td>"
+			str = str + "<td style='border: 2px solid black;padding:5px 5px 5px 5px;'><a target='_blank' href=../bwnorm/?norm="+arr[0]+">"+arr[0]+"</a></td>"
 			str = str + "<td style='border: 2px solid black;padding:5px 5px 5px 5px;'><a target='_blank' href=https://dolnoserbski.de/ndw/pytanje?wuraz="+arr[0].slice(1,-1).split("|")[0]+"&slownik=*&psistup=serbski&pisanje=originalne&pozicija=slowo>"+arr[0].slice(1,-1).split("|")[0]+"</a></td>"
 			str = str + "<td style='border: 2px solid black;padding:5px 5px 5px 5px;'><a target='_blank' href=../bwtoken/?token="+arr[1]+">"+arr[1]+"</a></td>"
 			for (var j=2;j<arr.length;j++){
