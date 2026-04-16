@@ -93,7 +93,7 @@
 			infotext+='<tr><td>Typ</td>'
 			if(clickable==1){infotext+='<td></td>'}
 			infotext+='<td> '+data[4]+'</td></tr>'
-			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl+'plain/textexamples.php?limit=5&deletexml&snippet='+word+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
+			if(clickable==1){infotext+='<tr style="background-color:#F0F3FA;"><td>Verwendungen</td><td><a target="_blank" href="'+ctsurl.replace('/cts/','')+'/plain/textexamples.php?limit=5&deletexml&snippet='+word+'">➚</a></td><td id = "examplesentece"> </td></tr>'}
 			infotext=infotext.replaceAll("\t",", ")
 			if (clickable == 1){
 				infotext += '<tr><tr><td></td><td></td><td>'+wm_title+'</td></tr></table>'
