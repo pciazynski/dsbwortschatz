@@ -25,10 +25,10 @@
 	edges = []
 	var dataset = getQueryVariable('data')
 	var frequency = getQueryVariable('frequency')
-	var left = getQueryVariable('left')
-	var right = getQueryVariable('right')
+	var left = getQueryVariable('left').trim()
+	var right = getQueryVariable('right').trim()
 	dataset = dataset +'?left='+left+'&frequency='+frequency+'&right='+right+'&limit=500&sortBy=frequency'
-	if(typeof deulist === 'undefined'){deulist = readTextFile("langdetect3/deu_slim").split("n")}
+	if(typeof deulist === 'undefined'){deulist = readTextFile("langDetect3/deu_slim").split("n")}
 	
 	network = readPHP(dataset).trim().split('\n')
 	if(network.length<100){lay='cose'}else{lay='random'}
@@ -81,16 +81,14 @@
 			'target-arrow-color': 'black'
 		}
 	}]});
-	var langColor = function(key){
-		if(deulist.includes(key)){return "red";}else{return "gray";}
-	}
+
 	
 	for (var key in nodes){
 		if( key.length>0)
 		{
 			cy.add({
 				data: { id: key,
-				color:langColor(key),
+				color:getColor(key),
 				width:nodes[key],
 				height:nodes[key]
 			}});
