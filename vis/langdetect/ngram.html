@@ -13,9 +13,9 @@
 	var frequency = getQueryVariable("frequency")
 	var n = getQueryVariable("n")
 
-	filter = getQueryVariable("filter")
+	filter = getQueryVariable("filter").trim()
 	dataset = dataset +"?frequency="+frequency+"&sort&n="+n+"&filter="+filter
-	data_arr = readPHP(dataset).split("\n");
+	data_arr = readPHP(dataset).trim().split("\n");
 
 	if(frequency.length==0){frequency =10}else{frequency=parseInt(frequency)}
 	count = 1000
