@@ -15,7 +15,8 @@ if (isset($_GET['deu']) and strlen($_GET['deu'])>0 and isset($_GET['n']) and str
 		$query = 'SELECT ngram, frequency FROM langDetectmixngram WHERE deu =='.$deu.' AND frequency >='.$frequency;
 	}
 	
-	(isset($_GET['filter']) and strlen($_GET['filter'])>0) ? $query .= ' AND ngram LIKE "%\_'.str_replace('_','\_',$_GET['filter']).'\_%" escape "\" ' : NULL;
+	
+	(isset($_GET['filter']) and strlen($_GET['filter'])>0) ? $query .= ' AND ngram LIKE "% '.$_GET['filter'].' %" ' : NULL;
 	(isset($_GET['sort'])) ? $query .= ' ORDER BY frequency DESC' : NULL;
 	(isset($_GET['count']) and strlen($_GET['count'])>0) ? $query.=' LIMIT '.$_GET['count'] : NULL;
 
