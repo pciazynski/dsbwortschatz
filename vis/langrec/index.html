@@ -60,7 +60,7 @@
 		document.getElementById('langrec').innerHTML = "Loading..."
 		text = " "+document.getElementById("inputtext").value.replaceAll("\n", ' <br> ').replace(punctRE, ' ').toLowerCase()+" "
 		textarr = text.split(" ").sort()
-		oldtoken = ""
+		oldword = ""
 		nl = "\n"
 		tab="\t"
 		sp=" "
@@ -70,28 +70,28 @@
 		deulist = nl+readTextFile("langDetect3/deu_slim")+nl;
 
 		for (var i = 0;i<textarr.length;i++){
-			token = textarr[i].trim()
-			if(oldtoken!== token){
-				onclickfun = "window.open('../../vis/bwtoken/?token="+token+"')"
-				if(deulist.includes(nl+token+nl)){
-					text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick="'+onclickfun+'">'+token+'</span> ')
+			word = textarr[i].trim()
+			if(oldword!== word){
+				onclickfun = "window.open('../../vis/bwword/?word="+word+"')"
+				if(deulist.includes(nl+word+nl)){
+					text = text.replaceAll(sp+word+sp, ' <span class="clickabletoken" style="cursor:pointer;color:red;" onclick="'+onclickfun+'">'+word+'</span> ')
 				}
 				else {
-					if(mix2list.includes("\n"+token+tab)){
-						text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick="'+onclickfun+'">'+token+'</span> ')
+					if(mix2list.includes("\n"+word+tab)){
+						text = text.replaceAll(sp+word+sp, ' <span class="clickabletoken" style="cursor:pointer;color:cyan;" onclick="'+onclickfun+'">'+word+'</span> ')
 					}
 					else{
-						if(mix1list.includes(nl+token+tab)){
-							text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick="'+onclickfun+'">'+token+'</span> ')
+						if(mix1list.includes(nl+word+tab)){
+							text = text.replaceAll(sp+word+sp, ' <span class="clickabletoken" style="cursor:pointer;color:blue;" onclick="'+onclickfun+'">'+word+'</span> ')
 						}
 						else{
-							if(dsblist.includes(nl+token+nl)){
-								text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+token+'</span> ')
+							if(dsblist.includes(nl+word+nl)){
+								text = text.replaceAll(sp+word+sp, ' <span class="clickabletoken" style="cursor:pointer;color:green;" onclick="'+onclickfun+'">'+word+'</span> ')
 							}
 						else{
-								text = text.replaceAll(sp+token+sp, ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick="'+onclickfun+'">'+token+'</span> ')
+								text = text.replaceAll(sp+word+sp, ' <span class="clickabletoken" style="cursor:pointer;color:black;" onclick="'+onclickfun+'">'+word+'</span> ')
 							}}}}
-				oldtoken = token
+				oldword = word
 			}
 		}
 		
