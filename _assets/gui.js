@@ -91,7 +91,7 @@ if(headerconf[2]!=='0'){str+='<td><a href="../characters?headerconf='+headerconf
 if(headerconf[3]!=='0'){str+='<td>'+lang_word+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,3)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
 if(headerconf[4]!=='0'){str+='<td>'+lang_connection+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,4)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
 if(headerconf[5]!=='0'){str+='<td>'+'SpoznajRec'+'&nbsp;<a style="color:black;" href=".?headerconf='+hidemenu(headerconf,5)+'"><sup title="'+lang_closemenu+'">&#10006;</sup></a></td>'}
-str+='<td><a href="'+ctsurl+'?request=GetCapabilities">'+lang_textapi+'</a></td>'
+str+='<td><a href="'+ctsurl.substring(0,ctsurl.length-4)+'plain/editions.php">'+lang_textapi+'</a></td>'
 str+='</tr>'
 +'<tr style="text-align:center;">'
 if(headerconf[0]!=='0'){str+='<td>'
