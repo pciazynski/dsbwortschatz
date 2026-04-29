@@ -93,7 +93,6 @@ This repository is a modified fork of the following original work.
 ### Fork Maintainer
 
 - Name: Piotr Ciążyński / Pětš Śěžyński
-- Contact: pets.sezynski@serbski-institut.de
 - Fork URL: https://github.com/pciazynski/dsbwortschatz
 - Modified since: 2026-04-28
 
