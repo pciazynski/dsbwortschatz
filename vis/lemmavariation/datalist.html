@@ -16,7 +16,7 @@
 	data_arr = readPHP(dataset).split("\n");
 
 	str = '<table style="border-collapse: collapse;text-align:left;">';
-	str += '<tr><th style="border: 2px solid black;padding:5px 5px 5px 5px;">Lemma</th><th style="border: 2px solid black;padding:5px 5px 5px 5px;">Deutsch (dolnoserbski.de)</th><th style="border: 2px solid black;padding:5px 5px 5px 5px;">Token</th><th style="border: 2px solid black;padding:5px 5px 5px 5px;">Norm</th>'
+	str += '<tr><th style="border: 2px solid black;padding:5px 5px 5px 5px;">'+lang_lemmafy+'</th><th style="border: 2px solid black;padding:5px 5px 5px 5px;">Deutsch (dolnoserbski.de)</th><th style="border: 2px solid black;padding:5px 5px 5px 5px;">'+lang_word+'</th>'
 	str += '</tr>'
 
 	for (var i = 0; i < data_arr.length; i++) {

@@ -178,7 +178,6 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtokenregex.php&sort&norm='+curnorm+weight
 			document.getElementById('traviz').src='traviz.html?data=normtokenregex.php&sort&norm='+curnorm+weight
-			document.title=curnorm
 			document.getElementById('tokeninfo').src = 'error_token.html'
 			document.getElementById('timeline').src = 'error_token.html'
 		}
@@ -191,7 +190,6 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&inclusive&norm='+curnorm+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&inclusive&norm='+curnorm+weight
-			document.title=curnorm
 		document.getElementById('tokeninfo').src = 'error_token.html'
 		document.getElementById('timeline').src = 'error_token.html'
 		}
@@ -204,7 +202,6 @@
 			if(document.getElementById('weight').checked){weight='&weight'}else{weight=""}
 			document.getElementById('tree').src='normtree_dagre.html?data=normtoken.php&sort&inclusive&norm='+curnorm+weight
 			document.getElementById('traviz').src='traviz.html?data=normtoken.php&sort&inclusive&norm='+curnorm+weight
-			document.title=curnorm+"Normierungsbaum"
 			document.getElementById('tokeninfo').src = 'error_token.html'
 			document.getElementById('timeline').src = 'error_token.html'
 		}
