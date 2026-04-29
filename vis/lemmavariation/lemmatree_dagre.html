@@ -148,15 +148,18 @@
 		if(tappedBefore === tappedNow) {
 			tappedBefore = null;
 			cy.fit()
-		}	else{
+		}else{
 				tappedTimeout = setTimeout(function(){ tappedBefore = null; }, 300);
 				tappedBefore = tappedNow;
 				if (tappedNow!==cy){
 					cy.fit(event.target.neighborhood(),100)
-			}
-		}
-	});
-	
+					if(!event.target.id().includes("Input:")){
+						elemen = event.target.id()
+						if(elemen.includes("|")){parent.lemmaclick(elemen.slice(1,-1))}
+						else{parent.tokenclick(elemen)}
+					}
+				}
+			}});
 	
 
 </script>
