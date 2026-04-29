@@ -40,6 +40,12 @@
 
 <table class="optionmenu" align="center">
 	<tr>
+		<td></td>
+		<td>
+			<input id="prefixsearchCheckBox" checked type="checkbox" onchange="switchPrefixsearch()"><script>document.write(lang_prefixsearchalphabet)</script></input>
+		</td>
+	</tr>
+	<tr>
 		<td style="text-align:right;">
 			<script>document.write(lang_normify)</script>
 		</td>
@@ -129,6 +135,12 @@
 
 <br><br>
 <script>
+
+	var switchPrefixsearch = function(){
+		tmp = document.getElementById('prefixsearchCheckBox').checked
+		if(tmp){tmp = 'alphabet'}else{tmp = 'frequency'}
+		autocomplete("norm", "prefixnormsearch.php?limit=30&sortby="+tmp+"&norm=", ""); 
+	}
 
 	var normclick = function(tmp){
 		loading("timeline")
