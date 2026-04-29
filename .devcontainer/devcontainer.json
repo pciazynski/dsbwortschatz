@@ -30,7 +30,6 @@
         "editorconfig.editorconfig"
       ],
       "settings": {
-        "chat.disableAIFeatures": false,
         "php.validate.executablePath": "/usr/bin/php",
         "python.defaultInterpreterPath": "/usr/bin/python3",
         "editor.formatOnSave": true,
