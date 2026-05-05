@@ -97,7 +97,7 @@
 			if(key==lemma){color = 'gray'}else{color='red'}
 			cy.add({
 				data: { id: key,
-				color:color,
+				color:getColor(key),
 				width:size,
 				height:size
 			}});

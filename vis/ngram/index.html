@@ -21,12 +21,6 @@
 	if(n.length==0){n=3}
 </script>
 
-<div class = "explain">
-	<p>
-		Hier werden nGramme nach Häufigkeitsrang dargestellt. Per Klick auf einen Balken kann das zugehörige nGram näher untersucht werden.
-	</p>
-</div>
-
 <table class="optionmenu" align="center">
 	<tr>
 		<td style="text-align:right;"><script>document.write(lang_frequency)</script></td>
@@ -36,17 +30,6 @@
 	<tr>
 		<td></td><td  style = "text-align:center;"><label id="yearlabel">1111</label></td><td></td>
 	</tr>
-	</tr>
-		<tr>
-		<td style="text-align:right;">
-			<input id = "peryearcheckbox" onchange="switchPerYear()" type = "checkbox"><script>document.write(lang_year)</script> </input><script>document.write(minDate)</script>
-		</td>
-		<td>
-			<input type="range" class="slider" id="year" oninput= "updateYearlabel()" onchange="updateZipf()">
-		</td>
-		<td style="text-align:left;"> <script>document.write(maxDate)</script></td>
-	</tr>
-	
 </table>
 
 <div class = "iframediv">
@@ -62,12 +45,6 @@
 </div>
 
 <br><br>
-
-<div class = "explain">
-	<p>
-		Nach Klick auf einen Balken der Häufigkeitssortierung wird die Vorkommenshäufigkeit des nGram im Zeitverlauf visualisiert. Alternativ kann ein Suchbegriff im Textfeld angegeben werden. Die einzelnen Wortformen in der rechten Tabelle können per Klick ausgewählt werden um Häufigkeitsverläufe verschiedener farbkodierter nGramme zu visualisieren, welche diese Wortform enthalten. Zur Unterstützung werden Vorschläge bereitgestellt, bei denen der folgende Buchstabe variiert wird.
-	</p>
-</div>
 
 <table class="optionmenu" align="center">
 	<tr>
@@ -120,18 +97,6 @@
 <br><br>
 <script>
 
-
-	var updateYearlabel = function(){
-		tmp = parseInt(document.getElementById("year").value)
-		document.getElementById("yearlabel").innerHTML = tmp
-	}
-	
-	var switchPerYear = function(){
-		document.getElementById("year").disabled = !document.getElementById("peryearcheckbox").checked
-		updateZipf()
-	}
-	
-	
 	var linreg = function(iframeid){
 		tmp = document.getElementById("filter").value.trim()
 		if(tmp.length>0){
@@ -161,25 +126,10 @@
 	var updateZipf = function(){
 		loading('zipf')
 		min = document.getElementById("min").value.trim()
-		if (document.getElementById("peryearcheckbox").checked){
-		tmp2 = parseInt(document.getElementById("year").value)
-			//if(tmp2<1848){
-			//	if (tmp2<1837){tmp2 = 1797}
-			//	else{tmp2 = 1837}
-			//}
-			//else if(tmp2<1921 && tmp2>1918){
-			//	tmp2 = 1918
-			//}
-		document.getElementById('zipf').src="zipf.html?data=ngramperyear.php&frequency="+min+"&n="+n+"&year="+tmp2
-		}else{document.getElementById('zipf').src="zipf.html?data=ngram.php&frequency="+min+"&n="+n}
+		document.getElementById('zipf').src="zipf.html?data=ngram.php&frequency="+min+"&n="+n
 	}
 
 	if(n.length==0){n=3}
-	document.getElementById("year").min = minDate
-	document.getElementById("year").max = maxDate
-	document.getElementById("year").disabled = true
-	document.getElementById("yearlabel").innerHTML = parseInt((minDate + maxDate)/2)
-	document.getElementById("year").value = parseInt((minDate + maxDate)/2)
 
 	updateZipf()
 	document.title=n+"Gram "
