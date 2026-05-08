@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import sys
+import shutil
 
 if not os.path.exists("data"):
     os.mkdir("data")
