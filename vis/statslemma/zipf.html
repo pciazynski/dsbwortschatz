@@ -100,8 +100,7 @@
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 	myPlot = document.getElementById('myDiv')
 	myPlot.on("plotly_click", function(data) {
-		parent.document.getElementById("lemma").value = data.points[0].x;
-		parent.updateTimeline()
+		parent.zipfClick(data.points[0].x)
 	});
 	document.title = diagramtitle
 

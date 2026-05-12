@@ -54,6 +54,13 @@
 			<input type="range" class="slider" id="yearmaxslider" onchange="updateZipf()">
 		</td>
 	</tr>
+	<tr>
+		<td style="text-align:right;vertical-align:top;"><script>document.write(lang_redirect)</script><br/></td>
+		<td>
+			<span id="timelinelink"></span><br/>
+			<span id="profilelink"></span><br/>
+		</td>
+	</tr>
 </table>
 <script>
 	yearminslider.oninput = function() {
@@ -96,7 +103,11 @@
 <br><br>
 
 <script>
-
+	
+	var zipfClick = function(tmp){
+		document.getElementById("timelinelink").innerHTML = '<a target="_blank" href="../characters?char='+tmp+'">'+lang_timeline+ ' & ' + lang_docreferences+'</a> '+tmp;
+	}
+	
 	var updateZipf = function(){
 		loading("zipf")
 		tmp = document.getElementById("min").value.trim()
