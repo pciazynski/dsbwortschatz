@@ -99,7 +99,11 @@
 	};
 
 
-	Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
+	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
+	myPlot = document.getElementById('myDiv')
+	myPlot.on("plotly_click", function(data) {
+		parent.zipfClick(data.points[0].x)
+	});
 	document.title = diagramtitle
 
 </script>

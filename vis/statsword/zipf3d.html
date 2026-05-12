@@ -107,13 +107,12 @@
 
 	myPlot = document.getElementById('myDiv')
 
-	if(parent.document.getElementById('token') != undefined){
-		myPlot.on('plotly_click', function(data) {
-			token=data.points[0].x;
-			parent.document.getElementById('token').value = token
-			parent.updateTimeline()
-		});
-	}
+	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
+	myPlot = document.getElementById('myDiv')
+	myPlot.on("plotly_click", function(data) {
+		parent.zipfClick(data.points[0].x)
+	});
+	
 	document.title = diagramtitle
 
 </script>

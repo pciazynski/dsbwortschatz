@@ -57,6 +57,13 @@
 			<button onclick ="zipfTypecount()"><script>document.write(lang_typecount)</script></button>
 		</td>
 	</tr>
+	<tr>
+		<td style="text-align:right;vertical-align:top;"><script>document.write(lang_redirect)</script><br/></td>
+		<td>
+			<span id="timelinelink"></span><br/>
+			<span id="profilelink"></span><br/>
+		</td>
+	</tr>
 </table>
 
 <div class = "iframediv">
@@ -74,7 +81,10 @@
 <br><br>
 <script>
 
-	
+	var zipfClick = function(tmp){
+		document.getElementById("timelinelink").innerHTML = '<a target="_blank" href="../bwnorm?norm='+tmp+'">'+lang_timeline+'</a> '+tmp;
+		document.getElementById("profilelink").innerHTML = '<a target="_blank" href="../profile?norm='+tmp+'">'+lang_profile+'</a> ';
+	}
 	var zipfTypecount = function(){
 		loading("zipf")
 		document.getElementById("zipf").src="zipf.html?data=typecountpernorm.php&sort=1"
