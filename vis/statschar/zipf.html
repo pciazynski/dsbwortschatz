@@ -81,14 +81,11 @@
 	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
 
 	myPlot = document.getElementById('myDiv')
-
-	if(parent.document.getElementById('charinput') != undefined){
-		myPlot.on('plotly_click', function(data) {
-			character=data.points[0].x;
-			parent.document.getElementById('charinput').value = character
-			parent.updateTimeline()
-		});
-	}
+	myPlot = Plotly.newPlot('myDiv', data, layout, plotlyconfiguration);
+	myPlot = document.getElementById('myDiv')
+	myPlot.on("plotly_click", function(data) {
+		parent.zipfClick(data.points[0].x)
+	});
 	
 	document.title = diagramtitle
 

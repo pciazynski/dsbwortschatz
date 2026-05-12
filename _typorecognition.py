@@ -1,25 +1,22 @@
 from datetime import datetime
 import os
 import sys
+import shutil
 
 if not os.path.exists("data"):
     os.mkdir("data")
-if not os.path.exists("data/typorecognition"):
-    os.mkdir("data/typorecognition")
+if os.path.exists("data/typorecognition"):
+    shutil.rmtree("data/typorecognition")
+os.mkdir("data/typorecognition")
 
+    
+    
 tab = "\t"
 nl = "\n"
 sumtoklen = 0
 checkedwords = {}
 singleusewords = {}
 alreadyseen = {}
-
-if os.path.exists("data/typorecognition/typos.txt"):
-    with open ("data/typorecognition/typos.txt","r",encoding="utf8") as bwin:
-        for line in bwin:
-            linearr = line.split(tab)
-            checkedwords[linearr[1].split(":")[0]] = 1
-            alreadyseen[linearr[1].split(":")[0]] = 1
 
 bw = dict()
 with open ("data/bagofwords/_all.txt","r",encoding="utf8") as bwin:
@@ -66,7 +63,7 @@ res = {}
 typofrequency = 100
 
 print("Start " +start.strftime("%m/%d/%Y, %H:%M:%S")+" avgtoklen: "+str(avgtoklen))
-with open ("data/typorecognition/typos.txt", "a", encoding="utf8") as outf, open ("data/typorecognition/typowords.txt", "a", encoding="utf8") as outfwords:
+with open ("data/typorecognition/typos.txt", "w", encoding="utf8") as outf, open ("data/typorecognition/typowords.txt", "a", encoding="utf8") as outfwords:
     for token1,tokencount in sorted(bw.items(),key = lambda x:x[1], reverse=True):
         if counter != 0:
             if len(token1)>=avgtoklen and not token1 in checkedwords and not token1 in res and int(bw[token1])>typofrequency:
