@@ -94,7 +94,7 @@ This repository is a modified fork of the following original work.
 
 - Name: Piotr Ciążyński / Pětš Śěžyński
 - Fork URL: https://github.com/pciazynski/dsbwortschatz
-- Modified since: 2026-04-28
+- Modified since: 2026-04-28 (but sometimes synced to the upstream)
 
 ### Modification Log
 
