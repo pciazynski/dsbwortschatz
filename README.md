@@ -38,6 +38,8 @@ against those generated artifacts.
 
 ## Installation
 
+0. You need as well: `sudo apt install -y php8.3-sqlite3`
+
 1. Clone this fork.
 
 ```bash

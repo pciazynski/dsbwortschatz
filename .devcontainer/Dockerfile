@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl gnupg \
     python3 python3-pip python3-venv \
-    php php-cli php-mbstring php-xml php-curl php-zip php-intl \
+    php php-cli php-mbstring php-xml php-curl php-zip php-intl php8.3-sqlite3 \
     composer \
     nodejs npm \
     git \
